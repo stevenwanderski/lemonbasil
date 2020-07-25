@@ -25,6 +25,7 @@ header {
     padding: .3em 0;
     display: inline-block;
     text-decoration: none;
+    font-size: 1.125em
   }
 
   .logo {
@@ -53,29 +54,62 @@ header {
     display: flex;
     align-items: center;
     height: 100%;
-  }
 
-  .nav-toggle span,
-  .nav-toggle span::before,
-  .nav-toggle span::after {
-    display: block;
-    height: 2px;
-    width: 2em;
-    background: $black;
-    position: relative;
-  }
+    span,
+    span::before,
+    span::after {
+      display: block;
+      height: 2px;
+      width: 2em;
+      background: $black;
+      position: relative;
+    }
 
-  .nav-toggle span::before,
-  .nav-toggle span::after {
-    content: '';
-    position: absolute;
-  }
+    span::before,
+    span::after {
+      content: '';
+      position: absolute;
+    }
 
-  .nav-toggle span::before {
-    top: 7px;
-  }
+    span::before {
+      top: 7px;
+    }
 
-  .nav-toggle span::after {
-    bottom: 7px;
+    span::after {
+      bottom: 7px;
+    }
+  }
+}
+
+@media screen and (min-width: 800px) {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+
+    nav {
+      position: relative;
+      display: block;
+      padding: 0;
+    }
+
+    ul {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    a {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+
+    a:hover {
+      color: #999;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
   }
 }

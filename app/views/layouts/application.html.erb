@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lemonbasil</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+  </head>
+
+  <body>
+    <%= render 'layouts/header' %>
+
+    <div class="content">
+      <%= yield %>
+    </div>
+  </body>
+</html>

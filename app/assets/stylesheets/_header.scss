@@ -1,0 +1,81 @@
+header {
+  text-align: center;
+  padding: 1em 0;
+  position: fixed;
+  width: 100%;
+  background: $white;
+  z-index: 999;
+
+  nav {
+    position: absolute;
+    background: $white;
+    width: 100%;
+    padding: 1em;
+    display: none;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+  }
+
+  a {
+    padding: .3em 0;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .logo {
+    border: solid $black 3px;
+    display: inline-block;
+    padding: .2em .4em;
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 26px;
+  }
+
+  .nav-input {
+    display: none;
+  }
+
+  .nav-input:checked ~ nav {
+    display: block;
+  }
+
+  .nav-toggle {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-left: 1em;
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+
+  .nav-toggle span,
+  .nav-toggle span::before,
+  .nav-toggle span::after {
+    display: block;
+    height: 2px;
+    width: 2em;
+    background: $black;
+    position: relative;
+  }
+
+  .nav-toggle span::before,
+  .nav-toggle span::after {
+    content: '';
+    position: absolute;
+  }
+
+  .nav-toggle span::before {
+    top: 7px;
+  }
+
+  .nav-toggle span::after {
+    bottom: 7px;
+  }
+}

@@ -1,5 +1,5 @@
 <header>
-  <div class="logo">Lemon&Basil</div>
+  <a href="/" class="logo">Lemon&Basil</a>
 
   <input type="checkbox" id="nav-input" class="nav-input">
   <label for="nav-input" class="nav-toggle">
@@ -8,10 +8,10 @@
 
   <nav>
     <ul>
-      <li><a href="">How it Works</a></li>
-      <li><a href="">About</a></li>
-      <li><a href="">Menus</a></li>
-      <li><a href="">Contact</a></li>
+      <li><%= active_link_to 'How it Works', how_it_works_path %></li>
+      <li><%= active_link_to 'About', about_path %></li>
+      <li><%= active_link_to 'Menus', menus_path %></li>
+      <li><%= active_link_to 'Contact', contact_path %></li>
     </ul>
   </nav>
 </header>

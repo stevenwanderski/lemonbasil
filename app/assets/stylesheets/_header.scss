@@ -27,7 +27,7 @@ header {
     font-size: 1.125em;
 
     &.active {
-      text-decoration: underline;
+      border-bottom: solid 2px $black;
     }
   }
 
@@ -99,20 +99,20 @@ header {
       position: relative;
       display: block;
       padding: 0;
+
+      a {
+        margin-left: 1em;
+        margin-right: 1em;
+      }
+
+      a:hover {
+        border-bottom: solid 2px $black;
+      }
     }
 
     ul {
       display: flex;
       justify-content: flex-end;
-    }
-
-    a {
-      padding-left: 1em;
-      padding-right: 1em;
-    }
-
-    a:hover {
-      text-decoration: underline;
     }
 
     .nav-toggle {

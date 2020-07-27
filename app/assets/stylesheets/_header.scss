@@ -25,10 +25,6 @@ header {
     display: inline-block;
     text-decoration: none;
     font-size: 1.125em;
-
-    &.active {
-      border-bottom: solid 2px $black;
-    }
   }
 
   .logo {
@@ -103,10 +99,14 @@ header {
       a {
         margin-left: 1em;
         margin-right: 1em;
-      }
 
-      a:hover {
-        border-bottom: solid 2px $black;
+        &.active {
+          border-bottom: solid 2px $black;
+        }
+
+        &:hover {
+          border-bottom: solid 2px $black;
+        }
       }
     }
 

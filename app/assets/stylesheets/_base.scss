@@ -16,8 +16,8 @@ body {
 
 main {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 p {
@@ -38,10 +38,6 @@ h2 {
 }
 
 .content {
-  flex-grow: 1;
-  padding: 1em;
-  overflow-y: scroll;
-  max-width: 1000px;
-  margin: 0 auto;
-  width: 100%;
+  height: 100%;
+  padding: 100px 1em 1em 1em;
 }

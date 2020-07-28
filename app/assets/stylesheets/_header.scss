@@ -100,12 +100,9 @@ header {
         margin-left: 1em;
         margin-right: 1em;
 
-        &.active {
-          border-bottom: solid 2px $black;
-        }
-
+        &.active,
         &:hover {
-          border-bottom: solid 2px $black;
+          box-shadow: 0 2px 0 $black;
         }
       }
     }

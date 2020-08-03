@@ -3,8 +3,8 @@ class ContactMailer < ApplicationMailer
     @contact = params[:contact]
 
     mail(
-      from: 'Birdie <hello@lemonandbasil.co>',
-      to: 'Steven <wandoledzep@gmail.com>',
+      from: 'Lemon&Basil <hello@lemonandbasil.co>',
+      to: 'Birdie <wandoledzep@gmail.com>',
       subject: 'New contact message from lemonandbasil.co'
     )
   end

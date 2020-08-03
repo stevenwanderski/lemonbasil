@@ -1,23 +1,22 @@
-<h1>Contact</h1>
+<h1>Get in touch with me</h1>
 
 <%= form_for(@contact, url: contact_path, html: { class: 'form' }) do |f| %>
-  <div class="form-item">
-    <%= f.label :name, class: 'label' %>
-    <%= f.text_field :name, class: 'input--text required' %>
+  <div class="form-group">
+    <div class="form-item">
+      <%= f.text_field :name, class: 'input--text required', placeholder: 'Your name' %>
+    </div>
+
+    <div class="form-item">
+      <%= f.text_field :email, class: 'input--text required', placeholder: 'Your email' %>
+    </div>
   </div>
 
   <div class="form-item">
-    <%= f.label :email, class: 'label' %>
-    <%= f.text_field :email, class: 'input--text required' %>
+    <%= f.text_area :message, class: 'textarea required', placeholder: 'Your message' %>
   </div>
 
   <div class="form-item">
-    <%= f.label :message, class: 'label' %>
-    <%= f.text_area :message, class: 'textarea required' %>
-  </div>
-
-  <div class="form-item">
-    <%= f.submit 'Submit', class: 'button' %>
+    <%= f.submit 'Get in touch', class: 'button' %>
   </div>
 <% end %>
 

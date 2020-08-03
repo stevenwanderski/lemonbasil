@@ -61,6 +61,7 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    awesome_print (1.8.0)
     bindex (0.8.1)
     bootsnap (1.4.7)
       msgpack (~> 1.0)
@@ -203,6 +204,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_link_to
+  awesome_print
   bootsnap (>= 1.4.2)
   byebug
   guard-livereload (~> 2.5)

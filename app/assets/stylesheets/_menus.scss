@@ -1,0 +1,43 @@
+.menu-nav {
+  margin-bottom: 30px;
+
+  li {
+    list-style: none;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 5px 0;
+
+    &.active,
+    &:hover {
+      color: pink;
+    }
+  }
+}
+
+.menu-item {
+  margin-bottom: 20px;
+  display: none;
+  font-size: 1.125em;
+
+  .name {
+    font-weight: bold;
+  }
+}
+
+.menu-item[data-menu-category="salad"] {
+  display: block;
+}
+
+@media screen and (min-width: 800px) {
+  .menus {
+    display: flex;
+  }
+
+  .menu-nav {
+    flex-basis: 300px;
+  }
+
+  .menu-items {
+    flex: 1;
+  }
+}

@@ -7,4 +7,8 @@ class PagesController < ApplicationController
 
   def about
   end
+
+  def menus
+    @menus = Menu.order(:category)
+  end
 end

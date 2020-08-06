@@ -12,6 +12,12 @@ header {
     padding: 1em;
     display: none;
     border-bottom: solid #ccc 1px;
+
+    li:last-child {
+      a {
+        margin-right: 0;
+      }
+    }
   }
 
   ul {
@@ -91,8 +97,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1em;
-    max-width: 1000px;
-    margin: 0 auto;
+    max-width: $main-max-width;
 
     nav {
       position: relative;

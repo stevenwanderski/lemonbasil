@@ -2,6 +2,14 @@
   .secondary {
     margin-bottom: 1em;
   }
+
+  &--center {
+    text-align: center;
+  }
+
+  &--contact-success {
+    padding-top: 60px;
+  }
 }
 
 .page-image {
@@ -25,6 +33,10 @@
   background-image: image-url('birdie.jpg');
 }
 
+.page-image-contact-success {
+  background-image: image-url('pasta.jpg');
+}
+
 @media screen and (min-width: 800px) {
   .page {
     display: flex;
@@ -36,6 +48,10 @@
 
     .secondary {
       flex-basis: 300px;
+    }
+
+    &--center {
+      display: block;
     }
   }
 

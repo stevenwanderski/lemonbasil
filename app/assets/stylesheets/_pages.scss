@@ -48,6 +48,7 @@
 
     .secondary {
       flex-basis: 300px;
+      margin-left: 40px;
     }
 
     &--center {
@@ -58,6 +59,6 @@
   .page-image {
     width: 400px;
     height: 400px;
-    margin-left: 40px;
+    margin-bottom: 1em;
   }
 }

@@ -15,12 +15,17 @@
 }
 
 .menu-item {
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: none;
   font-size: 1.125em;
 
   .name {
     font-weight: bold;
+    margin-bottom: 2px;
+  }
+
+  .description {
+    line-height: 24px;
   }
 }
 

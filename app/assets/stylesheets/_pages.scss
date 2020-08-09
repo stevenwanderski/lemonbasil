@@ -31,6 +31,7 @@
 
 .page-image-about {
   background-image: image-url('birdie.jpg');
+  background-position: top center;
 }
 
 .page-image-contact-success {
@@ -43,11 +44,11 @@
     justify-content: space-between;
 
     .primary {
-      flex-basis: 70ch;
+      flex-basis: 60ch;
     }
 
     .secondary {
-      flex-basis: 300px;
+      flex-basis: 400px;
       margin-left: 40px;
     }
 
@@ -57,8 +58,8 @@
   }
 
   .page-image {
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     margin-bottom: 1em;
   }
 }

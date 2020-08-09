@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;700&display=swap');
 
 * {
   margin: 0;
@@ -12,7 +12,7 @@ html, body {
 }
 
 body {
-  font-family: 'Raleway';
+  font-family: 'Open Sans';
   font-weight: 400;
 }
 
@@ -30,8 +30,8 @@ p {
 
 .p--eco {
   background: image-url('plant.png') left top no-repeat;
-  background-size: 30px;
-  padding-left: 44px;
+  background-size: 40px;
+  padding-left: 54px;
   font-size: 16px;
 }
 
@@ -41,6 +41,9 @@ a {
 
 h1 {
   margin-bottom: 20px;
+  font-family: 'Quicksand';
+  text-transform: uppercase;
+  font-weight: 400;
 }
 
 h2 {

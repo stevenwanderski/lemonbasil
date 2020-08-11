@@ -18,6 +18,12 @@ header {
         margin-right: 0;
       }
     }
+
+    a {
+      &.active {
+        font-weight: 600;
+      }
+    }
   }
 
   ul {
@@ -111,9 +117,10 @@ header {
         margin-right: 1em;
         font-size: 1.125em;
 
-        &.active,
-        &:hover {
+        &:hover,
+        &.active {
           box-shadow: 0 1px 0 #ccc;
+          font-weight: 300;
         }
       }
     }

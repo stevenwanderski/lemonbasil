@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   end
 
   def menus
-    @menus = Menu.order(:category)
+    @menus = Menu.order(:category, :weight)
   end
 
   def meal_prep

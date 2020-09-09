@@ -90,34 +90,28 @@ Menu.create!([
     weight: 1
   },
   {
-    name: 'Rice bowl',
-    description: 'jasmine or brown rice, avocado, carrot, red cabbage, edamame, red bell pepper, jalapeño, sesame-cilantro sauce',
-    category: 'vegetable',
-    weight: 2
-  },
-  {
     name: 'Stuffed poblano',
     description: 'quinoa, brown rice, onion, hominy, corn, black bean, tomato, asadero, cilantro',
     category: 'vegetable',
-    weight: 3
+    weight: 2
   },
   {
     name: 'Cannelloni',
     description: 'mashed butternut squash, ricotta, sage, parm, fresh herbs',
     category: 'vegetable',
-    weight: 4
+    weight: 3
   },
   {
     name: 'Shakshuka',
     description: 'stewed tomatoes, peppers, potatoes, baked egg, crispy shallot, greek yogurt, herbs, spices, mint, pita',
     category: 'vegetable',
-    weight: 5
+    weight: 4
   },
   {
     name: 'Rigatoni classico',
     description: 'garden tomato sauce, fresh mozzarella, basil',
     category: 'vegetable',
-    weight: 6
+    weight: 5
   }
 ])
 

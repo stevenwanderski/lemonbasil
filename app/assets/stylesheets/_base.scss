@@ -41,9 +41,12 @@ a {
 
 h1 {
   margin-bottom: 20px;
-  font-family: 'Quicksand';
+  font-family: 'Denver';
   text-transform: uppercase;
-  font-weight: 400;
+  line-height: 1.5em;
+  font-size: 1.8em;
+  font-weight: normal;
+  orphans: 2;
 }
 
 h2 {

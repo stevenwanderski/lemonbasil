@@ -20,6 +20,12 @@ header {
     }
 
     a {
+      padding: .3em 0;
+      display: inline-block;
+      text-decoration: none;
+      font-size: 1.35em;
+      // font-family: 'Denver';
+
       &.active {
         font-weight: 600;
       }
@@ -33,21 +39,19 @@ header {
     text-align: left;
   }
 
-  a {
-    padding: .3em 0;
-    display: inline-block;
-    text-decoration: none;
-    font-size: 1.35em;
-  }
-
   .logo {
+    text-decoration: none;
     border: solid $black 1px;
     display: inline-block;
-    padding: .2em .4em;
-    font-weight: 300;
+    padding: .3em .4em 0 .6em;
     text-transform: uppercase;
-    font-size: 26px;
-    font-family: 'Quicksand';
+    font-family: 'Denver';
+
+    span {
+      font-size: 1.25em;
+      line-height: 1.5em;
+      display: inline-block;
+    }
 
     &:hover {
       text-decoration: none;

@@ -1,0 +1,32 @@
+@font-face {
+  font-family: 'Denver';
+  font-weight: normal;
+  font-style: normal;
+  src: font-url('Denver-Regular.eot?#iefix') format('embedded-opentype'),
+       font-url('Denver-Regular.otf') format('opentype'),
+       font-url('Denver-Regular.woff') format('woff'),
+       font-url('Denver-Regular.ttf') format('truetype'),
+       font-url('Denver-Regular.svg#Denver-Regular') format('svg');
+}
+
+@font-face {
+  font-family: 'Denver-Bold';
+  font-weight: normal;
+  font-style: normal;
+  src: font-url('Denver-Bold.eot?#iefix') format('embedded-opentype'),
+       font-url('Denver-Bold.otf') format('opentype'),
+       font-url('Denver-Bold.woff') format('woff'),
+       font-url('Denver-Bold.ttf') format('truetype'),
+       font-url('Denver-Bold.svg#Denver-Regular') format('svg');
+}
+
+@font-face {
+  font-family: 'Denver-Black';
+  font-weight: normal;
+  font-style: normal;
+  src: font-url('Denver-Black.eot?#iefix') format('embedded-opentype'),
+       font-url('Denver-Black.otf') format('opentype'),
+       font-url('Denver-Black.woff') format('woff'),
+       font-url('Denver-Black.ttf') format('truetype'),
+       font-url('Denver-Black.svg#Denver-Regular') format('svg');
+}

@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   get '/contact', to: 'contact#new'
   post '/contact', to: 'contact#create'
   get '/contact-success', to: 'contact#success'
+
+  namespace :admin do
+    get '/pages', to: 'pages#index'
+  end
 end

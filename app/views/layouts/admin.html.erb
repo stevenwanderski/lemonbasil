@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lemon&Basil Admin</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width">
+
+    <%= favicon_link_tag asset_path('lemon.png') %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+  </head>
+
+  <body>
+    <main>
+      <header>
+        <a href="/" class="logo">
+          <span>Lemon&Basil Admin</span>
+        </a>
+
+        <input type="checkbox" id="nav-input" class="nav-input">
+        <label for="nav-input" class="nav-toggle">
+          <span></span>
+        </label>
+
+        <nav>
+          <ul>
+            <li><%= active_link_to 'Pages', admin_pages_path %></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="content">
+        <%= render 'layouts/flash_messages' %>
+        <%= yield %>
+      </div>
+    </main>
+  </body>
+</html>

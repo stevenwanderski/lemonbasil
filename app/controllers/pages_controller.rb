@@ -3,6 +3,7 @@ class PagesController < ApplicationController
   end
 
   def about
+    @page = Page.find_by(slug: 'about')
   end
 
   def menus
@@ -10,8 +11,10 @@ class PagesController < ApplicationController
   end
 
   def meal_prep
+    @page = Page.find_by(slug: 'meal-prep')
   end
 
   def parties
+    @page = Page.find_by(slug: 'parties')
   end
 end

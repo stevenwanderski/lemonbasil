@@ -13,5 +13,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get '/pages', to: 'pages#index'
+    get '/pages/:slug', to: 'pages#edit', as: :page
+    put '/pages/:slug', to: 'pages#update'
   end
 end

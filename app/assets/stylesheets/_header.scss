@@ -4,6 +4,7 @@ header {
   width: 100%;
   background: $white;
   position: fixed;
+  z-index: 999;
 
   nav {
     position: absolute;

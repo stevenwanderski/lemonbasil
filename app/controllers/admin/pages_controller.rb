@@ -10,9 +10,9 @@ class Admin::PagesController < AdminController
     @page = Page.find_by(slug: params[:slug])
 
     if @page.update(page_params)
-      redirect_to admin_page_path(slug: @page.slug), notice: "Success!"
+      redirect_to admin_page_path(slug: @page.slug), notice: "Saved!"
     else
-      redirect_to admin_page_path(slug: @page.slug), alert: "No good."
+      redirect_to admin_page_path(slug: @page.slug), alert: "No good. Tell someone."
     end
   end
 

@@ -3,12 +3,16 @@
   color: $white;
   margin-bottom: 20px;
   font-size: 18px;
+  font-weight: bold;
+  text-align: center;
 
   &--success {
-    background: $green;
+    color: $green;
+    background: rgba($green, 0.1);
   }
 
   &--error {
-    background: $red;
+    color: $red;
+    background: rgba($red, 0.1);
   }
 }

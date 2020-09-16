@@ -16,6 +16,6 @@ Rails.application.routes.draw do
     get '/pages/:slug', to: 'pages#edit', as: :page
     patch '/pages/:slug', to: 'pages#update', as: :update_page
 
-    root to: redirect('/admin/pages')
+    root to: redirect('/users/sign_in')
   end
 end

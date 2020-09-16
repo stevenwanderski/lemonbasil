@@ -10,6 +10,7 @@ gem 'sass-rails', '>= 6'
 gem 'active_link_to'
 gem 'awesome_print'
 gem 'devise'
+gem 'jquery-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

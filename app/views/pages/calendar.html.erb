@@ -1,0 +1,24 @@
+<div id="calendar"></div>
+
+<script type="text/javascript">
+  window.initCalendar = function(eventDates) {
+    const events = eventDates.map((date) => {
+      return {
+        start: date,
+        end: date,
+        display: 'background'
+      }
+    });
+
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: events
+    });
+
+    calendar.render();
+  }
+
+  const eventDates = <%= raw @event_dates %>
+  window.initCalendar(eventDates);
+</script>

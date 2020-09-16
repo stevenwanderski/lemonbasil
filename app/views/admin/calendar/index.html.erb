@@ -1,0 +1,33 @@
+<div id="calendar"></div>
+
+<%= form_tag(admin_update_calendar_path, method: :patch, remote: true) do %>
+  <%= hidden_field_tag :date %>
+<% end %>
+
+<script type="text/javascript">
+  window.initCalendar = function(eventDates) {
+    const events = eventDates.map((date) => {
+      return {
+        start: date,
+        end: date,
+        display: 'background'
+      }
+    });
+
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: events,
+      dateClick(info) {
+        const date = info.dateStr;
+        $('#date').val(date);
+        $('form').submit();
+      },
+    });
+
+    calendar.render();
+  }
+
+  const eventDates = <%= raw @event_dates %>
+  window.initCalendar(eventDates);
+</script>

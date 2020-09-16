@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/menus', to: 'pages#menus'
   get '/meal-prep', to: 'pages#meal_prep'
   get '/parties', to: 'pages#parties'
+  get '/calendar', to: 'pages#calendar'
 
   get '/contact', to: 'contact#new'
   post '/contact', to: 'contact#create'
@@ -15,6 +16,9 @@ Rails.application.routes.draw do
     get '/pages', to: 'pages#index'
     get '/pages/:slug', to: 'pages#edit', as: :page
     patch '/pages/:slug', to: 'pages#update', as: :update_page
+
+    get '/calendar', to: 'calendar#index'
+    patch '/calendar', to: 'calendar#update', as: :update_calendar
 
     root to: redirect('/users/sign_in')
   end

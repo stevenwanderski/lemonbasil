@@ -2,12 +2,12 @@ class PagesController < ApplicationController
   def home
   end
 
-  def about
-    @page = Page.find_by(slug: 'about')
-  end
-
   def menus
     @menus = Menu.order(:category, :weight)
+  end
+
+  def about
+    @page = Page.find_by(slug: 'about')
   end
 
   def meal_prep

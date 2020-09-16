@@ -10,4 +10,7 @@
 #  updated_at :datetime         not null
 #
 class Page < ApplicationRecord
+  def friendly_slug
+    slug.gsub('-', ' ')
+  end
 end

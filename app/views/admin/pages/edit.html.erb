@@ -1,4 +1,4 @@
-<h1><%= @page.slug.gsub('-', ' ') %></h1>
+<h1><%= @page.friendly_slug %></h1>
 
 <%= form_for(@page, url: admin_update_page_path(slug: @page.slug)) do |f| %>
 

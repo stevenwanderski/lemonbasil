@@ -25,3 +25,7 @@ group :development do
   gem 'guard-livereload', '~> 2.5', require: false
   gem 'annotate'
 end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 4.0.1'
+end

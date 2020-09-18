@@ -35,7 +35,6 @@ module Lemonbasil
     # Don't generate system test files.
     config.generators.system_tests = nil
 
-    config.time_zone = 'Central Time (US & Canada)'
-    config.active_record.default_timezone = :local
+    config.active_record.default_timezone = :utc
   end
 end

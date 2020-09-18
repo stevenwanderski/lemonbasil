@@ -92,3 +92,29 @@
     margin-left: 20px;
   }
 }
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba($black, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+
+  span {
+    font-size: 20px;
+    background: #666;
+    color: $white;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+  }
+}
+
+.fc-day {
+  cursor: pointer;
+}

@@ -1,25 +1,21 @@
 class PagesController < ApplicationController
-  def home
-  end
-
-  def menus
-    @menus = Menu.order(:category, :weight)
-  end
-
-  def calendar
-    events = Event.all.order(starts_at: :asc)
-
-    @event_dates = events.map do |event|
-      event.starts_at.strftime('%Y-%m-%d')
-    end.to_json
-  end
-
   def about
     @page = Page.find_by(slug: 'about')
   end
 
+  def calendar
+    @event_dates = Event.all_dates
+  end
+
+  def home
+  end
+
   def meal_prep
     @page = Page.find_by(slug: 'meal-prep')
+  end
+
+  def menus
+    @menus = Menu.order(:category, :weight)
   end
 
   def parties

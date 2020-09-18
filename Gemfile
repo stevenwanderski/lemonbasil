@@ -29,3 +29,7 @@ end
 group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
 end
+
+group :test do
+  gem 'database_cleaner-active_record'
+end

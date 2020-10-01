@@ -21,4 +21,8 @@ class PagesController < ApplicationController
   def parties
     @page = Page.find_by(slug: 'parties')
   end
+
+  def pricing
+    @page = Page.find_by(slug: 'pricing')
+  end
 end

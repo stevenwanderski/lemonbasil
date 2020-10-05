@@ -20,6 +20,15 @@
       max-width: 300px;
     }
   }
+
+  &--home {
+    align-items: center;
+    flex-direction: row-reverse;
+
+    .secondary {
+      margin-left: 0;
+    }
+  }
 }
 
 .page-image {
@@ -40,6 +49,10 @@
   background-image: image-url('parties.jpg');
 }
 
+.page-image-pricing {
+  background-image: image-url('pricing.jpg');
+}
+
 .page-image-about {
   background-image: image-url('birdie.jpg');
   background-position: 0 -30px;
@@ -47,6 +60,10 @@
 
 .page-image-contact {
   background-image: image-url('caprese.jpg');
+}
+
+.page-image-home {
+  background-image: image-url('home.jpg');
 }
 
 @media screen and (min-width: 800px) {
@@ -70,6 +87,16 @@
     &--meal-prep {
       h1 {
         max-width: 100%;
+      }
+    }
+
+    &--home {
+      .secondary {
+        margin-left: 0;
+      }
+
+      .primary {
+        margin-left: 40px;
       }
     }
   }

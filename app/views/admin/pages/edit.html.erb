@@ -3,12 +3,9 @@
 <%= form_for(@page, url: admin_update_page_path(slug: @page.slug)) do |f| %>
 
   <div class="form-item">
-    <trix-editor input="page_body">
-      <%= @page.body.html_safe %>
-    </trix-editor>
+    <%= f.text_area :body, class: 'input--textarea' %>
   </div>
 
-  <%= f.hidden_field :body %>
 
   <%= f.submit 'Save', class: 'button' %>
 <% end %>

@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   def about
     @page = Page.find_by(slug: 'about')
+    @content = Kramdown::Document.new(@page.body).to_html
   end
 
   def calendar
@@ -12,6 +13,7 @@ class PagesController < ApplicationController
 
   def meal_prep
     @page = Page.find_by(slug: 'meal-prep')
+    @content = Kramdown::Document.new(@page.body).to_html
   end
 
   def menus
@@ -20,9 +22,11 @@ class PagesController < ApplicationController
 
   def parties
     @page = Page.find_by(slug: 'parties')
+    @content = Kramdown::Document.new(@page.body).to_html
   end
 
   def pricing
     @page = Page.find_by(slug: 'pricing')
+    @content = Kramdown::Document.new(@page.body).to_html
   end
 end

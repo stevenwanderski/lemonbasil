@@ -119,3 +119,21 @@
 .fc-day {
   cursor: pointer;
 }
+
+.hint {
+  margin-bottom: 40px;
+
+  a {
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
+
+    &:hover {
+      color: pink;
+    }
+
+    strong {
+      font-size: 26px;
+    }
+  }
+}

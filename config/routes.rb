@@ -23,4 +23,9 @@ Rails.application.routes.draw do
 
     root to: redirect('/users/sign_in')
   end
+
+  namespace :api do
+    get '/events', to: 'events#index'
+    post '/events', to: 'events#create'
+  end
 end

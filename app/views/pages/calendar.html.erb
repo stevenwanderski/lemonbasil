@@ -2,9 +2,14 @@
 
 <script type="text/javascript">
   const element = document.getElementById('calendar');
-  
+
   this.calendar = new FullCalendar.Calendar(element, {
     initialView: 'dayGridMonth',
+    headerToolbar: {
+      start: 'title',
+      center: '',
+      end: 'prev,next'
+    },
     eventSources: [
       {
         url: '/api/events'

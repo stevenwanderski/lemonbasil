@@ -1,3 +1,37 @@
 .fc .fc-bg-event {
   background: #bbb !important;
 }
+
+.fc .fc-toolbar.fc-header-toolbar {
+  flex-wrap: wrap;
+}
+
+.fc .fc-toolbar-title {
+  font-weight: normal;
+  font-family: 'Denver';
+}
+
+.fc .fc-button-primary {
+  background-color: #eee;
+  border: none;
+  color: #999;
+
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #calendar {
+    height: 100%;
+  }
+
+  .fc .fc-toolbar.fc-header-toolbar {
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .fc-toolbar-chunk:first-child {
+    margin-bottom: 16px;
+  }
+}

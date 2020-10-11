@@ -12,6 +12,7 @@ gem 'awesome_print'
 gem 'devise'
 gem 'jquery-rails'
 gem 'kramdown'
+gem 'recaptcha'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -26,6 +27,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
+  gem 'dotenv-rails'
 end
 
 group :test do

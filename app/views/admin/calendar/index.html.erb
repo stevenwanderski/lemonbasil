@@ -1,9 +1,9 @@
 <div id="calendar"></div>
 
-<div class="loading" style="display: none;"></div>
-
 <script type="text/javascript">
   $(function() {
-    new AdminCalendar();
+    new AdminCalendar({
+      token: '<%= @token %>'
+    });
   });
 </script>

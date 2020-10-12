@@ -9,16 +9,6 @@
 #  updated_at :datetime         not null
 #
 class Event < ApplicationRecord
-  def self.toggle!(date)
-    event = find_by(starts_at: date)
-
-    if event.present?
-      return event.destroy
-    end
-
-    create!(starts_at: date, ends_at: date)
-  end
-
   def self.all_dates(format: '%Y-%m-%d')
     events = Event.all.order(starts_at: :asc)
 

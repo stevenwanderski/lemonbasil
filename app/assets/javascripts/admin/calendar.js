@@ -1,11 +1,12 @@
 class AdminCalendar {
-  constructor(events) {
-    const element = document.getElementById('calendar');
-
-    this.initializeCalendar(element);
+  constructor(args) {
+    this.token = args.token;
+    this.initializeCalendar();
   }
 
-  initializeCalendar(element, events) {
+  initializeCalendar(events) {
+    const element = document.getElementById('calendar');
+
     this.calendar = new FullCalendar.Calendar(element, {
       initialView: 'dayGridMonth',
       eventSources: [
@@ -30,6 +31,7 @@ class AdminCalendar {
         fetch('/api/events', {
           method: 'POST',
           headers: {
+            'Authorization': `Bearer ${this.token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),

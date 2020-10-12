@@ -1,6 +1,7 @@
-class Api::EventsController < ApplicationController
+class Api::EventsController < ApiController
   protect_from_forgery with: :null_session
-  
+  skip_before_action :authenticate_token!, only: [:index]
+
   def index
     format = '%Y-%m-%d'
 

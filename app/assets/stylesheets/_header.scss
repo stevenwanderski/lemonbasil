@@ -25,7 +25,6 @@ header {
       display: inline-block;
       text-decoration: none;
       font-size: 1.35em;
-      // font-family: 'Denver';
 
       &.active {
         font-weight: 600;
@@ -48,6 +47,7 @@ header {
     text-transform: uppercase;
     font-family: 'Denver';
     white-space: nowrap;
+    letter-spacing: 1px;
 
     span {
       font-size: 1.25em;

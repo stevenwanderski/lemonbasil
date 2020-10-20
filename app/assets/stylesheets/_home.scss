@@ -4,3 +4,11 @@
   background: image-url('home.jpg') #f5f5f5 no-repeat center center;
   background-size: cover;
 }
+
+.home-title {
+  text-align: center;
+
+  @media screen and (max-width: 800px) {
+    font-size: 22px;
+  }
+}

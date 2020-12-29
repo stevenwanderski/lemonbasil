@@ -30,5 +30,6 @@ Rails.application.routes.draw do
   namespace :api do
     get '/events', to: 'events#index'
     post '/events', to: 'events#create'
+    post '/categories/weights', to: 'categories#update_weights'
   end
 end

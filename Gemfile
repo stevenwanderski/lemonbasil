@@ -11,6 +11,7 @@ gem 'active_link_to'
 gem 'awesome_print'
 gem 'devise'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'kramdown'
 gem 'recaptcha'
 

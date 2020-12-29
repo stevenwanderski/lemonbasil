@@ -1,6 +1,7 @@
 class Admin::CategoriesController < AdminController
   def index
-    @categories = Category.all
+    @categories = Category.all.order(weight: :asc, created_at: :desc)
+    @token = ENV['API_TOKEN']
   end
 
   def new

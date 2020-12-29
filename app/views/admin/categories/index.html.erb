@@ -5,7 +5,7 @@
 
 <div class="categories">
   <% @categories.each do |category| %>
-  <div class="category">
+  <div class="category" data-id="<%= category.id %>">
     <div class="category__section">
       <div class="category__move move"></div>
 
@@ -22,3 +22,33 @@
   </div>
   <% end %>
 </div>
+
+<script type="text/javascript">
+  $('.categories').sortable({
+    axis: 'y',
+    handle: '.move',
+
+    update(event) {
+      const weights = {};
+
+      $('.category').each(function(index, el) {
+        const id = $(el).data('id');
+        weights[id] = index;
+      });
+
+      const data = { weights: weights };
+
+      fetch('/api/categories/weights', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer <%= @token %>`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => {
+        console.log('cool!');
+      })
+    }
+  });
+</script>

@@ -160,7 +160,6 @@
 }
 
 .categories {
-  border-bottom: solid $gray-light 1px;
   max-width: 800px;
 }
 
@@ -169,8 +168,8 @@
   align-items: center;
   padding: 10px;
   border: solid $gray-light 1px;
-  border-bottom: none;
   justify-content: space-between;
+  background: $white;
 
   a {
     text-decoration: none;

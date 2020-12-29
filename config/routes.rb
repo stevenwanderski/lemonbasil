@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     get '/calendar', to: 'calendar#index'
     patch '/calendar', to: 'calendar#update', as: :update_calendar
 
+    resources :categories
+    resources :menus
+
     root to: redirect('/users/sign_in')
   end
 

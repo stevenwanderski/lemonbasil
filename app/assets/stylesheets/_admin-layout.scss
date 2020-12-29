@@ -12,6 +12,7 @@
   border-radius: 4px;
   font-size: 16px;
   box-sizing: border-box;
+  font-family: 'Open Sans';
 
   &:focus {
     outline: none;
@@ -59,6 +60,16 @@
 
 .form-item {
   margin-bottom: 20px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+
+  .button {
+    margin-right: 20px;
+  }
 }
 
 .button {
@@ -136,4 +147,54 @@
       font-size: 26px;
     }
   }
+}
+
+.field_with_errors {
+  color: $red;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.categories {
+  border-bottom: solid $gray-light 1px;
+  max-width: 800px;
+}
+
+.category {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: solid $gray-light 1px;
+  border-bottom: none;
+  justify-content: space-between;
+
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__section {
+    display: flex;
+    align-items: center;
+  }
+
+  &__move {
+    margin-right: 10px;
+    opacity: 40%;
+    cursor: grab;
+  }
+}
+
+.move {
+  width: 16px;
+  height: 16px;
+  background: asset-url('move.svg') no-repeat top left;
+  background-size: contain;
 }

@@ -1,0 +1,24 @@
+<div class="admin-header">
+  <h1>Menu Sections</h1>
+  <p><%= link_to '+ Add Section', new_admin_category_path %></p>
+</div>
+
+<div class="categories">
+  <% @categories.each do |category| %>
+  <div class="category">
+    <div class="category__section">
+      <div class="category__move move"></div>
+
+      <div class="category__name">
+        <%= link_to category.name, edit_admin_category_path(category) %>
+      </div>
+    </div>
+
+    <div class="category__section">
+      <div class="category__items">
+        <%= link_to 'Menu Items', admin_category_path(category) %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>

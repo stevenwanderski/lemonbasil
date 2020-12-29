@@ -16,7 +16,10 @@
     <%= f.select :category_id, Category.all.map { |c| [c.name, c.id] }, {}, class: 'input--select' %>
   </div>
 
+  <%= f.hidden_field :weight %>
+
   <div class="form-actions">
     <%= f.submit 'Submit', class: 'button' %>
+    <%= link_to 'Cancel', admin_category_path(@menu.category) %>
   </div>
 <% end %>

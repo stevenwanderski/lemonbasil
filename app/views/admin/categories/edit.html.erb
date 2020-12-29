@@ -9,5 +9,6 @@
   <div class="form-actions">
     <%= f.submit 'Submit', class: 'button' %>
     <%= link_to 'Cancel', admin_categories_path %>
+    <%= link_to 'Delete', admin_category_path(@category), method: :delete, data: { confirm: 'Are you sure? This will also delete all menu items under this section!' }, class: 'link--danger' %>
   </div>
 <% end %>

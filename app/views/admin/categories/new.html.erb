@@ -6,7 +6,10 @@
     <%= f.text_field :name, class: 'input--text' %>
   </div>
 
+  <%= f.hidden_field :weight %>
+
   <div class="form-actions">
     <%= f.submit 'Submit', class: 'button' %>
+    <%= link_to 'Cancel', admin_categories_path %>
   </div>
 <% end %>

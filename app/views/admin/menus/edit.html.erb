@@ -18,5 +18,7 @@
 
   <div class="form-actions">
     <%= f.submit 'Submit', class: 'button' %>
+    <%= link_to 'Cancel', admin_menus_path %>
+    <%= link_to 'Delete', admin_menu_path(@menu), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link--danger' %>
   </div>
 <% end %>

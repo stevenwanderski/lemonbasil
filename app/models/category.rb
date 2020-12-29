@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 class Category < ApplicationRecord
-  has_many :menus
+  has_many :menus, dependent: :destroy
 
   validates :name, presence: true
 end

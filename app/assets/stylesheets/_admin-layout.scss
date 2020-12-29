@@ -67,7 +67,7 @@
   align-items: center;
   margin-top: 40px;
 
-  .button {
+  > * {
     margin-right: 20px;
   }
 }
@@ -197,4 +197,10 @@
   height: 16px;
   background: asset-url('move.svg') no-repeat top left;
   background-size: contain;
+}
+
+.link {
+  &--danger {
+    color: $red;
+  }
 }

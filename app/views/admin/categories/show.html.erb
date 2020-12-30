@@ -3,6 +3,8 @@
   <p><%= link_to '+ Add Menu Item', new_admin_menu_path(category_id: @category.id), class: 'link--control' %></p>
 </div>
 
+<div class="sort-status"></div>
+
 <% if @menus.any? %>
 <div class="categories">
   <% @menus.each do |menu| %>
@@ -36,6 +38,8 @@
 
       const data = { weights: weights };
 
+      $('.sort-status').html('Saving...');
+
       fetch('/api/menus/weights', {
         method: 'POST',
         headers: {
@@ -45,7 +49,11 @@
         body: JSON.stringify(data),
       })
       .then((response) => {
-        console.log('cool!');
+        $('.sort-status').html('Saved!');
+
+        setTimeout(() => {
+          $('.sort-status').html('');
+        }, 1000);
       })
     }
   });

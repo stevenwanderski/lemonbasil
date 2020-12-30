@@ -3,6 +3,8 @@
   <p><%= link_to '+ Add Category', new_admin_category_path, class: 'link--control' %></p>
 </div>
 
+<div class="sort-status"></div>
+
 <div class="categories">
   <% @categories.each do |category| %>
   <div class="category" data-id="<%= category.id %>">
@@ -38,6 +40,8 @@
 
       const data = { weights: weights };
 
+      $('.sort-status').html('Saving...');
+
       fetch('/api/categories/weights', {
         method: 'POST',
         headers: {
@@ -47,7 +51,11 @@
         body: JSON.stringify(data),
       })
       .then((response) => {
-        console.log('cool!');
+        $('.sort-status').html('Saved!');
+
+        setTimeout(() => {
+          $('.sort-status').html('');
+        }, 1000);
       })
     }
   });

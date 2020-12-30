@@ -18,7 +18,7 @@ class PagesController < ApplicationController
 
   def menus
     @categories = Category.all.order(weight: :asc, created_at: :desc)
-    @menus = Menu.order(:category_id, :weight)
+    @menus = Menu.order(category_id: :asc, weight: :asc, created_at: :desc)
   end
 
   def parties

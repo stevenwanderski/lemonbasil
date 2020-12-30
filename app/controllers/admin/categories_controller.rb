@@ -36,7 +36,8 @@ class Admin::CategoriesController < AdminController
 
   def show
     @category = Category.find(params[:id])
-    @menus = @category.menus
+    @menus = @category.menus.order(weight: :asc, created_at: :desc)
+    @token = ENV['API_TOKEN']
   end
 
   def destroy

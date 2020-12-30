@@ -31,5 +31,6 @@ Rails.application.routes.draw do
     get '/events', to: 'events#index'
     post '/events', to: 'events#create'
     post '/categories/weights', to: 'categories#update_weights'
+    post '/menus/weights', to: 'menus#update_weights'
   end
 end

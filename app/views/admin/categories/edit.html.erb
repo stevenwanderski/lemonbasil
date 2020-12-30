@@ -1,4 +1,6 @@
-<h1><%= link_to 'Menus', admin_categories_path %> >  Edit Category</h1>
+<div class="admin-header">
+  <h1><%= link_to 'Menus', admin_categories_path, class: 'link' %> >  Edit Category</h1>
+</div>
 
 <%= form_for(@category, url: admin_category_path) do |f| %>
   <div class="form-item">

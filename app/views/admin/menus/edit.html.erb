@@ -1,4 +1,6 @@
-<h1>Menus: New Item</h1>
+<div class="admin-header">
+  <h1>Menus: Edit Item</h1>
+</div>
 
 <%= form_for(@menu, url: admin_menu_path(@menu)) do |f| %>
   <div class="form-item">
@@ -18,7 +20,7 @@
 
   <div class="form-actions">
     <%= f.submit 'Submit', class: 'button' %>
-    <%= link_to 'Cancel', admin_menus_path %>
+    <%= link_to 'Cancel', admin_category_path(@menu.category) %>
     <%= link_to 'Delete', admin_menu_path(@menu), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link--danger' %>
   </div>
 <% end %>

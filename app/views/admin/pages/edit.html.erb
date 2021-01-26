@@ -1,5 +1,5 @@
 <div class="admin-header">
-  <h1><%= @page.friendly_slug %></h1>
+  <h1 class="capitalize"><%= @page.friendly_slug %></h1>
 </div>
 
 <%= form_for(@page, url: admin_update_page_path(slug: @page.slug)) do |f| %>

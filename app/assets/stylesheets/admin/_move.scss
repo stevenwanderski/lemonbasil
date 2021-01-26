@@ -1,0 +1,12 @@
+.move {
+  width: 16px;
+  height: 16px;
+  background: asset-url('move.svg') no-repeat top left;
+  background-size: contain;
+}
+
+.sort-status {
+  position: absolute;
+  margin-top: -30px;
+  font-weight: bold;
+}

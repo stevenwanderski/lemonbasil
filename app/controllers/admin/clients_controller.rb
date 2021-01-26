@@ -11,7 +11,7 @@ class Admin::ClientsController < AdminController
     @client = Client.new(client_params)
 
     if @client.save
-      redirect_to admin_clients_path, notice: 'Section created!'
+      redirect_to admin_clients_path, notice: 'Client created!'
     else
       flash.now[:error] = 'Could not save'
       render :new

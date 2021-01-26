@@ -7,22 +7,18 @@
     <meta name="viewport" content="width=device-width">
 
     <%= favicon_link_tag asset_path('lemon.png') %>
-    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <%= stylesheet_link_tag 'admin', media: 'all' %>
     <%= javascript_include_tag 'admin' %>
   </head>
 
   <body class="admin">
-    <main>
-      <header>
+    <aside class="sidebar">
+      <div class="sidebar__section">
         <a href="/" class="logo">
-          <span>Lemon&Basil <strong>Admin</strong></span>
+          <span>Lemon&Basil</span>
         </a>
-
-        <input type="checkbox" id="nav-input" class="nav-input">
-        <label for="nav-input" class="nav-toggle">
-          <span></span>
-        </label>
 
         <nav>
           <ul>
@@ -31,11 +27,16 @@
             <li><%= active_link_to 'Menus', admin_categories_path %></li>
             <li><%= active_link_to 'Clients', admin_clients_path %></li>
             <li><%= active_link_to 'Client Menus', admin_client_menus_path %></li>
-            <li><%= link_to 'Logout', destroy_user_session_path %></li>
           </ul>
         </nav>
-      </header>
+      </div>
 
+      <div class="sidebar__section">
+        <%= link_to 'Logout', destroy_user_session_path %>
+      </div>
+    </aside>
+
+    <main>
       <div class="content">
         <%= render 'layouts/flash_messages' %>
         <%= yield %>

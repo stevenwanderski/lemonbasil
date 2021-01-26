@@ -1,8 +1,29 @@
-<h1>Pages</h1>
+<div class="admin-header">
+  <h1>Pages</h1>
+</div>
 
-<ul>
-  <li><%= link_to 'Meal Prep', admin_page_path(slug: 'meal-prep') %></li>
-  <li><%= link_to 'Parties', admin_page_path(slug: 'parties') %></li>
-  <li><%= link_to 'Pricing', admin_page_path(slug: 'pricing') %></li>
-  <li><%= link_to 'About', admin_page_path(slug: 'about') %></li>
-</ul>
+<div class="rows">
+  <div class="row">
+    <div class="row__name">
+      <%= link_to 'Meal Prep', admin_page_path(slug: 'meal-prep') %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row__name">
+      <%= link_to 'Parties', admin_page_path(slug: 'parties') %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row__name">
+      <%= link_to 'Pricing', admin_page_path(slug: 'pricing') %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row__name">
+      <%= link_to 'About', admin_page_path(slug: 'about') %>
+    </div>
+  </div>
+</div>

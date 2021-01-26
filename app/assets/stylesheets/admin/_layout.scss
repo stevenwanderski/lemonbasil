@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: $admin-font;
+  font-weight: 500;
+}
+
+body {
+  display: flex;
+}
+
+main {
+  padding: 40px 40px;
+  flex: 1;
+}
+
+h1 {
+  font-family: $admin-font;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 35px;
+}

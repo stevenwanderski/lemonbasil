@@ -1,0 +1,60 @@
+<div class="admin-header">
+  <h1><%= link_to 'Menus', admin_categories_path %> > <%= @category.name %></h1>
+  <p><%= link_to '+ Add Menu Item', new_admin_menu_path(category_id: @category.id), class: 'link--control' %></p>
+</div>
+
+<div class="sort-status"></div>
+
+<% if @menus.any? %>
+<div class="categories">
+  <% @menus.each do |menu| %>
+  <div class="category" data-id="<%= menu.id %>">
+    <div class="category__section">
+      <div class="category__move move"></div>
+
+      <div class="category__name">
+        <%= link_to menu.name, edit_admin_menu_path(menu, category_id: @category.id) %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+<% else %>
+  <p>Add the first menu item now!</p>
+<% end %>
+
+<script type="text/javascript">
+  $('.categories').sortable({
+    axis: 'y',
+    handle: '.move',
+
+    update(event) {
+      const weights = {};
+
+      $('.category').each(function(index, el) {
+        const id = $(el).data('id');
+        weights[id] = index;
+      });
+
+      const data = { weights: weights };
+
+      $('.sort-status').html('Saving...');
+
+      fetch('/api/menus/weights', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer <%= @token %>`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then((response) => {
+        $('.sort-status').html('Saved!');
+
+        setTimeout(() => {
+          $('.sort-status').html('');
+        }, 1000);
+      })
+    }
+  });
+</script>

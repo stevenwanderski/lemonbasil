@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :menus
     resources :clients
+    resources :client_menus
 
     root to: redirect('/users/sign_in')
   end

@@ -1,0 +1,20 @@
+<div class="admin-header">
+  <h1><%= link_to 'Client Menus', admin_client_menus_path, class: 'link' %> >  Edit Client Menu</h1>
+</div>
+
+<%= form_for(@client_menu, url: admin_client_menu_path) do |f| %>
+  <div class="form-item">
+    <%= f.label :client_id, class: 'label' %>
+    <%= f.select :client_id,
+        Client.all.order(last_name: :asc).collect { |client| [client.full_name, client.id]},
+        { prompt: '- Select -' },
+        class: 'input--select'
+    %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Submit', class: 'button' %>
+    <%= link_to 'Cancel', admin_client_menus_path %>
+    <%= link_to 'Delete', admin_client_menu_path(@client_menu), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link--danger' %>
+  </div>
+<% end %>

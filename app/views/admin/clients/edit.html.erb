@@ -1,0 +1,21 @@
+<div class="admin-header">
+  <h1><%= link_to 'Clients', admin_clients_path, class: 'link' %> >  Edit Client</h1>
+</div>
+
+<%= form_for(@client, url: admin_client_path) do |f| %>
+  <div class="form-item">
+    <%= f.label :first_name, class: 'label' %>
+    <%= f.text_field :first_name, class: 'input--text', autofocus: true %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :last_name, class: 'label' %>
+    <%= f.text_field :last_name, class: 'input--text' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Submit', class: 'button' %>
+    <%= link_to 'Cancel', admin_clients_path %>
+    <%= link_to 'Delete', admin_client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link--danger' %>
+  </div>
+<% end %>

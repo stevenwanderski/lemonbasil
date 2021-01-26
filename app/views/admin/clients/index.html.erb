@@ -1,0 +1,14 @@
+<div class="admin-header">
+  <h1>Clients</h1>
+  <p><%= link_to '+ Add Client', new_admin_client_path, class: 'link--control' %></p>
+</div>
+
+<div class="rows">
+  <% @clients.each do |client| %>
+  <div class="row" data-id="<%= client.id %>">
+    <div class="row__name">
+      <%= link_to client.full_name, edit_admin_client_path(client) %>
+    </div>
+  </div>
+  <% end %>
+</div>

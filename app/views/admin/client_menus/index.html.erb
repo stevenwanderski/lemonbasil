@@ -1,24 +1,8 @@
 <%= javascript_pack_tag 'client_menus' %>
 
 <div id="client-menus-app">
-  <client-menus-app></client-menus-app>
-</div>
-
-
-
-<div class="admin-header">
-  <h1>Client Menus</h1>
-  <p><%= link_to 'Add Client Menu', new_admin_client_menu_path, class: 'button' %></p>
-</div>
-
-<div class="rows">
-  <% @client_menus.each do |client_menu| %>
-  <div class="row">
-    <div class="row__name">
-      <%= link_to edit_admin_client_menu_path(client_menu) do %>
-        <strong><%= client_menu.client.full_name %>:</strong> <%= client_menu.created_at.strftime("%b %d %Y") %>
-      <% end %>
-    </div>
-  </div>
-  <% end %>
+  <client-menus-app
+    v-bind:clients="<%= @clients.to_json %>"
+    token="<%= @token %>"
+  ></client-menus-app>
 </div>

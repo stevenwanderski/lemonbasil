@@ -34,5 +34,7 @@ Rails.application.routes.draw do
     post '/events', to: 'events#create'
     post '/categories/weights', to: 'categories#update_weights'
     post '/menus/weights', to: 'menus#update_weights'
+
+    resources :client_menus, only: [:index, :create]
   end
 end

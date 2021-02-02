@@ -14,6 +14,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'kramdown'
 gem 'recaptcha'
+gem 'webpacker', '~> 5.x'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

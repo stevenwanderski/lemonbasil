@@ -12,4 +12,13 @@
 #
 class ClientMenu < ApplicationRecord
   belongs_to :client
+
+  before_create :set_slug
+
+  def set_slug
+    self.slug = loop do
+      random_short_code = ('a'..'z').to_a.shuffle[0,6].join
+      break random_short_code unless ClientMenu.exists?(slug: random_short_code)
+    end
+  end
 end

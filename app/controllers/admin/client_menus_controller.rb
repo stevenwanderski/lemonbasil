@@ -36,7 +36,10 @@ class Admin::ClientMenusController < AdminController
   end
 
   def show
-    @client_menu = ClientMenu.find(params[:id])
+    clients = Client.all
+    @clients = ActiveModelSerializers::SerializableResource.new(clients)
+    @client_menu_id = params[:id]
+    @token = ENV['API_TOKEN']
   end
 
   def destroy

@@ -1,0 +1,37 @@
+.menu {
+}
+
+.menu-header {
+  position: relative;
+  
+  &__row {
+    display: flex;
+
+    &--primary {
+      margin-bottom: 5px;
+      align-items: baseline;
+    }
+  }
+
+  &__name {
+    font-size: 32px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  &__date {
+    font-size: 26px;
+    font-weight: 400;
+  }
+
+  &__slug {
+    font-size: 18px;
+    color: #999;
+  }
+
+  &__nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

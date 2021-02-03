@@ -1,7 +1,4 @@
 class Api::MenusController < ApiController
-  protect_from_forgery with: :null_session
-  skip_before_action :authenticate_token!, only: [:index]
-
   def update_weights
     weights = params[:weights]
 

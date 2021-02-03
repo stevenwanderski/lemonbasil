@@ -1,6 +1,4 @@
 class Api::ClientMenusController < ApiController
-  protect_from_forgery with: :null_session
-
   def index
     client_menus = ClientMenu.all.order(created_at: :desc)
 

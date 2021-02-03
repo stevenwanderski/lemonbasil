@@ -24,11 +24,13 @@
           ></datepicker>
         </div>
 
-        <button class="button">
-          Submit
-        </button>
+        <div class="form-actions">
+          <button class="button">
+            Submit
+          </button>
 
-        <button @click="closeModal">Cancel</button>
+          <button @click="closeModal" class="link">Cancel</button>          
+        </div>
       </form>
     </modal>
 

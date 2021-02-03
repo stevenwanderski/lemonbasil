@@ -65,5 +65,12 @@ describe 'Admin: Client Menus', js: true do
       click_button 'Cancel'
       expect(page).to_not have_content('New Client Menu')
     end
+
+    it 'shows validation message' do
+      visit admin_client_menus_path
+      click_button 'Add Client Menu'
+      click_button 'Submit'
+      expect(accept_alert).to eq('Client and Prep Date are required')
+    end
   end
 end

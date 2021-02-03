@@ -2,7 +2,7 @@
   <div>
     <modal v-if="showingModal" :onClose="closeModal">
       <h2>New Client Menu</h2>
-      <form @submit="submit">
+      <form @submit="checkForm">
         <div class="form-item">
           <label for="client" class="label">Client</label>
           <select name="client" v-model="client" class="input--select">
@@ -29,7 +29,7 @@
             Submit
           </button>
 
-          <button @click="closeModal" class="link">Cancel</button>          
+          <button @click="closeModal" class="link">Cancel</button>
         </div>
       </form>
     </modal>
@@ -97,6 +97,17 @@ export default {
   },
 
   methods: {
+    checkForm(event) {
+      event.preventDefault();
+
+      if (!this.client || !this.dueAt) {
+        alert('Client and Prep Date are required');
+        return;
+      }
+
+      this.submit();
+    },
+
     clickAdd() {
       this.showingModal = !this.showingModal;
     },
@@ -127,15 +138,10 @@ export default {
         }
       };
 
-      return axios.post('/api/client_menus', data, options)
-        .then((response) => {
-          console.log(response);
-        });
+      return axios.post('/api/client_menus', data, options);
     },
 
-    submit(event) {
-      event.preventDefault();
-
+    submit() {
       this.loading = true;
       this.saveMenu()
         .then(() => {

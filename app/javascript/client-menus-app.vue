@@ -1,36 +1,61 @@
 <template>
   <div>
     <modal v-if="showingModal" :onClose="closeModal">
+      <h2>New Client Menu</h2>
       <form @submit="submit">
         <div class="form-item">
-          <label for="client">Client</label>
-          <select name="client" v-model="client">
+          <label for="client" class="label">Client</label>
+          <select name="client" v-model="client" class="input--select">
+            <option value="">- Select -</option>
             <option v-for="client in clients" v-bind:value="client.id">
               {{client.full_name}}
             </option>
           </select>
         </div>
 
+        <div class="form-item">
+          <label for="due_at" class="label">Prep Date</label>
+          <datepicker
+            name="due_at"
+            format="MM/dd/yyyy"
+            input-class="input--text"
+            :typeable="true"
+            v-model="dueAt"
+          ></datepicker>
+        </div>
+
         <button class="button">
           Submit
         </button>
+
+        <button @click="closeModal">Cancel</button>
       </form>
     </modal>
 
     <div class="admin-header">
       <h1>Client Menus</h1>
-      <button class="button" @click="clickAdd">
+      <button class="button" @click="clickAdd" v-if="clientsAny">
         Add Client Menu
       </button>
     </div>
 
-    <div class="rows" v-for="menu in menus">
-      <div class="row">
-        <div class="row__name">
-          <a :href="menu.url">
-            {{menu.client_full_name}}
-          </a>
+    <div v-if="!clientsAny">
+      Please <a href="/admin/clients/new" class="link">add a client</a> before creating a menu!
+    </div>
+
+    <div v-else>
+      <div class="rows" v-if="menus.length">
+        <div class="row" v-for="menu in menus">
+          <div class="row__name">
+            <a :href="menu.url">
+              {{menu.client_full_name}}: <strong>{{ menu.due_at | moment('MMMM D, Y') }}</strong>
+            </a>
+          </div>
         </div>
+      </div>
+
+      <div v-else>
+        No menus yet.
       </div>
     </div>
   </div>
@@ -38,12 +63,26 @@
 
 <script>
 import axios from 'axios';
+import moment from 'moment';
+import Datepicker from 'vuejs-datepicker';
 import Modal from './components/modal';
 
 export default {
+  components: {
+    Datepicker,
+    Modal
+  },
+
+  computed: {
+    clientsAny() {
+      return this.clients.length;
+    }
+  },
+
   data() {
     return {
-      client: this.clients[0].id,
+      client: '',
+      dueAt: '',
       menus: [],
       showingModal: false
     }
@@ -70,7 +109,8 @@ export default {
 
     saveMenu() {
       const data = {
-        client_id: this.client
+        client_id: this.client,
+        due_at: this.dueAt
       };
 
       const options = {
@@ -105,10 +145,6 @@ export default {
   props: [
     'clients',
     'token'
-  ],
-
-  components: {
-    Modal
-  }
+  ]
 }
 </script>

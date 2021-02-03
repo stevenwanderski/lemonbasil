@@ -18,9 +18,6 @@ gem 'webpacker', '~> 5.x'
 gem 'active_model_serializers', '~> 0.10.0'
 
 group :development do
-  # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem 'web-console', '>= 3.3.0'
-  gem 'listen', '~> 3.2'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
@@ -34,5 +31,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'factory_bot_rails'
+  gem 'capybara'
   gem 'database_cleaner-active_record'
+  gem 'selenium-webdriver'
+  gem 'chromedriver-helper'
 end

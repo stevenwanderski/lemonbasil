@@ -6,10 +6,14 @@ class Api::ClientMenusController < ApiController
   end
 
   def create
-    client_menu = ClientMenu.create!(
-      client_id: params[:client_id]
-    )
+    client_menu = ClientMenu.create!(client_menu_params)
 
     render json: client_menu
+  end
+
+  private
+
+  def client_menu_params
+    params.permit(:client_id, :due_at)
   end
 end

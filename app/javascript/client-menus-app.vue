@@ -32,6 +32,8 @@
       </form>
     </modal>
 
+    <loading v-if="loading"></loading>
+
     <div class="admin-header">
       <h1>Client Menus</h1>
       <button class="button" @click="clickAdd" v-if="clientsAny">
@@ -43,7 +45,7 @@
       Please <a href="/admin/clients/new" class="link">add a client</a> before creating a menu!
     </div>
 
-    <div v-else>
+    <div v-else-if="loaded">
       <div class="rows" v-if="menus.length">
         <div class="row" v-for="menu in menus">
           <div class="row__name">
@@ -65,11 +67,13 @@
 import axios from 'axios';
 import moment from 'moment';
 import Datepicker from 'vuejs-datepicker';
+import Loading from './components/loading';
 import Modal from './components/modal';
 
 export default {
   components: {
     Datepicker,
+    Loading,
     Modal
   },
 
@@ -83,6 +87,8 @@ export default {
     return {
       client: '',
       dueAt: '',
+      loaded: false,
+      loading: true,
       menus: [],
       showingModal: false
     }
@@ -128,18 +134,23 @@ export default {
     submit(event) {
       event.preventDefault();
 
+      this.loading = true;
       this.saveMenu()
         .then(() => {
           return this.fetchMenus();
         })
         .then(() => {
           this.closeModal();
+          this.loading = false;
         });
     }
   },
 
   mounted() {
-    this.fetchMenus();
+    this.fetchMenus().then(() => {
+      this.loading = false;
+      this.loaded = true;
+    })
   },
 
   props: [

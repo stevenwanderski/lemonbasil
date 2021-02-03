@@ -54,6 +54,7 @@ describe 'Admin: Client Menus', js: true do
       fill_in 'due_at', with: '03/31/2021'
       click_button 'Submit'
 
+      expect(page).to have_content('Loading...')
       expect(page).to_not have_content('New Client Menu')
       expect(page).to have_content('David Bowie: March 31, 2021')
     end

@@ -12,6 +12,7 @@
 #
 class ClientMenu < ApplicationRecord
   belongs_to :client
+  has_many :client_menu_categories
 
   before_create :set_slug
 

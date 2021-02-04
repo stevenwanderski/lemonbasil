@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_194953) do
+ActiveRecord::Schema.define(version: 2021_02_04_184401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,15 @@ ActiveRecord::Schema.define(version: 2021_01_26_194953) do
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.integer "weight"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "client_menu_categories", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "weight"
+    t.integer "client_menu_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -48,6 +57,15 @@ ActiveRecord::Schema.define(version: 2021_01_26_194953) do
 
   create_table "events", force: :cascade do |t|
     t.date "starts_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "menu_items", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "quantity"
+    t.integer "cost"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

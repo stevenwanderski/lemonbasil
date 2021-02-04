@@ -39,6 +39,8 @@ Rails.application.routes.draw do
     post '/categories/weights', to: 'categories#update_weights'
     post '/menus/weights', to: 'menus#update_weights'
 
-    resources :client_menus, only: [:index, :create, :show]
+    resources :client_menus, only: [:index, :create, :show] do
+      get '/categories', action: :categories
+    end
   end
 end

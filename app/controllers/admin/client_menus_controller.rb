@@ -41,9 +41,9 @@ class Admin::ClientMenusController < AdminController
 
   def categories
     @clients = ActiveModelSerializers::SerializableResource.new(Client.all)
-    @client_menu_id = params[:client_menu_id]
     @token = ENV['API_TOKEN']
     @active_page = 'categories'
+    @client_menu_id = params[:client_menu_id]
   end
 
   def menu_items

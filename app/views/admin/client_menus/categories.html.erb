@@ -1,10 +1,10 @@
-<%= javascript_pack_tag 'client_menu' %>
+<%= javascript_pack_tag 'client_menu_categories' %>
 
-<div id="client-menu-app">
-  <client-menu-app
+<div id="client-menu-categories-app">
+  <client-menu-categories-app
     active-page="<%= @active_page %>"
     v-bind:clients="<%= @clients.to_json %>"
     menu-id="<%= @client_menu_id %>"
     token="<%= @token %>"
-  ></client-menu-app>
+  ></client-menu-categories-app>
 </div>

@@ -24,7 +24,11 @@ Rails.application.routes.draw do
     resources :categories
     resources :menus
     resources :clients
-    resources :client_menus
+    resources :client_menus, only: [:index, :show] do
+      get '/categories', action: :categories
+      get '/menu_items', action: :menu_items
+      get '/results', action: :results
+    end
 
     root to: redirect('/users/sign_in')
   end

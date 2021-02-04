@@ -1,0 +1,10 @@
+<%= javascript_pack_tag 'client_menu' %>
+
+<div id="client-menu-app">
+  <client-menu-app
+    active-page="<%= @active_page %>"
+    v-bind:clients="<%= @clients.to_json %>"
+    menu-id="<%= @client_menu_id %>"
+    token="<%= @token %>"
+  ></client-menu-app>
+</div>

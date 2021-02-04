@@ -36,10 +36,28 @@ class Admin::ClientMenusController < AdminController
   end
 
   def show
-    clients = Client.all
-    @clients = ActiveModelSerializers::SerializableResource.new(clients)
-    @client_menu_id = params[:id]
+    redirect_to admin_client_menu_categories_path(params[:id])
+  end
+
+  def categories
+    @clients = ActiveModelSerializers::SerializableResource.new(Client.all)
+    @client_menu_id = params[:client_menu_id]
     @token = ENV['API_TOKEN']
+    @active_page = 'categories'
+  end
+
+  def menu_items
+    @clients = ActiveModelSerializers::SerializableResource.new(Client.all)
+    @client_menu_id = params[:client_menu_id]
+    @token = ENV['API_TOKEN']
+    @active_page = 'menu_items'
+  end
+
+  def results
+    @clients = ActiveModelSerializers::SerializableResource.new(Client.all)
+    @client_menu_id = params[:client_menu_id]
+    @token = ENV['API_TOKEN']
+    @active_page = 'results'
   end
 
   def destroy

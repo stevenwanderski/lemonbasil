@@ -4,20 +4,12 @@
 
     <div v-if="loaded">
       <div class="menu-header">
-        <div class="menu-header__row menu-header__row--primary">
-          <div class="menu-header__name">
-            {{menu.client_full_name}}
-          </div>
-
-          <div class="menu-header__date">
-            {{menu.due_at | moment('MMMM D, Y')}}
-          </div>
+        <div class="menu-header__name">
+          {{menu.client_full_name}}
         </div>
 
-        <div class="menu-header__row">
-          <div class="menu-header__slug">
-            {{menu.slug_url}}
-          </div>
+        <div class="menu-header__date">
+          {{menu.due_at | moment('MMMM D, Y')}}
         </div>
 
         <div class="menu-header__nav hamburger-nav">
@@ -33,6 +25,30 @@
             <a href="">Edit</a>
             <a href="">Copy</a>
           </div>
+        </div>
+      </div>
+
+      <div class="menu-nav">
+        <div class="menu-nav__section">
+          <a
+            :class="activePage == 'categories' ? 'active' : null"
+            :href="`/admin/client_menus/${menu.id}/categories`">
+            Categories
+          </a>
+
+          <a
+            :class="activePage == 'menu_items' ? 'active' : null"
+            :href="`/admin/client_menus/${menu.id}/menu_items`">
+            Menu Items
+          </a>
+        </div>
+
+        <div class="menu-nav__section">
+          <a
+            :class="activePage == 'results' ? 'active' : null" 
+            :href="`/admin/client_menus/${menu.id}/results`">
+            Results
+          </a>
         </div>
       </div>
     </div>
@@ -81,6 +97,7 @@ export default {
   },
 
   props: [
+    'activePage',
     'menuId',
     'token'
   ]

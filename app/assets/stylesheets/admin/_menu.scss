@@ -3,15 +3,7 @@
 
 .menu-header {
   position: relative;
-  
-  &__row {
-    display: flex;
-
-    &--primary {
-      margin-bottom: 5px;
-      align-items: baseline;
-    }
-  }
+  margin-bottom: 40px;
 
   &__name {
     font-size: 32px;
@@ -20,18 +12,41 @@
   }
 
   &__date {
-    font-size: 26px;
-    font-weight: 400;
-  }
-
-  &__slug {
     font-size: 18px;
-    color: #999;
+    font-weight: 500;
   }
 
   &__nav {
     position: absolute;
     top: 0;
     right: 0;
+  }
+}
+
+.menu-nav {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #e5e5e5;
+  padding-bottom: 10px;
+  margin-left: -10px;
+
+  &__section {
+    display: flex;
+  }
+
+  a {
+    font-size: 18px;
+    font-weight: 500;
+    color: #c4c4c4;
+    padding: 10px;
+
+    &.active {
+      color: $black;
+    }
+
+    &:hover {
+      text-decoration: none;
+      color: $black;
+    }
   }
 }

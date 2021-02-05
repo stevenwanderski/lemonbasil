@@ -19,10 +19,21 @@
   .logo {
     font-size: 24px;
     border: solid 1px $white;
-    padding: 5px 7px;
-    text-transform: uppercase;
+    padding: 6px 2px 1px 6px;
+    text-transform: lowercase;
     margin-bottom: 30px;
     display: inline-block;
+    letter-spacing: 1px;
+
+    div {
+      font-family: 'Denver';
+      font-weight: 200;
+    }
+
+    .amp {
+      font-family: 'Denver';
+      font-size: 20px;
+    }
   }
 
   nav {

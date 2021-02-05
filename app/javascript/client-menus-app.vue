@@ -25,7 +25,7 @@
         </div>
 
         <div class="form-actions">
-          <button class="button">
+          <button class="button button--submit">
             Submit
           </button>
 
@@ -39,7 +39,7 @@
     <div class="admin-header">
       <h1>Client Menus</h1>
       <button class="button" @click="clickAdd" v-if="clientsAny">
-        Add Client Menu
+        + Add Client Menu
       </button>
     </div>
 

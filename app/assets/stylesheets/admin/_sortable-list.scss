@@ -1,0 +1,32 @@
+.sortable-list {
+  flex: 1;
+}
+
+.sortable-item {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  background: $white;
+
+  a {
+    font-size: 18px;
+    // font-weight: 500;
+    display: inline-block;
+  }
+
+  &__move {
+    flex: 0 0 20px;
+    margin-right: 14px;
+    cursor: grab;
+
+    span {
+      display: block;
+      border-bottom: solid #ccc 1px;
+      margin-bottom: 3px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

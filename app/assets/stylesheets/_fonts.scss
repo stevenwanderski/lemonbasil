@@ -30,3 +30,10 @@
        font-url('Denver-Black.ttf') format('truetype'),
        font-url('Denver-Black.svg#Denver-Regular') format('svg');
 }
+
+@font-face {
+  font-family: 'ITC Avant Garde Gothic Std Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: font-url('ITCAvantGardeStdBold.woff') format('woff');
+}

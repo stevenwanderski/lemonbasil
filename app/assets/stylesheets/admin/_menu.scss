@@ -9,11 +9,11 @@
     font-size: 32px;
     font-weight: bold;
     margin-right: 10px;
+    font-family: $admin-header-font;
   }
 
   &__date {
     font-size: 18px;
-    font-weight: 500;
   }
 
   &__nav {
@@ -35,8 +35,7 @@
   }
 
   a {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 16px;
     color: #c4c4c4;
     padding: 10px;
 
@@ -52,5 +51,5 @@
 }
 
 .menu-body {
-  padding: 40px;
+  padding: 40px 0;
 }

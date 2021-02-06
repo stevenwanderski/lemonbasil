@@ -49,7 +49,7 @@
     </div>
 
     <modal v-if="showingModal" :onClose="closeModal">
-      <h2>New Category</h2>
+      <h2>Category</h2>
       <form @submit="checkForm">
         <div class="form-item">
           <label for="name" class="label">Name</label>
@@ -61,11 +61,12 @@
             Submit
           </button>
 
+          <button @click="clickDelete(model, $event)" class="link--danger">Delete</button>
+
           <button @click="clickCancel" class="link">Cancel</button>
         </div>
       </form>
     </modal>
-
   </div>
 </template>
 
@@ -119,6 +120,20 @@ export default {
       this.showingModal = false;
     },
 
+    clickDelete(category, event) {
+      event.preventDefault();
+
+      this.deleteCategory(category)
+        .then(() => {
+          return this.fetchCategories();
+        })
+        .then(() => {
+          this.closeModal();
+          this.loading = false;
+          this.name = '';
+        });
+    },
+
     clickEdit(category, event) {
       event.preventDefault();
       this.model = category;
@@ -128,6 +143,18 @@ export default {
 
     closeModal() {
       this.showingModal = false;
+    },
+
+    deleteCategory(category) {
+      const options = {
+        headers: {
+          'Authorization': `Token token=${this.token}`
+        }
+      };
+
+      console.log('hi?')
+
+      return axios.delete(`/api/client_menus/${this.menuId}/categories/${category.id}`, options);
     },
 
     fetchCategories() {
@@ -160,6 +187,10 @@ export default {
           'Authorization': `Token token=${this.token}`
         }
       };
+
+      if (this.model) {
+        return axios.put(`/api/client_menus/${this.menuId}/categories/${this.model.id}`, data, options);
+      }
 
       return axios.post(`/api/client_menus/${this.menuId}/categories`, data, options);
     },

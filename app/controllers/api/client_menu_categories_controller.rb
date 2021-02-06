@@ -14,6 +14,18 @@ class Api::ClientMenuCategoriesController < ApiController
     render json: category
   end
 
+  def update
+    category = ClientMenuCategory.find(params[:id])
+    category.update!(client_menu_category_params)
+    render json: category
+  end
+
+  def destroy
+    category = ClientMenuCategory.find(params[:id])
+    category.destroy!
+    render json: category
+  end
+
   def update_weights
     weights = params[:weights]
 

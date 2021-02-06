@@ -1,5 +1,5 @@
 <div class="admin-header">
-  <h1>Menus: New Section</h1>
+  <h1>Menus: New Category</h1>
 </div>
 
 <%= form_for(@category, url: admin_categories_path) do |f| %>
@@ -11,7 +11,7 @@
   <%= f.hidden_field :weight %>
 
   <div class="form-actions">
-    <%= f.submit 'Submit', class: 'button' %>
+    <%= f.submit 'Submit', class: 'button button--submit' %>
     <%= link_to 'Cancel', admin_categories_path %>
   </div>
 <% end %>

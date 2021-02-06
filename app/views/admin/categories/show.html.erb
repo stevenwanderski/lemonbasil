@@ -1,6 +1,6 @@
 <div class="admin-header">
-  <h1><%= link_to 'Menus', admin_categories_path %> > <%= @category.name %></h1>
-  <p><%= link_to 'Add Menu Item', new_admin_menu_path(category_id: @category.id), class: 'button' %></p>
+  <h1><%= @category.name %></h1>
+  <p><%= link_to '+ Add Menu Item', new_admin_menu_path(category_id: @category.id), class: 'button' %></p>
 </div>
 
 <div class="sort-status"></div>

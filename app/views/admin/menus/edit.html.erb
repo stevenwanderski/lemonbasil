@@ -19,7 +19,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.submit 'Submit', class: 'button' %>
+    <%= f.submit 'Submit', class: 'button button--submit' %>
     <%= link_to 'Cancel', admin_category_path(@menu.category) %>
     <%= link_to 'Delete', admin_menu_path(@menu), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link--danger' %>
   </div>

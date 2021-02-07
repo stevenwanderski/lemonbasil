@@ -3,20 +3,18 @@
     Lemon&Basil
   </a>
 
-  <div class="header-menu">
-    <input type="checkbox" id="nav-input" class="nav-input">
-    <label for="nav-input" class="nav-toggle"></label>
+  <input type="checkbox" id="nav-input" class="nav-input">
+  <label for="nav-input" class="nav-toggle"></label>
 
-    <nav>
-      <ul>
-        <li><%= active_link_to 'Meal Prep', meal_prep_path %></li>
-        <li><%= active_link_to 'Parties', parties_path %></li>
-        <li><%= active_link_to 'Pricing', pricing_path %></li>
-        <li><%= active_link_to 'About', about_path %></li>
-        <li><%= active_link_to 'Menus', menus_path %></li>
-        <li><%= active_link_to 'Calendar', calendar_path %></li>
-        <li><%= active_link_to 'Contact', contact_path %></li>
-      </ul>
-    </nav>
-  </div>
+  <nav>
+    <ul>
+      <li><%= active_link_to 'Meal Prep', meal_prep_path %></li>
+      <li><%= active_link_to 'Parties', parties_path %></li>
+      <li><%= active_link_to 'Pricing', pricing_path %></li>
+      <li><%= active_link_to 'About', about_path %></li>
+      <li><%= active_link_to 'Menus', menus_path %></li>
+      <li><%= active_link_to 'Calendar', calendar_path %></li>
+      <li><%= active_link_to 'Contact', contact_path %></li>
+    </ul>
+  </nav>
 </header>

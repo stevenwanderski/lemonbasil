@@ -15,7 +15,7 @@
     padding: .75em .75em .75em 0;
     width: 100%;
     font-size: 1em;
-    font-family: $font;
+    font-family: $primary-font;
     font-weight: 500;
     border-radius: 0;
     outline: none;
@@ -30,6 +30,7 @@
     cursor: pointer;
     -webkit-appearance: none;
     border-radius: 0;
+    font-family: $primary-font;
 
     &:disabled {
       background: rgba($black, 0.25);

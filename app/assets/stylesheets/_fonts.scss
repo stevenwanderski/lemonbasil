@@ -30,3 +30,27 @@
        font-url('Denver-Black.ttf') format('truetype'),
        font-url('Denver-Black.svg#Denver-Regular') format('svg');
 }
+
+@font-face {
+  font-family: 'ITC Avant Garde';
+  font-weight: normal;
+  font-style: normal;
+  src: font-url('ITCAvantGardeStdBk.woff') format('woff'),
+       font-url('ITCAvantGardeStdBk.ttf') format('truetype');
+}
+
+// @font-face {
+//   font-family: 'ITC Avant Garde';
+//   font-weight: lighter;
+//   font-style: normal;
+//   src: font-url('ITCAvantGardeStdXLt.woff') format('woff'),
+//        font-url('ITCAvantGardeStdXLt.ttf') format('truetype');
+// }
+
+@font-face {
+  font-family: 'ITC Avant Garde';
+  font-weight: bold;
+  font-style: normal;
+  src: font-url('ITCAvantGardeStdBold.woff') format('woff'),
+       font-url('ITCAvantGardeStdBold.ttf') format('truetype');
+}

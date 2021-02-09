@@ -310,11 +310,8 @@ DEPENDENCIES
   recaptcha
   rspec-rails (~> 4.0.1)
   sass-rails (>= 6)
-<<<<<<< HEAD
   selenium-webdriver
-=======
   sassc (~> 2.1.0)
->>>>>>> master
   spring
   spring-watcher-listen (~> 2.0.0)
   webpacker (~> 5.x)

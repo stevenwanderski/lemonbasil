@@ -17,22 +17,20 @@
   }
 
   .logo {
-    font-size: 24px;
-    border: solid 1px $white;
-    padding: 6px 2px 1px 6px;
-    text-transform: lowercase;
-    margin-bottom: 30px;
+    text-decoration: none;
     display: inline-block;
-    letter-spacing: 1px;
+    text-transform: lowercase;
+    font-family: $secondary-font;
+    font-size: 22px;
+    margin-bottom: 40px;
 
-    div {
-      font-family: 'Denver';
-      font-weight: 200;
+    &:hover {
+      text-decoration: none;
     }
 
-    .amp {
-      font-family: 'Denver';
-      font-size: 20px;
+    span {
+      font-size: 16px;
+      color: #999;
     }
   }
 

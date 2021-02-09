@@ -53,7 +53,7 @@
       <form @submit="checkForm">
         <div class="form-item">
           <label for="name" class="label">Name</label>
-          <input type="text" class="input--text" v-model="name">
+          <input type="text" class="input--text" name="name" v-model="name">
         </div>
 
         <div class="form-actions">
@@ -61,9 +61,9 @@
             Submit
           </button>
 
-          <button @click="clickDelete(model, $event)" class="link--danger">Delete</button>
-
           <button @click="clickCancel" class="link">Cancel</button>
+
+          <button @click="clickDelete(model, $event)" class="link link--danger">Delete</button>
         </div>
       </form>
     </modal>
@@ -122,6 +122,10 @@ export default {
 
     clickDelete(category, event) {
       event.preventDefault();
+
+      if (!confirm('Are you sure?')) {
+        return;
+      }
 
       this.deleteCategory(category)
         .then(() => {

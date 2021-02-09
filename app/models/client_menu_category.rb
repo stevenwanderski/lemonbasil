@@ -11,4 +11,5 @@
 #  client_menu_id :integer
 #
 class ClientMenuCategory < ApplicationRecord
+  belongs_to :client_menu
 end

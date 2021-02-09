@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: $admin-font;
+  font-family: $primary-font;
   font-weight: 500;
 }
 
@@ -17,8 +17,9 @@ main {
   overflow-y: scroll;
 }
 
-h1 {
-  font-family: $admin-font;
+h1, h2 {
+  font-family: $secondary-font;
+  font-weight: bold;
 }
 
 a {

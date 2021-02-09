@@ -17,12 +17,21 @@
   }
 
   .logo {
-    font-size: 24px;
-    border: solid 1px $white;
-    padding: 5px 7px;
-    text-transform: uppercase;
-    margin-bottom: 30px;
+    text-decoration: none;
     display: inline-block;
+    text-transform: lowercase;
+    font-family: $secondary-font;
+    font-size: 22px;
+    margin-bottom: 40px;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    span {
+      font-size: 16px;
+      color: #999;
+    }
   }
 
   nav {

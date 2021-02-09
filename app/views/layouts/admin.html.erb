@@ -17,7 +17,9 @@
     <aside class="sidebar">
       <div class="sidebar__section">
         <a href="/" class="logo">
-          <span>Lemon&Basil</span>
+          <div>
+            Lemon&amp;Basil <span>admin</span>
+          </div>
         </a>
 
         <nav>
@@ -27,7 +29,7 @@
             <li><%= active_link_to 'Menus', admin_categories_path %></li>
 
             <br><br>
-            
+
             <li><%= active_link_to 'Clients', admin_clients_path %></li>
             <li><%= active_link_to 'Client Menus', admin_client_menus_path %></li>
           </ul>

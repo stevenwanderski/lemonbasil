@@ -7,9 +7,9 @@
 
 .home-title {
   text-align: center;
+  font-size: 40px;
 
   @media screen and (max-width: 800px) {
-    font-size: 15px;
-    letter-spacing: 1px;
+    font-size: 26px;
   }
 }

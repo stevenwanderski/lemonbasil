@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: $admin-font;
+  font-family: $primary-font;
 }
 
 body {
@@ -18,7 +18,7 @@ main {
 }
 
 h1, h2 {
-  font-family: $admin-header-font;
+  font-family: $secondary-font;
 }
 
 a {

@@ -5,6 +5,7 @@
     list-style: none;
     cursor: pointer;
     font-size: 20px;
+    font-weight: lighter;
     padding: 5px 0;
 
     &.active,
@@ -18,9 +19,11 @@
   margin-bottom: 30px;
   display: none;
   font-size: 1.125em;
+  font-weight: lighter;
 
   .name {
     font-weight: bold;
+    font-family: $secondary-font;
     margin-bottom: 2px;
   }
 

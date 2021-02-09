@@ -12,8 +12,7 @@ html, body {
 }
 
 body {
-  font-family: 'Open Sans';
-  font-weight: 300;
+  font-family: $primary-font, 'Arial';
 }
 
 main {
@@ -24,6 +23,7 @@ main {
 
 p {
   font-size: 18px;
+  font-weight: lighter;
   line-height: 24px;
   margin-bottom: 20px;
 }
@@ -41,11 +41,11 @@ a {
 
 h1 {
   margin-bottom: 20px;
-  font-family: 'Denver';
-  text-transform: uppercase;
+  font-family: $secondary-font;
+  text-transform: lowercase;
   line-height: 1.5em;
-  font-size: 1.8em;
-  font-weight: normal;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 h2 {
@@ -54,5 +54,5 @@ h2 {
 
 .content {
   height: 100%;
-  padding: 100px 1em 1em 1em;
+  padding: 30px 1em 1em 1em;
 }

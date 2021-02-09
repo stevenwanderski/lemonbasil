@@ -39,12 +39,18 @@ Rails.application.routes.draw do
     post '/categories/weights', to: 'categories#update_weights'
     post '/menus/weights', to: 'menus#update_weights'
 
-    resources :client_menus, only: [:index, :create, :show] do
-      get '/categories', to: 'client_menu_categories#index'
-      post '/categories', to: 'client_menu_categories#create'
-      put '/categories/:id', to: 'client_menu_categories#update'
-      delete '/categories/:id', to: 'client_menu_categories#destroy'
-      post '/categories/update_weights', to: 'client_menu_categories#update_weights'
+    resources :client_menus, only: [:index, :create, :show]
+
+    resources :client_menu_categories do
+      collection do
+        post '/weights', action: :update_weights
+      end
+    end
+
+    resources :client_menu_items do
+      collection do
+        post '/weights', action: :update_weights
+      end
     end
   end
 end

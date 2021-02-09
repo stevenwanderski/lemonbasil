@@ -156,13 +156,14 @@ export default {
         }
       };
 
-      console.log('hi?')
-
-      return axios.delete(`/api/client_menus/${this.menuId}/categories/${category.id}`, options);
+      return axios.delete(`/api/client_menu_categories/${category.id}`, options);
     },
 
     fetchCategories() {
-      return axios.get(`/api/client_menus/${this.menuId}/categories`, {
+      return axios.get(`/api/client_menu_categories`, {
+        params: {
+          client_menu_id: this.menuId
+        },
         headers: {
           'Authorization': `Token token=${this.token}`
         }
@@ -183,7 +184,9 @@ export default {
 
     saveCategory() {
       const data = {
-        name: this.name
+        client_menu_id: this.menuId,
+        name: this.name,
+        weight: 0
       };
 
       const options = {
@@ -193,10 +196,10 @@ export default {
       };
 
       if (this.model) {
-        return axios.put(`/api/client_menus/${this.menuId}/categories/${this.model.id}`, data, options);
+        return axios.put(`/api/client_menu_categories/${this.model.id}`, data, options);
       }
 
-      return axios.post(`/api/client_menus/${this.menuId}/categories`, data, options);
+      return axios.post(`/api/client_menu_categories`, data, options);
     },
 
     saveWeights(event, originalEvent) {
@@ -214,7 +217,7 @@ export default {
         }
       };
 
-      return axios.post(`/api/client_menus/${this.menuId}/categories/update_weights`, data, options);
+      return axios.post(`/api/client_menu_categories/weights`, data, options);
     },
 
     submit() {

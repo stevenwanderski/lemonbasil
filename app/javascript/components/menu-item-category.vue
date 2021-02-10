@@ -12,7 +12,7 @@
       handle=".sortable-item__move"
       :list="items"
     >
-      <div v-for="item in items" class="sortable-item">
+      <div v-for="item in items" class="sortable-item menu-item">
         <div class="sortable-item__move">
           <span></span>
           <span></span>
@@ -34,8 +34,13 @@
         </div>
 
         <div class="form-item">
-          <label for="name" class="label">Description</label>
-          <textarea class="input--textarea" name="description" v-model="description"></textarea>
+          <label for="cost" class="label">Cost</label>
+          <input type="text" class="input--text" name="cost" v-model="cost">
+        </div>
+
+        <div class="form-item">
+          <label for="quantity" class="label">Quantity</label>
+          <input type="text" class="input--text" name="quantity" v-model="quantity">
         </div>
 
         <div class="form-actions">
@@ -68,7 +73,8 @@
         showingModal: false,
         items: null,
         name: null,
-        description: null
+        cost: null,
+        quantity: null
       }
     },
 
@@ -76,8 +82,8 @@
       checkForm(event) {
         event.preventDefault();
 
-        if (!this.name || !this.description) {
-          alert('Name and Description are required');
+        if (!this.name || !this.cost) {
+          alert('Name and Cost are required');
           return;
         }
 
@@ -85,19 +91,24 @@
       },
 
       clickAdd(category) {
+        this.model = null;
+        this.name = null;
+        this.cost = null;
+        this.quantity = null;
         this.showingModal = true;
       },
 
       clickCancel() {
-        this.name = '';
         this.showingModal = false;
       },
 
       clickEdit(item, event) {
         event.preventDefault();
+
         this.model = item;
         this.name = item.name;
-        this.description = item.description;
+        this.cost = item.cost;
+        this.quantity = item.quantity;
         this.showingModal = true;
       },
 
@@ -106,22 +117,26 @@
       },
 
       fetchMenuItems() {
-        return axios.get(`/api/client_menu_items`, {
+        const options = {
           headers: {
             'Authorization': `Token token=${this.token}`
           },
           params: {
             client_menu_category_id: this.category.id
           }
-        }).then((response) => {
-          this.items = response.data;
-        });
+        }
+
+        return axios.get(`/api/client_menu_items`, options)
+          .then((response) => {
+            this.items = response.data;
+          });
       },
 
       saveMenuItem() {
         const data = {
           name: this.name,
-          description: this.description,
+          cost: this.cost,
+          quantity: this.quantity,
           client_menu_category_id: this.category.id
         };
 
@@ -158,6 +173,7 @@
 
       submit() {
         this.loading = true;
+
         this.saveMenuItem()
           .then(() => {
             return this.fetchMenuItems(this.activeCategory);
@@ -165,7 +181,6 @@
           .then(() => {
             this.closeModal();
             this.loading = false;
-            this.name = '';
           });
       }
     },

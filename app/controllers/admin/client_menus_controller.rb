@@ -36,7 +36,13 @@ class Admin::ClientMenusController < AdminController
   end
 
   def show
-    redirect_to admin_client_menu_categories_path(params[:id])
+    @client_menu = ClientMenu.find(params[:id])
+
+    if @client_menu.client_menu_categories.none?
+      redirect_to admin_client_menu_categories_path(params[:id])
+    else
+      redirect_to admin_client_menu_menu_items_path(params[:id])
+    end
   end
 
   def categories

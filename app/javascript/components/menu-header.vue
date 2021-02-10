@@ -16,8 +16,6 @@
       </button>
 
       <div class="hamburger-nav__body" v-if="navOpen">
-        <a :href="menu.url">Menu</a>
-        <a href="">Results</a>
         <a href="">Edit</a>
         <a href="">Copy</a>
       </div>

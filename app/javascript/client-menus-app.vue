@@ -2,36 +2,11 @@
   <div>
     <modal v-if="showingModal" :onClose="closeModal">
       <h2>New Client Menu</h2>
-      <form @submit="checkForm">
-        <div class="form-item">
-          <label for="client" class="label">Client</label>
-          <select name="client" v-model="client" class="input--select">
-            <option value="">- Select -</option>
-            <option v-for="client in clients" v-bind:value="client.id">
-              {{client.full_name}}
-            </option>
-          </select>
-        </div>
-
-        <div class="form-item">
-          <label for="due_at" class="label">Prep Date</label>
-          <datepicker
-            name="due_at"
-            format="MM/dd/yyyy"
-            input-class="input--text"
-            :typeable="true"
-            v-model="dueAt"
-          ></datepicker>
-        </div>
-
-        <div class="form-actions">
-          <button class="button button--submit">
-            Submit
-          </button>
-
-          <button @click="closeModal" class="link">Cancel</button>
-        </div>
-      </form>
+      <menu-form
+        :clients="clients"
+        :onCancel="closeModal"
+        :onSubmit="saveMenu"
+      ></menu-form>
     </modal>
 
     <loading v-if="loading"></loading>
@@ -68,15 +43,15 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import Datepicker from 'vuejs-datepicker';
 import Loading from './components/loading';
 import Modal from './components/modal';
+import MenuForm from './components/menu-form';
 
 export default {
   components: {
-    Datepicker,
     Loading,
-    Modal
+    Modal,
+    MenuForm
   },
 
   computed: {
@@ -97,17 +72,6 @@ export default {
   },
 
   methods: {
-    checkForm(event) {
-      event.preventDefault();
-
-      if (!this.client || !this.dueAt) {
-        alert('Client and Prep Date are required');
-        return;
-      }
-
-      this.submit();
-    },
-
     clickAdd() {
       this.showingModal = !this.showingModal;
     },
@@ -126,10 +90,10 @@ export default {
       });
     },
 
-    saveMenu() {
+    saveMenu(values) {
       const data = {
-        client_id: this.client,
-        due_at: this.dueAt
+        client_id: values.client,
+        due_at: values.dueAt
       };
 
       const options = {
@@ -138,12 +102,9 @@ export default {
         }
       };
 
-      return axios.post('/api/client_menus', data, options);
-    },
-
-    submit() {
       this.loading = true;
-      this.saveMenu()
+
+      return axios.post('/api/client_menus', data, options)
         .then(() => {
           return this.fetchMenus();
         })

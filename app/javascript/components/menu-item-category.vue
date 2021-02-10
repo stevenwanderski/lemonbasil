@@ -33,14 +33,16 @@
           <input type="text" class="input--text" name="name" v-model="name">
         </div>
 
-        <div class="form-item">
-          <label for="cost" class="label">Cost</label>
-          <input type="text" class="input--text" name="cost" v-model="cost">
-        </div>
+        <div class="form-item--flex">
+          <div class="form-item">
+            <label for="cost" class="label">Cost</label>
+            <input type="text" class="input--text" name="cost" v-model="cost">
+          </div>
 
-        <div class="form-item">
-          <label for="quantity" class="label">Quantity</label>
-          <input type="text" class="input--text" name="quantity" v-model="quantity">
+          <div class="form-item">
+            <label for="quantity" class="label">Quantity</label>
+            <input type="text" class="input--text" name="quantity" v-model="quantity">
+          </div>
         </div>
 
         <div class="form-actions">

@@ -7,7 +7,7 @@
   border: solid $gray-medium 2px;
   padding: 10px;
   display: block;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   border-radius: 4px;
   font-size: 16px;
@@ -23,7 +23,7 @@
   border: solid $gray-medium 2px;
   padding: 10px;
   display: block;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   border-radius: 4px;
   font-size: 16px;
@@ -41,7 +41,7 @@
   border: solid $gray-medium 2px;
   padding: 10px;
   display: block;
-  max-width: 500px;
+  max-width: 600px;
   width: 100%;
   border-radius: 4px;
   font-size: 16px;
@@ -60,6 +60,12 @@
 
 .form-item {
   margin-bottom: 20px;
+  flex: 1;
+
+  &--flex {
+    display: flex;
+    gap: 30px;
+  }
 }
 
 .form-actions {

@@ -2,7 +2,7 @@ class Api::ClientMenuItemsController < ApiController
   def index
     client_menu_category = ClientMenuCategory.find(params[:client_menu_category_id])
 
-    render json: client_menu_category.client_menu_items.order(weight: :asc)
+    render json: client_menu_category.client_menu_items.order(weight: :asc, created_at: :desc)
   end
 
   def create
@@ -40,6 +40,6 @@ class Api::ClientMenuItemsController < ApiController
   private
 
   def client_menu_item_params
-    params.permit(:name, :description, :cost, :quantity)
+    params.permit(:name, :cost, :quantity, :weight)
   end
 end

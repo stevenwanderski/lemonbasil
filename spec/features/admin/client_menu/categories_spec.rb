@@ -20,7 +20,7 @@ describe 'Admin: Client Menu: Categories', js: true do
     end
 
     context 'categories do not exist' do
-      it 'shows the add client message' do
+      it 'shows the add categories message' do
         expect(page).to have_content('No categories. Add one now!')
       end
 

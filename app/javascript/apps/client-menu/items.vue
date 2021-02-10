@@ -19,7 +19,11 @@
           </div>
 
           <div class="empty__control">
-            <a :href="`/admin/client_menus/${this.menuId}/categories`" class="button">Go to categories page</a>
+            <a
+              :href="categoriesPath"
+              class="button">
+              Go to categories page
+            </a>
           </div>
         </div>
 
@@ -27,10 +31,11 @@
           <menu-item-category
             class="menu-item-category"
             :category="category"
+            :data-category-id="category.id"
+            :key="category.id"
             :token="token"
             v-for="category in categories"
           ></menu-item-category>
-
         </div>
       </div>
     </div>
@@ -39,7 +44,6 @@
 
 <script>
 import axios from 'axios';
-import draggable from 'vuedraggable'
 import Loading from '../../components/loading';
 import MenuHeader from '../../components/menu-header';
 import MenuItemCategory from '../../components/menu-item-category';
@@ -47,11 +51,16 @@ import MenuNav from '../../components/menu-nav';
 
 export default {
   components: {
-    draggable,
     Loading,
     MenuHeader,
     MenuItemCategory,
     MenuNav
+  },
+
+  computed: {
+    categoriesPath() {
+      return `/admin/client_menus/${this.menuId}/categories`;
+    }
   },
 
   data() {
@@ -59,51 +68,10 @@ export default {
       categories: null,
       loaded: false,
       loading: true,
-      model: null,
-      name: null,
-      description: null,
-      showingModal: false
     }
   },
 
   methods: {
-    clickDelete(category, event) {
-      event.preventDefault();
-
-      if (!confirm('Are you sure?')) {
-        return;
-      }
-
-      this.deleteCategory(category)
-        .then(() => {
-          return this.fetchCategories();
-        })
-        .then(() => {
-          this.closeModal();
-          this.loading = false;
-          this.name = '';
-        });
-    },
-
-    clickEdit(category, event) {
-      event.preventDefault();
-      this.model = category;
-      this.name = category.name;
-      this.showingModal = true;
-    },
-
-    deleteCategory(category) {
-      const options = {
-        headers: {
-          'Authorization': `Token token=${this.token}`
-        }
-      };
-
-      console.log('hi?')
-
-      return axios.delete(`/api/client_menus/${this.menuId}/categories/${category.id}`, options);
-    },
-
     fetchCategories() {
       return axios.get(`/api/client_menu_categories`, {
         headers: {

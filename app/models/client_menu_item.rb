@@ -13,4 +13,5 @@
 #  client_menu_category_id :integer
 #
 class ClientMenuItem < ApplicationRecord
+  belongs_to :client_menu_category
 end

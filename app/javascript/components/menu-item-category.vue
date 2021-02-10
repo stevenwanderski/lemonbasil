@@ -102,6 +102,23 @@
         this.showingModal = false;
       },
 
+      clickDelete(item, event) {
+        event.preventDefault();
+
+        if (!confirm('Are you sure?')) {
+          return;
+        }
+
+        this.deleteMenuItem(item)
+          .then(() => {
+            return this.fetchMenuItems();
+          })
+          .then(() => {
+            this.closeModal();
+            this.loading = false;
+          });
+      },
+
       clickEdit(item, event) {
         event.preventDefault();
 
@@ -114,6 +131,16 @@
 
       closeModal() {
         this.showingModal = false;
+      },
+
+      deleteMenuItem(item) {
+        const options = {
+          headers: {
+            'Authorization': `Token token=${this.token}`
+          }
+        };
+
+        return axios.delete(`/api/client_menu_items/${item.id}`, options);
       },
 
       fetchMenuItems() {
@@ -137,6 +164,7 @@
           name: this.name,
           cost: this.cost,
           quantity: this.quantity,
+          weight: 0,
           client_menu_category_id: this.category.id
         };
 

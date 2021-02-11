@@ -8,6 +8,7 @@
 body {
   display: flex;
   font-weight: 300;
+  flex-wrap: wrap;
 }
 
 main {
@@ -31,8 +32,13 @@ a {
   }
 }
 
+<<<<<<< HEAD
 strong {
   font-weight: 600;
+=======
+.content {
+  height: 100%;
+>>>>>>> master
 }
 
 .admin-header {

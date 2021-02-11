@@ -15,30 +15,31 @@
 
   <body class="admin">
     <aside class="sidebar">
-      <div class="sidebar__section">
-        <a href="/" class="logo">
-          <div>
-            Lemon&amp;Basil <span>admin</span>
-          </div>
-        </a>
+      <a href="/" class="logo">
+        <div>
+          Lemon&amp;Basil <span>admin</span>
+        </div>
+      </a>
 
-        <nav>
-          <ul>
-            <li><%= active_link_to 'Pages', admin_pages_path %></li>
-            <li><%= active_link_to 'Calendar', admin_calendar_path %></li>
-            <li><%= active_link_to 'Menus', admin_categories_path %></li>
+      <label class="sidebar__control" for="sidebar_menu"></label>
+      <input type="checkbox" id="sidebar_menu">
 
-            <br><br>
+      <nav>
+        <ul>
+          <li><%= active_link_to 'Pages', admin_pages_path %></li>
+          <li><%= active_link_to 'Calendar', admin_calendar_path %></li>
+          <li><%= active_link_to 'Menus', admin_categories_path %></li>
 
-            <li><%= active_link_to 'Clients', admin_clients_path %></li>
-            <li><%= active_link_to 'Client Menus', admin_client_menus_path %></li>
-          </ul>
-        </nav>
-      </div>
+          <br><br>
 
-      <div class="sidebar__section">
-        <%= link_to 'Logout', destroy_user_session_path %>
-      </div>
+          <li><%= active_link_to 'Clients', admin_clients_path %></li>
+          <li><%= active_link_to 'Client Menus', admin_client_menus_path %></li>
+
+          <br><br>
+
+          <li><%= link_to 'Logout', destroy_user_session_path %></li>
+        </ul>
+      </nav>
     </aside>
 
     <main>

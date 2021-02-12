@@ -5,6 +5,7 @@
     <div v-if="loaded">
       <menu-header
         :menu="menu"
+        :on-menu-submit="saveMenu"
       ></menu-header>
 
       <menu-nav
@@ -200,6 +201,26 @@ export default {
       }
 
       return axios.post(`/api/client_menu_categories`, data, options);
+    },
+
+    saveMenu(values) {
+      const data = {
+        due_at: values.dueAt
+      };
+
+      const options = {
+        headers: {
+          'Authorization': `Token token=${this.token}`
+        }
+      };
+
+      this.loading = true;
+
+      return axios.put(`/api/client_menus/${this.menuId}`, data, options)
+        .then((response) => {
+          this.menu = response.data;
+          this.loading = false;
+        });
     },
 
     saveWeights(event, originalEvent) {

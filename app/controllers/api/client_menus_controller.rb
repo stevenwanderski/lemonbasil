@@ -17,6 +17,12 @@ class Api::ClientMenusController < ApiController
     render json: client_menu
   end
 
+  def update
+    client_menu = ClientMenu.find(params[:id])
+    client_menu.update!(client_menu_params)
+    render json: client_menu
+  end
+
   private
 
   def client_menu_params

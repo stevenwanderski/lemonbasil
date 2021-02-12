@@ -61,20 +61,29 @@
 
     data() {
       return {
-        dueAt: null,
+        dueAt: this.menu.due_at,
         navOpen: false,
         showingModal: false
       }
     },
 
     methods: {
-      checkForm() {
+      checkForm(event) {
+        event.preventDefault();
 
+        if (!this.dueAt) {
+          return alert('Prep Date is required');
+        }
+
+        this.onMenuSubmit({ dueAt: this.dueAt }).then(() => {
+          this.closeModal();
+        });
       },
 
       clickEdit(event) {
         event.preventDefault();
         this.showingModal = true;
+        this.navOpen = false;
       },
 
       closeModal() {
@@ -87,7 +96,8 @@
     },
 
     props: [
-      'menu'
+      'menu',
+      'onMenuSubmit'
     ]
   }
 </script>

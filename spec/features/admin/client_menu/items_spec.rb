@@ -128,4 +128,37 @@ describe 'Admin: Client Menu: Items', js: true do
       expect(page).to_not have_field(:name)
     end
   end
+
+  describe 'Menu form' do
+    before do
+      visit admin_client_menu_menu_items_path(client_menu_id: client_menu.id)
+    end
+
+    it 'updates the menu date' do
+      find('.hamburger-nav__control').click
+      click_link 'Edit'
+      fill_in 'due_at', with: '02/28/21'
+      click_button 'Submit'
+
+      expect(page).to have_content('February 28, 2021')
+      expect(page).to_not have_link('Edit')
+    end
+
+    it 'closes when clicking cancel' do
+      find('.hamburger-nav__control').click
+      click_link 'Edit'
+      click_button 'Cancel'
+
+      expect(page).to_not have_field(:due_at)
+    end
+
+    it 'shows validation message' do
+      find('.hamburger-nav__control').click
+      click_link 'Edit'
+      fill_in 'due_at', with: ''
+      click_button 'Submit'
+
+      expect(accept_alert).to eq('Prep Date is required')
+    end
+  end
 end

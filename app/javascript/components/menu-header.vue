@@ -18,7 +18,7 @@
 
         <div class="hamburger-nav__body" v-if="navOpen">
           <a href="" @click="clickEdit($event)">Edit</a>
-          <a href="">Copy</a>
+          <a href="" @click="clickCopyUrl($event)">Copy URL</a>
         </div>
       </div>
     </div>
@@ -77,6 +77,14 @@
 
         this.onMenuSubmit({ dueAt: this.dueAt }).then(() => {
           this.closeModal();
+        });
+      },
+
+      clickCopyUrl(event) {
+        event.preventDefault();
+
+        navigator.clipboard.writeText(this.menu.slug_url).then(() => {
+          alert(`${this.menu.slug_url} was copied to your clipboard`);
         });
       },
 

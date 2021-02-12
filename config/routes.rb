@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   post '/contact', to: 'contact#create'
   get '/contact-success', to: 'contact#success'
 
+  get '/menu/:slug', to: 'client_menus#show'
+
   namespace :admin do
     get '/pages', to: 'pages#index'
     get '/pages/:slug', to: 'pages#edit', as: :page

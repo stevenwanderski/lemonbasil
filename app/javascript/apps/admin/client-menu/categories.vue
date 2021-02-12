@@ -74,10 +74,10 @@
 <script>
 import axios from 'axios';
 import draggable from 'vuedraggable'
-import Loading from '../../components/loading';
-import MenuHeader from '../../components/menu-header';
-import MenuNav from '../../components/menu-nav';
-import Modal from '../../components/modal';
+import Loading from '../../../components/loading';
+import MenuHeader from '../../../components/menu-header';
+import MenuNav from '../../../components/menu-nav';
+import Modal from '../../../components/modal';
 
 export default {
   components: {
@@ -205,7 +205,8 @@ export default {
 
     saveMenu(values) {
       const data = {
-        due_at: values.dueAt
+        due_at: values.dueAt,
+        message: values.message
       };
 
       const options = {

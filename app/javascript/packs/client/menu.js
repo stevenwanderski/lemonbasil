@@ -1,5 +1,5 @@
 import Vue from 'vue/dist/vue.esm'
-import ClientMenuApp from '../client-menu-app.vue'
+import ClientMenuApp from '../../apps/client/menu-app.vue'
 
 Vue.use(require('vue-moment'));
 

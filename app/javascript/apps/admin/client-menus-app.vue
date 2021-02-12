@@ -43,9 +43,9 @@
 <script>
 import axios from 'axios';
 import moment from 'moment';
-import Loading from './components/loading';
-import Modal from './components/modal';
-import MenuForm from './components/menu-form';
+import Loading from '../../components/loading';
+import Modal from '../../components/modal';
+import MenuForm from '../../components/menu-form';
 
 export default {
   components: {

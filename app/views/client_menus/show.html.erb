@@ -1,1 +1,8 @@
-<h1>Hello <%= @menu.client.full_name %>!</h1>
+<%= javascript_pack_tag 'client/menu' %>
+
+<div id="client-menu-app">
+  <client-menu-app
+    menu-id="<%= @menu_id %>"
+    token="<%= @token %>"
+  ></client-menu-app>
+</div>

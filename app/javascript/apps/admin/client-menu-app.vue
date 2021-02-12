@@ -45,7 +45,7 @@
 
         <div class="menu-nav__section">
           <a
-            :class="activePage == 'results' ? 'active' : null" 
+            :class="activePage == 'results' ? 'active' : null"
             :href="`/admin/client_menus/${menu.id}/results`">
             Results
           </a>
@@ -57,7 +57,7 @@
 
 <script>
 import axios from 'axios';
-import Loading from './components/loading';
+import Loading from '../../components/loading';
 
 export default {
   components: {

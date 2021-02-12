@@ -19,6 +19,7 @@
         <div class="hamburger-nav__body" v-if="navOpen">
           <a href="" @click="clickEdit($event)">Edit</a>
           <a href="" @click="clickCopyUrl($event)">Copy URL</a>
+          <a :href="menu.slug_url" target="_blank">Public View</a>
         </div>
       </div>
     </div>
@@ -35,6 +36,16 @@
             :typeable="true"
             v-model="dueAt"
           ></datepicker>
+        </div>
+
+        <div class="form-item">
+          <label for="message" class="label">Message</label>
+          <textarea
+            class="input--textarea"
+            name="message"
+            id="message"
+            v-model="message"
+          ></textarea>
         </div>
 
         <div class="form-actions">
@@ -62,6 +73,7 @@
     data() {
       return {
         dueAt: this.menu.due_at,
+        message: this.menu.message,
         navOpen: false,
         showingModal: false
       }
@@ -75,7 +87,12 @@
           return alert('Prep Date is required');
         }
 
-        this.onMenuSubmit({ dueAt: this.dueAt }).then(() => {
+        const values = {
+          dueAt: this.dueAt,
+          message: this.message
+        }
+
+        this.onMenuSubmit(values).then(() => {
           this.closeModal();
         });
       },

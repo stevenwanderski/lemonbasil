@@ -45,10 +45,10 @@
 
 <script>
 import axios from 'axios';
-import Loading from '../../components/loading';
-import MenuHeader from '../../components/menu-header';
-import MenuItemCategory from '../../components/menu-item-category';
-import MenuNav from '../../components/menu-nav';
+import Loading from '../../../components/loading';
+import MenuHeader from '../../../components/menu-header';
+import MenuItemCategory from '../../../components/menu-item-category';
+import MenuNav from '../../../components/menu-nav';
 
 export default {
   components: {
@@ -98,7 +98,8 @@ export default {
 
     saveMenu(values) {
       const data = {
-        due_at: values.dueAt
+        due_at: values.dueAt,
+        message: values.message
       };
 
       const options = {

@@ -1,0 +1,29 @@
+.client-menu {
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__meta {
+    text-align: right;
+  }
+
+  &__due-at {
+    font-size: 20px;
+    font-weight: 300;
+    margin-bottom: 5px;
+  }
+
+  &__client-name {
+    font-weight: 300;
+    font-size: 17px;
+    color: #7c7c7c;
+  }
+
+  &__message {
+    font-size: 32px;
+    line-height: 44px;
+    font-weight: 300;
+    width: 35ch;
+  }
+}

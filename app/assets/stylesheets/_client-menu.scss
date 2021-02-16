@@ -1,4 +1,6 @@
 .client-menu {
+  padding-bottom: 100px;
+
   header {
     display: flex;
     justify-content: space-between;
@@ -25,5 +27,60 @@
     line-height: 44px;
     font-weight: 300;
     width: 35ch;
+    margin-bottom: 60px;
+  }
+
+  &__categories {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__category-section {
+    margin-bottom: 60px;
+    flex: 1 1 500px;
+  }
+
+  &__category {
+    margin-bottom: 30px;
+  }
+
+  &__category-name {
+    margin-bottom: 3px;
+  }
+
+  &__category-description {
+    font-size: 17px;
+    color: #7c7c7c;
+    font-weight: 300;
+  }
+}
+
+.client-menu-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #f5f5f5;
+  font-weight: 300;
+
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5em 1em;
+  }
+
+  &__total {
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+
+  &__count {
+    font-size: 18px;
+    color: #7c7c7c;
   }
 }

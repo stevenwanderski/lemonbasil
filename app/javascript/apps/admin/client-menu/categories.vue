@@ -57,6 +57,11 @@
           <input type="text" class="input--text" name="name" v-model="name">
         </div>
 
+        <div class="form-item">
+          <label for="description" class="label">Description</label>
+          <textarea class="input--textarea" name="description" v-model="description"></textarea>
+        </div>
+
         <div class="form-actions">
           <button class="button button--submit">
             Submit
@@ -91,6 +96,7 @@ export default {
   data() {
     return {
       categories: null,
+      description: null,
       loaded: false,
       loading: true,
       model: null,
@@ -113,6 +119,7 @@ export default {
 
     clickAdd() {
       this.name = '';
+      this.description = '';
       this.showingModal = true;
     },
 
@@ -143,6 +150,7 @@ export default {
       event.preventDefault();
       this.model = category;
       this.name = category.name;
+      this.description = category.description;
       this.showingModal = true;
     },
 
@@ -187,6 +195,7 @@ export default {
       const data = {
         client_menu_id: this.menuId,
         name: this.name,
+        description: this.description,
         weight: 0
       };
 
@@ -252,6 +261,7 @@ export default {
           this.closeModal();
           this.loading = false;
           this.name = '';
+          this.description = '';
         });
     }
   },

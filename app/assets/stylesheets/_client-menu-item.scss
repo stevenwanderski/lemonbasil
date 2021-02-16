@@ -1,0 +1,56 @@
+.client-menu-item {
+  margin-bottom: 30px;
+  font-weight: 300;
+
+  &__row {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+
+  &__cost {
+    padding-left: 44px;
+    font-weight: bold;
+    font-size: 18px;
+    margin-right: 16px;
+  }
+
+  &__quantity {
+    font-size: 15px;
+    color: #7c7c7c;
+  }
+
+  label {
+    cursor: pointer;
+    font-size: 18px;
+    padding-top: 12px;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 30px;
+  }
+
+  input[type="checkbox"]:before {
+    content: "";
+    display: block;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    border: solid 2px black;
+    background: white;
+    cursor: pointer;
+  }
+
+  input[type="checkbox"]:checked:after {
+    content: "";
+    display: block;
+    position: relative;
+    width: 10px;
+    height: 10px;
+    background: black;
+    top: -19px;
+    left: 5px;
+    border: solid 2px black;
+    cursor: pointer;
+  }
+}

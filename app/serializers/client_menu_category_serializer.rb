@@ -1,3 +1,3 @@
 class ClientMenuCategorySerializer < ActiveModel::Serializer
-  attributes :id, :name, :weight
+  attributes :id, :name, :description, :weight
 end

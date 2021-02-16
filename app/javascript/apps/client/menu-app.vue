@@ -18,6 +18,35 @@
 
     <div class="content" v-if="loaded">
       <p class="client-menu__message">{{ menu.message }}</p>
+
+      <div class="client-menu__categories">
+        <client-menu-category
+          v-for="category in categories"
+          :category="category"
+          :on-click-item="clickItem"
+          :token="token"
+        ></client-menu-category>        
+      </div>
+
+      <div class="client-menu-actions">
+        <div class="client-menu-actions__inner">
+          <div>
+            <div class="client-menu-actions__total">
+              Total Estimate: <strong>${{ totalCost }}</strong>
+            </div>
+
+            <div class="client-menu-actions__count">
+              Selected items: {{ totalCount }}
+            </div>
+          </div>
+
+          <button
+            class="button button--submit"
+            @click="clickSubmit($event)">
+            Submit Order
+          </button>
+        </div>
+      </div>
     </div>
 
     <loading v-if="loading"></loading>
@@ -26,22 +55,68 @@
 
 <script>
 import axios from 'axios';
+import ClientMenuCategory from '../../components/client-menu-category';
 import Loading from '../../components/loading';
 
 export default {
   components: {
+    ClientMenuCategory,
     Loading
+  },
+
+  computed: {
+    totalCost() {
+      return this.selectedItems.reduce((total, item) => {
+        return parseInt(total) + parseInt(item.cost);
+      }, 0);
+    },
+
+    totalCount() {
+      return this.selectedItems.length;
+    }
   },
 
   data() {
     return {
       loaded: false,
       loading: true,
-      menu: null
+      menu: null,
+      selectedItems: []
     }
   },
 
   methods: {
+    addSelectedItem(item) {
+      console.log('hi!');
+      this.selectedItems.push(item);
+    },
+
+    clickItem(item, checked) {
+      if (checked) {
+        this.addSelectedItem(item);
+        return;
+      }
+
+      this.removeSelectedItem(item);
+    },
+
+    clickSubmit(event) {
+      event.preventDefault();
+    },
+
+    fetchCategories() {
+      return axios.get(`/api/client_menu_categories`, {
+        headers: {
+          'Authorization': `Token token=${this.token}`
+        },
+        params: {
+          client_menu_id: this.menuId
+        }
+      }).then((response) => {
+        this.categories = response.data;
+      });
+    },
+
     fetchMenu() {
       return axios.get(`/api/client_menus/${this.menuId}`, {
         headers: {
@@ -50,11 +125,20 @@ export default {
       }).then((response) => {
         this.menu = response.data;
       });
+    },
+
+    removeSelectedItem(item) {
+      const index = this.selectedItems.indexOf(item);
+
+      this.$delete(this.selectedItems, index);
     }
   },
 
   mounted() {
-    this.fetchMenu().then(() => {
+    Promise.all([
+      this.fetchMenu(),
+      this.fetchCategories()
+    ]).then((results) => {
       this.loading = false;
       this.loaded = true;
     })

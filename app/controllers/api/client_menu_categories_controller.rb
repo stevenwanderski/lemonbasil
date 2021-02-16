@@ -40,6 +40,6 @@ class Api::ClientMenuCategoriesController < ApiController
   private
 
   def client_menu_category_params
-    params.permit(:name, :weight)
+    params.permit(:name, :description, :weight)
   end
 end

@@ -39,13 +39,13 @@
        font-url('ITCAvantGardeStdBk.ttf') format('truetype');
 }
 
-// @font-face {
-//   font-family: 'ITC Avant Garde';
-//   font-weight: lighter;
-//   font-style: normal;
-//   src: font-url('ITCAvantGardeStdXLt.woff') format('woff'),
-//        font-url('ITCAvantGardeStdXLt.ttf') format('truetype');
-// }
+@font-face {
+  font-family: 'ITC Avant Garde';
+  font-weight: 300;
+  font-style: normal;
+  src: font-url('ITCAvantGardeStdXLt.woff') format('woff'),
+       font-url('ITCAvantGardeStdXLt.ttf') format('truetype');
+}
 
 @font-face {
   font-family: 'ITC Avant Garde';

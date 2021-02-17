@@ -52,11 +52,12 @@ describe 'Admin: Client Menus', js: true do
       click_button 'Add Client Menu'
       select 'David Bowie', from: 'client'
       fill_in 'due_at', with: '03/31/2021'
+      fill_in 'job_date', with: '04/15/2021'
       click_button 'Submit'
 
       expect(page).to have_content('Loading...')
       expect(page).to_not have_content('New Client Menu')
-      expect(page).to have_content('David Bowie: March 31, 2021')
+      expect(page).to have_content('David Bowie: April 15, 2021')
     end
 
     it 'closes when clicking cancel' do

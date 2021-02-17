@@ -33,6 +33,6 @@ class Api::ClientMenusController < ApiController
   private
 
   def client_menu_params
-    params.permit(:client_id, :due_at, :message)
+    params.permit(:client_id, :due_at, :message, :job_date)
   end
 end

@@ -1,19 +1,19 @@
 <template>
   <div class="client-menu">
     <header>
+      <div class="client-menu__meta" v-if="loaded">
+        <div class="client-menu__client-name">
+          {{ menu.client_full_name }}
+        </div>
+
+        <div class="client-menu__due-at">
+          Submit by: {{ menu.due_at | moment('MMMM D, Y') }}
+        </div>
+      </div>
+
       <a href="/" class="logo">
         Lemon&amp;Basil
       </a>
-
-      <div class="client-menu__meta" v-if="loaded">
-        <div class="client-menu__due-at">
-          Submit by: <strong>{{ menu.due_at | moment('MMMM D, Y') }}</strong>
-        </div>
-
-        <div class="client-menu__client-name">
-          Prepared for: {{ menu.client_full_name }}
-        </div>
-      </div>
     </header>
 
     <div class="content" v-if="loaded">

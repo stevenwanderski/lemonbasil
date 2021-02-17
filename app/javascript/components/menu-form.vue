@@ -11,13 +11,24 @@
     </div>
 
     <div class="form-item">
-      <label for="due_at" class="label">Prep Date</label>
+      <label for="due_at" class="label">Due Date</label>
       <datepicker
         name="due_at"
         format="MM/dd/yyyy"
         input-class="input--text"
         :typeable="true"
         v-model="dueAt"
+      ></datepicker>
+    </div>
+
+    <div class="form-item">
+      <label for="job_date" class="label">Prep Date</label>
+      <datepicker
+        name="job_date"
+        format="MM/dd/yyyy"
+        input-class="input--text"
+        :typeable="true"
+        v-model="jobDate"
       ></datepicker>
     </div>
 
@@ -38,11 +49,12 @@
     components: {
       Datepicker
     },
-    
+
     data() {
       return {
         client: null,
-        dueAt: null
+        dueAt: null,
+        jobDate: null
       }
     },
 
@@ -57,7 +69,8 @@
 
         this.onSubmit({
           client: this.client,
-          dueAt: this.dueAt
+          dueAt: this.dueAt,
+          jobDate: this.jobDate
         });
       },
     },

@@ -2,7 +2,14 @@ require 'spec_helper'
 
 describe 'Admin: Client Menu: Items', js: true do
   let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
-  let!(:client_menu) { create(:client_menu, due_at: '2021-02-09', client: client) }
+
+  let!(:client_menu) do
+    create(:client_menu,
+      due_at: '2021-02-01',
+      job_date: '2021-02-05',
+      client: client
+    )
+  end
 
   before do
     user = create(:user)
@@ -16,7 +23,7 @@ describe 'Admin: Client Menu: Items', js: true do
 
     it 'renders the client menu info' do
       expect(page).to have_content('Frank Zappa')
-      expect(page).to have_content('February 9, 2021')
+      expect(page).to have_content('February 5, 2021')
     end
 
     context 'categories do not exist' do
@@ -143,13 +150,14 @@ describe 'Admin: Client Menu: Items', js: true do
       visit admin_client_menu_menu_items_path(client_menu_id: client_menu.id)
     end
 
-    it 'updates the menu date' do
+    it 'updates the menu dates' do
       find('.hamburger-nav__control').click
       click_link 'Edit'
-      fill_in 'due_at', with: '02/28/21'
+      fill_in 'job_date', with: '02/15/21'
+      fill_in 'due_at', with: '02/13/21'
       click_button 'Submit'
 
-      expect(page).to have_content('February 28, 2021')
+      expect(page).to have_content('February 15, 2021')
       expect(page).to_not have_link('Edit')
     end
 
@@ -164,10 +172,11 @@ describe 'Admin: Client Menu: Items', js: true do
     it 'shows validation message' do
       find('.hamburger-nav__control').click
       click_link 'Edit'
+      fill_in 'job_date', with: ''
       fill_in 'due_at', with: ''
       click_button 'Submit'
 
-      expect(accept_alert).to eq('Prep Date is required')
+      expect(accept_alert).to eq('Due Date and Prep Date are required')
     end
   end
 end

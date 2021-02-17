@@ -6,7 +6,7 @@
       </div>
 
       <div class="menu-header__date">
-        {{menu.due_at | moment('MMMM D, Y')}}
+        {{menu.job_date | moment('MMMM D, Y')}}
       </div>
 
       <div class="menu-header__nav hamburger-nav">
@@ -28,7 +28,7 @@
       <h2>Edit Client Menu</h2>
       <form @submit="checkForm">
         <div class="form-item">
-          <label for="due_at" class="label">Prep Date</label>
+          <label for="due_at" class="label">Due Date</label>
           <datepicker
             name="due_at"
             format="MM/dd/yyyy"
@@ -39,13 +39,14 @@
         </div>
 
         <div class="form-item">
-          <label for="message" class="label">Message</label>
-          <textarea
-            class="input--textarea"
-            name="message"
-            id="message"
-            v-model="message"
-          ></textarea>
+          <label for="job_date" class="label">Prep Date</label>
+          <datepicker
+            name="job_date"
+            format="MM/dd/yyyy"
+            input-class="input--text"
+            :typeable="true"
+            v-model="jobDate"
+          ></datepicker>
         </div>
 
         <div class="form-actions">
@@ -73,7 +74,7 @@
     data() {
       return {
         dueAt: this.menu.due_at,
-        message: this.menu.message,
+        jobDate: this.menu.job_date,
         navOpen: false,
         showingModal: false
       }
@@ -83,13 +84,13 @@
       checkForm(event) {
         event.preventDefault();
 
-        if (!this.dueAt) {
-          return alert('Prep Date is required');
+        if (!this.dueAt || !this.jobDate) {
+          return alert('Due Date and Prep Date are required');
         }
 
         const values = {
           dueAt: this.dueAt,
-          message: this.message
+          jobDate: this.jobDate,
         }
 
         this.onMenuSubmit(values).then(() => {

@@ -99,6 +99,7 @@ export default {
     saveMenu(values) {
       const data = {
         due_at: values.dueAt,
+        job_date: values.jobDate,
         message: values.message
       };
 

@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  due_at     :datetime
+#  job_date   :datetime
 #  message    :text
 #  slug       :string
 #  created_at :datetime         not null

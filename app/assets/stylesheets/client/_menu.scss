@@ -4,13 +4,13 @@
   header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     flex-wrap: wrap;
     border-bottom: solid #f5f5f5 1px;
-  }
 
-  &__meta {
-    text-align: right;
+    .logo {
+      color: #999;
+      font-weight: 300;
+    }
   }
 
   &__due-at {
@@ -20,19 +20,9 @@
   }
 
   &__client-name {
-    display: none;
-    font-weight: 300;
-    font-size: 17px;
-    color: #7c7c7c;
-  }
-
-  &__message {
-    // display: none;
+    font-weight: bold;
     font-size: 32px;
-    line-height: 44px;
-    font-weight: 300;
-    width: 35ch;
-    margin-bottom: 60px;
+    font-family: $secondary-font;
   }
 
   &__category-section {
@@ -60,24 +50,16 @@
     header {
       display: block;
       padding-bottom: 0;
+
+      .logo {
+        display: none;
+      }
     }
 
     &__meta {
       text-align: left;
-      // margin-top: 20px;
       padding-top: 3px;
       padding-bottom: 20px;
-      // border-top: solid #f5f5f5 1px;
-      // border-bottom: solid #f5f5f5 1px;
-    }
-
-    &__message {
-      // display: none;
-      font-size: 22px;
-      line-height: 32px;
-      font-weight: 300;
-      width: 100%;
-      margin-bottom: 60px;
     }
   }
 }

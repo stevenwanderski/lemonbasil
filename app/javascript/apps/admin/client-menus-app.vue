@@ -27,7 +27,7 @@
         <div class="row" v-for="menu in menus">
           <div class="row__name">
             <a :href="menu.url">
-              {{menu.client_full_name}}: <strong>{{ menu.due_at | moment('MMMM D, Y') }}</strong>
+              {{menu.client_full_name}}: <strong>{{ menu.job_date | moment('MMMM D, Y') }}</strong>
             </a>
           </div>
         </div>
@@ -93,7 +93,8 @@ export default {
     saveMenu(values) {
       const data = {
         client_id: values.client,
-        due_at: values.dueAt
+        due_at: values.dueAt,
+        job_date: values.jobDate
       };
 
       const options = {

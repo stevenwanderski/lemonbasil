@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_09_203441) do
+ActiveRecord::Schema.define(version: 2021_02_17_173734) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,21 @@ ActiveRecord::Schema.define(version: 2021_02_09_203441) do
     t.string "quantity"
     t.integer "weight"
     t.integer "client_menu_category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "client_menu_selections", force: :cascade do |t|
+    t.integer "client_menu_submission_id"
+    t.integer "client_menu_item_id"
+    t.text "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "client_menu_submissions", force: :cascade do |t|
+    t.integer "client_menu_id"
+    t.text "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

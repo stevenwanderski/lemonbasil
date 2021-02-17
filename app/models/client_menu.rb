@@ -13,6 +13,7 @@
 class ClientMenu < ApplicationRecord
   belongs_to :client
   has_many :client_menu_categories
+  has_one :client_menu_submission
 
   before_create :set_slug
 

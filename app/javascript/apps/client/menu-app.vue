@@ -108,6 +108,27 @@ export default {
 
     clickSubmit(event) {
       event.preventDefault();
+
+      const ids = this.selectedItems.map(item => item.id);
+
+      const data = {
+        client_menu_id: this.menuId,
+        client_menu_item_ids: ids
+      };
+
+      const options = {
+        headers: {
+          'Authorization': `Token token=${this.token}`
+        }
+      };
+
+      this.loading = true;
+
+      return axios.post('/api/client_menu_submissions', data, options)
+        .then(() => {
+          this.loading = false;
+          console.log('yay');
+        });
     },
 
     fetchCategories() {

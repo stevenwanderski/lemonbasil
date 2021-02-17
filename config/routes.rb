@@ -41,7 +41,11 @@ Rails.application.routes.draw do
     post '/categories/weights', to: 'categories#update_weights'
     post '/menus/weights', to: 'menus#update_weights'
 
-    resources :client_menus, only: [:index, :create, :show, :update]
+    resources :client_menus, only: [:index, :create, :show, :update] do
+      get '/submission', action: 'submission'
+    end
+
+    resources :client_menu_submissions, only: [:create]
 
     resources :client_menu_categories do
       collection do

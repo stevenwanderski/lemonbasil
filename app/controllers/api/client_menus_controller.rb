@@ -23,6 +23,13 @@ class Api::ClientMenusController < ApiController
     render json: client_menu
   end
 
+  def submission
+    client_menu = ClientMenu.find(params[:client_menu_id])
+    client_menu_submission = client_menu.client_menu_submission
+
+    render json: client_menu_submission
+  end
+
   private
 
   def client_menu_params

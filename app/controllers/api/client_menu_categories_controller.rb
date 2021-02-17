@@ -2,7 +2,11 @@ class Api::ClientMenuCategoriesController < ApiController
   def index
     client_menu = ClientMenu.find(params[:client_menu_id])
 
-    render json: client_menu.client_menu_categories.order(weight: :asc, created_at: :desc)
+    categories = client_menu
+      .client_menu_categories
+      .order(weight: :asc, created_at: :asc)
+
+    render json: categories
   end
 
   def create

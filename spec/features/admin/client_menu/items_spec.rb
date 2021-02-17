@@ -58,6 +58,7 @@ describe 'Admin: Client Menu: Items', js: true do
     let!(:menu_item1) do
       create(:client_menu_item,
         name: 'Crisps',
+        description: 'Thin and crispy',
         cost: '10',
         quantity: 'Pack of 20',
         client_menu_category: category2
@@ -74,6 +75,7 @@ describe 'Admin: Client Menu: Items', js: true do
       end
 
       fill_in 'name', with: 'Beef'
+      fill_in 'description', with: 'Tender and juicy'
       fill_in 'cost', with: '7'
       fill_in 'quantity', with: '1 slab'
       click_button 'Submit'
@@ -82,11 +84,17 @@ describe 'Admin: Client Menu: Items', js: true do
         expect(page).to have_content('Dinner')
         expect(page).to have_content('Beef')
       end
+
+      click_link 'Beef'
+      expect(page).to have_field(:description, with: 'Tender and juicy')
+      expect(page).to have_field(:cost, with: '7')
+      expect(page).to have_field(:quantity, with: '1 slab')
     end
 
-    it 'creates a menu item' do
+    it 'edits a menu item' do
       click_link 'Crisps'
       fill_in 'name', with: 'Choco Crisps'
+      fill_in 'description', with: 'Light and airy'
       fill_in 'cost', with: '15'
       fill_in 'quantity', with: 'Sleeve of 5'
       click_button 'Submit'
@@ -98,6 +106,7 @@ describe 'Admin: Client Menu: Items', js: true do
 
       expect(menu_item1.reload.cost).to eq('15')
       expect(menu_item1.quantity).to eq('Sleeve of 5')
+      expect(menu_item1.description).to eq('Light and airy')
     end
 
     it 'deletes a menu item' do

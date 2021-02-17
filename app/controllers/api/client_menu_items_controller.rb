@@ -40,6 +40,6 @@ class Api::ClientMenuItemsController < ApiController
   private
 
   def client_menu_item_params
-    params.permit(:name, :cost, :quantity, :weight)
+    params.permit(:name, :cost, :quantity, :weight, :description)
   end
 end

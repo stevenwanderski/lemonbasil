@@ -25,7 +25,7 @@
           :category="category"
           :on-click-item="clickItem"
           :token="token"
-        ></client-menu-category>        
+        ></client-menu-category>
       </div>
 
       <div class="client-menu-actions">
@@ -42,6 +42,7 @@
 
           <button
             class="button button--submit"
+            :disabled="isDisabled"
             @click="clickSubmit($event)">
             Submit Order
           </button>
@@ -65,6 +66,10 @@ export default {
   },
 
   computed: {
+    isDisabled() {
+      return this.selectedItems.length === 0;
+    },
+
     totalCost() {
       return this.selectedItems.reduce((total, item) => {
         return parseInt(total) + parseInt(item.cost);

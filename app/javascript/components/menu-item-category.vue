@@ -33,6 +33,15 @@
           <input type="text" class="input--text" name="name" v-model="name">
         </div>
 
+        <div class="form-item">
+          <label for="description" class="label">Description</label>
+          <textarea
+            class="input--textarea"
+            name="description"
+            v-model="description"
+          ></textarea>
+        </div>
+
         <div class="form-item--flex">
           <div class="form-item">
             <label for="cost" class="label">Cost</label>
@@ -75,6 +84,7 @@
         showingModal: false,
         items: null,
         name: null,
+        description: null,
         cost: null,
         quantity: null
       }
@@ -95,6 +105,7 @@
       clickAdd(category) {
         this.model = null;
         this.name = null;
+        this.description = null;
         this.cost = null;
         this.quantity = null;
         this.showingModal = true;
@@ -126,6 +137,7 @@
 
         this.model = item;
         this.name = item.name;
+        this.description = item.description;
         this.cost = item.cost;
         this.quantity = item.quantity;
         this.showingModal = true;
@@ -164,6 +176,7 @@
       saveMenuItem() {
         const data = {
           name: this.name,
+          description: this.description,
           cost: this.cost,
           quantity: this.quantity,
           weight: 0,

@@ -27,5 +27,10 @@
       background: #333;
       text-decoration: none;
     }
+
+    &:disabled {
+      cursor: not-allowed;
+      background: #ccc;
+    }
   }
 }

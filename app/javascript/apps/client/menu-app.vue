@@ -7,6 +7,10 @@
         </div>
 
         <div class="client-menu__due-at">
+          Prep date: {{ menu.job_date | moment('MMMM D, Y') }}
+        </div>
+
+        <div class="client-menu__due-at">
           Submit by: {{ menu.due_at | moment('MMMM D, Y') }}
         </div>
       </div>
@@ -17,8 +21,6 @@
     </header>
 
     <div class="content" v-if="loaded">
-      <p class="client-menu__message">{{ menu.message }}</p>
-
       <div class="client-menu__categories">
         <client-menu-category
           v-for="category in categories"

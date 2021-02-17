@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get '/contact-success', to: 'contact#success'
 
   get '/menus/:slug', to: 'client_menus#show'
+  get '/menus/:slug/success', to: 'client_menus#success'
 
   namespace :admin do
     get '/pages', to: 'pages#index'

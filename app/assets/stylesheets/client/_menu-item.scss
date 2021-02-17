@@ -1,29 +1,31 @@
 .client-menu-item {
   margin-bottom: 30px;
   font-weight: 300;
+  display: flex;
 
   &__row {
     display: flex;
-    margin-bottom: 10px;
-    align-items: center;
+    margin-bottom: 5px;
+    align-items: baseline;
   }
 
   &__cost {
-    padding-left: 44px;
     font-weight: bold;
     font-size: 18px;
-    margin-right: 16px;
   }
 
-  &__quantity {
+  &__description {
     font-size: 15px;
     color: #7c7c7c;
+    width: 70ch;
+    line-height: 20px;
   }
 
-  label {
+  &__label {
     cursor: pointer;
     font-size: 18px;
-    padding-top: 12px;
+    line-height: 22px;
+    margin-right: 20px;
   }
 
   input[type="checkbox"] {
@@ -52,5 +54,13 @@
     left: 5px;
     border: solid 2px black;
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .client-menu-item {
+    &__description {
+      width: 100%;
+    }
   }
 }

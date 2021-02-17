@@ -23,6 +23,7 @@
         <client-menu-category
           v-for="category in categories"
           :category="category"
+          :key="category.id"
           :on-click-item="clickItem"
           :token="token"
         ></client-menu-category>
@@ -56,7 +57,7 @@
 
 <script>
 import axios from 'axios';
-import ClientMenuCategory from '../../components/client-menu-category';
+import ClientMenuCategory from '../../components/client/menu-category';
 import Loading from '../../components/loading';
 
 export default {

@@ -11,26 +11,28 @@
     </div>
 
     <div v-for="item in items" class="client-menu-item">
-      <div class="client-menu-item__row">
-        <input
-          :id="`item-${item.id}`"
-          type="checkbox"
-          @change="clickItem(item, $event)">
+      <input
+        :id="`item-${item.id}`"
+        type="checkbox"
+        @change="clickItem(item, $event)">
 
-        <label
-          class="client-menu-item__label"
-          :for="`item-${item.id}`">
-          {{ item.name }}
-        </label>
-      </div>
+      <div class="client-menu-item__section">
+        <div class="client-menu-item__row">
+          <label
+            class="client-menu-item__label"
+            :for="`item-${item.id}`">
+            {{ item.name }}
+          </label>
 
-      <div class="client-menu-item__row">
-        <div class="client-menu-item__cost">
-          ${{ item.cost }}
+          <div class="client-menu-item__cost">
+            ${{ item.cost }}
+          </div>
         </div>
 
-        <div class="client-menu-item__quantity" v-if="item.quantity">
-          {{ item.quantity }}
+        <div class="client-menu-item__row">
+          <div class="client-menu-item__description" v-if="item.description">
+            {{ item.description }}
+          </div>
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@
       <h2>Menu Item</h2>
       <form @submit="checkForm">
         <div class="form-item">
-          <label for="name" class="label">Name</label>
+          <label for="name" class="label" ref="name">Name</label>
           <input type="text" class="input--text" name="name" v-model="name">
         </div>
 
@@ -108,11 +108,11 @@
         this.description = null;
         this.cost = null;
         this.quantity = null;
-        this.showingModal = true;
+        this.openModal();
       },
 
       clickCancel() {
-        this.showingModal = false;
+        this.closeModal();
       },
 
       clickDelete(item, event) {
@@ -140,7 +140,7 @@
         this.description = item.description;
         this.cost = item.cost;
         this.quantity = item.quantity;
-        this.showingModal = true;
+        this.openModal();
       },
 
       closeModal() {
@@ -171,6 +171,10 @@
           .then((response) => {
             this.items = response.data;
           });
+      },
+
+      openModal() {
+        this.showingModal = true;
       },
 
       saveMenuItem() {

@@ -111,6 +111,10 @@ export default {
     clickSubmit(event) {
       event.preventDefault();
 
+      if (!confirm('Are you sure you want to submit your selections?')) {
+        return;
+      }
+
       const ids = this.selectedItems.map(item => item.id);
 
       const data = {
@@ -128,8 +132,7 @@ export default {
 
       return axios.post('/api/client_menu_submissions', data, options)
         .then(() => {
-          this.loading = false;
-          console.log('yay');
+          window.location.href = `/menus/${this.menuId}/success`
         });
     },
 

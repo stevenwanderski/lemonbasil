@@ -8,7 +8,11 @@ class Api::ClientMenuSubmissionsController < ApiController
       )
     end
 
-    # send that mailer!
+    client_menu = ClientMenu.find(params[:client_menu_id])
+    ClientMenuMailer
+      .with(client_menu: client_menu)
+      .client_submission
+      .deliver
 
     render json: client_menu_submission
   end
@@ -23,6 +27,6 @@ class Api::ClientMenuSubmissionsController < ApiController
   private
 
   def client_menu_submission_params
-    params.permit(:client_menu_id, :message)
+    params.permit(:client_menu_id, :message, :total)
   end
 end

@@ -13,8 +13,13 @@
     <%= f.text_field :last_name, class: 'input--text' %>
   </div>
 
+  <div class="form-item">
+    <%= f.label :email, class: 'label' %>
+    <%= f.email_field :email, class: 'input--text' %>
+  </div>
+
   <div class="form-actions">
-    <%= f.submit 'Submit', class: 'button' %>
+    <%= f.submit 'Submit', class: 'button button--submit' %>
     <%= link_to 'Cancel', admin_clients_path %>
     <%= link_to 'Delete', admin_client_path(@client), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link--danger' %>
   </div>

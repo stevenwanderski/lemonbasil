@@ -95,7 +95,6 @@ export default {
 
   methods: {
     addSelectedItem(item) {
-      console.log('hi!');
       this.selectedItems.push(item);
     },
 
@@ -119,7 +118,8 @@ export default {
 
       const data = {
         client_menu_id: this.menuId,
-        client_menu_item_ids: ids
+        client_menu_item_ids: ids,
+        total: this.totalCost
       };
 
       const options = {

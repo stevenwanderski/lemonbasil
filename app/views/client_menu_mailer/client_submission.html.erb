@@ -1,15 +1,9 @@
-<div class="menu-header">
-  <div class="menu-header__name">
-    <%= @client_menu.client.full_name %>
-  </div>
-</div>
-
-<% submission = @client_menu.client_menu_submission %>
+<h1><%= @client_menu.client.full_name %> <span>Meal Prep Menu</span></h1>
 
 <div class="submission">
   <div class="submission__header">
     <div class="submission__total">
-      Total estimate: <strong>$<%= submission.total %></strong>
+      Total estimate: <strong>$<%= @submission.total %></strong>
     </div>
 
     <div class="submission__date">
@@ -17,11 +11,11 @@
     </div>
   </div>
 
-  <% submission.categories.each do |category| %>
+  <% @submission.categories.each do |category| %>
     <div class="submission__category-group">
       <h2><%= category.name %></h2>
 
-      <% submission.items(category).each do |item| %>
+      <% @submission.items(category).each do |item| %>
         <div class="submission__item">
           <div class="submission__item-name">
             <%= item.name %> <strong>$<%= item.cost %></strong>

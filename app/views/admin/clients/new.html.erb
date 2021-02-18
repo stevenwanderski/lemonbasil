@@ -13,8 +13,13 @@
     <%= f.text_field :last_name, class: 'input--text' %>
   </div>
 
+  <div class="form-item">
+    <%= f.label :email, class: 'label' %>
+    <%= f.email_field :email, class: 'input--text' %>
+  </div>
+
   <div class="form-actions">
-    <%= f.submit 'Submit', class: 'button' %>
+    <%= f.submit 'Submit', class: 'button button--submit' %>
     <%= link_to 'Cancel', admin_clients_path %>
   </div>
 <% end %>

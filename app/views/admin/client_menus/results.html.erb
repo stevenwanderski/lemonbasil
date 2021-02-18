@@ -12,8 +12,16 @@
 </div>
 
 <div class="menu-body">
-  <%= render 'submission',
-      client_menu: @client_menu,
-      submission: @client_menu.client_menu_submission
-  %>
+  <% if @client_menu.client_menu_submission.present? %>
+    <%= render 'submission',
+        client_menu: @client_menu,
+        submission: @client_menu.client_menu_submission
+    %>
+  <% else %>
+    <div class="empty">
+      <div class="empty__text">
+        The client has not made selections yet.
+      </div>
+    </div>
+  <% end %>
 </div>

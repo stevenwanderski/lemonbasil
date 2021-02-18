@@ -1,0 +1,23 @@
+<div class="submission">
+  <div class="submission__header">
+    <div class="submission__total">
+      Total estimate: <strong>$<%= submission.total %></strong>
+    </div>
+
+    <div class="submission__date">
+      Submitted: <%= l(submission.created_at, format: :date_and_time) %>
+    </div>
+  </div>
+
+  <% submission.categories.each do |category| %>
+    <div class="submission__category-group">
+      <h2><%= category.name %></h2>
+
+      <% submission.items(category).each do |item| %>
+        <div class="submission__item">
+          <%= item.name %> <strong>$<%= item.cost %></strong>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

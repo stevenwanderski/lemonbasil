@@ -17,6 +17,7 @@ gem 'kramdown'
 gem 'recaptcha'
 gem 'webpacker', '~> 5.x'
 gem 'active_model_serializers', '~> 0.10.0'
+gem 'premailer-rails'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

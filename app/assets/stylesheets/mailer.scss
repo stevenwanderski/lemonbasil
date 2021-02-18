@@ -1,0 +1,88 @@
+@import 'fonts';
+@import 'variables';
+@import 'base';
+@import "admin/submission";
+@import 'admin/menu';
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #eee;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+img {
+  border: 0 none;
+  height: auto;
+  line-height: 100%;
+  outline: none;
+  text-decoration: none;
+  -ms-interpolation-mode: bicubic;
+}
+
+a img {
+  border: 0 none;
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+ul, ol {
+  margin-left: 24px;
+}
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
+}
+
+a {
+  color: #8687c5;
+}
+
+table, td {
+  border-collapse: collapse;
+  padding: 0;
+}
+
+table {
+  mso-table-lspace: 0pt;
+  mso-table-rspace: 0pt;
+}
+
+// #email-container {
+//   background: #fff;
+// }
+
+#email-body {
+  background: #fff;
+  width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+.body-content {
+  padding: 20px;
+}
+
+.email-header--content {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 24px;
+  color: #333;
+}

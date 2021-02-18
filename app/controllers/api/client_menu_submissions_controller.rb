@@ -8,6 +8,8 @@ class Api::ClientMenuSubmissionsController < ApiController
       )
     end
 
+    # send that mailer!
+
     render json: client_menu_submission
   end
 

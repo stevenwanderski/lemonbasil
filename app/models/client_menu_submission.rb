@@ -11,6 +11,7 @@
 #
 class ClientMenuSubmission < ApplicationRecord
   has_many :client_menu_selections
+  belongs_to :client_menu
 
   def categories
     client_menu_selections.map do |selection|

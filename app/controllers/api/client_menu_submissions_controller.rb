@@ -1,5 +1,5 @@
 class Api::ClientMenuSubmissionsController < ApiController
-  def create
+  def create    
     client_menu_submission = ClientMenuSubmission.create!(client_menu_submission_params)
 
     params[:client_menu_item_ids].each do |id|

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Admin: Client Menu: Categories', js: true do
   let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
-  let!(:client_menu) { create(:client_menu, due_at: '2021-02-09', client: client) }
+  let!(:client_menu) { create(:client_menu, job_date: '2021-02-09', client: client) }
 
   before do
     user = create(:user)
@@ -96,7 +96,7 @@ describe 'Admin: Client Menu: Categories', js: true do
     it 'updates the menu date' do
       find('.hamburger-nav__control').click
       click_link 'Edit'
-      fill_in 'due_at', with: '02/28/21'
+      fill_in 'job_date', with: '02/28/21'
       click_button 'Submit'
 
       expect(page).to have_content('February 28, 2021')

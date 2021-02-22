@@ -14,6 +14,7 @@
 class ClientMenu < ApplicationRecord
   belongs_to :client
   has_many :client_menu_categories
+  has_many :client_menu_items, through: :client_menu_categories
   has_one :client_menu_submission
 
   before_create :set_slug
@@ -23,5 +24,12 @@ class ClientMenu < ApplicationRecord
       random_short_code = ('a'..'z').to_a.shuffle[0,6].join
       break random_short_code unless ClientMenu.exists?(slug: random_short_code)
     end
+  end
+
+  def duplicate!(new_values = {})
+    menu = self.deep_clone include: [{ client_menu_categories: :client_menu_items }]
+    menu.assign_attributes(new_values)
+    menu.save!
+    menu
   end
 end

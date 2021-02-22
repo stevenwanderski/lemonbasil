@@ -1,5 +1,5 @@
 <template>
-  <div class="client-menu__category-section">
+  <div class="client-menu__category-section" :data-category-id="category.id">
     <div class="client-menu__category">
       <h2 class="client-menu__category-name">
         {{ category.name }}
@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div v-for="item in items" class="client-menu-item">
+    <div v-for="item in items" class="client-menu-item" :data-item-id="item.id">
       <input
         :id="`item-${item.id}`"
         type="checkbox"

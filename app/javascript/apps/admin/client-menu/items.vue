@@ -5,6 +5,7 @@
     <div v-if="loaded">
       <menu-header
         :menu="menu"
+        :on-dupe-submit="saveDupe"
         :on-menu-submit="saveMenu"
       ></menu-header>
 
@@ -94,6 +95,26 @@ export default {
       }).then((response) => {
         this.menu = response.data;
       });
+    },
+
+    saveDupe(values) {
+      const data = {
+        due_at: values.dueAt,
+        job_date: values.jobDate
+      };
+
+      const options = {
+        headers: {
+          'Authorization': `Token token=${this.token}`
+        }
+      };
+
+      this.loading = true;
+
+      return axios.post(`/api/client_menus/${this.menuId}/duplicate`, data, options)
+        .then((response) => {
+          window.location.href = `/admin/client_menus/${response.data.id}`
+        });
     },
 
     saveMenu(values) {

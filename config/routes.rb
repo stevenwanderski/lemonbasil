@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
     resources :client_menus, only: [:index, :create, :show, :update] do
       get '/submission', action: 'submission'
+      post '/duplicate', action: 'duplicate'
     end
 
     resources :client_menu_submissions, only: [:create]

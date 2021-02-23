@@ -179,4 +179,46 @@ describe 'Admin: Client Menu: Items', js: true do
       expect(accept_alert).to eq('Due Date and Prep Date are required')
     end
   end
+
+  describe 'Copy Menu' do
+    let!(:category1) { create(:client_menu_category, name: 'Dinner', client_menu: client_menu) }
+    let!(:menu_item1) { create(:client_menu_item, name: 'Beef', client_menu_category: category1) }
+
+    before do
+      visit admin_client_menu_menu_items_path(client_menu_id: client_menu.id)
+    end
+
+    it 'redirects to the new menu' do
+      find('.hamburger-nav__control').click
+      click_link 'Copy Menu'
+      fill_in 'dupe_job_date', with: '02/15/21'
+      fill_in 'dupe_due_at', with: '02/13/21'
+      click_button 'Submit'
+
+      expect(page).to have_content('February 15, 2021')
+
+      menu = ClientMenu.order(created_at: :desc).first
+      expect(page).to have_current_path(
+        admin_client_menu_menu_items_path(client_menu_id: menu.id)
+      )
+    end
+
+    it 'closes when clicking cancel' do
+      find('.hamburger-nav__control').click
+      click_link 'Copy Menu'
+      click_button 'Cancel'
+
+      expect(page).to_not have_field(:dupe_due_at)
+    end
+
+    it 'shows validation message' do
+      find('.hamburger-nav__control').click
+      click_link 'Copy Menu'
+      fill_in 'dupe_job_date', with: ''
+      fill_in 'dupe_due_at', with: ''
+      click_button 'Submit'
+
+      expect(accept_alert).to eq('Due Date and Prep Date are required')
+    end
+  end
 end

@@ -30,6 +30,19 @@ class Api::ClientMenusController < ApiController
     render json: client_menu_submission
   end
 
+  def duplicate
+    client_menu = ClientMenu.find(params[:client_menu_id])
+
+    values = {
+      due_at: params[:due_at],
+      job_date: params[:job_date]
+    }
+
+    menu = client_menu.duplicate!(values)
+
+    render json: menu
+  end
+
   private
 
   def client_menu_params

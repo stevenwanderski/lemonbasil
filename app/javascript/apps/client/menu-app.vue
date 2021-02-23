@@ -7,11 +7,11 @@
         </div>
 
         <div class="client-menu__due-at">
-          Prep date: {{ menu.job_date | moment('MMMM D, Y') }}
+          Prep date: {{ menu.job_date | moment('M/d/Y') }}
         </div>
 
         <div class="client-menu__due-at">
-          Submit by: {{ menu.due_at | moment('MMMM D, Y') }}
+          Submit by: {{ menu.due_at | moment('M/d/Y') }}
         </div>
       </div>
 
@@ -132,7 +132,7 @@ export default {
 
       return axios.post('/api/client_menu_submissions', data, options)
         .then(() => {
-          window.location.href = `/menus/${this.menuId}/success`
+          window.location.href = `${this.menu.slug_url}/success`
         });
     },
 

@@ -28,17 +28,6 @@
       <h2>Edit Client Menu</h2>
       <form @submit="checkForm">
         <div class="form-item">
-          <label for="due_at" class="label">Due Date</label>
-          <datepicker
-            name="due_at"
-            format="MM/dd/yyyy"
-            input-class="input--text"
-            :typeable="true"
-            v-model="dueAt"
-          ></datepicker>
-        </div>
-
-        <div class="form-item">
           <label for="job_date" class="label">Prep Date</label>
           <datepicker
             name="job_date"
@@ -46,6 +35,17 @@
             input-class="input--text"
             :typeable="true"
             v-model="jobDate"
+          ></datepicker>
+        </div>
+
+        <div class="form-item">
+          <label for="due_at" class="label">Due Date</label>
+          <datepicker
+            name="due_at"
+            format="MM/dd/yyyy"
+            input-class="input--text"
+            :typeable="true"
+            v-model="dueAt"
           ></datepicker>
         </div>
 

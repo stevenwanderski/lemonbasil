@@ -6,6 +6,7 @@ class ClientMenuMailer < ApplicationMailer
     mail(
       from: 'Lemon&Basil <hello@lemonandbasil.co>',
       to: "#{@client_menu.client.full_name} <#{@client_menu.client.email}>",
+      bcc: "Birdie <wandoledzep@gmail.com>",
       subject: "Menu Submission for Meal Prep: #{@client_menu.job_date.strftime("%m/%d/%Y")}"
     )
   end

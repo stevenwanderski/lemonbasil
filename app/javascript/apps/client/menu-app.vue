@@ -7,11 +7,11 @@
         </div>
 
         <div class="client-menu__due-at">
-          Prep date: {{ menu.job_date | moment('M/d/Y') }}
+          Prep date: {{ menu.job_date | moment('M/D/Y') }}
         </div>
 
         <div class="client-menu__due-at">
-          Submit by: {{ menu.due_at | moment('M/d/Y') }}
+          Submit by: {{ menu.due_at | moment('M/D/Y') }}
         </div>
       </div>
 

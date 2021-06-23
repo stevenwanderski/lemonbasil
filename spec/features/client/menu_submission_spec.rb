@@ -17,8 +17,8 @@ describe 'Client: Menu Submission', js: true do
   describe 'Initial rendering' do
     it 'shows the client info and menu items' do
       expect(page).to have_content('Frank Zappa')
-      expect(page).to have_content('Prep date: March 2, 2021')
-      expect(page).to have_content('Submit by: February 28, 2021')
+      expect(page).to have_content('Prep date: 3/2/2021')
+      expect(page).to have_content('Submit by: 2/28/2021')
       expect(page).to have_content('Total Estimate: $0')
       expect(page).to have_content('Selected items: 0')
 

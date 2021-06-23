@@ -181,6 +181,7 @@ describe 'Admin: Client Menu: Items', js: true do
   end
 
   describe 'Copy Menu' do
+    let!(:client2) { create(:client, first_name: 'David', last_name: 'Bowie') }
     let!(:category1) { create(:client_menu_category, name: 'Dinner', client_menu: client_menu) }
     let!(:menu_item1) { create(:client_menu_item, name: 'Beef', client_menu_category: category1) }
 
@@ -193,9 +194,11 @@ describe 'Admin: Client Menu: Items', js: true do
       click_link 'Copy Menu'
       fill_in 'dupe_job_date', with: '02/15/21'
       fill_in 'dupe_due_at', with: '02/13/21'
+      select 'David Bowie', from: 'dupe_client'
       click_button 'Submit'
 
       expect(page).to have_content('February 15, 2021')
+      expect(page).to have_content('David Bowie')
 
       menu = ClientMenu.order(created_at: :desc).first
       expect(page).to have_current_path(

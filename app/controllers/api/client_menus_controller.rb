@@ -34,6 +34,7 @@ class Api::ClientMenusController < ApiController
     client_menu = ClientMenu.find(params[:client_menu_id])
 
     values = {
+      client_id: params[:client_id],
       due_at: params[:due_at],
       job_date: params[:job_date]
     }

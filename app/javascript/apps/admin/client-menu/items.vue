@@ -4,6 +4,7 @@
 
     <div v-if="loaded">
       <menu-header
+        :clients="clients"
         :menu="menu"
         :on-dupe-submit="saveDupe"
         :on-menu-submit="saveMenu"
@@ -99,6 +100,7 @@ export default {
 
     saveDupe(values) {
       const data = {
+        client_id: values.clientId,
         due_at: values.dueAt,
         job_date: values.jobDate
       };
@@ -152,6 +154,7 @@ export default {
 
   props: [
     'activePage',
+    'clients',
     'menuId',
     'token'
   ]

@@ -86,6 +86,15 @@
           ></datepicker>
         </div>
 
+        <div class="form-item">
+          <label for="client" class="label">Client</label>
+          <select name="dupe_client" v-model="clientId" class="input--select">
+            <option v-for="client in clients" v-bind:value="client.id">
+              {{client.full_name}}
+            </option>
+          </select>
+        </div>
+
         <div class="form-actions">
           <button class="button button--submit">
             Submit
@@ -110,6 +119,7 @@
 
     data() {
       return {
+        clientId: this.clients[0].id,
         dupeDueAt: null,
         dupeJobDate: null,
         dueAt: this.menu.due_at,
@@ -129,6 +139,7 @@
         }
 
         const values = {
+          clientId: this.clientId,
           dueAt: this.dupeDueAt,
           jobDate: this.dupeJobDate,
         }
@@ -187,6 +198,7 @@
     },
 
     props: [
+      'clients',
       'menu',
       'onDupeSubmit',
       'onMenuSubmit'

@@ -89,17 +89,21 @@ describe 'Admin: Client Menu: Categories', js: true do
   end
 
   describe 'Menu form' do
+    let!(:client2) { create(:client, first_name: 'David', last_name: 'Bowie') }
+
     before do
       visit admin_client_menu_categories_path(client_menu_id: client_menu.id)
     end
 
-    it 'updates the menu date' do
+    it 'updates the menu info' do
       find('.hamburger-nav__control').click
       click_link 'Edit'
       fill_in 'job_date', with: '02/28/21'
+      select 'David Bowie', from: 'dupe_client'
       click_button 'Submit'
 
       expect(page).to have_content('February 28, 2021')
+      expect(page).to have_content('David Bowie')
       expect(page).to_not have_link('Edit')
     end
   end

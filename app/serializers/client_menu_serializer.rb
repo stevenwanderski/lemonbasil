@@ -3,6 +3,7 @@ class ClientMenuSerializer < ActiveModel::Serializer
 
   attributes :id,
     :client_full_name,
+    :client_id,
     :due_at,
     :message,
     :slug_url,

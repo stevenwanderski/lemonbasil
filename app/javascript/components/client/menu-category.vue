@@ -10,9 +10,10 @@
       </div>
     </div>
 
-    <div v-for="item in items" class="client-menu-item" :data-item-id="item.id">
+    <div v-for="item in menuItems" class="client-menu-item" :data-item-id="item.id">
       <input
         :id="`item-${item.id}`"
+        :checked="item.selected"
         type="checkbox"
         @change="clickItem(item, $event)">
 
@@ -71,12 +72,9 @@
       }
     },
 
-    mounted() {
-      this.fetchMenuItems();
-    },
-
     props: [
       'category',
+      'menuItems',
       'onClickItem',
       'token'
     ]

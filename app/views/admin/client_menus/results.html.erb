@@ -12,10 +12,10 @@
 </div>
 
 <div class="menu-body">
-  <% if @client_menu.client_menu_submission.present? %>
+  <% if @client_menu.newest_submission.present? %>
     <%= render 'submission',
         client_menu: @client_menu,
-        submission: @client_menu.client_menu_submission
+        submission: @client_menu.newest_submission
     %>
   <% else %>
     <div class="empty">

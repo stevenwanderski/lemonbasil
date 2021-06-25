@@ -23,9 +23,10 @@
     <div class="content" v-if="loaded">
       <div class="client-menu__categories">
         <client-menu-category
-          v-for="category in categories"
-          :category="category"
-          :key="category.id"
+          v-for="section in sections"
+          :category="section.category"
+          :menu-items="section.items"
+          :key="section.category.id"
           :on-click-item="clickItem"
           :token="token"
         ></client-menu-category>
@@ -85,11 +86,21 @@ export default {
   },
 
   data() {
+    const initialSelected = [];
+
+    this.sections.forEach((section) => {
+      section.items.forEach((item) => {
+        if (item.selected) {
+          initialSelected.push(item);
+        }
+      });
+    });
+
     return {
       loaded: false,
       loading: true,
       menu: null,
-      selectedItems: []
+      selectedItems: initialSelected
     }
   },
 
@@ -169,7 +180,6 @@ export default {
   mounted() {
     Promise.all([
       this.fetchMenu(),
-      this.fetchCategories()
     ]).then((results) => {
       this.loading = false;
       this.loaded = true;
@@ -177,6 +187,7 @@ export default {
   },
 
   props: [
+    'sections',
     'menuId',
     'token'
   ]

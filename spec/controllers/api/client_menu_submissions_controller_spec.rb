@@ -36,7 +36,7 @@ describe Api::ClientMenuSubmissionsController do
     it 'creates a client menu submission and client menu selections' do
       subject
 
-      submission = menu.client_menu_submission
+      submission = menu.newest_submission
       selections = submission.client_menu_selections
 
       expect(submission.total).to eq(32)

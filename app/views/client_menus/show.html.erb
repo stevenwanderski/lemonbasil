@@ -1,9 +1,83 @@
-<%= javascript_pack_tag 'client/menu' %>
+<script src="https://unpkg.com/unpoly@2.4.1/unpoly.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/unpoly@2.4.1/unpoly.min.css">
 
-<div id="client-menu-app">
-  <client-menu-app
-    :sections="<%= @sections.to_json %>"
-    menu-id="<%= @menu_id %>"
-    token="<%= @token %>"
-  ></client-menu-app>
+<div class="client-menu">
+  <header>
+    <div class="client-menu__meta">
+      <div class="client-menu__client-name">
+        <%= @client.full_name %>
+      </div>
+      <div class="client-menu__due-at">
+        Prep date: <%= l(@menu.job_date, format: :date_only) %>
+      </div>
+      <div class="client-menu__due-at">
+        Submit by: <%= l(@menu.due_at, format: :date_only) %>
+      </div>
+    </div>
+
+    <a href="/" class="logo">
+      Lemon&amp;Basil
+    </a>
+  </header>
+
+  <div class="content">
+    <%= form_for(@client_menu_submission, html: { 'up-submit' => true }) do |f| %>
+    <div class="client-menu__categories">
+      <% @categories.each do |category| %>
+        <div data-category-id="33" class="client-menu__category-section">
+          <div class="client-menu__category">
+            <h2 class="client-menu__category-name">
+              <%= category.name %>
+            </h2>
+
+            <div class="client-menu__category-description">
+              <%= category.description %>
+            </div>
+          </div>
+
+          <% category.client_menu_items.order(weight: :asc).each do |item| %>
+            <div class="client-menu-item">
+              <%= check_box_tag 'client_menu_submission[client_menu_item_ids][]', item.id %>
+
+              <div class="client-menu-item__section">
+                <div class="client-menu-item__row">
+                  <label for="item-145" class="client-menu-item__label">
+                    <%= item.name %>
+                  </label>
+                  <div class="client-menu-item__cost">
+                    $<%= item.cost %>
+                  </div>
+                </div>
+                <div class="client-menu-item__row">
+                  <div class="client-menu-item__description">
+                    <%= item.description %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      <% end %>
+    </div>
+
+    <div class="client-menu-actions">
+      <div class="client-menu-actions__inner">
+        <div>
+          <div class="client-menu-actions__total">
+            Total Estimate: <strong>$?</strong>
+          </div>
+
+          <div class="client-menu-actions__count">
+            Selected items: 0
+          </div>
+        </div>
+
+        <button class="button button--submit">
+          Submit Order
+        </button>
+      </div>
+    </div>
+    <% end %>
+  </div>
 </div>

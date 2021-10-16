@@ -10,8 +10,9 @@
 #  client_menu_id :integer
 #
 class ClientMenuSubmission < ApplicationRecord
-  has_many :client_menu_selections
   belongs_to :client_menu
+  has_many :client_menu_selections
+  has_many :client_menu_items, through: :client_menu_selections
 
   def categories
     client_menu_selections.map do |selection|

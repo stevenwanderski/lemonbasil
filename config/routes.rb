@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get '/menus/:slug', to: 'client_menus#show', as: 'menu_slug'
   get '/menus/:slug/success', to: 'client_menus#success', as: 'menu_slug_success'
 
+  resources :client_menu_submissions, only: [:create]
+
   namespace :admin do
     get '/pages', to: 'pages#index'
     get '/pages/:slug', to: 'pages#edit', as: :page

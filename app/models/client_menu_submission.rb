@@ -14,6 +14,14 @@ class ClientMenuSubmission < ApplicationRecord
   has_many :client_menu_selections
   has_many :client_menu_items, through: :client_menu_selections
 
+  def running_total
+    client_menu_items.inject(0) { |sum, item| sum + item.cost.to_i }
+  end
+
+  def running_quantity
+    client_menu_items.size
+  end
+
   def categories
     client_menu_selections.map do |selection|
       selection

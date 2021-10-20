@@ -32,7 +32,7 @@ describe ClientMenuMailer do
 
       expect(body).to have_content('Frank Zappa Meal Prep Menu')
       expect(body).to have_content('Total estimate: $22')
-      expect(body).to have_content('Prep date: 03/02/2021')
+      expect(body).to have_content('Prep date: 3/2/2021')
 
       expect(body).to have_content('Breakfast')
       expect(body).to have_content('Eggs Benny $7')

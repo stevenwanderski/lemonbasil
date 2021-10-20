@@ -1,24 +1,25 @@
 class ClientMenuSubmissionsController < ApplicationController
+  layout 'minimal'
+
+  def new
+    @menu = ClientMenu.find_by(slug: params[:slug])
+    @client = @menu.client
+    @categories = @menu.client_menu_categories.order(weight: :asc)
+    @client_menu_submission = @menu.newest_submission || ClientMenuSubmission.new
+  end
+
   def create
-    client_menu_submission = ClientMenuSubmission.new(client_menu_submission_params)
+    @client_menu_submission = ClientMenuSubmission.new(client_menu_submission_params)
 
-    ap client_menu_submission.client_menu_selections
+    @menu = ClientMenu.find(params[:client_menu_id])
+    @client = @menu.client
+    @categories = @menu.client_menu_categories.order(weight: :asc)
 
-    # client_menu_submission = ClientMenuSubmission.create!(client_menu_submission_params)
-
-    # params[:client_menu_item_ids].each do |id|
-    #   client_menu_submission.client_menu_selections.create!(
-    #     client_menu_item_id: id
-    #   )
-    # end
-    #
-    # client_menu = ClientMenu.find(params[:client_menu_id])
-    # ClientMenuMailer
-    #   .with(client_menu: client_menu)
-    #   .client_submission
-    #   .deliver
-    #
-    # render json: client_menu_submission
+    if !request.headers['X-Up-Validate']
+      @client_menu_submission.client_menu = @menu
+      @client_menu_submission.save!
+      redirect_to menu_slug_success_path(slug: @menu.slug)
+    end
   end
 
   def show
@@ -31,7 +32,6 @@ class ClientMenuSubmissionsController < ApplicationController
   private
 
   def client_menu_submission_params
-    params.require(:client_menu_submission).permit!
-    # params.permit(:client_menu_id, :message, :total)
+    params.require(:client_menu_submission).permit! if !params[:client_menu_submission].blank?
   end
 end

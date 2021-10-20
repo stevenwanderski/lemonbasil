@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post '/contact', to: 'contact#create'
   get '/contact-success', to: 'contact#success'
 
-  get '/menus/:slug', to: 'client_menus#show', as: 'menu_slug'
+  get '/menus/:slug', to: 'client_menu_submissions#new', as: 'menu_slug'
   get '/menus/:slug/success', to: 'client_menus#success', as: 'menu_slug_success'
 
   resources :client_menu_submissions, only: [:create]

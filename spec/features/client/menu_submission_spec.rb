@@ -10,11 +10,11 @@ describe 'Client: Menu Submission', js: true do
   let!(:item3) { create(:client_menu_item, client_menu_category: category2, name: 'Chicken and Veggies', cost: 22) }
   let!(:item4) { create(:client_menu_item, client_menu_category: category2, name: 'Carrot Soup', cost: 9) }
 
-  before do
-    visit menu_slug_path(slug: menu.slug)
-  end
-
   describe 'Initial rendering' do
+    before do
+      visit menu_slug_path(slug: menu.slug)
+    end
+
     it 'shows the client info and menu items' do
       expect(page).to have_content('Frank Zappa')
       expect(page).to have_content('Prep date: 3/2/2021')
@@ -37,6 +37,10 @@ describe 'Client: Menu Submission', js: true do
   end
 
   describe 'Item Selections' do
+    before do
+      visit menu_slug_path(slug: menu.slug)
+    end
+
     it 'updates the total and item count on selection' do
       check "item-#{item1.id}"
       expect(page).to have_content('Total Estimate: $7')
@@ -67,6 +71,36 @@ describe 'Client: Menu Submission', js: true do
       check "item-#{item1.id}"
       click_button 'Submit Order'
 
+      expect(accept_alert).to eq('Are you sure you want to submit your selections?')
+      expect(page).to have_content('thank you!')
+    end
+  end
+
+  describe 'Edit Submission' do
+    let!(:submission) do
+      create(:client_menu_submission,
+        client_menu: menu,
+        client_menu_item_ids: [item2.id, item3.id]
+      )
+    end
+
+    it 'displays the previously selected items' do
+      visit menu_slug_path(slug: menu.slug)
+
+      expect(page).to have_field("item-#{item2.id}", checked: true)
+      expect(page).to have_field("item-#{item3.id}", checked: true)
+      expect(page).to have_field("item-#{item1.id}", checked: false)
+      expect(page).to have_field("item-#{item4.id}", checked: false)
+    end
+
+    it 'saves the updated values' do
+      visit menu_slug_path(slug: menu.slug)
+
+      check "item-#{item1.id}"
+      expect(page).to have_content('Total Estimate: $41')
+      expect(page).to have_content('Selected items: 3')
+
+      click_button 'Submit Order'
       expect(accept_alert).to eq('Are you sure you want to submit your selections?')
       expect(page).to have_content('thank you!')
     end

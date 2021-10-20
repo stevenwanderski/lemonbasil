@@ -151,6 +151,8 @@ GEM
     jsonapi-renderer (0.2.2)
     kramdown (2.3.0)
       rexml
+    launchy (2.5.0)
+      addressable (~> 2.7)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -318,6 +320,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   kramdown
+  launchy
   pg (>= 0.18, < 2.0)
   premailer-rails
   puma (~> 4.1)

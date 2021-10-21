@@ -18,6 +18,12 @@ class ClientMenuSubmissionsController < ApplicationController
     if !request.headers['X-Up-Validate']
       @client_menu_submission.client_menu = @menu
       @client_menu_submission.save!
+
+      ClientMenuMailer
+        .with(client_menu: @menu)
+        .client_submission
+        .deliver
+
       redirect_to menu_slug_success_path(slug: @menu.slug)
     end
   end

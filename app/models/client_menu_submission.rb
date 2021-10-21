@@ -41,6 +41,8 @@ class ClientMenuSubmission < ApplicationRecord
   private
 
   def set_total
+    return if self.total.present?
+    
     self.total = self.running_total
   end
 end

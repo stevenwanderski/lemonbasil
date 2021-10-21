@@ -2,17 +2,35 @@ require 'spec_helper'
 
 describe ClientMenuSubmission do
   describe '#set_total' do
-    it 'sets the total on before save' do
-      menu = create(:client_menu)
-      item1 = create(:client_menu_item, cost: 7)
-      item2 = create(:client_menu_item, cost: 8)
+    context 'total value does not exist' do
+      it 'sets the total from the running total on before save' do
+        menu = create(:client_menu)
+        item1 = create(:client_menu_item, cost: 7)
+        item2 = create(:client_menu_item, cost: 8)
 
-      submission = ClientMenuSubmission.create!(
-        client_menu: menu,
-        client_menu_item_ids: [item1.id, item2.id]
-      )
+        submission = ClientMenuSubmission.create!(
+          client_menu: menu,
+          client_menu_item_ids: [item1.id, item2.id]
+        )
 
-      expect(submission.total).to eq(15)
+        expect(submission.total).to eq(15)
+      end
+    end
+
+    context 'total value exists' do
+      it 'keeps the total value' do
+        menu = create(:client_menu)
+        item1 = create(:client_menu_item, cost: 7)
+        item2 = create(:client_menu_item, cost: 8)
+
+        submission = ClientMenuSubmission.create!(
+          client_menu: menu,
+          client_menu_item_ids: [item1.id, item2.id],
+          total: 99
+        )
+
+        expect(submission.total).to eq(99)
+      end
     end
   end
 

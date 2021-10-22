@@ -69,6 +69,7 @@ describe 'Client: Menu Submission', js: true do
 
     it 'redirects to success page' do
       check "item-#{item1.id}"
+      fill_in 'Notes', with: 'These are my notes.'
       click_button 'Submit Order'
 
       expect(accept_alert).to eq('Are you sure you want to submit your selections?')

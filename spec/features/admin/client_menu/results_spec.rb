@@ -26,7 +26,14 @@ describe 'Admin: Client Menu: Results', js: true do
     end
 
     context 'submission exists' do
-      let!(:submission) { create(:client_menu_submission, client_menu: menu, total: 22, created_at: '2021-03-02') }
+      let!(:submission) do
+        create(:client_menu_submission,
+          client_menu: menu,
+          total: 22,
+          created_at: '2021-03-02'
+        )
+      end
+
       let!(:category1) { create(:client_menu_category, client_menu: menu, name: 'Breakfast') }
       let!(:category2) { create(:client_menu_category, client_menu: menu, name: 'Dinner') }
       let!(:item1) { create(:client_menu_item, client_menu_category: category1, name: 'Eggs Benny', cost: 7) }
@@ -53,6 +60,16 @@ describe 'Admin: Client Menu: Results', js: true do
         within("[data-category-id='#{category2.id}']") do
           expect(page).to have_content('Dinner')
           expect(page).to have_content('Chicken and Veggies $22')
+        end
+      end
+
+      context 'notes exist' do
+        it 'shows the notes' do
+          submission.update!(notes: 'I am notes!')
+
+          visit admin_client_menu_results_path(client_menu_id: menu.id)
+
+          expect(page).to have_content('I am notes!')
         end
       end
     end

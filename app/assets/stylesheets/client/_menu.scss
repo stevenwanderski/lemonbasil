@@ -43,6 +43,18 @@
     color: #7c7c7c;
     font-weight: 300;
   }
+
+  &__notes {
+    margin-bottom: 60px;
+  }
+
+  &__notes-label {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 300;
+    margin-bottom: 6px;
+    display: block;
+  }
 }
 
 @media screen and (max-width: 800px) {

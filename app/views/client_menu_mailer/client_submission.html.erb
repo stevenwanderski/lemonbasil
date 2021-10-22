@@ -28,4 +28,16 @@
       <% end %>
     </div>
   <% end %>
+
+  <% if @submission.notes? %>
+    <div class="submission__notes">
+      <div class="submission__notes-label">
+        Notes
+      </div>
+
+      <div class="submission__notes-value">
+        <%= simple_format(@submission.notes) %>
+      </div>
+    </div>
+  <% end %>
 </div>

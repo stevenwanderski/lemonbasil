@@ -3,7 +3,7 @@ require 'spec_helper'
 describe ClientMenuMailer do
   let!(:client) { create(:client) }
   let!(:menu) { create(:client_menu, client: client, job_date: '2021-03-02') }
-  let!(:submission) { create(:client_menu_submission, client_menu: menu, total: 22) }
+  let!(:submission) { create(:client_menu_submission, client_menu: menu, total: 22, notes: 'I am notes!') }
 
   let!(:category1) { create(:client_menu_category, client_menu: menu, name: 'Breakfast') }
   let!(:category2) { create(:client_menu_category, client_menu: menu, name: 'Dinner') }
@@ -40,6 +40,12 @@ describe ClientMenuMailer do
 
       expect(body).to have_content('Dinner')
       expect(body).to have_content('Chicken and Veggies $22')
+    end
+
+    it 'shows the notes' do
+      body = Capybara.string(mail.body.encoded)
+
+      expect(body).to have_content('I am notes!')
     end
   end
 end

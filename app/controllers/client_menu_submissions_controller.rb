@@ -15,7 +15,7 @@ class ClientMenuSubmissionsController < ApplicationController
     @client = @menu.client
     @categories = @menu.client_menu_categories.order(weight: :asc)
 
-    if !request.headers['X-Up-Validate']
+    if !up.validate?
       @client_menu_submission.client_menu = @menu
       @client_menu_submission.save!
 

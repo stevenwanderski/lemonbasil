@@ -36,14 +36,14 @@ class ClientMenuSubmission < ApplicationRecord
   def items(category)
     client_menu_selections.filter do |selection|
       selection.client_menu_item.client_menu_category_id == category.id
-    end.map(&:client_menu_item)
+    end
   end
 
   private
 
   def set_total
     return if self.total.present?
-    
+
     self.total = self.running_total
   end
 end

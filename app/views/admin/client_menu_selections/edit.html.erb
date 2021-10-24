@@ -1,0 +1,25 @@
+<div class="submission__item">
+  <% item = @client_menu_selection.client_menu_item %>
+  <div>
+    <span><%= item.name %> <strong>$<%= item.cost %></strong></span>
+  </div>
+
+  <div class="instruction-form">
+    <%= form_for(@client_menu_selection,
+        url: admin_client_menu_selection_path(@client_menu_selection),
+        html: {
+          'up-target' => '.submission__item'
+        }
+    ) do |f| %>
+      <%= f.fields_for :instruction, @instruction do |ff| %>
+        <%= ff.text_area :text %>
+      <% end %>
+
+      <%= f.submit 'Save' %>
+
+      <a href="<%= admin_client_menu_selection_path(@client_menu_selection) %>" up-target=".submission__item">
+        Cancel
+      </a>
+    <% end %>
+  </div>
+</div>

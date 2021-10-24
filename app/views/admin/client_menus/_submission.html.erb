@@ -13,10 +13,11 @@
     <div class="submission__category-group" data-category-id="<%= category.id %>">
       <h2><%= category.name %></h2>
 
-      <% submission.items(category).each do |item| %>
-        <div class="submission__item" data-item-id="<%= item.id %>">
-          <%= item.name %> <strong>$<%= item.cost %></strong>
-        </div>
+      <% submission.items(category).each do |selection| %>
+        <%= render 'admin/client_menu_selections/selection',
+            selection: selection,
+            item: selection.client_menu_item
+        %>
       <% end %>
     </div>
   <% end %>

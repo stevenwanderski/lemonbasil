@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :menus
     resources :clients
+    resources :client_menu_selections
     resources :client_menus, only: [:index, :show] do
       get '/categories', action: :categories
       get '/menu_items', action: :menu_items

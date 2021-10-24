@@ -12,4 +12,7 @@
 class ClientMenuSelection < ApplicationRecord
   belongs_to :client_menu_submission
   belongs_to :client_menu_item
+  has_one :instruction
+
+  accepts_nested_attributes_for :instruction
 end

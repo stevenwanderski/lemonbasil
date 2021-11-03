@@ -8,18 +8,21 @@
     <%= form_for(@client_menu_selection,
         url: admin_client_menu_selection_path(@client_menu_selection),
         html: {
-          'up-target' => '.submission__item'
+          'up-target' => '.submission__item',
+          'up-history' => 'false'
         }
     ) do |f| %>
       <%= f.fields_for :instruction, @instruction do |ff| %>
-        <%= ff.text_area :text %>
+        <%= ff.text_area :text, class: 'input--textarea my-5' %>
       <% end %>
 
-      <%= f.submit 'Save' %>
+      <%= f.submit 'Save', class: 'button' %>
 
-      <a href="<%= admin_client_menu_selection_path(@client_menu_selection) %>" up-target=".submission__item">
-        Cancel
-      </a>
+      <%= link_to 'Cancel',
+          admin_client_menu_selection_path(@client_menu_selection),
+          class: 'text-sm',
+          'up-target' => '.submission__item'
+      %>
     <% end %>
   </div>
 </div>

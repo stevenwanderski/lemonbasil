@@ -7,7 +7,12 @@ class Admin::ClientMenuSelectionsController < AdminController
 
   def update
     @client_menu_selection = ClientMenuSelection.find(params[:id])
-    @client_menu_selection.update!(client_menu_selection_params)
+
+    if @client_menu_selection.update(client_menu_selection_params)
+      redirect_to admin_client_menu_selection_path(@client_menu_selection)
+    else
+      render :edit, status: 422
+    end
   end
 
   def show

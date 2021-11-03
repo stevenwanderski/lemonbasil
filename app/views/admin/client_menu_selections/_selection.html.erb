@@ -1,13 +1,17 @@
-<div class="submission__item" data-item-id="<%= item.id %>">
+<div id="item-<%= item.id %>" class="submission__item" data-item-id="<%= item.id %>">
   <div>
     <span><%= item.name %> <strong>$<%= item.cost %></strong></span>
 
-    <a href="<%= edit_admin_client_menu_selection_path(selection.id) %>" up-follow up-target=".submission__item">
+    <a href="<%= edit_admin_client_menu_selection_path(selection.id) %>"
+       up-target=".submission__item"
+       up-history="false">
       Edit instruction
     </a>
   </div>
 
   <% if selection.instruction.present? %>
-    <%= selection.instruction.text %>
+    <div class="text-gray-400 text-sm max-w-prose">
+      <%= selection.instruction.text %>
+    </div>
   <% end %>
 </div>

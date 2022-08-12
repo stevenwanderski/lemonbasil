@@ -20,7 +20,7 @@ describe Api::EventsController do
       let(:params) { { date: date } }
 
       before do
-        headers = { 'Authorization' => encode_token('secret-token') }
+        headers = { 'Authorization' => encode_token(ENV['API_TOKEN']) }
         request.headers.merge! headers
       end
 

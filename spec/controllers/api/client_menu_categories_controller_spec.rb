@@ -8,7 +8,7 @@ describe Api::ClientMenuCategoriesController do
   describe '#update_weights' do
     before do
       headers = {
-        'Authorization' => encode_token('secret-token'),
+        'Authorization' => encode_token(ENV['API_TOKEN']),
         'Content-Type' => 'application/json;charset=UTF-8'
       }
       request.headers.merge! headers

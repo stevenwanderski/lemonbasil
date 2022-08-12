@@ -3,6 +3,7 @@ require 'spec_helper'
 describe 'Admin: Client Menu: Categories', js: true do
   let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
   let!(:client_menu) { create(:client_menu, job_date: '2021-02-09', client: client) }
+  let!(:category) { nil }
 
   before do
     user = create(:user)
@@ -52,7 +53,6 @@ describe 'Admin: Client Menu: Categories', js: true do
       fill_in 'name', with: 'Snacks'
       click_button 'Submit'
 
-      expect(page).to have_content('Loading')
       expect(page).to have_content('Snacks')
     end
 

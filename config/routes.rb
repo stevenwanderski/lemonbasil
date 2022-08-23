@@ -24,8 +24,6 @@ Rails.application.routes.draw do
     get '/calendar', to: 'calendar#index'
     patch '/calendar', to: 'calendar#update', as: :update_calendar
 
-    resources :categories
-    resources :menus
     resources :clients
     resources :client_menus, only: [:index, :show] do
       get '/categories', action: :categories

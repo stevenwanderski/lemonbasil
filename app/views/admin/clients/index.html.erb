@@ -5,10 +5,12 @@
 
 <div class="rows">
   <% @clients.each do |client| %>
-  <div class="row" data-id="<%= client.id %>">
-    <div class="row__name">
-      <%= link_to client.full_name, edit_admin_client_path(client) %>
+    <div class="row" data-id="<%= client.id %>">
+      <div class="row__name">
+        <%= link_to client.full_name, edit_admin_client_path(client) %>
+      </div>
     </div>
-  </div>
   <% end %>
+
+  <%= paginate @clients %>
 </div>

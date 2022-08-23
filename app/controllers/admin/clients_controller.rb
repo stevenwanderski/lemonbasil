@@ -1,6 +1,6 @@
 class Admin::ClientsController < AdminController
   def index
-    @clients = Client.all.order(last_name: :asc)
+    @clients = Client.order(last_name: :asc).page(params[:page]).per(10)
   end
 
   def new

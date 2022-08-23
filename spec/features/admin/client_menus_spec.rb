@@ -55,7 +55,6 @@ describe 'Admin: Client Menus', js: true do
       fill_in 'job_date', with: '04/15/2021'
       click_button 'Submit'
 
-      expect(page).to have_content('Loading...')
       expect(page).to_not have_content('New Client Menu')
       expect(page).to have_content('David Bowie: April 15, 2021')
     end

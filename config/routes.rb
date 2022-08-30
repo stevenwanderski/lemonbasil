@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    get 'meals/index'
+    get 'meals/create'
+    get 'meals/update'
+    get 'meals/destroy'
+  end
   devise_for :users
   root to: 'pages#home'
 
@@ -25,6 +31,8 @@ Rails.application.routes.draw do
     patch '/calendar', to: 'calendar#update', as: :update_calendar
 
     resources :clients
+    resources :meals
+
     resources :client_menus, only: [:index, :show] do
       get '/categories', action: :categories
       get '/menu_items', action: :menu_items

@@ -25,7 +25,7 @@ class Admin::MealsController < AdminController
     @meal = Meal.find(params[:id])
 
     if @meal.update(meal_params)
-      redirect_to admin_meal_path(@meal), notice: 'Successfully updated.'
+      redirect_to edit_admin_meal_path(@meal), notice: 'Successfully updated.'
     else
       render 'edit'
     end

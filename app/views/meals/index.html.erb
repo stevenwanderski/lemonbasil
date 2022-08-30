@@ -1,0 +1,52 @@
+<style>
+  input {
+    font-size: 34px;
+    padding: 14px;
+    border-radius: 10px;
+    border: solid 1px #ccc;
+    width: 100%;
+  }
+
+  input::placeholder {
+    color: #ccc;
+    font-weight: normal;
+  }
+
+  input:focus-visible {
+    outline: none;
+  }
+
+  .autocomplete-suggestion {
+    padding: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .autocomplete-suggestions {
+    border: solid 1px #ccc;
+    background: #FFF;
+    overflow: auto;
+    margin-top: -7px;
+  }
+
+  .autocomplete-selected { background: #F0F0F0; }
+  .autocomplete-suggestions strong { font-weight: normal; }
+  .autocomplete-group { padding: 2px 5px; }
+</style>
+
+<div>
+  <h1>meal instructions</h1>
+  <input id="autocomplete" type="text" placeholder="start typing a meal...">
+</div>
+
+<script>
+  $('#autocomplete').autocomplete({
+    lookup: <%= raw @meals.to_json %>,
+
+    onSelect: function (suggestion) {
+      window.location.href = `/meals/${suggestion.data}`;
+    }
+});
+</script>

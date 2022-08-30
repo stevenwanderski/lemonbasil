@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-  namespace :admin do
-    get 'meals/index'
-    get 'meals/create'
-    get 'meals/update'
-    get 'meals/destroy'
-  end
   devise_for :users
   root to: 'pages#home'
 
@@ -21,6 +15,7 @@ Rails.application.routes.draw do
   get '/menus/:slug/success', to: 'client_menus#success', as: 'menu_slug_success'
 
   resources :client_menu_submissions, only: [:create]
+  resources :meals, only: [:index, :show]
 
   namespace :admin do
     get '/pages', to: 'pages#index'

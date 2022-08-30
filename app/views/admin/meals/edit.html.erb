@@ -10,8 +10,17 @@
 
   <div class="form-item">
     <%= f.label :instructions, class: 'label' %>
-    <%= f.text_area :instructions, class: 'input--text' %>
+    <%= f.text_area :instructions, class: 'input--textarea' %>
   </div>
+
+  <div class="form-item">
+    <p class="hint">
+      <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank">
+        <strong>💁</strong> Click here to see formatting tips!
+      </a>
+    </p>
+  </div>
+
 
   <div class="form-actions">
     <%= f.submit 'Submit', class: 'button button--submit' %>

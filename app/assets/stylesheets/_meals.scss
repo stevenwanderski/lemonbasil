@@ -1,0 +1,52 @@
+.meals {
+  input {
+    font-size: 34px;
+    padding: 14px;
+    border-radius: 10px;
+    border: solid 1px #ccc;
+    width: 100%;
+  }
+
+  input::placeholder {
+    color: #ccc;
+    font-weight: normal;
+  }
+
+  input:focus-visible {
+    outline: none;
+  }
+}
+
+.meal {
+  h1 {
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+.autocomplete-suggestion {
+  padding: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.autocomplete-suggestions {
+  border: solid 1px #ccc;
+  background: #FFF;
+  overflow: auto;
+  margin-top: -7px;
+}
+
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; }
+.autocomplete-group { padding: 2px 5px; }

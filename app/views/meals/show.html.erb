@@ -1,5 +1,12 @@
-<div>
-  <h1><%= @meal.name %></h1>
+<div class="meal">
+  <div class="meal__header">
+    <h1><%= @meal.name %></h1>
+
+    <div>
+      <%= link_to 'Back to Meals', meals_path %>
+    </div>
+  </div>
+
   <div>
     <%= @instructions.html_safe %>
   </div>

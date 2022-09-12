@@ -1,10 +1,11 @@
 <div class="meals">
   <h1>meal instructions</h1>
-  <input id="autocomplete" type="text" placeholder="start typing a meal...">
+  <label for="meal-search" class="sr-only">meal search</label>
+  <input id="meal-search" type="text" placeholder="start typing a meal...">
 </div>
 
 <script>
-  $('#autocomplete').autocomplete({
+  $('#meal-search').autocomplete({
     lookup: <%= raw @meals.to_json %>,
 
     onSelect: function (suggestion) {

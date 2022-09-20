@@ -4,7 +4,7 @@ class ClientMenuMailer < ApplicationMailer
     @submission = @client_menu.newest_submission
 
     mail(
-      from: 'Lemon&Basil Menu Submission <hello@lemonandbasil.co>',
+      from: 'L&B Menu Submission <hello@lemonandbasil.co>',
       to: "#{@client_menu.client.full_name} <#{@client_menu.client.email}>",
       bcc: "Birdie <lemonandbasil.co@gmail.com>",
       subject: "Menu Submission: #{@client_menu.client.full_name} - #{@client_menu.job_date.strftime("%m/%d/%Y")}"

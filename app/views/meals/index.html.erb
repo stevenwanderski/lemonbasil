@@ -7,6 +7,7 @@
 <script>
   $('#meal-search').autocomplete({
     lookup: <%= raw @meals.to_json %>,
+    triggerSelectOnValidInput: false,
 
     onSelect: function (suggestion) {
       window.location.href = `/meals/${suggestion.data}`;

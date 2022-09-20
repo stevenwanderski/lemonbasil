@@ -40,3 +40,5 @@ module Lemonbasil
     config.time_zone = 'Central Time (US & Canada)'
   end
 end
+
+Rails.application.routes.default_url_options[:host] = 'lemonandbasil.co'

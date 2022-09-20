@@ -20,6 +20,7 @@
           <a href="" @click="clickEdit($event)">Edit</a>
           <a href="" @click="clickDuplicate($event)">Copy Menu</a>
           <a :href="menu.slug_url" target="_blank">Public View</a>
+          <a :href="`/admin/client_menus/${menu.id}/send_to_client`" @click="clickSendToClient($event)">Send to Client</a>
         </div>
       </div>
     </div>
@@ -195,6 +196,12 @@
         event.preventDefault();
         this.showingModal = true;
         this.navOpen = false;
+      },
+
+      clickSendToClient(event) {
+        if (!confirm(`Are you sure? This menu will be sent to ${this.menu.client_email}`)) {
+          event.preventDefault();
+        }
       },
 
       closeModal() {

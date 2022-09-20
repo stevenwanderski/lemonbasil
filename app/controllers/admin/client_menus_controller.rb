@@ -69,6 +69,17 @@ class Admin::ClientMenusController < AdminController
     redirect_to admin_client_menus_path, notice: 'Client Menu deleted!'
   end
 
+  def send_to_client
+    client_menu = ClientMenu.find(params[:client_menu_id])
+
+    ClientMenuMailer
+      .with(client_menu: client_menu)
+      .send_to_client
+      .deliver_now
+
+    redirect_to admin_client_menu_path(client_menu), notice: 'Client Menu was sent!'
+  end
+
   private
 
   def client_menu_params

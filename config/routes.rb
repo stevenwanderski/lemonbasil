@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get '/categories', action: :categories
       get '/menu_items', action: :menu_items
       get '/results', action: :results
+      get '/send_to_client', action: :send_to_client
     end
 
     root to: redirect('/users/sign_in')

@@ -17,6 +17,9 @@ Rails.application.routes.draw do
   resources :client_menu_submissions, only: [:create]
   resources :instructions, only: [:index, :show]
 
+  get '/meals', to: redirect('/instructions')
+  get '/meals/:id', to: redirect('/instructions/%{id}')
+
   namespace :admin do
     get '/pages', to: 'pages#index'
     get '/pages/:slug', to: 'pages#edit', as: :page

@@ -1,4 +1,4 @@
-class Admin::MealsController < AdminController
+class Admin::InstructionsController < AdminController
   def index
     @meals = Meal.order(name: :asc).page(params[:page])
   end
@@ -15,7 +15,7 @@ class Admin::MealsController < AdminController
     @meal = Meal.new(meal_params)
 
     if @meal.save
-      redirect_to edit_admin_meal_path(@meal), notice: "Successfully created #{@meal.name}"
+      redirect_to edit_admin_instruction_path(@meal), notice: "Successfully created #{@meal.name}"
     else
       render 'new'
     end
@@ -25,7 +25,7 @@ class Admin::MealsController < AdminController
     @meal = Meal.find(params[:id])
 
     if @meal.update(meal_params)
-      redirect_to edit_admin_meal_path(@meal), notice: 'Successfully updated.'
+      redirect_to edit_admin_instruction_path(@meal), notice: 'Successfully updated.'
     else
       render 'edit'
     end
@@ -34,7 +34,7 @@ class Admin::MealsController < AdminController
   def destroy
     @meal = Meal.find(params[:id])
     @meal.destroy
-    redirect_to admin_meals_path, notice: "Successfully deleted #{@meal.name}"
+    redirect_to admin_instructions_path, notice: "Successfully deleted #{@meal.name}"
   end
 
   private

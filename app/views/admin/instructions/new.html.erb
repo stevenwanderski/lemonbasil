@@ -1,12 +1,12 @@
 <div class="admin-header">
-  <h1>New Meal</h1>
+  <h1>New Instruction</h1>
 </div>
 
-<%= form_for([:admin, @meal]) do |f| %>
+<%= form_for(@meal, url: admin_instructions_path) do |f| %>
   <%= render 'form', f: f %>
 
   <div class="form-actions">
     <%= f.submit 'Submit', class: 'button button--submit' %>
-    <%= link_to 'Cancel', admin_meals_path %>
+    <%= link_to 'Cancel', admin_instructions_path %>
   </div>
 <% end %>

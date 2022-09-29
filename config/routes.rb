@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   get '/menus/:slug/success', to: 'client_menus#success', as: 'menu_slug_success'
 
   resources :client_menu_submissions, only: [:create]
-  resources :meals, only: [:index, :show]
+  resources :instructions, only: [:index, :show]
 
   namespace :admin do
     get '/pages', to: 'pages#index'
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     patch '/calendar', to: 'calendar#update', as: :update_calendar
 
     resources :clients
-    resources :meals
+    resources :instructions
 
     resources :client_menus, only: [:index, :show] do
       get '/categories', action: :categories

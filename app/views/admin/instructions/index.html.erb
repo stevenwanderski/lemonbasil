@@ -1,13 +1,13 @@
 <div class="admin-header">
-  <h1>Meals</h1>
-  <p><%= link_to '+ Add Meal', new_admin_meal_path, class: 'button' %></p>
+  <h1>Instructions</h1>
+  <p><%= link_to '+ Add Instruction', new_admin_instruction_path, class: 'button' %></p>
 </div>
 
 <div class="rows">
   <% @meals.each do |meal| %>
     <div class="row" data-id="<%= meal.id %>">
       <div class="row__name">
-        <%= link_to meal.name, edit_admin_meal_path(meal) %>
+        <%= link_to meal.name, edit_admin_instruction_path(meal) %>
       </div>
     </div>
   <% end %>

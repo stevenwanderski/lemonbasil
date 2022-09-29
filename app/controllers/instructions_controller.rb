@@ -1,4 +1,4 @@
-class MealsController < ApplicationController
+class InstructionsController < ApplicationController
   def index
     @meals = Meal.order(name: :asc).map do |meal|
       { value: meal.name, data: meal.id }

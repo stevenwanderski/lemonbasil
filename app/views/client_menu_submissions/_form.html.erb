@@ -45,9 +45,13 @@
                     <label class="client-menu-item__label" for="item-<%= item.id %>">
                       <%= item.name %>
                     </label>
-                    <div class="client-menu-item__cost">
-                      $<%= item.cost %>
-                    </div>
+
+                    <% if false %>
+                      <div class="client-menu-item__cost">
+                        $<%= item.cost %>
+                      </div>
+                    <% end %>
+
                   </div>
                   <div class="client-menu-item__row">
                     <div class="client-menu-item__description">
@@ -70,9 +74,11 @@
       <div class="client-menu-actions">
         <div class="client-menu-actions__inner">
           <div>
-            <div class="client-menu-actions__total">
-              Total Estimate: <strong>$<%= @client_menu_submission.running_total %></strong>
-            </div>
+            <% if false %>
+              <div class="client-menu-actions__total">
+                Total Estimate: <strong>$<%= @client_menu_submission.running_total %></strong>
+              </div>
+            <% end %>
 
             <div class="client-menu-actions__count">
               Selected items: <%= @client_menu_submission.running_quantity %>

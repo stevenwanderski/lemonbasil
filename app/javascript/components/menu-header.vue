@@ -59,6 +59,16 @@
           </select>
         </div>
 
+        <div class="form-item form-item--checkbox">
+          <input
+            type="checkbox"
+            name="show_pricing"
+            id="show_pricing"
+            v-model="showPricing"
+          />
+          <label for="show_pricing" class="label">Show Pricing</label>
+        </div>
+
         <div class="form-actions">
           <button class="button button--submit">
             Submit
@@ -136,7 +146,8 @@
         jobDate: this.menu.job_date,
         navOpen: false,
         showingModal: false,
-        showingDupeModal: false
+        showingDupeModal: false,
+        showPricing: this.menu.show_pricing
       }
     },
 
@@ -152,6 +163,7 @@
           clientId: this.clientId,
           dueAt: this.dupeDueAt,
           jobDate: this.dupeJobDate,
+          showPricing: this.showPricing
         }
 
         this.onDupeSubmit(values).then(() => {
@@ -170,6 +182,7 @@
           clientId: this.clientId,
           dueAt: this.dueAt,
           jobDate: this.jobDate,
+          showPricing: this.showPricing
         }
 
         this.onMenuSubmit(values).then(() => {

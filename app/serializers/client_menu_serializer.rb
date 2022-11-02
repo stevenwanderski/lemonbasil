@@ -9,7 +9,8 @@ class ClientMenuSerializer < ActiveModel::Serializer
     :message,
     :slug_url,
     :url,
-    :job_date
+    :job_date,
+    :show_pricing
 
   def client_full_name
     object.client.full_name

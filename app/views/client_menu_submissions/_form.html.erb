@@ -46,7 +46,7 @@
                       <%= item.name %>
                     </label>
 
-                    <% if false %>
+                    <% if @menu.show_pricing? %>
                       <div class="client-menu-item__cost">
                         $<%= item.cost %>
                       </div>
@@ -74,7 +74,7 @@
       <div class="client-menu-actions">
         <div class="client-menu-actions__inner">
           <div>
-            <% if false %>
+            <% if @menu.show_pricing? %>
               <div class="client-menu-actions__total">
                 Total Estimate: <strong>$<%= @client_menu_submission.running_total %></strong>
               </div>

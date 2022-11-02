@@ -2,7 +2,7 @@
 
 <div class="submission">
   <div class="submission__header">
-    <% if false %>
+    <% if @client_menu.show_pricing? %>
       <div class="submission__total">
         Total estimate: <strong>$<%= @submission.total %></strong>
       </div>
@@ -20,7 +20,11 @@
       <% @submission.items(category).each do |item| %>
         <div class="submission__item">
           <div class="submission__item-name">
-            <%= item.name %> <strong>$<%= item.cost %></strong>
+            <%= item.name %>
+
+            <% if @client_menu.show_pricing? %>
+              <strong>$<%= item.cost %></strong>
+            <% end %>
           </div>
 
           <div class="submission__item-description">

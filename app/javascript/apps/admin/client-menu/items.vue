@@ -124,7 +124,8 @@ export default {
         client_id: values.clientId,
         due_at: values.dueAt,
         job_date: values.jobDate,
-        message: values.message
+        message: values.message,
+        show_pricing: values.showPricing
       };
 
       const options = {

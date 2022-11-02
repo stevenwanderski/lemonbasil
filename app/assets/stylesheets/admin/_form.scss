@@ -66,6 +66,17 @@
     display: flex;
     gap: 30px;
   }
+
+  &--checkbox {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .label {
+      margin-bottom: 0;
+      cursor: pointer;
+    }
+  }
 }
 
 .form-actions {

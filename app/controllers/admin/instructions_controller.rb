@@ -1,6 +1,10 @@
 class Admin::InstructionsController < AdminController
   def index
     @meals = Meal.order(name: :asc).page(params[:page])
+
+    @meals_lookup = Meal.order(name: :asc).map do |meal|
+      { value: meal.name, data: meal.id }
+    end
   end
 
   def new

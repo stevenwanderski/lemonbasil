@@ -3,6 +3,26 @@
   <p><%= link_to '+ Add Instruction', new_admin_instruction_path, class: 'button' %></p>
 </div>
 
+<div style="margin: 14px 0;">
+  <input
+    id="meal-search"
+    type="text"
+    placeholder="Start typing a meal..."
+    class="input--select"
+  >
+</div>
+
+<script>
+  $('#meal-search').autocomplete({
+    lookup: <%= raw @meals_lookup.to_json %>,
+    triggerSelectOnValidInput: false,
+
+    onSelect: function (suggestion) {
+      window.location.href = `/admin/instructions/${suggestion.data}/edit`;
+    }
+  });
+</script>
+
 <div class="rows">
   <% @meals.each do |meal| %>
     <div class="row" data-id="<%= meal.id %>">

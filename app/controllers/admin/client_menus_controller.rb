@@ -22,13 +22,14 @@ class Admin::ClientMenusController < AdminController
 
   def edit
     @client_menu = ClientMenu.find(params[:id])
+    @clients = Client.all.order(last_name: :asc)
   end
 
   def update
     @client_menu = ClientMenu.find(params[:id])
 
-    if @client_menu.update!(client_menu_params)
-      redirect_to admin_client_menus_path, notice: 'Client Menu updated!'
+    if @client_menu.update(client_menu_params)
+      redirect_to edit_admin_client_menu_path(@client_menu), notice: 'Client Menu updated!'
     else
       flash.now[:error] = 'Could not save'
       render :edit
@@ -46,10 +47,9 @@ class Admin::ClientMenusController < AdminController
   end
 
   def categories
-    @clients = ActiveModelSerializers::SerializableResource.new(Client.all)
-    @token = ENV['API_TOKEN']
-    @active_page = 'categories'
-    @client_menu_id = params[:client_menu_id]
+    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client = @client_menu.client
+    @categories = @client_menu.client_menu_categories
   end
 
   def menu_items
@@ -80,9 +80,20 @@ class Admin::ClientMenusController < AdminController
     redirect_to admin_client_menu_path(client_menu), notice: 'Client Menu was sent!'
   end
 
+  def update_category_weights
+    weights = params[:weights]
+
+    weights.each do |id, weight|
+      category = ClientMenuCategory.find(id)
+      category.update!(weight: weight)
+    end
+
+    render json: { status: 'success' }, status: 200
+  end
+
   private
 
   def client_menu_params
-    params.require(:client_menu).permit(:client_id)
+    params.require(:client_menu).permit!
   end
 end

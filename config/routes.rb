@@ -31,11 +31,12 @@ Rails.application.routes.draw do
     resources :clients
     resources :instructions
 
-    resources :client_menus, only: [:index, :show] do
+    resources :client_menus do
       get '/categories', action: :categories
       get '/menu_items', action: :menu_items
       get '/results', action: :results
       get '/send_to_client', action: :send_to_client
+      post '/update_category_weights', action: :update_category_weights
     end
 
     root to: redirect('/users/sign_in')

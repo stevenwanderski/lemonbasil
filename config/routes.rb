@@ -37,10 +37,11 @@ Rails.application.routes.draw do
       get '/results', action: :results
       get '/send_to_client', action: :send_to_client
       post '/update_category_weights', action: :update_category_weights
-      post '/duplicate', action: :duplicate
 
       resources :categories, controller: 'client_menus/categories'
+      resources :duplicates, only: [:new, :create], controller: 'client_menus/duplicates'
     end
+
 
     root to: redirect('/users/sign_in')
   end

@@ -93,25 +93,6 @@ class Admin::ClientMenusController < AdminController
     render json: { status: 'success' }, status: 200
   end
 
-  def update_category
-
-  end
-
-  def duplicate
-    client_menu = ClientMenu.find(params[:client_menu_id])
-
-    values = {
-      client_id: client_menu_params[:client_id],
-      due_at: client_menu_params[:due_at],
-      job_date: client_menu_params[:job_date],
-      show_pricing: client_menu_params[:show_pricing]
-    }
-
-    menu = client_menu.duplicate!(values)
-
-    redirect_to admin_client_menu_path(menu)
-  end
-
   private
 
   def client_menu_params

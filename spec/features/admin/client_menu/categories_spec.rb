@@ -118,7 +118,7 @@ describe 'Admin: Client Menu: Categories', js: true do
     end
 
     it 'redirects to the new menu' do
-      # find('.hamburger-nav__control').click
+      find('.hamburger-nav__control').click
       click_link 'Copy Menu'
       fill_in 'Prep Date', with: '02/15/2021'
       fill_in 'Due Date', with: '02/13/2021'
@@ -130,7 +130,7 @@ describe 'Admin: Client Menu: Categories', js: true do
 
       menu = ClientMenu.order(created_at: :desc).first
       expect(page).to have_current_path(
-        admin_client_menu_menu_items_path(client_menu_id: menu.id)
+        admin_client_menu_categories_path(client_menu_id: menu.id)
       )
     end
 

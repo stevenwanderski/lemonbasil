@@ -34,6 +34,13 @@ class Admin::ClientMenus::CategoriesController < AdminController
     end
   end
 
+  def destroy
+    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @category = ClientMenuCategory.find(params[:id])
+    @category.destroy!
+    @categories = @client_menu.client_menu_categories.order(:weight)
+  end
+
   private
 
   def category_params

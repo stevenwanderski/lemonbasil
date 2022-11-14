@@ -10,6 +10,15 @@
     <button data-modal-close class="link">
       Cancel
     </button>
+
+    <%= link_to 'Delete',
+        admin_client_menu_category_path(@client_menu, @category),
+        class: 'link link--danger',
+        data: {
+          confirm: 'Are you sure?',
+          turbo_method: :delete
+        }
+    %>
   </div>
 <% end %>
 

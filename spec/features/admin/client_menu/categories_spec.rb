@@ -111,16 +111,19 @@ describe 'Admin: Client Menu: Categories', js: true do
   describe 'Copy Menu' do
     let!(:category1) { create(:client_menu_category, name: 'Dinner', client_menu: client_menu) }
     let!(:menu_item1) { create(:client_menu_item, name: 'Beef', client_menu_category: category1) }
+    let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
 
     before do
       visit admin_client_menu_categories_path(client_menu_id: client_menu.id)
     end
 
     it 'redirects to the new menu' do
-      find('.hamburger-nav__control').click
+      # find('.hamburger-nav__control').click
       click_link 'Copy Menu'
-      fill_in 'dupe_job_date', with: '02/15/21'
-      fill_in 'dupe_due_at', with: '02/13/21'
+      fill_in 'Prep Date', with: '02/15/2021'
+      fill_in 'Due Date', with: '02/13/2021'
+      page.execute_script('$(".datepicker").datepicker("hide");')
+      select 'Frank Zappa', from: 'Client'
       click_button 'Submit'
 
       expect(page).to have_content('February 15, 2021')

@@ -1,0 +1,9 @@
+<%
+output = render 'admin/client_menus/category',
+  category: @category,
+  client_menu: @client_menu
+%>
+
+$('#<%= dom_id(@category) %>').html('<%= j(output) %>');
+
+$('.modal').hide();

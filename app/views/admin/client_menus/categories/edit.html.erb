@@ -1,0 +1,6 @@
+<%= form_for(@category, url: admin_client_menu_category_path(@client_menu, @category)) do |f| %>
+  <div class="form-item">
+    <%= f.label :name, class: 'label' %>
+    <%= f.text_field :name, class: 'input--text' %>
+  </div>
+<% end %>

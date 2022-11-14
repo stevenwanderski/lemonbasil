@@ -49,7 +49,9 @@ class Admin::ClientMenusController < AdminController
   def categories
     @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
-    @categories = @client_menu.client_menu_categories
+    @categories = @client_menu.client_menu_categories.order(:weight)
+    @new_client_menu = ClientMenu.new
+    @clients = Client.all.order(:last_name)
   end
 
   def menu_items
@@ -83,12 +85,31 @@ class Admin::ClientMenusController < AdminController
   def update_category_weights
     weights = params[:weights]
 
-    weights.each do |id, weight|
+    weights.each_with_index do |id, weight|
       category = ClientMenuCategory.find(id)
       category.update!(weight: weight)
     end
 
     render json: { status: 'success' }, status: 200
+  end
+
+  def update_category
+
+  end
+
+  def duplicate
+    client_menu = ClientMenu.find(params[:client_menu_id])
+
+    values = {
+      client_id: client_menu_params[:client_id],
+      due_at: client_menu_params[:due_at],
+      job_date: client_menu_params[:job_date],
+      show_pricing: client_menu_params[:show_pricing]
+    }
+
+    menu = client_menu.duplicate!(values)
+
+    redirect_to admin_client_menu_path(menu)
   end
 
   private

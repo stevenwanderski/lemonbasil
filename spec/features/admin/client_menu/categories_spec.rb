@@ -26,8 +26,8 @@ describe 'Admin: Client Menu: Categories', js: true do
       end
 
       it 'opens the category form' do
-        click_button '+ Add Category'
-        expect(page).to have_field(:name)
+        click_link '+ Add Category'
+        expect(page).to have_field('Name')
       end
     end
 
@@ -49,17 +49,17 @@ describe 'Admin: Client Menu: Categories', js: true do
     end
 
     it 'creates a category' do
-      click_button '+ Add Category'
-      fill_in 'name', with: 'Snacks'
-      click_button 'Submit'
+      click_link '+ Add Category'
+      fill_in 'Name', with: 'Snacks'
+      click_button 'Save'
 
       expect(page).to have_content('Snacks')
     end
 
     it 'edits a category' do
       click_link 'Dinner'
-      fill_in 'name', with: 'Lunch'
-      click_button 'Submit'
+      fill_in 'Name', with: 'Lunch'
+      click_button 'Save'
 
       expect(page).to_not have_content('Dinner')
       expect(page).to have_content('Lunch')
@@ -67,24 +67,24 @@ describe 'Admin: Client Menu: Categories', js: true do
 
     it 'deletes a category' do
       click_link 'Dinner'
-      click_button 'Delete'
+      click_link 'Delete'
 
       expect(accept_alert).to eq('Are you sure?')
       expect(page).to_not have_content('Dinner')
     end
 
     it 'shows validation message' do
-      click_button '+ Add Category'
-      click_button 'Submit'
+      click_link '+ Add Category'
+      click_button 'Save'
 
-      expect(accept_alert).to eq('Name is required')
+      expect(page).to have_content('This field is required')
     end
 
     it 'closes when clicking cancel' do
-      click_button '+ Add Category'
+      click_link '+ Add Category'
       click_button 'Cancel'
 
-      expect(page).to_not have_field(:name)
+      expect(page).to_not have_field('Name')
     end
   end
 
@@ -98,12 +98,10 @@ describe 'Admin: Client Menu: Categories', js: true do
     it 'updates the menu info' do
       find('.hamburger-nav__control').click
       click_link 'Edit'
-      fill_in 'job_date', with: '02/28/21'
-      select 'David Bowie', from: 'dupe_client'
+      fill_in 'Prep Date', with: '02/28/2021'
       click_button 'Submit'
 
       expect(page).to have_content('February 28, 2021')
-      expect(page).to have_content('David Bowie')
       expect(page).to_not have_link('Edit')
     end
   end
@@ -139,17 +137,15 @@ describe 'Admin: Client Menu: Categories', js: true do
       click_link 'Copy Menu'
       click_button 'Cancel'
 
-      expect(page).to_not have_field(:dupe_due_at)
+      expect(page).to_not have_field('Prep Date')
     end
 
     it 'shows validation message' do
       find('.hamburger-nav__control').click
       click_link 'Copy Menu'
-      fill_in 'dupe_job_date', with: ''
-      fill_in 'dupe_due_at', with: ''
       click_button 'Submit'
 
-      expect(accept_alert).to eq('Due Date and Prep Date are required')
+      expect(page).to have_content('This field is required')
     end
   end
 end

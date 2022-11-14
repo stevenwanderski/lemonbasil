@@ -3,7 +3,7 @@
     <%= @client.full_name %>
   </div>
 
-  <div class="menu-header__date">
+  <div class="menu-header__date" id="client_menu_header_job_date">
     <%= l(@client_menu.job_date, format: :full_month) %>
   </div>
 
@@ -15,14 +15,20 @@
     </button>
 
     <div class="hamburger-nav__body" style="display: none;">
-      <%= link_to 'Edit', edit_admin_client_menu_path(@client_menu) %>
+      <%= link_to 'Edit',
+          edit_admin_client_menu_path(@client_menu),
+          data: { turbo_frame: 'modal' }
+      %>
 
       <%= link_to 'Copy Menu',
           new_admin_client_menu_duplicate_path(@client_menu),
           data: { turbo_frame: 'modal' }
       %>
 
-      <%= link_to 'Public View', menu_slug_path(@client_menu.slug), target: '_blank' %>
+      <%= link_to 'Public View',
+          menu_slug_path(@client_menu.slug),
+          target: '_blank'
+      %>
 
       <%= link_to 'Send to Client',
           admin_client_menu_send_to_client_path(@client_menu),
@@ -52,7 +58,11 @@
       </div>
 
       <div class="empty__control">
-        <button class="button button--light" @click="clickAdd">+ Add Category</button>
+        <%= link_to '+ Add Category',
+            new_admin_client_menu_category_path(@client_menu),
+            class: 'button button--light',
+            data: { turbo_frame: 'modal' }
+        %>
       </div>
     </div>
 

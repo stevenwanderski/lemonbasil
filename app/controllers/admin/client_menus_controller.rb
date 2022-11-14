@@ -29,10 +29,9 @@ class Admin::ClientMenusController < AdminController
     @client_menu = ClientMenu.find(params[:id])
 
     if @client_menu.update(client_menu_params)
-      redirect_to edit_admin_client_menu_path(@client_menu), notice: 'Client Menu updated!'
+      render 'update'
     else
-      flash.now[:error] = 'Could not save'
-      render :edit
+      render 'edit', status: 422
     end
   end
 

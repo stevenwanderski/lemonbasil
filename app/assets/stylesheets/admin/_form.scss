@@ -93,6 +93,13 @@
   color: $red;
 }
 
+label.error {
+  color: $red;
+  margin-top: 5px;
+  display: inline-block;
+  font-size: 14px;
+}
+
 .hint {
   margin-bottom: 40px;
 

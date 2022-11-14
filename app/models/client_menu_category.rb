@@ -13,4 +13,6 @@
 class ClientMenuCategory < ApplicationRecord
   belongs_to :client_menu
   has_many :client_menu_items
+
+  validates :name, presence: true
 end

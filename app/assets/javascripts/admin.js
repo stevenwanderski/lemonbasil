@@ -2,9 +2,9 @@
 //= require jquery_ujs
 //= require jquery-ui/widgets/sortable
 //= require jquery-ui/widgets/datepicker
+//= require vendor/jquery.validate.min
 //= require vendor/calendar.min
 //= require vendor/jquery.autocomplete.min
-//= require unpoly
 //= require admin/calendar
 
 $(function() {
@@ -12,17 +12,17 @@ $(function() {
     dateFormat: 'm/d/yy'
   });
 
-  $(document).on('click', '[data-modal-open]', function(event) {
-    event.preventDefault();
-    const id = $(this).data('modal-open');
+  // $(document).on('click', '[data-modal-open]', function(event) {
+  //   event.preventDefault();
+  //   const id = $(this).data('modal-open');
 
-    $(`[data-modal-id="${id}"]`).show();
-  });
+  //   $(`[data-modal-id="${id}"]`).show();
+  // });
 
   $(document).on('click', '[data-modal-overlay], [data-modal-close]', function(event) {
     event.preventDefault();
 
-    $('.modal').hide();
+    hideModal();
   });
 
   $(document).on('click', '.hamburger-nav__control', function(event) {
@@ -37,5 +37,16 @@ $(function() {
     }
 
     $('.hamburger-nav__body').hide();
-  })
+  });
+
+  $(document).on('turbo:submit-end', function(event) {
+    if (event.detail.success) {
+      hideModal();
+    }
+  });
 });
+
+function hideModal() {
+  $('#modal').get(0).removeAttribute('src');
+  $('#modal .modal').get(0).remove();
+}

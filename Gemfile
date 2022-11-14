@@ -19,6 +19,7 @@ gem 'deep_cloneable'
 gem 'unpoly-rails'
 gem 'kaminari'
 gem 'american_date'
+gem 'turbo-rails'
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

@@ -12,13 +12,6 @@ $(function() {
     dateFormat: 'm/d/yy'
   });
 
-  // $(document).on('click', '[data-modal-open]', function(event) {
-  //   event.preventDefault();
-  //   const id = $(this).data('modal-open');
-
-  //   $(`[data-modal-id="${id}"]`).show();
-  // });
-
   $(document).on('click', '[data-modal-overlay], [data-modal-close]', function(event) {
     event.preventDefault();
 

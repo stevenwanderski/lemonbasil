@@ -1,8 +1,37 @@
-<%= javascript_pack_tag 'admin/client_menus' %>
+<div>
+  <div class="admin-header">
+    <h1>Client Menus</h1>
 
-<div id="client-menus-app">
-  <client-menus-app
-    v-bind:clients="<%= @clients.to_json %>"
-    token="<%= @token %>"
-  ></client-menus-app>
+    <div>
+      <%= link_to '+ Add Client Menu',
+          new_admin_client_menu_path,
+          class: 'button',
+          data: {
+            turbo_frame: 'modal'
+          }
+      %>
+    </div>
+  </div>
+
+  <div class="rows">
+    <% if @client_menus.any? %>
+
+      <% @client_menus.each do |menu| %>
+        <div class="row">
+          <div class="row__name">
+            <%= link_to admin_client_menu_menu_items_path(menu) do %>
+              <%= menu.client.full_name %> <strong><%= l(menu.job_date, format: :full_month) %></strong>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= paginate @client_menus %>
+
+    <% else %>
+
+      <div>No menus yet.</div>
+
+    <% end %>
+  </div>
 </div>

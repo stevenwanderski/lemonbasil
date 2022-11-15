@@ -4,50 +4,6 @@
       <h1>Edit Client Menu</h1>
     </div>
 
-    <%= form_for([:admin, @client_menu]) do |f| %>
-      <div class="form-item">
-        <%= f.label :job_date, 'Prep Date', class: 'label' %>
-        <%= f.text_field :job_date,
-            class: 'datepicker input--text',
-            value: @client_menu.job_date&.strftime('%-m/%-d/%Y')
-        %>
-      </div>
-
-      <div class="form-item">
-        <%= f.label :due_at, 'Due Date', class: 'label' %>
-        <%= f.text_field :due_at,
-            class: 'datepicker input--text',
-            value: @client_menu.due_at&.strftime('%-m/%-d/%Y')
-        %>
-      </div>
-
-      <div class="form-item">
-        <%= f.label :client_id, 'Client', class: 'label' %>
-        <%= f.select :client_id,
-            @clients.map {|c| [c.full_name, c.id] },
-            {},
-            class: 'input--select'
-        %>
-      </div>
-
-      <div class="form-item form-item--checkbox">
-        <%= f.check_box :show_pricing %>
-        <%= f.label :show_pricing, class: 'label' %>
-      </div>
-
-      <div class="form-actions">
-        <button class="button button--submit">
-          Submit
-        </button>
-      </div>
-    <% end %>
-
-    <script>
-      $('.edit_client_menu .datepicker').datepicker({
-        dateFormat: 'm/d/yy'
-      });
-
-      $('.edit_client_menu').validate();
-    </script>
+    <%= render 'form', turbo_frame: 'modal' %>
   <% end %>
 <% end %>

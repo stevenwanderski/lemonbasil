@@ -99,7 +99,7 @@ describe 'Admin: Client Menu: Categories', js: true do
       find('.hamburger-nav__control').click
       click_link 'Edit'
       fill_in 'Prep Date', with: '02/28/2021'
-      click_button 'Submit'
+      click_button 'Save'
 
       expect(page).to have_content('February 28, 2021')
       expect(page).to_not have_link('Edit')

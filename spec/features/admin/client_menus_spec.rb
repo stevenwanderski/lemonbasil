@@ -7,16 +7,6 @@ describe 'Admin: Client Menus', js: true do
   end
 
   describe 'Initial rendering' do
-    context 'clients do not exist' do
-      it 'shows the add client message' do
-        visit admin_client_menus_path
-
-        expect(page).to have_content('Please add a client')
-        expect(page).to_not have_button('Add Client Menu')
-        expect(page).to_not have_content('No menus yet.')
-      end
-    end
-
     context 'clients exist' do
       let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
 
@@ -49,28 +39,31 @@ describe 'Admin: Client Menus', js: true do
 
     it 'creates a client menu' do
       visit admin_client_menus_path
-      click_button 'Add Client Menu'
-      select 'David Bowie', from: 'client'
-      fill_in 'due_at', with: '03/31/2021'
-      fill_in 'job_date', with: '04/15/2021'
-      click_button 'Submit'
+      click_link '+ Add Client Menu'
+      select 'David Bowie', from: 'Client'
+      fill_in 'Due Date', with: '03/31/2021'
+      fill_in 'Prep Date', with: '04/15/2021'
+      click_button 'Save'
 
       expect(page).to_not have_content('New Client Menu')
-      expect(page).to have_content('David Bowie: April 15, 2021')
+      expect(page).to have_content('Client Menu created!')
+      expect(page).to have_content('David Bowie April 15, 2021')
     end
 
     it 'closes when clicking cancel' do
       visit admin_client_menus_path
-      click_button 'Add Client Menu'
+      click_link '+ Add Client Menu'
       click_button 'Cancel'
+
       expect(page).to_not have_content('New Client Menu')
     end
 
     it 'shows validation message' do
       visit admin_client_menus_path
-      click_button 'Add Client Menu'
-      click_button 'Submit'
-      expect(accept_alert).to eq('Client and Prep Date are required')
+      click_link '+ Add Client Menu'
+      click_button 'Save'
+
+      expect(page).to have_content('This field is required')
     end
   end
 end

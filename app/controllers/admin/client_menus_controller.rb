@@ -1,12 +1,11 @@
 class Admin::ClientMenusController < AdminController
   def index
-    clients = Client.all.order(:last_name)
-    @clients = ActiveModelSerializers::SerializableResource.new(clients)
-    @token = ENV['API_TOKEN']
+    @client_menus = ClientMenu.all.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new
     @client_menu = ClientMenu.new
+    @clients = Client.all.order(:last_name)
   end
 
   def create

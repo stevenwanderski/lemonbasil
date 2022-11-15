@@ -1,19 +1,9 @@
-<div class="admin-header">
-  <h1>New Client Menu</h1>
-</div>
+<%= turbo_frame_tag 'modal' do %>
+  <%= render 'shared/modal' do %>
+    <div class="admin-header">
+      <h1>New Client Menu</h1>
+    </div>
 
-<%= form_for(@client_menu, url: admin_client_menus_path) do |f| %>
-  <div class="form-item">
-    <%= f.label :client_id, class: 'label' %>
-    <%= f.select :client_id,
-        Client.all.order(last_name: :asc).collect { |client| [client.full_name, client.id]},
-        { prompt: '- Select -' },
-        class: 'input--select'
-    %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.submit 'Submit', class: 'button' %>
-    <%= link_to 'Cancel', admin_client_menus_path %>
-  </div>
+    <%= render 'form', turbo_frame: '_top' %>
+  <% end %>
 <% end %>

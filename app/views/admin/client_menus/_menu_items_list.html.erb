@@ -1,0 +1,43 @@
+<div id="<%= dom_id(category) %>_list">
+  <div class="sortable-list">
+    <% items.each do |item| %>
+      <div class="sortable-item menu-item" data-menu-item-id="<%= item.id %>">
+        <div class="sortable-item__move">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <%= link_to item.name,
+            edit_admin_client_menu_item_path(item),
+            data: {
+              turbo_frame: 'modal'
+            }
+        %>
+      </div>
+    <% end %>
+  </div>
+
+  <script>
+    (function() {
+      const url = '<%= admin_client_menu_update_menu_item_weights_path(client_menu) %>';
+      const $list = $("#<%= dom_id(category) %>_list .sortable-list");
+
+      $list.sortable({
+        handle: '.sortable-item__move',
+
+        update: function() {
+          const weights = $list.find('[data-menu-item-id]').map(function() {
+            return $(this).data('menu-item-id');
+          }).get();
+
+          $.ajax({
+            url: url,
+            method: 'POST',
+            data: { weights: weights }
+          });
+        }
+      })
+    })();
+  </script>
+</div>

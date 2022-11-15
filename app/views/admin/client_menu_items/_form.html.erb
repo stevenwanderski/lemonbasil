@@ -1,0 +1,44 @@
+<%= form_for([:admin, @client_menu_item]) do |f| %>
+  <div class="form-item">
+    <%= f.label :name, class: 'label' %>
+    <%= f.text_field :name, class: 'input--text' %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :description, class: 'label' %>
+    <%= f.text_area :description, class: 'input--textarea' %>
+  </div>
+
+  <div class="form-item--flex">
+    <div class="form-item">
+      <%= f.label :cost, class: 'label' %>
+      <%= f.text_field :cost, class: 'input--text' %>
+    </div>
+
+    <div class="form-item">
+      <%= f.label :quantity, class: 'label' %>
+      <%= f.text_field :quantity, class: 'input--text' %>
+    </div>
+  </div>
+
+  <%= f.hidden_field :client_menu_category_id %>
+
+  <div class="form-actions">
+    <%= f.submit 'Save', class: 'button button--submit' %>
+
+    <button data-modal-close class="link">
+      Cancel
+    </button>
+
+    <% if @client_menu_item.persisted? %>
+      <%= link_to 'Delete',
+          admin_client_menu_item_path(@client_menu_item),
+          class: 'link link--danger',
+          data: {
+            confirm: 'Are you sure?',
+            turbo_method: :delete
+          }
+      %>
+    <% end %>
+  </div>
+<% end %>

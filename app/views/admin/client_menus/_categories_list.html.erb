@@ -15,22 +15,24 @@
   <% end %>
 
   <script>
-    var url = '<%= admin_client_menu_update_category_weights_path(client_menu) %>';
+    (function() {
+      const url = '<%= admin_client_menu_update_category_weights_path(client_menu) %>';
 
-    $('.sortable-list').sortable({
-      handle: '.sortable-item__move',
+      $('.sortable-list').sortable({
+        handle: '.sortable-item__move',
 
-      update: function() {
-        const weights = $('[data-category-id]').map(function() {
-          return $(this).data('category-id');
-        }).get();
+        update: function() {
+          const weights = $('[data-category-id]').map(function() {
+            return $(this).data('category-id');
+          }).get();
 
-        $.ajax({
-          url: url,
-          method: 'POST',
-          data: { weights: weights }
-        });
-      }
-    });
+          $.ajax({
+            url: url,
+            method: 'POST',
+            data: { weights: weights }
+          });
+        }
+      });
+    })();
   </script>
 </div>

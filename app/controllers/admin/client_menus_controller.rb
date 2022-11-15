@@ -49,15 +49,12 @@ class Admin::ClientMenusController < AdminController
     @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
     @categories = @client_menu.client_menu_categories.order(:weight)
-    @new_client_menu = ClientMenu.new
-    @clients = Client.all.order(:last_name)
   end
 
   def menu_items
-    @clients = ActiveModelSerializers::SerializableResource.new(Client.all)
-    @client_menu_id = params[:client_menu_id]
-    @token = ENV['API_TOKEN']
-    @active_page = 'menu_items'
+    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client = @client_menu.client
+    @categories = @client_menu.client_menu_categories.order(:weight)
   end
 
   def results
@@ -87,6 +84,17 @@ class Admin::ClientMenusController < AdminController
     weights.each_with_index do |id, weight|
       category = ClientMenuCategory.find(id)
       category.update!(weight: weight)
+    end
+
+    render json: { status: 'success' }, status: 200
+  end
+
+  def update_menu_item_weights
+    weights = params[:weights]
+
+    weights.each_with_index do |id, weight|
+      item = ClientMenuItem.find(id)
+      item.update!(weight: weight)
     end
 
     render json: { status: 'success' }, status: 200

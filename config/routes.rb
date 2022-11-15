@@ -51,26 +51,5 @@ Rails.application.routes.draw do
   namespace :api do
     get '/events', to: 'events#index'
     post '/events', to: 'events#create'
-    post '/categories/weights', to: 'categories#update_weights'
-    post '/menus/weights', to: 'menus#update_weights'
-
-    resources :client_menus, only: [:index, :create, :show, :update] do
-      get '/submission', action: 'submission'
-      post '/duplicate', action: 'duplicate'
-    end
-
-    resources :client_menu_submissions, only: [:create]
-
-    resources :client_menu_categories do
-      collection do
-        post '/weights', action: :update_weights
-      end
-    end
-
-    resources :client_menu_items do
-      collection do
-        post '/weights', action: :update_weights
-      end
-    end
   end
 end

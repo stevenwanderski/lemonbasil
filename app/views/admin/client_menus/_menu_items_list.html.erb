@@ -8,11 +8,9 @@
           <span></span>
         </div>
 
-        <%= link_to item.name,
-            edit_admin_client_menu_item_path(item),
-            data: {
-              turbo_frame: 'modal'
-            }
+        <%= render 'admin/client_menus/menu_item',
+            item: item,
+            client_menu: client_menu
         %>
       </div>
     <% end %>

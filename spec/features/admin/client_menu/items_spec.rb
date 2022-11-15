@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe 'Admin: Client Menu: Items', js: true do
   let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
+  let!(:category1) { nil }
+  let!(:category2) { nil }
+  let!(:menu_item1) { nil }
+  let!(:menu_item2) { nil }
 
   let!(:client_menu) do
     create(:client_menu,
@@ -78,14 +82,14 @@ describe 'Admin: Client Menu: Items', js: true do
 
     it 'creates a menu item' do
       within("[data-category-id='#{category1.id}']") do
-        click_button '+ Add Item'
+        click_link '+ Add Item'
       end
 
-      fill_in 'name', with: 'Beef'
-      fill_in 'description', with: 'Tender and juicy'
-      fill_in 'cost', with: '7'
-      fill_in 'quantity', with: '1 slab'
-      click_button 'Submit'
+      fill_in 'Name', with: 'Beef'
+      fill_in 'Description', with: 'Tender and juicy'
+      fill_in 'Cost', with: '7'
+      fill_in 'Quantity', with: '1 slab'
+      click_button 'Save'
 
       within("[data-category-id='#{category1.id}']") do
         expect(page).to have_content('Dinner')
@@ -93,18 +97,18 @@ describe 'Admin: Client Menu: Items', js: true do
       end
 
       click_link 'Beef'
-      expect(page).to have_field(:description, with: 'Tender and juicy')
-      expect(page).to have_field(:cost, with: '7')
-      expect(page).to have_field(:quantity, with: '1 slab')
+      expect(page).to have_field('Description', with: 'Tender and juicy')
+      expect(page).to have_field('Cost', with: '7')
+      expect(page).to have_field('Quantity', with: '1 slab')
     end
 
     it 'edits a menu item' do
       click_link 'Crisps'
-      fill_in 'name', with: 'Choco Crisps'
-      fill_in 'description', with: 'Light and airy'
-      fill_in 'cost', with: '15'
-      fill_in 'quantity', with: 'Sleeve of 5'
-      click_button 'Submit'
+      fill_in 'Name', with: 'Choco Crisps'
+      fill_in 'Description', with: 'Light and airy'
+      fill_in 'Cost', with: '15'
+      fill_in 'Quantity', with: 'Sleeve of 5'
+      click_button 'Save'
 
       within("[data-category-id='#{category2.id}']") do
         expect(page).to have_content('Snacks')
@@ -118,7 +122,7 @@ describe 'Admin: Client Menu: Items', js: true do
 
     it 'deletes a menu item' do
       click_link 'Crisps'
-      click_button 'Delete'
+      click_link 'Delete'
 
       expect(accept_alert).to eq('Are you sure?')
       expect(page).to_not have_content('Crisps')
@@ -126,17 +130,17 @@ describe 'Admin: Client Menu: Items', js: true do
 
     it 'shows validation message' do
       within("[data-category-id='#{category1.id}']") do
-        click_button '+ Add Item'
+        click_link '+ Add Item'
       end
 
-      click_button 'Submit'
+      click_button 'Save'
 
-      expect(accept_alert).to eq('Name and Cost are required')
+      expect(page).to have_content('This field is required')
     end
 
     it 'closes when clicking cancel' do
       within("[data-category-id='#{category1.id}']") do
-        click_button '+ Add Item'
+        click_link '+ Add Item'
       end
 
       click_button 'Cancel'
@@ -155,39 +159,18 @@ describe 'Admin: Client Menu: Items', js: true do
     it 'updates the menu info' do
       find('.hamburger-nav__control').click
       click_link 'Edit'
-      fill_in 'job_date', with: '02/15/21'
-      fill_in 'due_at', with: '02/13/21'
-      select 'David Bowie', from: 'dupe_client'
+      fill_in 'Prep Date', with: '02/28/2021'
       click_button 'Submit'
 
-      expect(page).to have_content('February 15, 2021')
-      expect(page).to have_content('David Bowie')
+      expect(page).to have_content('February 28, 2021')
       expect(page).to_not have_link('Edit')
-    end
-
-    it 'closes when clicking cancel' do
-      find('.hamburger-nav__control').click
-      click_link 'Edit'
-      click_button 'Cancel'
-
-      expect(page).to_not have_field(:due_at)
-    end
-
-    it 'shows validation message' do
-      find('.hamburger-nav__control').click
-      click_link 'Edit'
-      fill_in 'job_date', with: ''
-      fill_in 'due_at', with: ''
-      click_button 'Submit'
-
-      expect(accept_alert).to eq('Due Date and Prep Date are required')
     end
   end
 
   describe 'Copy Menu' do
-    let!(:client2) { create(:client, first_name: 'David', last_name: 'Bowie') }
     let!(:category1) { create(:client_menu_category, name: 'Dinner', client_menu: client_menu) }
     let!(:menu_item1) { create(:client_menu_item, name: 'Beef', client_menu_category: category1) }
+    let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
 
     before do
       visit admin_client_menu_menu_items_path(client_menu_id: client_menu.id)
@@ -196,17 +179,17 @@ describe 'Admin: Client Menu: Items', js: true do
     it 'redirects to the new menu' do
       find('.hamburger-nav__control').click
       click_link 'Copy Menu'
-      fill_in 'dupe_job_date', with: '02/15/21'
-      fill_in 'dupe_due_at', with: '02/13/21'
-      select 'David Bowie', from: 'dupe_client'
+      fill_in 'Prep Date', with: '02/15/2021'
+      fill_in 'Due Date', with: '02/13/2021'
+      page.execute_script('$(".datepicker").datepicker("hide");')
+      select 'Frank Zappa', from: 'Client'
       click_button 'Submit'
 
       expect(page).to have_content('February 15, 2021')
-      expect(page).to have_content('David Bowie')
 
       menu = ClientMenu.order(created_at: :desc).first
       expect(page).to have_current_path(
-        admin_client_menu_menu_items_path(client_menu_id: menu.id)
+        admin_client_menu_categories_path(client_menu_id: menu.id)
       )
     end
 
@@ -215,17 +198,15 @@ describe 'Admin: Client Menu: Items', js: true do
       click_link 'Copy Menu'
       click_button 'Cancel'
 
-      expect(page).to_not have_field(:dupe_due_at)
+      expect(page).to_not have_field('Prep Date')
     end
 
     it 'shows validation message' do
       find('.hamburger-nav__control').click
       click_link 'Copy Menu'
-      fill_in 'dupe_job_date', with: ''
-      fill_in 'dupe_due_at', with: ''
       click_button 'Submit'
 
-      expect(accept_alert).to eq('Due Date and Prep Date are required')
+      expect(page).to have_content('This field is required')
     end
   end
 end

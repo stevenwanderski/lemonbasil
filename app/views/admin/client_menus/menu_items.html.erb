@@ -2,25 +2,44 @@
 <%= render 'admin/client_menus/show/nav' %>
 
 <div class="menu-body">
-  <% @categories.each do |category| %>
-    <div class="menu-item-category" id="<%= dom_id(category) %>">
-      <div class="menu-item-category__header">
-        <h2><%= category.name %></h2>
+  <% if @categories.any? %>
 
-        <%= link_to '+ Add Item',
-            new_admin_client_menu_item_path(client_menu_category_id: category.id),
-            class: 'button',
-            data: {
-              turbo_frame: 'modal'
-            }
+    <% @categories.each do |category| %>
+      <div class="menu-item-category" id="<%= dom_id(category) %>" data-category-id="<%= category.id %>">
+        <div class="menu-item-category__header">
+          <h2><%= category.name %></h2>
+
+          <%= link_to '+ Add Item',
+              new_admin_client_menu_item_path(client_menu_category_id: category.id),
+              class: 'button',
+              data: {
+                turbo_frame: 'modal'
+              }
+          %>
+        </div>
+
+        <%= render 'admin/client_menus/menu_items_list',
+            items: category.client_menu_items.order(:weight),
+            category: category,
+            client_menu: @client_menu
         %>
       </div>
+    <% end %>
 
-      <%= render 'menu_items_list',
-          items: category.client_menu_items.order(:weight),
-          category: category,
-          client_menu: @client_menu
-      %>
+  <% else %>
+
+    <div class="empty">
+      <div class="empty__text">
+        Please add a category first 🤗
+      </div>
+
+      <div class="empty__control">
+        <%= link_to 'Go to categories page',
+            admin_client_menu_categories_path(@client_menu),
+            class: 'button'
+        %>
+      </div>
     </div>
+
   <% end %>
 </div>

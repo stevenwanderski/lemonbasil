@@ -1,0 +1,8 @@
+<div id="<%= dom_id(item) %>">
+  <%= link_to item.name,
+      edit_admin_client_menu_item_path(client_menu, item),
+      data: {
+        turbo_frame: 'modal'
+      }
+  %>
+</div>

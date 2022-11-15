@@ -1,0 +1,6 @@
+<%= turbo_stream.replace dom_id(@client_menu_item) do %>
+  <%= render 'admin/client_menus/menu_item',
+      item: @client_menu_item,
+      client_menu: @client_menu
+  %>
+<% end %>

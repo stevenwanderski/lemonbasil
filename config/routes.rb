@@ -41,9 +41,9 @@ Rails.application.routes.draw do
 
       resources :categories, controller: 'client_menus/categories'
       resources :duplicates, only: [:new, :create], controller: 'client_menus/duplicates'
+      resources :items, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/items'
     end
 
-    resources :client_menu_items, only: [:new, :create, :edit, :update, :destroy]
 
     root to: redirect('/users/sign_in')
   end

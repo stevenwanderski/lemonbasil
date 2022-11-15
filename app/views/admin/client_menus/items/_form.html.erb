@@ -1,7 +1,7 @@
 <%= form_for([:admin, @client_menu_item]) do |f| %>
   <div class="form-item">
     <%= f.label :name, class: 'label' %>
-    <%= f.text_field :name, class: 'input--text' %>
+    <%= f.text_field :name, class: 'input--text required' %>
   </div>
 
   <div class="form-item">
@@ -32,7 +32,7 @@
 
     <% if @client_menu_item.persisted? %>
       <%= link_to 'Delete',
-          admin_client_menu_item_path(@client_menu_item),
+          admin_client_menu_item_path(@client_menu, @client_menu_item),
           class: 'link link--danger',
           data: {
             confirm: 'Are you sure?',
@@ -42,3 +42,7 @@
     <% end %>
   </div>
 <% end %>
+
+<script>
+  $('.new_client_menu_item, .edit_client_menu_item').validate();
+</script>

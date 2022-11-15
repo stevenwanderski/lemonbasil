@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "#{dom_id(@category)}_list" do %>
+  <%= render 'admin/client_menus/menu_items_list',
+      items: @category.client_menu_items.order(:weight),
+      category: @category,
+      client_menu: @client_menu
+  %>
+<% end %>

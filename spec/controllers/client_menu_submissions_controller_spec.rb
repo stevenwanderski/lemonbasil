@@ -36,23 +36,5 @@ describe ClientMenuSubmissionsController do
     it 'sends a mailer to the client' do
       expect { subject }.to change(ActionMailer::Base.deliveries, :count).by(1)
     end
-
-    context 'validate header is present' do
-      before do
-        headers = {
-          'X-Up-Validate' => 'true',
-        }
-
-        request.headers.merge! headers
-      end
-
-      it 'does not create a submission record' do
-        expect { subject }.to change(ClientMenuSubmission, :count).by(0)
-      end
-
-      it 'does not send a mailer' do
-        expect { subject }.to change(ActionMailer::Base.deliveries, :count).by(0)
-      end
-    end
   end
 end

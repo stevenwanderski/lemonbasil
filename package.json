@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "@hotwired/stimulus": "^3.1.1",
     "@hotwired/turbo-rails": "^7.2.4",
+    "@rails/request.js": "^0.0.7",
     "@rails/webpacker": "5.2.1"
   },
   "devDependencies": {

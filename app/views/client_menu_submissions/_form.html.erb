@@ -18,7 +18,14 @@
   </header>
 
   <div class="content">
-    <%= form_for(@client_menu_submission, url: client_menu_submissions_path, method: :post, html: { 'up-validate' => '#form' }) do |f| %>
+    <%= form_for(@client_menu_submission,
+        url: client_menu_submissions_path,
+        method: :post,
+        data: {
+          controller: 'client-menu',
+          client_menu_url_value: update_totals_client_menu_submissions_path(client_menu_id: @menu.id)
+        }
+    ) do |f| %>
       <div class="client-menu__categories">
         <% @categories.each do |category| %>
           <div data-category-id="<%= category.id %>" class="client-menu__category-section">
@@ -37,7 +44,10 @@
                 <%= check_box_tag 'client_menu_submission[client_menu_item_ids][]',
                     item.id,
                     @client_menu_submission.client_menu_items.include?(item),
-                    id: "item-#{item.id}"
+                    id: "item-#{item.id}",
+                    data: {
+                      action: 'client-menu#toggle'
+                    }
                 %>
 
                 <div class="client-menu-item__section">
@@ -72,23 +82,10 @@
       </div>
 
       <div class="client-menu-actions">
-        <div class="client-menu-actions__inner">
-          <div>
-            <% if @menu.show_pricing? %>
-              <div class="client-menu-actions__total">
-                Total Estimate: <strong>$<%= @client_menu_submission.running_total %></strong>
-              </div>
-            <% end %>
-
-            <div class="client-menu-actions__count">
-              Selected items: <%= @client_menu_submission.running_quantity %>
-            </div>
-          </div>
-
-          <%= button_tag 'Submit Order',
-              class: 'button button--submit',
-              disabled: @client_menu_submission.running_quantity.zero?,
-              data: { confirm: 'Are you sure you want to submit your selections?' }
+        <div class="client-menu-actions__inner" id="footer">
+          <%= render 'footer',
+              client_menu_submission: @client_menu_submission,
+              client_menu: @menu
           %>
         </div>
       </div>

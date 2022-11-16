@@ -12,10 +12,15 @@ Rails.application.routes.draw do
   get '/contact-success', to: 'contact#success'
 
   get '/menus/:slug', to: 'client_menu_submissions#new', as: 'menu_slug'
-  get '/menus/:slug/success', to: 'client_menus#success', as: 'menu_slug_success'
+  get '/menus/:slug/success', to: 'client_menu_submissions#success', as: 'menu_slug_success'
 
-  resources :client_menu_submissions, only: [:create]
   resources :instructions, only: [:index, :show]
+
+  resources :client_menu_submissions, only: [:create] do
+    collection do
+      post '/update_totals', action: :update_totals
+    end
+  end
 
   get '/meals', to: redirect('/instructions')
   get '/meals/:id', to: redirect('/instructions/%{id}')

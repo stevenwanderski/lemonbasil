@@ -1,0 +1,17 @@
+<div>
+  <% if client_menu.show_pricing? %>
+    <div class="client-menu-actions__total">
+      Total Estimate: <strong>$<%= client_menu_submission.running_total %></strong>
+    </div>
+  <% end %>
+
+  <div class="client-menu-actions__count">
+    Selected items: <%= client_menu_submission.running_quantity %>
+  </div>
+</div>
+
+<%= button_tag 'Submit Order',
+    class: 'button button--submit',
+    disabled: @client_menu_submission.running_quantity.zero?,
+    data: { confirm: 'Are you sure you want to submit your selections?' }
+%>

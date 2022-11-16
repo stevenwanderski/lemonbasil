@@ -1,0 +1,6 @@
+<%= turbo_stream.update 'footer' do %>
+  <%= render 'footer',
+      client_menu_submission: @client_menu_submission,
+      client_menu: @client_menu
+  %>
+<% end %>

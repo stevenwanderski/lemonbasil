@@ -8,7 +8,10 @@ describe 'Admin: Client Menu: Items', js: true do
   let!(:menu_item2) { nil }
 
   let!(:client_menu) do
+    # Use a unique ID so that the menu and the items do not
+    # have the same IDs which results in a false positive "edit" test.
     create(:client_menu,
+      id: 999,
       due_at: '2021-02-01',
       job_date: '2021-02-05',
       client: client
@@ -189,7 +192,7 @@ describe 'Admin: Client Menu: Items', js: true do
 
       menu = ClientMenu.order(created_at: :desc).first
       expect(page).to have_current_path(
-        admin_client_menu_categories_path(client_menu_id: menu.id)
+        admin_client_menu_menu_items_path(client_menu_id: menu.id)
       )
     end
 

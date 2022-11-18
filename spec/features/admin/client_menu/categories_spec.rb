@@ -128,7 +128,7 @@ describe 'Admin: Client Menu: Categories', js: true do
 
       menu = ClientMenu.order(created_at: :desc).first
       expect(page).to have_current_path(
-        admin_client_menu_categories_path(client_menu_id: menu.id)
+        admin_client_menu_menu_items_path(client_menu_id: menu.id)
       )
     end
 

@@ -17,7 +17,7 @@ class Admin::ClientMenus::DuplicatesController < AdminController
 
     menu = client_menu.duplicate!(values)
 
-    redirect_to admin_client_menu_categories_path(menu), status: :see_other
+    redirect_to admin_client_menu_menu_items_path(menu), status: :see_other
   end
 
   private

@@ -1,5 +1,6 @@
 class Admin::ClientMenus::ItemsController < AdminController
   def new
+    @client_menu = ClientMenu.find(params[:client_menu_id])
     @client_menu_item = ClientMenuItem.new(
       client_menu_category_id: params[:client_menu_category_id]
     )

@@ -2,6 +2,6 @@
   <%= render 'shared/modal' do %>
     <h2>Menu Item</h2>
 
-    <%= render 'form' %>
+    <%= render 'form', url: admin_client_menu_items_path(@client_menu) %>
   <% end %>
 <% end %>

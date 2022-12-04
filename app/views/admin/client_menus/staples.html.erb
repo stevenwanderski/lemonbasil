@@ -1,0 +1,37 @@
+<%= render 'admin/client_menus/show/header' %>
+<%= render 'admin/client_menus/show/nav' %>
+
+<div class="menu-body">
+  <% if @staples.empty? %>
+
+    <div class="empty">
+      <div class="empty__text">
+        No staples. Add one now!
+      </div>
+
+      <div class="empty__control">
+        <%= link_to '+ Add Staple',
+            new_admin_client_menu_staple_path(@client_menu),
+            class: 'button button--light',
+            data: { turbo_frame: 'modal' }
+        %>
+      </div>
+    </div>
+
+  <% else %>
+
+    <div class="staples-list">
+      <%= render 'staples_list',
+          staples: @staples,
+          client_menu: @client_menu
+      %>
+
+      <%= link_to '+ Add Staple',
+          new_admin_client_menu_staple_path(@client_menu),
+          class: 'button button--light',
+          data: { turbo_frame: 'modal' }
+      %>
+    </div>
+
+  <% end %>
+</div>

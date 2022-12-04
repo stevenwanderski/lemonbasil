@@ -1,0 +1,9 @@
+.staples-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  > .button {
+    flex-grow: 0;
+  }
+}

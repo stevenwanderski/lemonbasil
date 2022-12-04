@@ -1,0 +1,38 @@
+<div class="sortable-list" id="staples_list">
+  <% staples.each do |staple| %>
+    <div class="sortable-item" data-staple-id="<%= staple.id %>">
+      <div class="sortable-item__move">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <%= render 'admin/client_menus/staple',
+          staple: staple,
+          client_menu: client_menu
+      %>
+    </div>
+  <% end %>
+
+  <script>
+    (function() {
+      const url = '<%= admin_client_menu_update_staple_weights_path(client_menu) %>';
+
+      $('.sortable-list').sortable({
+        handle: '.sortable-item__move',
+
+        update: function() {
+          const weights = $('[data-staple-id]').map(function() {
+            return $(this).data('staple-id');
+          }).get();
+
+          $.ajax({
+            url: url,
+            method: 'POST',
+            data: { weights: weights }
+          });
+        }
+      });
+    })();
+  </script>
+</div>

@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get '/menus/:slug', to: 'client_menu_submissions#new', as: 'menu_slug'
   get '/menus/:slug/success', to: 'client_menu_submissions#success', as: 'menu_slug_success'
 
+  post '/menus/:slug/staples', to: 'client_menu_submissions#save_staples', as: 'save_staples'
+  get '/menus/:slug/staples_success', to: 'client_menu_submissions#staples_success', as: 'staples_success'
+
   resources :instructions, only: [:index, :show]
 
   resources :client_menu_submissions, only: [:create] do

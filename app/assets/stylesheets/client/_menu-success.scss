@@ -1,10 +1,22 @@
 .client-menu-success {
-  text-align: center;
+  // text-align: center;
   padding-top: 100px;
 
   p {
-    margin: 0 auto;
+    // margin: 0 auto;
     width: 60ch;
     max-width: 75%;
+  }
+}
+
+.staples {
+  max-width: 1200px;
+  margin: 60px 0;
+
+  &__header {
+    max-width: 66%;
+    background: #f9f9f9;
+    padding: 40px;
+    border-radius: 10px;
   }
 }

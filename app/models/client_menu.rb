@@ -20,6 +20,8 @@ class ClientMenu < ApplicationRecord
   has_many :client_menu_submissions
   has_many :staples
 
+  accepts_nested_attributes_for :staples
+
   before_create :set_slug
 
   def duplicate!(new_values = {})

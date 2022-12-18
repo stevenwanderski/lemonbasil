@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_04_182749) do
+ActiveRecord::Schema.define(version: 2022_12_17_011328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(version: 2022_12_04_182749) do
     t.datetime "job_date"
     t.boolean "show_pricing", default: false
     t.boolean "staples_enabled", default: false
+    t.text "staples_notes"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -119,9 +120,18 @@ ActiveRecord::Schema.define(version: 2022_12_04_182749) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "staple_categories", force: :cascade do |t|
+    t.string "name"
+    t.integer "staple_id"
+    t.integer "client_menu_id"
+    t.integer "weight", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "staples", force: :cascade do |t|
     t.string "name"
-    t.integer "client_menu_id"
+    t.integer "staple_category_id"
     t.integer "weight"
     t.boolean "selected", default: false
     t.datetime "created_at", precision: 6, null: false

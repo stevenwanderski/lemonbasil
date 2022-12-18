@@ -6,29 +6,4 @@
   </p>
 </div>
 
-<%= turbo_frame_tag 'staples' do %>
-  <div class="staples">
-    <div class="staples__header">
-      <h2>
-        heads up!
-      </h2>
-
-      <p>
-        In order to save you some money, please let us know which
-        staples you have on hand:
-      </p>
-
-      <%= form_for @client_menu,
-          url: save_staples_path(slug: @client_menu.slug),
-          method: :post do |f| %>
-        <%= f.fields_for :staples do |ff| %>
-          <div class="client-menu-item">
-            <%= ff.check_box :selected %> <%= ff.label :selected, ff.object.name %>
-          </div>
-        <% end %>
-
-        <%= f.submit 'Submit', class: 'button button--submit' %>
-      <% end %>
-    </div>
-  </div>
-<% end %>
+<%= turbo_frame_tag 'staples', src: edit_staples_client_menu_path(@client_menu) %>

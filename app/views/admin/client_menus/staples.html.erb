@@ -2,35 +2,43 @@
 <%= render 'admin/client_menus/show/nav' %>
 
 <div class="menu-body">
-  <% if @staples.empty? %>
+  <% if @staple_categories.any? %>
 
-    <div class="empty">
-      <div class="empty__text">
-        No staples. Add one now!
-      </div>
+    <% @staple_categories.each do |category| %>
+      <div class="menu-item-category" id="<%= dom_id(category) %>" data-staple-category-id="<%= category.id %>">
+        <div class="menu-item-category__header">
+          <h2><%= category.name %></h2>
 
-      <div class="empty__control">
-        <%= link_to '+ Add Staple',
-            new_admin_client_menu_staple_path(@client_menu),
-            class: 'button button--light',
-            data: { turbo_frame: 'modal' }
+          <%= link_to '+ Add Staple',
+              new_admin_client_menu_item_path(client_menu_category_id: category.id),
+              class: 'button',
+              data: {
+                turbo_frame: 'modal'
+              }
+          %>
+        </div>
+
+        <%= render 'admin/client_menus/staples_list',
+            items: category.staples.order(:weight),
+            category: category,
+            client_menu: @client_menu
         %>
       </div>
-    </div>
+    <% end %>
 
   <% else %>
 
-    <div class="staples-list">
-      <%= render 'staples_list',
-          staples: @staples,
-          client_menu: @client_menu
-      %>
+    <div class="empty">
+      <div class="empty__text">
+        Please add a category first 🤗
+      </div>
 
-      <%= link_to '+ Add Staple',
-          new_admin_client_menu_staple_path(@client_menu),
-          class: 'button button--light',
-          data: { turbo_frame: 'modal' }
-      %>
+      <div class="empty__control">
+        <%= link_to 'Go to categories page',
+            admin_client_menu_categories_path(@client_menu),
+            class: 'button'
+        %>
+      </div>
     </div>
 
   <% end %>

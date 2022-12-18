@@ -1,0 +1,32 @@
+<%= turbo_frame_tag 'staples' do %>
+  <div class="staples">
+    <div class="staples__header">
+      <h2>
+        heads up!
+      </h2>
+
+      <p>
+        In order to save you some money, please let us know which
+        staples you have on hand:
+      </p>
+
+      <%= form_for(@client_menu,
+          url: staples_client_menu_path(@client_menu),
+          method: :patch
+      ) do |f| %>
+        <%= f.fields_for :staples do |ff| %>
+          <div class="client-menu-item">
+            <%= ff.check_box :selected %> <%= ff.label :selected, ff.object.name %>
+          </div>
+        <% end %>
+
+        <div class="form-item">
+          <%= f.label :staples_notes, 'Notes', class: 'label' %>
+          <%= f.text_area :staples_notes, class: 'input--textarea' %>
+        </div>
+
+        <%= f.submit 'Submit', class: 'button button--submit' %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

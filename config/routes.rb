@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   post '/menus/:slug/staples', to: 'client_menu_submissions#save_staples', as: 'save_staples'
   get '/menus/:slug/staples_success', to: 'client_menu_submissions#staples_success', as: 'staples_success'
 
+  namespace :staples do
+    resources :client_menus, only: [:edit, :update, :show]
+  end
+
   resources :instructions, only: [:index, :show]
 
   resources :client_menu_submissions, only: [:create] do

@@ -9,6 +9,7 @@
 #  show_pricing    :boolean          default(FALSE)
 #  slug            :string
 #  staples_enabled :boolean          default(FALSE)
+#  staples_notes   :text
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  client_id       :integer
@@ -19,6 +20,7 @@ class ClientMenu < ApplicationRecord
   has_many :client_menu_items, through: :client_menu_categories
   has_many :client_menu_submissions
   has_many :staples
+  has_many :staple_categories
 
   accepts_nested_attributes_for :staples
 

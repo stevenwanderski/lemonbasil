@@ -113,7 +113,7 @@ class Admin::ClientMenusController < AdminController
   def staples
     @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
-    @staples = @client_menu.staples.order(:weight)
+    @staple_categories = @client_menu.staple_categories.order(:weight)
   end
 
   private

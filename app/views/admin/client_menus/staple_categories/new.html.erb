@@ -1,0 +1,7 @@
+<%= turbo_frame_tag 'modal' do %>
+  <%= render 'shared/modal' do %>
+    <h2>Staple Category</h2>
+
+    <%= render 'form', url: admin_client_menu_staple_categories_path(@client_menu) %>
+  <% end %>
+<% end %>

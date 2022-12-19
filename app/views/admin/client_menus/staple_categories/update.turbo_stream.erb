@@ -1,0 +1,6 @@
+<%= turbo_stream.replace dom_id(@staple_category) do %>
+  <%= render 'admin/client_menus/staple_category',
+      staple_category: @staple_category,
+      client_menu: @client_menu
+  %>
+<% end %>

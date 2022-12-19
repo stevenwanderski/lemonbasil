@@ -47,11 +47,13 @@ Rails.application.routes.draw do
       get '/categories', action: :categories
       get '/menu_items', action: :menu_items
       get '/staples', action: :staples
+      get '/staple_categories', action: :staple_categories
       get '/results', action: :results
       get '/send_to_client', action: :send_to_client
       post '/update_category_weights', action: :update_category_weights
       post '/update_menu_item_weights', action: :update_menu_item_weights
       post '/update_staple_weights', action: :update_staple_weights
+      post '/update_staple_category_weights', action: :update_staple_category_weights
 
       resources :categories, controller: 'client_menus/categories'
       resources :duplicates, only: [:new, :create], controller: 'client_menus/duplicates'

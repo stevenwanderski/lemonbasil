@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "staple_categories_list" do %>
+  <%= render 'admin/client_menus/staple_categories_list',
+      items: @staple_categories,
+      client_menu: @client_menu
+  %>
+<% end %>

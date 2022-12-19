@@ -19,15 +19,18 @@ class ClientMenu < ApplicationRecord
   has_many :client_menu_categories
   has_many :client_menu_items, through: :client_menu_categories
   has_many :client_menu_submissions
-  has_many :staples
   has_many :staple_categories
+  has_many :staples, through: :staple_categories
 
   accepts_nested_attributes_for :staples
 
   before_create :set_slug
 
   def duplicate!(new_values = {})
-    menu = self.deep_clone include: [{ client_menu_categories: :client_menu_items }]
+    menu = self.deep_clone include: [
+      { client_menu_categories: :client_menu_items },
+      { staple_categories: :staples }
+    ]
     menu.assign_attributes(new_values)
     menu.save!
     menu

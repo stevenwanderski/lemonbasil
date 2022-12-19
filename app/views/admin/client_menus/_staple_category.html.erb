@@ -1,0 +1,6 @@
+<div id="<%= dom_id(staple_category) %>">
+  <%= link_to staple_category.name,
+      edit_admin_client_menu_staple_category_path(client_menu, staple_category),
+      data: { turbo_frame: 'modal' }
+  %>
+</div>

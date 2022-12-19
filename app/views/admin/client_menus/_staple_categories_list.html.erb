@@ -1,0 +1,41 @@
+<div id="staple_categories_list">
+  <div class="sortable-list">
+    <% items.each do |item| %>
+      <div class="sortable-item menu-item" data-staple-category-id="<%= item.id %>">
+        <div class="sortable-item__move">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <%= render 'admin/client_menus/staple_category',
+            staple_category: item,
+            client_menu: client_menu
+        %>
+      </div>
+    <% end %>
+  </div>
+
+  <script>
+    (function() {
+      const url = '<%= admin_client_menu_update_staple_category_weights_path(client_menu) %>';
+      const $list = $("#staple_categories_list .sortable-list");
+
+      $list.sortable({
+        handle: '.sortable-item__move',
+
+        update: function() {
+          const weights = $list.find('[data-staple-category-id]').map(function() {
+            return $(this).data('staple-category-id');
+          }).get();
+
+          $.ajax({
+            url: url,
+            method: 'POST',
+            data: { weights: weights }
+          });
+        }
+      })
+    })();
+  </script>
+</div>

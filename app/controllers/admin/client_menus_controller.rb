@@ -110,7 +110,24 @@ class Admin::ClientMenusController < AdminController
     render json: { status: 'success' }, status: 200
   end
 
+  def update_staple_category_weights
+    weights = params[:weights]
+
+    weights.each_with_index do |id, weight|
+      item = StapleCategory.find(id)
+      item.update!(weight: weight)
+    end
+
+    render json: { status: 'success' }, status: 200
+  end
+
   def staples
+    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client = @client_menu.client
+    @staple_categories = @client_menu.staple_categories.order(:weight)
+  end
+
+  def staple_categories
     @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
     @staple_categories = @client_menu.staple_categories.order(:weight)

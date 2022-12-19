@@ -10,7 +10,7 @@
           <h2><%= category.name %></h2>
 
           <%= link_to '+ Add Staple',
-              new_admin_client_menu_item_path(client_menu_category_id: category.id),
+              new_admin_client_menu_staple_path(staple_category_id: category.id),
               class: 'button',
               data: {
                 turbo_frame: 'modal'
@@ -30,12 +30,12 @@
 
     <div class="empty">
       <div class="empty__text">
-        Please add a category first 🤗
+        Please add a staple category first 🤗
       </div>
 
       <div class="empty__control">
-        <%= link_to 'Go to categories page',
-            admin_client_menu_categories_path(@client_menu),
+        <%= link_to 'Go to staple categories page',
+            new_admin_client_menu_staple_category_path(@client_menu),
             class: 'button'
         %>
       </div>

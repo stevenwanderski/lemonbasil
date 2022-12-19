@@ -12,4 +12,5 @@
 #
 class StapleCategory < ApplicationRecord
   has_many :staples
+  belongs_to :client_menu
 end

@@ -1,6 +1,7 @@
-<%= turbo_stream.replace 'staples_list' do %>
+<%= turbo_stream.replace "#{dom_id(@staple_category)}_list" do %>
   <%= render 'admin/client_menus/staples_list',
-      staples: @staples,
+      items: @staple_category.staples.order(:weight),
+      category: @staple_category,
       client_menu: @client_menu
   %>
 <% end %>

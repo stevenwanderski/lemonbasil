@@ -11,5 +11,5 @@
 #  staple_category_id :integer
 #
 class Staple < ApplicationRecord
-  has_one :staple_category
+  belongs_to :staple_category
 end

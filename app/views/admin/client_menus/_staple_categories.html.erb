@@ -1,0 +1,32 @@
+<% if @staple_categories.any? %>
+
+  <div class="categories-list">
+    <%= render 'admin/client_menus/staple_categories_list',
+      items: @staple_categories,
+      client_menu: @client_menu
+    %>
+
+    <%= link_to '+ Add Staple Category',
+        new_admin_client_menu_staple_category_path(@client_menu),
+        class: 'button button--light',
+        data: { turbo_frame: 'modal' }
+    %>
+  </div>
+
+<% else %>
+
+  <div class="empty">
+    <div class="empty__text">
+      No staple categories. Add one now!
+    </div>
+
+    <div class="empty__control">
+      <%= link_to '+ Add Staple Category',
+          new_admin_client_menu_staple_category_path(@client_menu),
+          class: 'button',
+          data: { turbo_frame: 'modal' }
+      %>
+    </div>
+  </div>
+
+<% end %>

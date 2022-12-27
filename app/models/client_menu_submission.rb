@@ -5,6 +5,7 @@
 #  id             :bigint           not null, primary key
 #  message        :text
 #  notes          :text
+#  staples_notes  :text
 #  total          :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -14,6 +15,8 @@ class ClientMenuSubmission < ApplicationRecord
   belongs_to :client_menu
   has_many :client_menu_selections
   has_many :client_menu_items, through: :client_menu_selections
+  has_many :staple_selections
+  has_many :staples, through: :staple_selections
 
   before_save :set_total
 
@@ -43,7 +46,7 @@ class ClientMenuSubmission < ApplicationRecord
 
   def set_total
     return if self.total.present?
-    
+
     self.total = self.running_total
   end
 end

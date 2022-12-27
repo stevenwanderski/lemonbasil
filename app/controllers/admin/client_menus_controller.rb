@@ -58,6 +58,7 @@ class Admin::ClientMenusController < AdminController
 
   def results
     @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client = @client_menu.client
   end
 
   def destroy

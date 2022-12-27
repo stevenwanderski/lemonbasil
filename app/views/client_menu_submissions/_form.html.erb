@@ -91,6 +91,38 @@
       </div>
 
       <%= hidden_field_tag :client_menu_id, @menu.id %>
+
+      <div class="staples">
+        <div class="staples__header">
+          <h2>
+            heads up!
+          </h2>
+
+          <p>
+            In order to save you some money, please let us know which
+            staples you have on hand:
+          </p>
+
+          <% @menu.staples.each do |staple| %>
+            <div class="client-menu-item">
+              <%= check_box_tag 'client_menu_submission[staple_ids][]',
+                  staple.id,
+                  @client_menu_submission.client_menu_items.include?(staple),
+                  id: "staple-#{staple.id}"
+              %>
+
+              <div class="client-menu-item__section">
+                <div class="client-menu-item__row">
+                  <label class="client-menu-item__label" for="staple-<%= staple.id %>">
+                    <%= staple.name %>
+                  </label>
+                </div>
+              </div>
+            </div>
+          <% end %>
+
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

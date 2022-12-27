@@ -32,4 +32,12 @@
       </div>
     </div>
   <% end %>
+
+  <% if submission.staples.any? %>
+    <% submission.staples.each do |staple| %>
+      <div>
+        <%= staple.name %>
+      </div>
+    <% end %>
+  <% end %>
 </div>

@@ -1,15 +1,5 @@
-<%= render 'header', client_menu: @client_menu %>
-
-<div class="menu-nav">
-  <div class="menu-nav__section">
-    <%= active_link_to 'Categories', admin_client_menu_categories_path(@client_menu) %>
-    <%= active_link_to 'Menu Items', admin_client_menu_menu_items_path(@client_menu) %>
-  </div>
-
-  <div class="menu-nav__section">
-    <%= active_link_to 'Results', admin_client_menu_results_path(@client_menu) %>
-  </div>
-</div>
+<%= render 'admin/client_menus/show/header' %>
+<%= render 'admin/client_menus/show/nav' %>
 
 <div class="menu-body">
   <% if @client_menu.newest_submission.present? %>

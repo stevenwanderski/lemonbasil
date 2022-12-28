@@ -1,4 +1,6 @@
 class ContactController < ApplicationController
+  before_action :validate_email!, only: [:create]
+
   def new
     @contact = Contact.new
   end
@@ -22,5 +24,11 @@ class ContactController < ApplicationController
 
   def contact_params
     params.require(:contact).permit(:name, :email, :message, :neighborhood)
+  end
+
+  def validate_email!
+    if !Contact.valid_email?(contact_params[:email])
+      redirect_to contact_success_path
+    end
   end
 end

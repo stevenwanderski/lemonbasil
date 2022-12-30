@@ -12,4 +12,12 @@
 #
 class Contact < ApplicationRecord
   validates :name, :email, :message, presence: true
+
+  EMAIL_BLOCKLIST = [
+    'no-replyhat@gmail.com'
+  ]
+
+  def self.valid_email?(email)
+    !EMAIL_BLOCKLIST.include?(email.downcase)
+  end
 end

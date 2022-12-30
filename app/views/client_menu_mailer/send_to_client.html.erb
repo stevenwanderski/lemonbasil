@@ -1,5 +1,5 @@
 <h1><%= @client_menu.client.full_name %> <span>Meal Prep Menu: <%= l(@client_menu.job_date, format: :date_only) %></span></h1>
 
-<p>Hello <%= @client_menu.client.first_name %>! Here is your new menu for the week:</p>
+<p>Hello <%= @client_menu.client.first_name %>! Here is your next menu:</p>
 
 <p><%= link_to menu_slug_url(@client_menu.slug), menu_slug_url(@client_menu.slug) %></p>

@@ -58,7 +58,7 @@
   }
 }
 
-.staples-section {
+.staples-results {
   margin-bottom: 20px;
 
   hr {
@@ -68,10 +68,36 @@
   }
 
   ul {
-    margin-top: 8px;
+    margin: 0;
+    padding: 0;
+  }
 
-    li {
-      margin: 0 0 4px 20px;
-    }
+  li {
+    margin: 0 0 4px 20px;
+  }
+
+  &__main-header {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  &__category,
+  &__sub-header {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  &__section {
+    margin-bottom: 20px;
+  }
+
+  &__staple.selected {
+    color: green;
+  }
+
+  &__staple.not-selected {
+    color: red;
   }
 }

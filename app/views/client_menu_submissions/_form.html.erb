@@ -113,7 +113,7 @@
                 <div class="client-menu-item">
                   <%= check_box_tag 'client_menu_submission[staple_ids][]',
                       staple.id,
-                      @client_menu_submission.client_menu_items.include?(staple),
+                      @client_menu_submission.staples.include?(staple),
                       id: "staple-#{staple.id}"
                   %>
 

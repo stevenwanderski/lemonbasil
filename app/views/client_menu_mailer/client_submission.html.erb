@@ -47,30 +47,8 @@
     </div>
   <% end %>
 
-  <% if @submission.staples.any? %>
-    <div class="staples-section">
-      <hr>
-
-      <h2>Staples</h2>
-
-      <ul>
-        <% @submission.staples.each do |staple| %>
-          <li><%= staple.name %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <% if @submission.staples_notes.present? %>
-    <div class="submission__notes">
-      <div class="submission__notes-label">
-        Staples Notes
-      </div>
-
-      <div class="submission__notes-value">
-        <%= simple_format(@submission.staples_notes) %>
-      </div>
-    </div>
-  <% end %>
-
+  <%= render 'shared/staples_results',
+      client_menu: @client_menu,
+      submission: @submission
+  %>
 </div>

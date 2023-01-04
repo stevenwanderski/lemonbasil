@@ -1,0 +1,15 @@
+<% if submission.staples.any? %>
+  <div class="staples-results">
+    <hr>
+
+    <div class="staples-results__main-header">Staples</div>
+
+    <ul>
+      <% submission.staples.each do |staple| %>
+        <li class="staples-results__staple">
+          <%= staple.name %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

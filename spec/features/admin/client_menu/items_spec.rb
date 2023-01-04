@@ -35,10 +35,10 @@ describe 'Admin: Client Menu: Items', js: true do
 
     context 'categories do not exist' do
       it 'shows the add category message' do
-        expect(page).to have_content('Please add a category first')
+        expect(page).to have_content('Please add a category first!')
         expect(page).to have_link(
           'Go to categories page',
-          href: "/admin/client_menus/#{client_menu.id}/categories"
+          href: admin_client_menu_categories_path(client_menu)
         )
       end
     end

@@ -1,37 +1,6 @@
 <%= render 'admin/client_menus/show/header' %>
 <%= render 'admin/client_menus/show/nav' %>
 
-<div class="menu-body">
-  <% if @categories.empty? %>
-
-    <div class="empty">
-      <div class="empty__text">
-        No categories. Add one now!
-      </div>
-
-      <div class="empty__control">
-        <%= link_to '+ Add Category',
-            new_admin_client_menu_category_path(@client_menu),
-            class: 'button button--light',
-            data: { turbo_frame: 'modal' }
-        %>
-      </div>
-    </div>
-
-  <% else %>
-
-    <div class="categories-list">
-      <%= render 'categories_list',
-          categories: @categories,
-          client_menu: @client_menu
-      %>
-
-      <%= link_to '+ Add Category',
-          new_admin_client_menu_category_path(@client_menu),
-          class: 'button button--light',
-          data: { turbo_frame: 'modal' }
-      %>
-    </div>
-
-  <% end %>
+<div class="menu-body" id="menu_body">
+  <%= render 'categories' %>
 </div>

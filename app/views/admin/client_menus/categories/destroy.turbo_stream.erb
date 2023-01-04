@@ -1,6 +1,3 @@
-<%= turbo_stream.replace 'categories_list' do %>
-  <%= render 'admin/client_menus/categories_list',
-      categories: @categories,
-      client_menu: @client_menu
-  %>
+<%= turbo_stream.update 'menu_body' do %>
+  <%= render 'admin/client_menus/categories'  %>
 <% end %>

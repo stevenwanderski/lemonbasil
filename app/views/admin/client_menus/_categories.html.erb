@@ -1,0 +1,32 @@
+<% if @categories.empty? %>
+
+  <div class="empty">
+    <div class="empty__text">
+      Click the button to add a category!
+    </div>
+
+    <div class="empty__control">
+      <%= link_to '+ Add Category',
+          new_admin_client_menu_category_path(@client_menu),
+          class: 'button button--light',
+          data: { turbo_frame: 'modal' }
+      %>
+    </div>
+  </div>
+
+<% else %>
+
+  <div class="categories-list">
+    <%= render 'admin/client_menus/categories_list',
+        categories: @categories,
+        client_menu: @client_menu
+    %>
+
+    <%= link_to '+ Add Category',
+        new_admin_client_menu_category_path(@client_menu),
+        class: 'button button--light',
+        data: { turbo_frame: 'modal' }
+    %>
+  </div>
+
+<% end %>

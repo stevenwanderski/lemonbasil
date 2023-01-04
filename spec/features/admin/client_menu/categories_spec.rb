@@ -22,12 +22,15 @@ describe 'Admin: Client Menu: Categories', js: true do
 
     context 'categories do not exist' do
       it 'shows the add categories message' do
-        expect(page).to have_content('No categories. Add one now!')
+        expect(page).to have_content('Click the button to add a category!')
       end
 
-      it 'opens the category form' do
+      it 'adds a category' do
         click_link '+ Add Category'
-        expect(page).to have_field('Name')
+        fill_in 'Name', with: 'Snacks'
+        click_button 'Save'
+
+        expect(page).to have_content('Snacks')
       end
     end
 

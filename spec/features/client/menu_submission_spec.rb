@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Client: Menu Submission', js: true do
   let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa', email: 'frank@zappa.com') }
-  let!(:menu) { create(:client_menu, client: client, job_date: '2021-03-02', due_at: '2021-02-28', show_pricing: show_pricing) }
+  let!(:menu) { create(:client_menu, client: client, job_date: '2021-03-02', due_at: '2021-02-28', show_pricing: show_pricing, staples_enabled: staples_enabled) }
   let!(:category1) { create(:client_menu_category, client_menu: menu, name: 'Breakfast') }
   let!(:category2) { create(:client_menu_category, client_menu: menu, name: 'Dinner') }
   let!(:item1) { create(:client_menu_item, client_menu_category: category1, name: 'Eggs Benny', cost: 7) }
@@ -10,6 +10,7 @@ describe 'Client: Menu Submission', js: true do
   let!(:item3) { create(:client_menu_item, client_menu_category: category2, name: 'Chicken and Veggies', cost: 22) }
   let!(:item4) { create(:client_menu_item, client_menu_category: category2, name: 'Carrot Soup', cost: 9) }
   let(:show_pricing) { true }
+  let(:staples_enabled) { true }
 
   describe 'Initial rendering' do
     before do
@@ -92,6 +93,38 @@ describe 'Client: Menu Submission', js: true do
         check "item-#{item1.id}"
         expect(page).to_not have_content('Total Estimate: $7')
         expect(page).to have_content('Selected items: 1')
+      end
+    end
+  end
+
+  describe 'Staple Selections' do
+    context 'when staples enabled is false' do
+      let(:staples_enabled) { false }
+
+      it 'hides the staples selection' do
+        visit menu_slug_path(slug: menu.slug)
+
+        expect(page).to_not have_content('heads up')
+      end
+    end
+
+    context 'when staples enabled is true' do
+      let(:staples_enabled) { true }
+      let!(:staple_category) { create(:staple_category, client_menu: menu) }
+      let!(:staple1) { create(:staple, name: 'Rice', staple_category: staple_category) }
+      let!(:staple2) { create(:staple, name: 'Beans', staple_category: staple_category) }
+
+      it 'saves the staples selection' do
+        visit menu_slug_path(slug: menu.slug)
+
+        check 'Eggs Benny'
+        check 'Beans'
+        fill_in 'Staple Notes', with: 'I have beans.'
+        click_button 'Submit Order'
+
+        expect(accept_alert).to eq('Are you sure you want to submit your selections?')
+        expect(page).to have_content('thank you!')
+        expect(ClientMenuSubmission.first.staples.map(&:name)).to eq(['Beans'])
       end
     end
   end

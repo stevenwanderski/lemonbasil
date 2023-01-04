@@ -92,8 +92,8 @@
 
       <%= hidden_field_tag :client_menu_id, @menu.id %>
 
-      <div class="staples">
-        <div class="staples__header">
+      <% if @menu.staples_enabled? && @menu.staples.any? %>
+        <div class="staples">
           <h2>
             heads up!
           </h2>
@@ -103,26 +103,38 @@
             staples you have on hand:
           </p>
 
-          <% @menu.staples.each do |staple| %>
-            <div class="client-menu-item">
-              <%= check_box_tag 'client_menu_submission[staple_ids][]',
-                  staple.id,
-                  @client_menu_submission.client_menu_items.include?(staple),
-                  id: "staple-#{staple.id}"
-              %>
+          <% @menu.staple_categories.each do |staple_category| %>
+            <div class="client-menu__category">
+              <h2 class="client-menu__category-name">
+                <%= staple_category.name %>
+              </h2>
 
-              <div class="client-menu-item__section">
-                <div class="client-menu-item__row">
-                  <label class="client-menu-item__label" for="staple-<%= staple.id %>">
-                    <%= staple.name %>
-                  </label>
+              <% staple_category.staples.order(:weight).each do |staple| %>
+                <div class="client-menu-item">
+                  <%= check_box_tag 'client_menu_submission[staple_ids][]',
+                      staple.id,
+                      @client_menu_submission.client_menu_items.include?(staple),
+                      id: "staple-#{staple.id}"
+                  %>
+
+                  <div class="client-menu-item__section">
+                    <div class="client-menu-item__row">
+                      <label class="client-menu-item__label" for="staple-<%= staple.id %>">
+                        <%= staple.name %>
+                      </label>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              <% end %>
             </div>
           <% end %>
 
+          <div class="form-item">
+            <%= f.label :staples_notes, 'Staple Notes', class: 'label' %>
+            <%= f.text_area :staples_notes, class: 'input--textarea' %>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>

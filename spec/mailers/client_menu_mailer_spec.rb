@@ -64,5 +64,30 @@ describe ClientMenuMailer do
         expect(body).to have_content('Eggs')
       end
     end
+
+    context 'when staple selections do not exist' do
+      it 'does not show staples' do
+        body = Capybara.string(mail.body.encoded)
+
+        expect(body).to_not have_content('Staples')
+      end
+    end
+
+    context 'when staple selections exist' do
+      let!(:staple_category) { create(:staple_category, name: 'Pantry', client_menu: menu) }
+      let!(:staple1) { create(:staple, name: 'Rice', staple_category: staple_category) }
+      let!(:staple2) { create(:staple, name: 'Beans', staple_category: staple_category) }
+      let!(:staple_selection1) { submission.staples << staple1 }
+      let!(:staple_notes) { submission.update!(staples_notes: 'I am staple notes.') }
+
+      it 'shows the staples' do
+        body = Capybara.string(mail.body.encoded)
+
+        expect(body).to have_content('Staples')
+        expect(body).to have_content('Rice')
+        expect(body).to_not have_content('Beans')
+        expect(body).to have_content('I am staple notes.')
+      end
+    end
   end
 end

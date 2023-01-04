@@ -22,12 +22,15 @@ describe 'Admin: Client Menu: Staple Categories', js: true do
 
     context 'staple categories do not exist' do
       it 'shows the add staple categories message' do
-        expect(page).to have_content('No staple categories. Add one now!')
+        expect(page).to have_content('Click the button to add a staple category!')
       end
 
-      it 'opens the category form' do
+      it 'adds a staple category' do
         click_link '+ Add Staple Category'
-        expect(page).to have_field('Name')
+        fill_in 'Name', with: 'Snacks'
+        click_button 'Save'
+
+        expect(page).to have_content('Snacks')
       end
     end
 

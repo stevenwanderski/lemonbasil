@@ -35,10 +35,10 @@ describe 'Admin: Client Menu: Staples', js: true do
 
     context 'staple categories do not exist' do
       it 'shows the add category message' do
-        expect(page).to have_content('Please add a staple category first')
+        expect(page).to have_content('Please add a staple category first!')
         expect(page).to have_link(
           'Go to staple categories page',
-          href: new_admin_client_menu_staple_category_path(client_menu)
+          href: admin_client_menu_staple_categories_path(client_menu)
         )
       end
     end

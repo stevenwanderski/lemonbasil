@@ -1,0 +1,40 @@
+<% if @staple_categories.any? %>
+
+  <% @staple_categories.each do |category| %>
+    <div class="menu-item-category" id="<%= dom_id(category) %>" data-staple-category-id="<%= category.id %>">
+      <div class="menu-item-category__header">
+        <h2><%= category.name %></h2>
+
+        <%= link_to '+ Add Staple',
+            new_admin_client_menu_staple_path(staple_category_id: category.id),
+            class: 'button',
+            data: {
+              turbo_frame: 'modal'
+            }
+        %>
+      </div>
+
+      <%= render 'admin/client_menus/staples_list',
+          items: category.staples.order(:weight),
+          category: category,
+          client_menu: @client_menu
+      %>
+    </div>
+  <% end %>
+
+<% else %>
+
+  <div class="empty">
+    <div class="empty__text">
+      Please add a staple category first!
+    </div>
+
+    <div class="empty__control">
+      <%= link_to 'Go to staple categories page',
+          admin_client_menu_staple_categories_path(@client_menu),
+          class: 'button'
+      %>
+    </div>
+  </div>
+
+<% end %>

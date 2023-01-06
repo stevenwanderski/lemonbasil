@@ -3,6 +3,7 @@
   font-weight: 300;
   display: flex;
   align-items: flex-start;
+  gap: 14px;
 
   &__row {
     display: flex;
@@ -28,38 +29,12 @@
     margin-right: 20px;
     cursor: pointer;
   }
-
-  input[type="checkbox"] {
-    margin-right: 30px;
-  }
-
-  input[type="checkbox"]:before {
-    content: "";
-    display: block;
-    position: relative;
-    width: 20px;
-    height: 20px;
-    border: solid 2px black;
-    background: white;
-    cursor: pointer;
-  }
-
-  input[type="checkbox"]:checked:after {
-    content: "";
-    display: block;
-    position: relative;
-    width: 10px;
-    height: 10px;
-    background: black;
-    top: -19px;
-    left: 5px;
-    border: solid 2px black;
-    cursor: pointer;
-  }
 }
 
 @media screen and (max-width: 800px) {
   .client-menu-item {
+    gap: 24px;
+
     &__description {
       width: 100%;
     }

@@ -104,7 +104,7 @@ describe 'Client: Menu Submission', js: true do
       it 'hides the staples selection' do
         visit menu_slug_path(slug: menu.slug)
 
-        expect(page).to_not have_content('heads up')
+        expect(page).to_not have_content("If you'd like to save money on staples")
       end
     end
 
@@ -118,6 +118,7 @@ describe 'Client: Menu Submission', js: true do
         visit menu_slug_path(slug: menu.slug)
 
         check 'Eggs Benny'
+        click_link 'click here!'
         check 'Beans'
         fill_in 'Staple Notes', with: 'I have beans.'
         click_button 'Submit Order'
@@ -125,6 +126,15 @@ describe 'Client: Menu Submission', js: true do
         expect(accept_alert).to eq('Are you sure you want to submit your selections?')
         expect(page).to have_content('thank you!')
         expect(ClientMenuSubmission.first.staples.map(&:name)).to eq(['Beans'])
+      end
+
+      it 'shows and hides the staples form' do
+        visit menu_slug_path(slug: menu.slug)
+        click_link 'click here!'
+        expect(page).to have_content('Staples')
+
+        click_link 'Nevermind, skip!'
+        expect(page).to_not have_content('Staples')
       end
     end
   end

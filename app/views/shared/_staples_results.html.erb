@@ -2,14 +2,28 @@
   <div class="staples-results">
     <hr>
 
-    <div class="staples-results__main-header">Staples</div>
+    <div class="staples-results__main-header">
+      Staples
+    </div>
 
-    <ul>
-      <% submission.staples.each do |staple| %>
-        <li class="staples-results__staple">
-          <%= staple.name %>
-        </li>
-      <% end %>
-    </ul>
+    <div class="staples-results__section">
+      <ul>
+        <% submission.staples.each do |staple| %>
+          <li class="staples-results__staple">
+            <%= staple.name %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <% if submission.staples_notes.present? %>
+      <div class="staples-results__sub-header">
+        Staple Notes
+      </div>
+
+      <div>
+        <%= submission.staples_notes %>
+      </div>
+    <% end %>
   </div>
 <% end %>

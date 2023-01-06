@@ -1,0 +1,64 @@
+.staples {
+  margin: 60px 0;
+  max-width: 66%;
+  background: #f9f9f9;
+  padding: 40px;
+  border-radius: 10px;
+
+  .icon-bell {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  &__control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__main-heading {
+    font-weight: bold;
+    font-size: 26px;
+    margin-bottom: 4px;
+  }
+
+  &__category {
+    margin-bottom: 40px;
+  }
+
+  &__category-name {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+}
+
+.staple-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+
+  &__label {
+    font-size: 18px;
+    font-weight: 300;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .staples {
+    max-width: 100%;
+    padding: 20px;
+
+    &__control {
+      align-items: flex-start;
+    }
+  }
+}

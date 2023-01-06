@@ -1,0 +1,28 @@
+.checkbox {
+  width: 24px;
+  height: 24px;
+}
+
+.checkbox:before {
+  content: "";
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: solid 2px black;
+  background: white;
+  cursor: pointer;
+}
+
+.checkbox:checked:after {
+  content: "";
+  display: block;
+  position: relative;
+  width: 10px;
+  height: 10px;
+  background: black;
+  top: -19px;
+  left: 5px;
+  border: solid 2px black;
+  cursor: pointer;
+}

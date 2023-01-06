@@ -72,6 +72,23 @@ describe 'Admin: Client Menu: Results', js: true do
           expect(page).to have_content('I am notes!')
         end
       end
+
+      context 'staple selections exist' do
+        let!(:staple_category) { create(:staple_category, name: 'Pantry', client_menu: menu) }
+        let!(:staple1) { create(:staple, name: 'Rice', staple_category: staple_category) }
+        let!(:staple2) { create(:staple, name: 'Beans', staple_category: staple_category) }
+        let!(:staple_selection1) { submission.staples << staple1 }
+        let!(:staple_notes) { submission.update!(staples_notes: 'I am staple notes.') }
+
+        it 'shows the staples' do
+          visit admin_client_menu_results_path(client_menu_id: menu.id)
+
+          expect(page).to have_content('Staples')
+          expect(page).to have_content('Rice')
+          expect(page).to_not have_content('Beans')
+          expect(page).to have_content('I am staple notes.')
+        end
+      end
     end
   end
 end

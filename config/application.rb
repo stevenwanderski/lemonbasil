@@ -22,7 +22,7 @@ Bundler.require(*Rails.groups)
 module Lemonbasil
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.0
 
     config.assets.precompile += %w( application.js admin.js )
     config.assets.precompile += %w( application.css admin.css )
@@ -36,6 +36,7 @@ module Lemonbasil
     config.generators.system_tests = nil
 
     config.active_record.default_timezone = :utc
+    config.active_record.legacy_connection_handling = false
 
     config.time_zone = 'Central Time (US & Canada)'
   end

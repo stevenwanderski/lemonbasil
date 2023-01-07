@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.6'
+ruby '3.1.2'
 
 gem 'rails', '6.1.6.1'
 gem 'pg', '>= 0.18', '< 2.0'
@@ -21,6 +21,13 @@ gem 'american_date'
 gem 'turbo-rails'
 gem 'stimulus-rails'
 gem 'requestjs-rails'
+
+# Required for Ruby 3.1
+gem 'net-smtp'
+gem 'net-pop'
+gem 'net-imap'
+gem 'rexml'
+# END Required for Ruby 3.1
 
 group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring

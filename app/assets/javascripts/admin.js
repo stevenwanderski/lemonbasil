@@ -8,9 +8,9 @@
 //= require admin/calendar
 
 $(function() {
-  $('.datepicker').datepicker({
-    dateFormat: 'm/d/yy'
-  });
+  // $('.datepicker').datepicker({
+  //   dateFormat: 'm/d/yy'
+  // });
 
   $(document).on('click', '[data-modal-overlay], [data-modal-close]', function(event) {
     event.preventDefault();

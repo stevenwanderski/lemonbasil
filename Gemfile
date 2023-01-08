@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '3.1.2'
 
 gem 'rails', '7.0.4'
-gem 'importmap-rails'
+gem 'jsbundling-rails'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'

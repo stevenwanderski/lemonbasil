@@ -5,7 +5,7 @@
 </div>
 
 <script>
-  $('#meal-search').autocomplete({
+  $('#meal-search').devbridgeAutocomplete({
     lookup: <%= raw @meals.to_json %>,
     triggerSelectOnValidInput: false,
 

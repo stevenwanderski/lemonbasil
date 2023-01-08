@@ -1,16 +1,7 @@
-//= require jquery
-//= require jquery_ujs
-//= require jquery-ui/widgets/sortable
-//= require jquery-ui/widgets/datepicker
-//= require vendor/jquery.validate.min
-//= require vendor/calendar.min
-//= require vendor/jquery.autocomplete.min
-//= require admin/calendar
-
 $(function() {
-  // $('.datepicker').datepicker({
-  //   dateFormat: 'm/d/yy'
-  // });
+  $('.datepicker').datepicker({
+    dateFormat: 'm/d/yy'
+  });
 
   $(document).on('click', '[data-modal-overlay], [data-modal-close]', function(event) {
     event.preventDefault();

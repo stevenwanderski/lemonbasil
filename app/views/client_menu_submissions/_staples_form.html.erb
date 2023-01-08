@@ -1,20 +1,4 @@
 <% if @menu.staples_enabled? && @menu.staples.any? %>
-  <script>
-    $(document).on('click', '#staples-control', function(e) {
-      e.preventDefault();
-
-      $('.staples__control').hide();
-      $('.staples__body').show();
-    });
-
-    $(document).on('click', '#staples-close', function(e) {
-      e.preventDefault();
-
-      $('.staples__control').show();
-      $('.staples__body').hide();
-    });
-  </script>
-
   <div class="staples">
     <div class="staples__control" style="display: flex;">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="icon-bell">

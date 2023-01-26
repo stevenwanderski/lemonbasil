@@ -19,7 +19,7 @@ class Admin::InstructionsController < AdminController
     @meal = Meal.new(meal_params)
 
     if @meal.save
-      redirect_to edit_admin_instruction_path(@meal), notice: "Successfully created #{@meal.name}"
+      redirect_to admin_instructions_path, notice: "Successfully created #{@meal.name}"
     else
       render 'new'
     end
@@ -29,7 +29,7 @@ class Admin::InstructionsController < AdminController
     @meal = Meal.find(params[:id])
 
     if @meal.update(meal_params)
-      redirect_to edit_admin_instruction_path(@meal), notice: 'Successfully updated.'
+      redirect_to admin_instructions_path, notice: 'Successfully updated.'
     else
       render 'edit'
     end

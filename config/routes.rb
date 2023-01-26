@@ -17,20 +17,20 @@ Rails.application.routes.draw do
   post '/menus/:slug/staples', to: 'client_menu_submissions#save_staples', as: 'save_staples'
   get '/menus/:slug/staples_success', to: 'client_menu_submissions#staples_success', as: 'staples_success'
 
+  resources :instructions, only: [:index, :show]
+
+  get '/meals', to: redirect('/instructions')
+  get '/meals/:id', to: redirect('/instructions/%{id}')
+
   namespace :staples do
     resources :client_menus, only: [:edit, :update, :show]
   end
-
-  resources :instructions, only: [:index, :show]
 
   resources :client_menu_submissions, only: [:create] do
     collection do
       post '/update_totals', action: :update_totals
     end
   end
-
-  get '/meals', to: redirect('/instructions')
-  get '/meals/:id', to: redirect('/instructions/%{id}')
 
   namespace :admin do
     get '/pages', to: 'pages#index'

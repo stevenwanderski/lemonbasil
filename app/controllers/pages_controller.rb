@@ -5,7 +5,6 @@ class PagesController < ApplicationController
   end
 
   def calendar
-    @event_dates = Event.all_dates
   end
 
   def home
@@ -23,11 +22,6 @@ class PagesController < ApplicationController
 
   def parties
     @page = Page.find_by(slug: 'parties')
-    @content = Kramdown::Document.new(@page.body).to_html
-  end
-
-  def pricing
-    @page = Page.find_by(slug: 'pricing')
     @content = Kramdown::Document.new(@page.body).to_html
   end
 end

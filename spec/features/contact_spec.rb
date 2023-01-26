@@ -15,6 +15,7 @@ describe 'Contact', js: true do
     fill_in 'contact_message', with: 'Hello'
     click_button 'Get in touch'
 
+    expect(page).to have_content('thanks!')
     expect(current_path).to eq(contact_success_path)
     expect(ActionMailer::Base.deliveries.count).to eq(1)
   end
@@ -29,6 +30,7 @@ describe 'Contact', js: true do
       fill_in 'contact_message', with: 'Hello'
       click_button 'Get in touch'
 
+      expect(page).to have_content('thanks!')
       expect(current_path).to eq(contact_success_path)
       expect(ActionMailer::Base.deliveries.count).to eq(0)
     end

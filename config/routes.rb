@@ -22,10 +22,6 @@ Rails.application.routes.draw do
   get '/meals', to: redirect('/instructions')
   get '/meals/:id', to: redirect('/instructions/%{id}')
 
-  namespace :staples do
-    resources :client_menus, only: [:edit, :update, :show]
-  end
-
   resources :client_menu_submissions, only: [:create] do
     collection do
       post '/update_totals', action: :update_totals

@@ -50,6 +50,12 @@
           }
         }
       }
+    },
+
+    submitHandler(form, event) {
+      $('[type="submit"]').prop('disabled', true);
+
+      form.submit();
     }
   });
 

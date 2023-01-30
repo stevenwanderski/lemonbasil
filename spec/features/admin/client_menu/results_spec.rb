@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Admin: Client Menu: Results', js: true do
   let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
-  let!(:menu) { create(:client_menu, job_date: '2021-02-09', client: client) }
+  let!(:menu) { create(:client_menu, job_date: '2021-02-09', show_pricing: true, client: client) }
 
   before do
     user = create(:user)

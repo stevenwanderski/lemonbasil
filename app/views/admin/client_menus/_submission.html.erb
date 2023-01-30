@@ -15,7 +15,11 @@
 
       <% submission.items(category).each do |item| %>
         <div class="submission__item" data-item-id="<%= item.id %>">
-          <%= item.name %> <strong>$<%= item.cost %></strong>
+          <%= item.name %>
+
+          <% if client_menu.show_pricing? %>
+            <strong>$<%= item.cost %></strong>
+          <% end %>
         </div>
       <% end %>
     </div>

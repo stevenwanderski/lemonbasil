@@ -4,6 +4,7 @@
 </div>
 
 <div style="margin: 14px 0;">
+  <label for="meal-search" class="sr-only">meal search</label>
   <input
     id="meal-search"
     type="text"
@@ -11,17 +12,6 @@
     class="input--select"
   >
 </div>
-
-<script>
-  $('#meal-search').autocomplete({
-    lookup: <%= raw @meals_lookup.to_json %>,
-    triggerSelectOnValidInput: false,
-
-    onSelect: function (suggestion) {
-      window.location.href = `/admin/instructions/${suggestion.data}/edit`;
-    }
-  });
-</script>
 
 <div class="rows">
   <% @meals.each do |meal| %>
@@ -34,3 +24,14 @@
 
   <%= paginate @meals %>
 </div>
+
+<script>
+  $('#meal-search').devbridgeAutocomplete({
+    lookup: <%= raw @meals_lookup.to_json %>,
+    triggerSelectOnValidInput: false,
+
+    onSelect: function (suggestion) {
+      window.location.href = `/admin/instructions/${suggestion.data}/edit`;
+    }
+  });
+</script>

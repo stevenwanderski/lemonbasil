@@ -21,6 +21,7 @@ class ClientMenu < ApplicationRecord
   has_many :client_menu_submissions
   has_many :staple_categories
   has_many :staples, through: :staple_categories
+  has_many :client_menu_mailer_logs
 
   accepts_nested_attributes_for :staples
 

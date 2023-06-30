@@ -10,16 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_06_30_175205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
     t.integer "weight"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "client_menu_categories", force: :cascade do |t|
@@ -27,8 +26,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
     t.text "description"
     t.integer "weight"
     t.integer "client_menu_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "client_menu_items", force: :cascade do |t|
@@ -38,23 +37,31 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
     t.string "quantity"
     t.integer "weight"
     t.integer "client_menu_category_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "client_menu_mailer_logs", force: :cascade do |t|
+    t.integer "client_menu_id"
+    t.string "email"
+    t.datetime "sent_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "client_menu_selections", force: :cascade do |t|
     t.integer "client_menu_submission_id"
     t.integer "client_menu_item_id"
     t.text "message"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "client_menu_submissions", force: :cascade do |t|
     t.integer "client_menu_id"
     t.text "message"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "total"
     t.text "notes"
     t.text "staples_notes"
@@ -62,12 +69,12 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
 
   create_table "client_menus", force: :cascade do |t|
     t.integer "client_id"
-    t.datetime "due_at"
+    t.datetime "due_at", precision: nil
     t.text "message"
     t.string "slug"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "job_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "job_date", precision: nil
     t.boolean "show_pricing", default: false
     t.boolean "staples_enabled", default: false
     t.text "staples_notes"
@@ -76,8 +83,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
   create_table "clients", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "email"
   end
 
@@ -85,30 +92,30 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
     t.string "name", null: false
     t.string "email", null: false
     t.text "message"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "neighborhood"
   end
 
   create_table "events", force: :cascade do |t|
     t.date "starts_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "meals", force: :cascade do |t|
     t.string "name"
     t.text "instructions"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "menus", force: :cascade do |t|
     t.string "name", null: false
     t.text "description"
     t.string "category"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "weight"
     t.integer "category_id"
   end
@@ -117,8 +124,8 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
     t.string "title"
     t.text "body"
     t.string "slug"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "staple_categories", force: :cascade do |t|
@@ -126,15 +133,15 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
     t.integer "staple_id"
     t.integer "client_menu_id"
     t.integer "weight", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "staple_selections", force: :cascade do |t|
     t.integer "staple_id"
     t.integer "client_menu_submission_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "staples", force: :cascade do |t|
@@ -142,18 +149,18 @@ ActiveRecord::Schema[6.1].define(version: 2022_12_19_232706) do
     t.integer "staple_category_id"
     t.integer "weight"
     t.boolean "selected", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

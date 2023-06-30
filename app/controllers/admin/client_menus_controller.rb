@@ -1,4 +1,7 @@
 class Admin::ClientMenusController < AdminController
+  before_action :set_client_menu, only: [:categories, :menu_items, :results, :staples, :staple_categories]
+  before_action :set_client_menu_mailer_log, only: [:categories, :menu_items, :results, :staples, :staple_categories]
+
   def index
     @client_menus = ClientMenu.all.order(created_at: :desc).page(params[:page]).per(10)
   end
@@ -45,19 +48,16 @@ class Admin::ClientMenusController < AdminController
   end
 
   def categories
-    @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
     @categories = @client_menu.client_menu_categories.order(:weight)
   end
 
   def menu_items
-    @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
     @categories = @client_menu.client_menu_categories.order(:weight)
   end
 
   def results
-    @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
   end
 
@@ -74,6 +74,11 @@ class Admin::ClientMenusController < AdminController
       .with(client_menu: client_menu)
       .send_to_client
       .deliver_now
+
+    client_menu.client_menu_mailer_logs.create!(
+      sent_at: Time.now,
+      email: client_menu.client.email
+    )
 
     redirect_to admin_client_menu_path(client_menu), notice: 'Client Menu was sent!'
   end
@@ -123,13 +128,11 @@ class Admin::ClientMenusController < AdminController
   end
 
   def staples
-    @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
     @staple_categories = @client_menu.staple_categories.order(:weight)
   end
 
   def staple_categories
-    @client_menu = ClientMenu.find(params[:client_menu_id])
     @client = @client_menu.client
     @staple_categories = @client_menu.staple_categories.order(:weight)
   end
@@ -138,5 +141,13 @@ class Admin::ClientMenusController < AdminController
 
   def client_menu_params
     params.require(:client_menu).permit!
+  end
+
+  def set_client_menu
+    @client_menu = ClientMenu.find(params[:client_menu_id])
+  end
+
+  def set_client_menu_mailer_log
+    @client_menu_mailer_log = @client_menu.client_menu_mailer_logs.order(sent_at: :desc).first
   end
 end

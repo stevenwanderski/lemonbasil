@@ -1,22 +1,5 @@
-@import "./vendor/calendar.min";
 @import 'fonts';
-@import 'variables';
-@import 'base';
-@import 'header';
-@import 'home';
-@import 'contact';
-@import 'menus';
-@import 'meals';
-@import 'pages';
-@import 'calendar';
-@import 'auth';
-@import "flash";
-@import "loading";
-@import "checkbox";
-@import 'admin/form';
-@import 'admin/button';
-@import 'client/menu';
-@import 'client/menu-item';
-@import 'client/menu-actions';
-@import 'client/menu-success';
-@import 'client/staples';
+
+#home-header {
+  background-image: url(asset-path('bg-header.jpg'));
+}

@@ -2,10 +2,16 @@
   <a href="/" class="font-heading text-lg flex gap-3 items-center">
     <%= image_tag 'logo-circle.png', class: 'w-[40px]' %>
 
-    <span>lemon&basil</span>
+    <span class="mt-1">lemon&basil</span>
   </a>
 
-  <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+  <div class="hidden lg:flex gap-9 items-center">
+    <div><a href="">How it Works</a></div>
+    <div><a href="">About Birdie</a></div>
+    <div><a href="" class="bg-black rounded-full py-2 px-5 text-white inline-block">Book a Dinner</a></div>
+  </div>
+
+  <div class="lg:hidden relative" x-data="{ open: false }" @click.outside="open = false">
     <div class="w-8" @click="open = !open">
       <div class="h-[2px] bg-black mb-2"></div>
       <div class="h-[2px] bg-black mb-2"></div>

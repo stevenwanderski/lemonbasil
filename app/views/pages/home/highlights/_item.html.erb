@@ -1,5 +1,7 @@
-<div class="flex flex-col gap-10">
-  <div>
+<% classes = class_names('lg:order-last' => layout == 'right') %>
+
+<div class="flex flex-col lg:flex-row gap-10 lg:gap-32">
+  <div class="lg:w-1/2 lg:pt-8 <%= classes %>">
     <h2 class="text-2xl font-bold font-heading mb-4">
       <%= title %>
     </h2>
@@ -7,7 +9,7 @@
     <%= yield %>
   </div>
 
-  <div>
-    <div class="w-full h-52 rounded-3xl bg-cover" style="background-image: url('<%= image %>');"></div>
+  <div class="lg:w-1/2">
+    <div class="w-full h-52 lg:h-72 rounded-3xl bg-cover" style="background-image: url('<%= image %>');"></div>
   </div>
 </div>

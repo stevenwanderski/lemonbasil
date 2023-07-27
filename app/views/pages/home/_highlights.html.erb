@@ -1,5 +1,9 @@
-<div class="py-16 px-5 space-y-20">
-  <%= render 'pages/home/highlights/item', title: 'Uniquely Elevated Experience', image: image_url('highlight-1.jpg') do %>
+<div class="py-16 px-5 md:px-24 sm:py-24 space-y-20 lg:space-y-36 max-w-md md:max-w-xl lg:max-w-7xl lg:mx-auto">
+  <%= render 'pages/home/highlights/item',
+      title: 'Uniquely Elevated Experience',
+      image: image_url('highlight-1.jpg'),
+      layout: 'left' do
+  %>
     <p>
       I'm always sure to bring the party to your doorstep with a
       playful and energetic vibe. From apps to sweets, each dish is
@@ -7,13 +11,15 @@
       high-quality protein, and innovative flavor combinations. As
       you make your way through the courses I'll implement some of
       my favorite euro dining traditions, or entice you with an infused
-      treat before the main course 😎 It's not just dinner; it's a
-      celebration of good food and great company. Gather your crew and
-      let's get the party started 🎉
+      treat before the main course 😎
     </p>
   <% end %>
 
-  <%= render 'pages/home/highlights/item', title: 'Seamless Convenience', image: image_url('highlight-2.jpg') do %>
+  <%= render 'pages/home/highlights/item',
+      title: 'Seamless Convenience',
+      image: image_url('highlight-2.jpg'),
+      layout: 'right' do
+  %>
     <p>
       Ever host a party in your home only to be obsessively checking the
       oven, refilling drinks, over-cooking the pasta, and too frazzled to
@@ -24,7 +30,11 @@
     </p>
   <% end %>
 
-  <%= render 'pages/home/highlights/item', title: 'Intimacy & Customization', image: image_url('highlight-3.jpg') do %>
+  <%= render 'pages/home/highlights/item',
+      title: 'Intimacy & Customization',
+      image: image_url('highlight-3.jpg'),
+      layout: 'left' do
+  %>
     <p>
       You get a front-row seat to all the cooking action and can watch the
       madness unfold in real time! You'll be able to see the entire creation

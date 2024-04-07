@@ -1,44 +1,48 @@
-<div class="page page--contact">
-  <div class="primary">
-    <h1>Get in touch with me</h1>
+<%= render 'layouts/header' %>
 
-    <%= form_for(@contact, url: contact_path, html: { class: 'contact-form', data: { turbo: true } }) do |f| %>
-      <div class="contact-form-group">
-        <div class="contact-form-item">
-          <%= f.text_field :name, class: 'contact-input--text required', placeholder: 'Your name' %>
-        </div>
+<div class="px-5 pb-14 md:pb-24 md:px-24 mt-16 max-w-7xl mx-auto">
+  <h1 class="text-3xl font-heading tracking-tight font-bold sm:text-5xl">
+    Book a Dinner
+  </h1>
 
-        <div class="contact-form-item">
-          <%= f.email_field :email, class: 'contact-input--text required', placeholder: 'Your email' %>
-        </div>
+  <p class="text-gray-600 max-w-md">
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod quibusdam unde sed vitae eos aliquid quis rerum ullam. Tenetur adipisci asperiores delectus nisi sed saepe eligendi fugiat a distinctio expedita.
+  </p>
+
+  <%= form_for(@contact, url: contact_path, html: { class: 'mt-8 max-w-md', data: { turbo: true } }) do |f| %>
+    <div class="space-y-5">
+      <div>
+        <%= f.label :name, class: 'block text-sm mb-1' %>
+        <%= f.text_field :name, required: true, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
       </div>
 
-      <div class="contact-form-item">
-        <%= f.text_field :neighborhood, class: 'contact-textarea required', placeholder: 'Your neighborhood' %>
+      <div>
+        <%= f.label :email, class: 'block text-sm mb-1' %>
+        <%= f.email_field :email, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
       </div>
 
-      <div class="contact-form-item">
-        <%= f.text_area :message, class: 'contact-textarea required', placeholder: 'Your message' %>
+      <div>
+        <%= f.label :neighborhood, class: 'block text-sm mb-1' %>
+        <%= f.text_field :neighborhood, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
       </div>
 
-      <div class="contact-form-item">
+      <div>
+        <%= f.label :message, class: 'block text-sm mb-1' %>
+        <%= f.text_area :message, class: 'w-full h-24 py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
+      </div>
+
+      <div>
         <%= recaptcha_tags callback: 'recaptchaCallback' %>
         <input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
       </div>
 
-      <div class="contact-form-item">
-        <%= f.submit 'Get in touch', class: 'contact-button' %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="secondary">
-    <div class="page-image page-image-contact"></div>
-  </div>
+      <%= f.submit 'Submit', class: 'bg-black rounded-full py-2 px-5 text-white inline-block' %>
+    </div>
+  <% end %>
 </div>
 
 <script type="text/javascript">
-  $('.contact-form').validate({
+  $('form').validate({
     ignore: ".ignore",
     rules: {
       hiddenRecaptcha: {

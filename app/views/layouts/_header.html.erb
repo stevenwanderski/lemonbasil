@@ -8,7 +8,7 @@
   <div class="hidden lg:flex gap-9 items-center">
     <div><a href="">How it Works</a></div>
     <div><a href="">About Birdie</a></div>
-    <div><a href="" class="bg-black rounded-full py-2 px-5 text-white inline-block">Book a Dinner</a></div>
+    <div><a href="/contact" class="bg-black rounded-full py-2 px-5 text-white inline-block">Book a Dinner</a></div>
   </div>
 
   <div class="lg:hidden relative" x-data="{ open: false }" @click.outside="open = false">
@@ -18,7 +18,7 @@
       <div class="h-[2px] bg-black"></div>
     </div>
 
-    <div class="absolute bg-white p-5 w-52 right-0 mt-4 rounded-lg space-y-4" x-show="open" x-cloak>
+    <div class="absolute bg-white p-5 w-52 right-0 mt-4 rounded-lg space-y-4 shadow-md" x-show="open" x-cloak>
       <div><a href="">How it Works</a></div>
       <div><a href="">About Birdie</a></div>
       <div><a href="" class="bg-black rounded-full py-2 px-5 text-white inline-block">Book a Dinner</a></div>

@@ -9,7 +9,19 @@ class ContactController < ApplicationController
     @contact = Contact.new(contact_params)
 
     if verify_recaptcha(model: @contact) && @contact.save
-      ContactMailer.with(contact: @contact).success.deliver
+      Akismet.api_key = 'c53388e9bb4e'
+      Akismet.app_url = 'https://lemonandbsil.co'
+
+      is_spam = Akismet.spam?(
+        request.ip,
+        request.user_agent,
+        text: @contact.message
+      )
+
+      if !is_spam
+        ContactMailer.with(contact: @contact).success.deliver
+      end
+
       redirect_to contact_success_path
     else
       flash.now[:error] = "Oops! That didn't work. Try again?"

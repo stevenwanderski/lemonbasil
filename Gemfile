@@ -22,6 +22,8 @@ gem 'turbo-rails'
 gem 'stimulus-rails'
 gem 'requestjs-rails'
 gem 'tailwindcss-rails'
+gem 'akismet'
+gem 'httplog'
 
 # Required for Ruby 3.1
 gem 'net-smtp'

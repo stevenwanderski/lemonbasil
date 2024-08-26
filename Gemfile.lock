@@ -76,6 +76,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.1)
       public_suffix (>= 2.0.2, < 6.0)
+    akismet (3.0.0)
     american_date (1.2.0)
     annotate (3.2.0)
       activerecord (>= 3.2, < 8.0)
@@ -130,6 +131,9 @@ GEM
     globalid (1.0.0)
       activesupport (>= 5.0)
     htmlentities (4.3.4)
+    httplog (1.6.3)
+      rack (>= 2.0)
+      rainbow (>= 2.0.0)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     jquery-rails (4.5.1)
@@ -232,6 +236,7 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0)
       zeitwerk (~> 2.5)
+    rainbow (3.1.1)
     rake (13.0.6)
     recaptcha (5.12.3)
       json
@@ -321,6 +326,7 @@ PLATFORMS
 DEPENDENCIES
   active_link_to
   active_model_serializers (~> 0.10.0)
+  akismet
   american_date
   annotate
   awesome_print
@@ -331,6 +337,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   factory_bot_rails
+  httplog
   jquery-rails
   jquery-ui-rails
   jsbundling-rails

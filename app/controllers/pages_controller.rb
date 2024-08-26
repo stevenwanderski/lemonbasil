@@ -8,6 +8,7 @@ class PagesController < ApplicationController
   end
 
   def home
+    @contact = Contact.new
   end
 
   def meal_prep

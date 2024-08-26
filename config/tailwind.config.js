@@ -9,8 +9,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        olive: '#5C6734'
+      },
       fontFamily: {
-        sans: ['Arial', ...defaultTheme.fontFamily.sans],
+        sans: ['Roboto', 'Arial', ...defaultTheme.fontFamily.sans],
         heading: ['ITC Avant Garde']
       },
     },

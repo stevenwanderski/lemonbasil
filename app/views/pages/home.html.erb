@@ -1,3 +1,14 @@
+<%= render 'pages/home/header' %>
 <%= render 'pages/home/hero' %>
 <%= render 'pages/home/features' %>
 <%= render 'pages/home/contact' %>
+
+<script>
+  $(window).on('scroll', function(event) {
+    if ($(this).scrollTop() > 200) {
+      $('#header-fixed').removeClass('-translate-y-20');
+    } else {
+      $('#header-fixed').addClass('-translate-y-20');
+    }
+  });
+</script>

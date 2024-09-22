@@ -2,59 +2,61 @@
   <div class="px-5 pt-32 pb-14 md:pb-24 md:px-24 max-w-7xl mx-auto">
     <h2 class="font-heading text-3xl lg:text-5xl font-bold text-center mb-14">Get in Touch</h2>
 
-    <%= form_for(@contact, url: contact_path, html: { class: 'mt-8 max-w-md mx-auto', data: { turbo: true } }) do |f| %>
-      <div class="space-y-5">
-        <div>
-          <%= f.label :name, class: 'block text-sm mb-1' %>
-          <%= f.text_field :name, required: true, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
-        </div>
+    <%= turbo_frame_tag 'contact_form' do %>
+      <%= form_for(@contact, url: contact_path, html: { class: 'mt-8 max-w-md mx-auto', data: { turbo: true } }) do |f| %>
+        <div class="space-y-5">
+          <div>
+            <%= f.label :name, class: 'block text-sm mb-1' %>
+            <%= f.text_field :name, required: true, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
+          </div>
 
-        <div>
-          <%= f.label :email, class: 'block text-sm mb-1' %>
-          <%= f.email_field :email, required: true, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
-        </div>
+          <div>
+            <%= f.label :email, class: 'block text-sm mb-1' %>
+            <%= f.email_field :email, required: true, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
+          </div>
 
-        <div>
-          <%= f.label :neighborhood, class: 'block text-sm mb-1' %>
-          <%= f.text_field :neighborhood, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
-        </div>
+          <div>
+            <%= f.label :neighborhood, class: 'block text-sm mb-1' %>
+            <%= f.text_field :neighborhood, class: 'w-full py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
+          </div>
 
-        <div>
-          <%= f.label :message, class: 'block text-sm mb-1' %>
-          <%= f.text_area :message, required: true, class: 'w-full h-24 py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
-        </div>
+          <div>
+            <%= f.label :message, class: 'block text-sm mb-1' %>
+            <%= f.text_area :message, required: true, class: 'w-full h-24 py-1 px-2 border border-gray-300 border-solid rounded-sm' %>
+          </div>
 
-        <div>
-          <%= recaptcha_tags callback: 'recaptchaCallback' %>
-          <input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
-        </div>
+          <div>
+            <%= recaptcha_tags callback: 'recaptchaCallback' %>
+            <input type="hidden" class="hiddenRecaptcha required" name="hiddenRecaptcha" id="hiddenRecaptcha">
+          </div>
 
-        <%= f.submit 'Submit', class: 'bg-olive rounded-full py-2 px-5 text-white inline-block cursor-pointer' %>
-      </div>
+          <%= f.submit 'Submit', class: 'bg-olive rounded-full py-2 px-5 text-white inline-block cursor-pointer' %>
+        </div>
+      <% end %>
     <% end %>
   </div>
 </div>
 
 <script type="text/javascript">
-  $('form').validate({
-    ignore: ".ignore",
-    rules: {
-      hiddenRecaptcha: {
-        required: function () {
-          if (grecaptcha.getResponse() == '') {
-            return true;
-          } else {
-            return false;
-          }
-        }
-      }
-    },
+  // $('form').validate({
+  //   ignore: ".ignore",
+  //   rules: {
+  //     hiddenRecaptcha: {
+  //       required: function () {
+  //         if (grecaptcha.getResponse() == '') {
+  //           return true;
+  //         } else {
+  //           return false;
+  //         }
+  //       }
+  //     }
+  //   },
 
-    submitHandler(form, event) {
-      $('[type="submit"]').prop('disabled', true);
+  //   submitHandler(form, event) {
+  //     $('[type="submit"]').prop('disabled', true);
 
-      form.submit();
-    }
+  //     form.submit();
+  //   }
   });
 
   function recaptchaCallback() {

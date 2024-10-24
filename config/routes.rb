@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#about'
   get '/meal-prep', to: 'pages#meal_prep'
   get '/parties', to: 'pages#parties'
-  get '/calendar', to: 'pages#calendar'
 
   get '/contact', to: 'contact#new'
   post '/contact', to: 'contact#create'

@@ -32,9 +32,6 @@ Rails.application.routes.draw do
     get '/pages/:slug', to: 'pages#edit', as: :page
     patch '/pages/:slug', to: 'pages#update', as: :update_page
 
-    get '/calendar', to: 'calendar#index'
-    patch '/calendar', to: 'calendar#update', as: :update_calendar
-
     resources :clients
     resources :instructions
 

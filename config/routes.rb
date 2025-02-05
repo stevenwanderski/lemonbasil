@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   post '/contact', to: 'contact#create'
   get '/contact-success', to: 'contact#success'
 
+  get '/job-apply', to: 'jobs#new'
+  post '/job-apply', to: 'jobs#create'
+  get '/job-apply-success', to: 'jobs#success'
+
   get '/menus/:slug', to: 'client_menu_submissions#new', as: 'menu_slug'
   get '/menus/:slug/success', to: 'client_menu_submissions#success', as: 'menu_slug_success'
 

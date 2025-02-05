@@ -1,0 +1,64 @@
+  .job-apply-form-item {
+    margin-bottom: 30px;
+  }
+
+  .job-apply-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .job-apply-input--text,
+  .job-apply-textarea,
+  .job-apply-select {
+    border: solid #ccc 1px;
+    padding: 8px 10px;
+    width: 100%;
+    font-size: 1em;
+    font-family: $primary-font;
+    font-weight: 500;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  .job-apply-button {
+    background: $black;
+    padding: .75em;
+    color: $white;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    border-radius: 0;
+    font-family: $primary-font;
+
+    &:disabled {
+      background: rgba($black, 0.25);
+      cursor: wait;
+    }
+  }
+
+  label.error {
+    color: red;
+    padding-top: 5px;
+    display: block;
+  }
+
+  @media screen and (min-width: 800px) {
+    .job-apply-form {
+      max-width: 600px;
+    }
+
+    .job-apply-form-group {
+      display: flex;
+      justify-content: space-between;
+
+      .job-apply-form-item {
+        flex: 1;
+
+        &:first-child {
+          margin-right: 30px;
+        }
+      }
+    }
+  }

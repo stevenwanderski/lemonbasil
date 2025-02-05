@@ -1,0 +1,50 @@
+<div class="page page--contact">
+  <div class="primary">
+    <h1>Apply to work with lemon&amp;basil</h1>
+
+    <%= form_for(@job_application, url: job_apply_path, html: { class: 'contact-form', data: { turbo: true } }) do |f| %>
+      <div class="contact-form-item">
+        <%= f.label :name, class: 'job-apply-label' %>
+        <%= f.text_field :name, class: 'job-apply-input--text required' %>
+      </div>
+
+      <div class="contact-form-item">
+        <%= f.label :email, class: 'job-apply-label' %>
+        <%= f.text_field :email, class: 'job-apply-input--text required' %>
+      </div>
+
+      <div class="contact-form-item">
+        <%= f.label :phone, class: 'job-apply-label' %>
+        <%= f.text_field :phone, class: 'job-apply-input--text required' %>
+      </div>
+
+      <div class="contact-form-item">
+        <%= f.label :position, class: 'job-apply-label' %>
+        <%= f.select :position, ['Meal Prep', 'Dinner Party Helper'], { prompt: '-- Select --'}, class: 'job-apply-select required' %>
+      </div>
+
+      <div class="contact-form-item">
+        <%= f.label :message, class: 'job-apply-label' %>
+        <%= f.text_area :message, class: 'job-apply-textarea required' %>
+      </div>
+
+      <div class="contact-form-item">
+        <%= f.submit 'Submit', class: 'contact-button' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="secondary">
+    <div class="page-image page-image-job-apply"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('.contact-form').validate({
+    submitHandler(form, event) {
+      $('[type="submit"]').prop('disabled', true);
+
+      form.submit();
+    }
+  });
+</script>

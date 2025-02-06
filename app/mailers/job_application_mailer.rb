@@ -4,10 +4,8 @@ class JobApplicationMailer < ApplicationMailer
 
     mail(
       from: 'Lemon&Basil New Job Application <hello@lemonandbasil.co>',
-      to: 'Steven <steven.wanderski@gmail.com>',
+      to: 'Birdie <lemonandbasil.co@gmail.com>',
       subject: 'New Job Application'
     )
   end
 end
-
-# to: 'Birdie <lemonandbasil.co@gmail.com>'

@@ -1,6 +1,6 @@
 <div class="page page--contact">
   <div class="primary">
-    <h1>job application</h1>
+    <h1>apply here</h1>
 
     <%= form_for(@job_application, url: job_apply_path, html: { class: 'contact-form', data: { turbo: true } }) do |f| %>
       <div class="contact-form-item">
@@ -20,7 +20,7 @@
 
       <div class="contact-form-item">
         <%= f.label :position, 'position', class: 'job-apply-label' %>
-        <%= f.select :position, ['meal prep chef', 'dinner party helper'], { prompt: '-- select --' }, class: 'job-apply-select required' %>
+        <%= f.select :position, ['meal prep cook', 'dinner party assistant'], { prompt: '-- select --' }, class: 'job-apply-select required' %>
       </div>
 
       <div class="contact-form-item">

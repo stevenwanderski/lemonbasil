@@ -1,8 +1,33 @@
-<h1>New Job Application</h1>
+<div id="job-application">
+  <h2>New Job Application</h2>
 
-<p>Date: <%= @job_application.created_at.strftime("%m/%d/%Y %l:%M%P").squish %></p>
-<p>Name: <%= @job_application.name %></p>
-<p>Email: <%= @job_application.email %></p>
-<p>Phone: <%= @job_application.phone %></p>
-<p>Position: <%= @job_application.position %></p>
-<p>Message: <%= @job_application.message %></p>
+  <p>
+    <strong>Date:</strong><br>
+    <%= @job_application.created_at.strftime("%m/%d/%Y %l:%M%P").squish %>
+  </p>
+
+  <p>
+    <strong>Name:</strong><br>
+    <%= @job_application.name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong><br>
+    <%= @job_application.email %>
+  </p>
+
+  <p>
+    <strong>Phone:</strong><br>
+    <%= @job_application.phone %>
+  </p>
+
+  <p>
+    <strong>Position:</strong><br>
+    <%= @job_application.position %>
+  </p>
+
+  <p>
+    <strong>Message:</strong><br>
+    <%= @job_application.message %>
+  </p>
+</div>

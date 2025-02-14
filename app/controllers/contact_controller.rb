@@ -3,6 +3,7 @@ class ContactController < ApplicationController
 
   def new
     @contact = Contact.new
+    @page_title = 'Lemon&Basil | Contact'
   end
 
   def create
@@ -30,6 +31,7 @@ class ContactController < ApplicationController
   end
 
   def success
+    @page_title = 'Lemon&Basil | Contact Success'
   end
 
   private

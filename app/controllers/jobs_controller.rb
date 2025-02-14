@@ -3,6 +3,7 @@ class JobsController < ApplicationController
 
   def new
     @job_application = JobApplication.new
+    @page_title = 'Lemon&Basil | Job Application'
   end
 
   def create
@@ -30,6 +31,7 @@ class JobsController < ApplicationController
   end
 
   def success
+    @page_title = 'Lemon&Basil | Job Application Success'
   end
 
   private

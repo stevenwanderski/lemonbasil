@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   post '/job-apply', to: 'jobs#create'
   get '/job-apply-success', to: 'jobs#success'
 
+  get '/waitlist', to: 'waitlist#new'
+  post '/waitlist', to: 'waitlist#create'
+  get '/waitlist-success', to: 'waitlist#success'
+
   get '/menus/:slug', to: 'client_menu_submissions#new', as: 'menu_slug'
   get '/menus/:slug/success', to: 'client_menu_submissions#success', as: 'menu_slug_success'
 

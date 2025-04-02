@@ -19,10 +19,10 @@
       </div>
 
       <div class="contact-form-item">
-        <%= f.label :start_date, 'start date', class: 'job-apply-label' %>
+        <%= f.label :start_date, 'prep cycle', class: 'job-apply-label' %>
         <%= f.select :start_date, [
-          ['Summer 2025 (begins in June)', 'Summer 2025'],
-          ['Fall 2025 (begins in September)', 'Fall 2025']
+          ['Summer 2025', 'Summer 2025'],
+          ['Fall 2025', 'Fall 2025']
           ],
           { prompt: '-- select --' },
           class: 'job-apply-select required'

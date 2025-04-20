@@ -8,7 +8,7 @@ class ClientMenuMailer < ApplicationMailer
     ]
 
     if @client_menu.is_kat?
-      bcc << 'Kat Szymanski <info@lemonandbasil.co>'
+      bcc << 'Kat Szymanski <kat@lemonandbasil.co>'
     end
 
     mail(

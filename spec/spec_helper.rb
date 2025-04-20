@@ -41,8 +41,8 @@ RSpec.configure do |config|
   end
 end
 
-Webdrivers.cache_time = 86_400
-Webdrivers::Chromedriver.required_version = '2.36'
+# Webdrivers.cache_time = 86_400
+# Webdrivers::Chromedriver.required_version = '2.36'
 
 Capybara.server = :puma, { Silent: true }
 Capybara.asset_host = 'http://localhost:3000/'

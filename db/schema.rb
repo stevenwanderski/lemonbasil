@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_04_01_211256) do
+ActiveRecord::Schema[7.0].define(version: 2025_04_20_161532) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_04_01_211256) do
     t.boolean "show_pricing", default: false
     t.boolean "staples_enabled", default: false
     t.text "staples_notes"
+    t.boolean "is_kat", default: false
   end
 
   create_table "clients", force: :cascade do |t|

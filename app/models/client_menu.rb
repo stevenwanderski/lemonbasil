@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  due_at          :datetime
+#  is_kat          :boolean          default(FALSE)
 #  job_date        :datetime
 #  message         :text
 #  show_pricing    :boolean          default(FALSE)

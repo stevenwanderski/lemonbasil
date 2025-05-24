@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe ClientMenuMailer do
-  let!(:client) { create(:client) }
-  let!(:menu) { create(:client_menu, client: client, job_date: '2021-03-02', show_pricing: show_pricing) }
+  let!(:user) { create(:user) }
+  let!(:client) { create(:client, user: user) }
+  let!(:menu) { create(:client_menu, user: user, client: client, job_date: '2021-03-02', show_pricing: show_pricing) }
   let!(:submission) { create(:client_menu_submission, client_menu: menu, total: 22, notes: 'I am notes!') }
 
   let!(:category1) { create(:client_menu_category, client_menu: menu, name: 'Breakfast') }

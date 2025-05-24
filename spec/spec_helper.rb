@@ -42,7 +42,6 @@ RSpec.configure do |config|
 end
 
 Webdrivers.cache_time = 86_400
-Webdrivers::Chromedriver.required_version = '2.36'
 
 Capybara.server = :puma, { Silent: true }
 Capybara.asset_host = 'http://localhost:3000/'
@@ -63,5 +62,5 @@ Capybara.register_driver :headless_chrome do |app|
     desired_capabilities: capabilities
 end
 
-Capybara.default_driver = :headless_chrome
-Capybara.javascript_driver = :headless_chrome
+Capybara.default_driver = :chrome
+Capybara.javascript_driver = :chrome

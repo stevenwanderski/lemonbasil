@@ -20,12 +20,12 @@ class Admin::ClientMenus::CategoriesController < AdminController
 
   def edit
     @client_menu = current_user.client_menus.find(params[:client_menu_id])
-    @category = @client_menu.find(params[:id])
+    @category = @client_menu.client_menu_categories.find(params[:id])
   end
 
   def update
     @client_menu = current_user.client_menus.find(params[:client_menu_id])
-    @category = @client_menu.find(params[:id])
+    @category = @client_menu.client_menu_categories.find(params[:id])
 
     if @category.update(category_params)
       render 'update'
@@ -36,7 +36,7 @@ class Admin::ClientMenus::CategoriesController < AdminController
 
   def destroy
     @client_menu = current_user.client_menus.find(params[:client_menu_id])
-    @category = @client_menu.find(params[:id])
+    @category = @client_menu.client_menu_categories.find(params[:id])
     @category.destroy!
     @categories = @client_menu.client_menu_categories.order(:weight)
   end

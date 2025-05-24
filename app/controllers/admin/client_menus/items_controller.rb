@@ -20,12 +20,12 @@ class Admin::ClientMenus::ItemsController < AdminController
 
   def edit
     @client_menu = current_user.client_menus.find(params[:client_menu_id])
-    @client_menu_item = @client_menu.find(params[:id])
+    @client_menu_item = @client_menu.client_menu_items.find(params[:id])
   end
 
   def update
     @client_menu = current_user.client_menus.find(params[:client_menu_id])
-    @client_menu_item = @client_menu.find(params[:id])
+    @client_menu_item = @client_menu.client_menu_items.find(params[:id])
 
     if @client_menu_item.update(client_menu_item_params)
       render 'update'

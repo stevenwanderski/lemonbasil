@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_02_05_221632) do
+ActiveRecord::Schema[7.0].define(version: 2025_05_24_140253) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -78,6 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_05_221632) do
     t.boolean "show_pricing", default: false
     t.boolean "staples_enabled", default: false
     t.text "staples_notes"
+    t.boolean "is_kat", default: false
+    t.integer "user_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -86,6 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_05_221632) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email"
+    t.integer "user_id"
   end
 
   create_table "contacts", force: :cascade do |t|
@@ -118,6 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_05_221632) do
     t.text "instructions"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "menus", force: :cascade do |t|
@@ -173,6 +177,16 @@ ActiveRecord::Schema[7.0].define(version: 2025_02_05_221632) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "waitlists", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "neighborhood"
+    t.string "start_date"
+    t.text "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

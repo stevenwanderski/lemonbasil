@@ -20,7 +20,11 @@
         <div class="row">
           <div class="row__name">
             <%= link_to admin_client_menu_menu_items_path(menu) do %>
-              <%= menu&.client&.full_name %> <strong><%= l(menu.job_date, format: :full_month) %></strong>
+              <%= menu&.client&.full_name %>
+
+              <% if menu.job_date.present? %>
+                <strong><%= l(menu.job_date, format: :full_month) %></strong>
+              <% end %>
             <% end %>
           </div>
         </div>
@@ -30,7 +34,7 @@
 
     <% else %>
 
-      <div>No menus yet.</div>
+      <div>No menus.</div>
 
     <% end %>
   </div>

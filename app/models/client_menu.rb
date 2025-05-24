@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  due_at          :datetime
+#  is_kat          :boolean          default(FALSE)
 #  job_date        :datetime
 #  message         :text
 #  show_pricing    :boolean          default(FALSE)
@@ -13,9 +14,11 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  client_id       :integer
+#  user_id         :integer
 #
 class ClientMenu < ApplicationRecord
   belongs_to :client
+  belongs_to :user
   has_many :client_menu_categories
   has_many :client_menu_items, through: :client_menu_categories
   has_many :client_menu_submissions

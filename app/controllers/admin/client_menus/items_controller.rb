@@ -1,6 +1,6 @@
 class Admin::ClientMenus::ItemsController < AdminController
   def new
-    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
     @client_menu_item = ClientMenuItem.new(
       client_menu_category_id: params[:client_menu_category_id]
     )
@@ -9,7 +9,7 @@ class Admin::ClientMenus::ItemsController < AdminController
   def create
     @client_menu_item = ClientMenuItem.new(client_menu_item_params)
     @category = @client_menu_item.client_menu_category
-    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
 
     if @client_menu_item.save
       render 'create'
@@ -19,13 +19,13 @@ class Admin::ClientMenus::ItemsController < AdminController
   end
 
   def edit
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @client_menu_item = ClientMenuItem.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @client_menu_item = @client_menu.find(params[:id])
   end
 
   def update
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @client_menu_item = ClientMenuItem.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @client_menu_item = @client_menu.find(params[:id])
 
     if @client_menu_item.update(client_menu_item_params)
       render 'update'
@@ -35,9 +35,9 @@ class Admin::ClientMenus::ItemsController < AdminController
   end
 
   def destroy
-    @client_menu_item = ClientMenuItem.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @client_menu_item = @client_menu.find(params[:id])
     @category = @client_menu_item.client_menu_category
-    @client_menu = ClientMenu.find(params[:client_menu_id])
     @client_menu_item.destroy
   end
 

@@ -23,4 +23,5 @@ class User < ApplicationRecord
 
   has_many :clients
   has_many :client_menus
+  has_many :meals
 end

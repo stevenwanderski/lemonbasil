@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe 'Admin: Client Menus', js: true do
   before do
-    user = create(:user)
-    login_as(user, scope: :user)
+    @user = create(:user)
+    login_as(@user, scope: :user)
   end
 
   describe 'Initial rendering' do
     context 'clients exist' do
-      let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
+      let!(:client) { create(:client, user: @user, first_name: 'Frank', last_name: 'Zappa') }
 
       context 'menus do not exist' do
         it 'shows the empty message' do

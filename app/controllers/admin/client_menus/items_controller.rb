@@ -36,7 +36,7 @@ class Admin::ClientMenus::ItemsController < AdminController
 
   def destroy
     @client_menu = current_user.client_menus.find(params[:client_menu_id])
-    @client_menu_item = @client_menu.find(params[:id])
+    @client_menu_item = @client_menu.client_menu_items.find(params[:id])
     @category = @client_menu_item.client_menu_category
     @client_menu_item.destroy
   end

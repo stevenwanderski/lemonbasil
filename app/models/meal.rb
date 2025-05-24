@@ -10,4 +10,5 @@
 #  user_id      :integer
 #
 class Meal < ApplicationRecord
+  belongs_to :user
 end

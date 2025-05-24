@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe 'Admin: Client Menu: Send to Client', js: true do
-  let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa', email: 'frank@zappa.com') }
-  let!(:menu) { create(:client_menu, job_date: '2021-02-09', client: client) }
+  let(:user) { create(:user) }
+  let(:client) { create(:client, user: user, first_name: 'Frank', last_name: 'Zappa', email: 'frank@zappa.com') }
+  let!(:menu) { create(:client_menu, user: user, job_date: '2021-02-09', client: client) }
 
   before do
-    user = create(:user)
     login_as(user, scope: :user)
   end
 

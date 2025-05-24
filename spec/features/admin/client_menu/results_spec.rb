@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe 'Admin: Client Menu: Results', js: true do
-  let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
-  let!(:menu) { create(:client_menu, job_date: '2021-02-09', show_pricing: true, client: client) }
+  let(:user) { create(:user) }
+  let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa', user: user) }
+  let!(:menu) { create(:client_menu, job_date: '2021-02-09', show_pricing: true, client: client, user: user) }
 
   before do
-    user = create(:user)
     login_as(user, scope: :user)
   end
 

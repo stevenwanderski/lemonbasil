@@ -1,12 +1,15 @@
 require 'spec_helper'
 
 describe ClientMenuSubmission do
+  let(:user) { create(:user) }
+  let(:menu) { create(:client_menu, user: user) }
+  let(:category) { create(:client_menu_category, client_menu: menu) }
+
   describe '#set_total' do
     context 'total value does not exist' do
       it 'sets the total from the running total on before save' do
-        menu = create(:client_menu)
-        item1 = create(:client_menu_item, cost: 7)
-        item2 = create(:client_menu_item, cost: 8)
+        item1 = create(:client_menu_item, client_menu_category: category, cost: 7)
+        item2 = create(:client_menu_item, client_menu_category: category, cost: 8)
 
         submission = ClientMenuSubmission.create!(
           client_menu: menu,
@@ -19,9 +22,8 @@ describe ClientMenuSubmission do
 
     context 'total value exists' do
       it 'keeps the total value' do
-        menu = create(:client_menu)
-        item1 = create(:client_menu_item, cost: 7)
-        item2 = create(:client_menu_item, cost: 8)
+        item1 = create(:client_menu_item, client_menu_category: category, cost: 7)
+        item2 = create(:client_menu_item, client_menu_category: category, cost: 8)
 
         submission = ClientMenuSubmission.create!(
           client_menu: menu,
@@ -36,10 +38,9 @@ describe ClientMenuSubmission do
 
   describe '#running_total' do
     it 'returns the total cost of all selected items' do
-      menu = create(:client_menu)
-      item1 = create(:client_menu_item, cost: 7)
-      item2 = create(:client_menu_item, cost: 8)
-      item3 = create(:client_menu_item, cost: 9)
+      item1 = create(:client_menu_item, client_menu_category: category, cost: 7)
+      item2 = create(:client_menu_item, client_menu_category: category, cost: 8)
+      item3 = create(:client_menu_item, client_menu_category: category, cost: 9)
 
       submission = ClientMenuSubmission.new(
         client_menu: menu,
@@ -52,10 +53,9 @@ describe ClientMenuSubmission do
 
   describe '#running_quantity' do
     it 'returns the number of selected items' do
-      menu = create(:client_menu)
-      item1 = create(:client_menu_item, cost: 7)
-      item2 = create(:client_menu_item, cost: 8)
-      item3 = create(:client_menu_item, cost: 9)
+      item1 = create(:client_menu_item, client_menu_category: category, cost: 7)
+      item2 = create(:client_menu_item, client_menu_category: category, cost: 8)
+      item3 = create(:client_menu_item, client_menu_category: category, cost: 9)
 
       submission = ClientMenuSubmission.new(
         client_menu: menu,

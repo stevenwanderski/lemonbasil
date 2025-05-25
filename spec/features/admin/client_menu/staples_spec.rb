@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe 'Admin: Client Menu: Staples', js: true do
-  let(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
+  let(:user) { create(:user) }
+  let(:client) { create(:client, user: user, first_name: 'Frank', last_name: 'Zappa') }
   let!(:staple_category1) { nil }
   let!(:staple_category2) { nil }
   let!(:staple1) { nil }
@@ -14,12 +15,12 @@ describe 'Admin: Client Menu: Staples', js: true do
       id: 999,
       due_at: '2021-02-01',
       job_date: '2021-02-05',
-      client: client
+      client: client,
+      user: user
     )
   end
 
   before do
-    user = create(:user)
     login_as(user, scope: :user)
   end
 
@@ -140,8 +141,6 @@ describe 'Admin: Client Menu: Staples', js: true do
   end
 
   describe 'Menu form' do
-    let!(:client2) { create(:client, first_name: 'David', last_name: 'Bowie') }
-
     before do
       visit admin_client_menu_staples_path(client_menu_id: client_menu.id)
     end
@@ -158,10 +157,6 @@ describe 'Admin: Client Menu: Staples', js: true do
   end
 
   describe 'Copy Menu' do
-    let!(:category1) { create(:client_menu_category, name: 'Dinner', client_menu: client_menu) }
-    let!(:menu_item1) { create(:client_menu_item, name: 'Beef', client_menu_category: category1) }
-    let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
-
     before do
       visit admin_client_menu_staples_path(client_menu_id: client_menu.id)
     end

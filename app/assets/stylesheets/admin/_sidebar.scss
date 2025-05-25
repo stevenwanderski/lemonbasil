@@ -46,7 +46,6 @@
   .logo {
     text-decoration: none;
     display: inline-block;
-    text-transform: lowercase;
     font-family: $secondary-font;
     font-size: 22px;
 
@@ -66,6 +65,13 @@
 
     ul {
       margin: 0;
+    }
+
+    li {
+      color: $white;
+      list-style: none;
+      padding: 4px 0;
+      font-size: 16px;
     }
 
     a {

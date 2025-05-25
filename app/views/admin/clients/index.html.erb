@@ -4,12 +4,16 @@
 </div>
 
 <div class="rows">
-  <% @clients.each do |client| %>
-    <div class="row" data-id="<%= client.id %>">
-      <div class="row__name">
-        <%= link_to client.full_name, edit_admin_client_path(client) %>
+  <% if @clients.any? %>
+    <% @clients.each do |client| %>
+      <div class="row" data-id="<%= client.id %>">
+        <div class="row__name">
+          <%= link_to client.full_name, edit_admin_client_path(client) %>
+        </div>
       </div>
-    </div>
+    <% end %>
+  <% else %>
+    <div>No clients.</div>
   <% end %>
 
   <%= paginate @clients %>

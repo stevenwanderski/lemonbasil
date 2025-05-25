@@ -3,12 +3,12 @@ require 'spec_helper'
 describe Admin::ClientMenusController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    user = create(:user)
-    sign_in(user)
+    @user = create(:user)
+    sign_in(@user)
   end
 
   describe '#show' do
-    let!(:client_menu) { create(:client_menu) }
+    let!(:client_menu) { create(:client_menu, user: @user) }
 
     subject { get :show, params: { id: client_menu.id } }
 

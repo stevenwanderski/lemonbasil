@@ -1,6 +1,6 @@
 class Admin::ClientsController < AdminController
   def index
-    @clients = Client.order(last_name: :asc).page(params[:page]).per(10)
+    @clients = current_user.clients.order(last_name: :asc).page(params[:page]).per(10)
   end
 
   def new
@@ -8,7 +8,7 @@ class Admin::ClientsController < AdminController
   end
 
   def create
-    @client = Client.new(client_params)
+    @client = current_user.clients.build(client_params)
 
     if @client.save
       redirect_to admin_clients_path, notice: 'Client created!'
@@ -19,11 +19,11 @@ class Admin::ClientsController < AdminController
   end
 
   def edit
-    @client = Client.find(params[:id])
+    @client = current_user.clients.find(params[:id])
   end
 
   def update
-    @client = Client.find(params[:id])
+    @client = current_user.clients.find(params[:id])
 
     if @client.update!(client_params)
       redirect_to admin_clients_path, notice: 'Client updated!'
@@ -34,11 +34,11 @@ class Admin::ClientsController < AdminController
   end
 
   def show
-    @client = Client.find(params[:id])
+    @client = current_user.clients.find(params[:id])
   end
 
   def destroy
-    @client = Client.find(params[:id])
+    @client = current_user.clients.find(params[:id])
     @client.destroy
     redirect_to admin_clients_path, notice: 'Client deleted!'
   end

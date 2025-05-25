@@ -2,25 +2,25 @@ require 'spec_helper'
 
 describe 'Admin: Client Menus', js: true do
   before do
-    user = create(:user)
-    login_as(user, scope: :user)
+    @user = create(:user)
+    login_as(@user, scope: :user)
   end
 
   describe 'Initial rendering' do
     context 'clients exist' do
-      let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
+      let!(:client) { create(:client, user: @user, first_name: 'Frank', last_name: 'Zappa') }
 
       context 'menus do not exist' do
         it 'shows the empty message' do
           visit admin_client_menus_path
 
-          expect(page).to have_content('No menus yet.')
+          expect(page).to have_content('No menus.')
           expect(page).to_not have_content('Please add a client')
         end
       end
 
       context 'menus exist' do
-        let!(:client_menu) { create(:client_menu, client: client) }
+        let!(:client_menu) { create(:client_menu, client: client, user: @user) }
 
         it 'lists the menus' do
           visit admin_client_menus_path
@@ -34,8 +34,8 @@ describe 'Admin: Client Menus', js: true do
   end
 
   describe 'Client Menu form' do
-    let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa') }
-    let!(:client2) { create(:client, first_name: 'David', last_name: 'Bowie') }
+    let!(:client) { create(:client, user: @user, first_name: 'Frank', last_name: 'Zappa') }
+    let!(:client2) { create(:client, user: @user, first_name: 'David', last_name: 'Bowie') }
 
     it 'creates a client menu' do
       visit admin_client_menus_path

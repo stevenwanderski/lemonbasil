@@ -23,7 +23,7 @@
     <aside class="sidebar">
       <a href="/" class="logo">
         <div>
-          Lemon&amp;Basil <span>admin</span>
+          BasilBud
         </div>
       </a>
 
@@ -32,16 +32,13 @@
 
       <nav>
         <ul>
-          <li><%= active_link_to 'Pages', admin_pages_path %></li>
-
-          <br><br>
-
           <li><%= active_link_to 'Clients', admin_clients_path %></li>
           <li><%= active_link_to 'Client Menus', admin_client_menus_path %></li>
           <li><%= active_link_to 'Instructions', admin_instructions_path %></li>
 
-          <br><br>
+          <br><br><br><br>
 
+          <li><%= current_user.email %></li>
           <li><%= link_to 'Logout', destroy_user_session_path %></li>
         </ul>
       </nav>

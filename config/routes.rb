@@ -36,9 +36,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    get '/pages', to: 'pages#index'
-    get '/pages/:slug', to: 'pages#edit', as: :page
-    patch '/pages/:slug', to: 'pages#update', as: :update_page
+    # get '/pages', to: 'pages#index'
+    # get '/pages/:slug', to: 'pages#edit', as: :page
+    # patch '/pages/:slug', to: 'pages#update', as: :update_page
 
     resources :clients
     resources :instructions

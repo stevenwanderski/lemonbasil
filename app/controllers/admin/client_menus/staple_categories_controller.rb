@@ -1,11 +1,11 @@
 class Admin::ClientMenus::StapleCategoriesController < AdminController
   def new
-    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
     @staple_category = StapleCategory.new(client_menu_id: params[:client_menu_id])
   end
 
   def create
-    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
     @staple_category = StapleCategory.new(staple_category_params)
 
     if @staple_category.save
@@ -18,13 +18,13 @@ class Admin::ClientMenus::StapleCategoriesController < AdminController
   end
 
   def edit
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @staple_category = StapleCategory.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @staple_category = @client_menu.staple_categories.find(params[:id])
   end
 
   def update
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @staple_category = StapleCategory.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @staple_category = @client_menu.staple_categories.find(params[:id])
 
     if @staple_category.update(staple_category_params)
       render 'update'
@@ -34,8 +34,8 @@ class Admin::ClientMenus::StapleCategoriesController < AdminController
   end
 
   def destroy
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @staple_category = StapleCategory.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @staple_category = @client_menu.staple_categories.find(params[:id])
     @staple_category.destroy!
     @staple_categories = @client_menu.staple_categories.order(:weight)
   end

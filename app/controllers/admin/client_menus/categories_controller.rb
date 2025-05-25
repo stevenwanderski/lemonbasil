@@ -1,11 +1,11 @@
 class Admin::ClientMenus::CategoriesController < AdminController
   def new
-    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
     @category = ClientMenuCategory.new
   end
 
   def create
-    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
     @category = ClientMenuCategory.new(category_params)
     @category.client_menu = @client_menu
     @category.weight = @client_menu.client_menu_categories.count
@@ -19,13 +19,13 @@ class Admin::ClientMenus::CategoriesController < AdminController
   end
 
   def edit
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @category = ClientMenuCategory.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @category = @client_menu.client_menu_categories.find(params[:id])
   end
 
   def update
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @category = ClientMenuCategory.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @category = @client_menu.client_menu_categories.find(params[:id])
 
     if @category.update(category_params)
       render 'update'
@@ -35,8 +35,8 @@ class Admin::ClientMenus::CategoriesController < AdminController
   end
 
   def destroy
-    @client_menu = ClientMenu.find(params[:client_menu_id])
-    @category = ClientMenuCategory.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
+    @category = @client_menu.client_menu_categories.find(params[:id])
     @category.destroy!
     @categories = @client_menu.client_menu_categories.order(:weight)
   end

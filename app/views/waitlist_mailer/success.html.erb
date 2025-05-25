@@ -1,0 +1,33 @@
+<div id="job-application">
+  <h2>New Waitlist: <%= @waitlist.start_date %></h2>
+
+  <p>
+    <strong>Date:</strong><br>
+    <%= @waitlist.created_at.strftime("%m/%d/%Y %l:%M%P").squish %>
+  </p>
+
+  <p>
+    <strong>Name:</strong><br>
+    <%= @waitlist.name %>
+  </p>
+
+  <p>
+    <strong>Email:</strong><br>
+    <%= @waitlist.email %>
+  </p>
+
+  <p>
+    <strong>Neighborhood:</strong><br>
+    <%= @waitlist.neighborhood %>
+  </p>
+
+  <p>
+    <strong>Preferred start date:</strong><br>
+    <%= @waitlist.start_date %>
+  </p>
+
+  <p>
+    <strong>Message:</strong><br>
+    <%= @waitlist.message %>
+  </p>
+</div>

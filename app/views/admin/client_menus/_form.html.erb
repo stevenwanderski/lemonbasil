@@ -34,6 +34,11 @@
     <%= f.label :staples_enabled, class: 'label' %>
   </div>
 
+  <div class="form-item form-item--checkbox">
+    <%= f.check_box :is_kat %>
+    <%= f.label :is_kat, 'Add Kat', class: 'label' %>
+  </div>
+
   <div class="form-actions">
     <%= f.submit 'Save', class: 'button button--submit' %>
 

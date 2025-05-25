@@ -4,7 +4,7 @@ class ContactMailer < ApplicationMailer
 
     mail(
       from: 'Lemon&Basil New Contact <hello@lemonandbasil.co>',
-      to: 'Birdie <lemonandbasil.co@gmail.com>',
+      to: 'Beth Hackett <beth@lemonandbasil.co>',
       subject: 'New contact message from lemonandbasil.co'
     )
   end

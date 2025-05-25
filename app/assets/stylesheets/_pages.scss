@@ -70,6 +70,10 @@
   background-image: image-url('home.jpg');
 }
 
+.page-image-waitlist-apply {
+  background-image: image-url('waitlist.jpg');
+}
+
 @media screen and (min-width: 800px) {
   .page {
     display: flex;

@@ -26,6 +26,10 @@ describe ClientMenuMailer do
       expect(mail.to).to eq([client.email])
     end
 
+    it 'sets `bbc` as lemonandbasil email' do
+      expect(mail.bcc).to eq(['beth@lemonandbasil.co'])
+    end
+
     it 'sets `from` as the campaign#success_email_from' do
       expect(mail.from).to eq(['hello@lemonandbasil.co'])
     end
@@ -88,6 +92,16 @@ describe ClientMenuMailer do
         expect(body).to have_content('Rice')
         expect(body).to_not have_content('Beans')
         expect(body).to have_content('I am staple notes.')
+      end
+    end
+
+    context 'when `is_kat` is true' do
+      before do
+        menu.update!(is_kat: true)
+      end
+
+      it 'includes kat in the bcc field' do
+        expect(mail.bcc).to match_array(['beth@lemonandbasil.co', 'info@lemonandbasil.co'])
       end
     end
   end

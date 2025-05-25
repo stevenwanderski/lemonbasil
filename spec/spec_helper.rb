@@ -7,6 +7,8 @@ require 'selenium/webdriver'
 
 Selenium::WebDriver::Firefox::Binary.path = "/Applications/Firefox.app/Contents/MacOS/firefox"
 
+ActiveRecord::Migration.maintain_test_schema!
+
 begin
   ActiveRecord::Migration.maintain_test_schema!
 rescue ActiveRecord::PendingMigrationError => e

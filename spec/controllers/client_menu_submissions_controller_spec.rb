@@ -40,9 +40,9 @@ describe ClientMenuSubmissionsController do
       expect(ActionMailer::Base.deliveries.first.to).to eq([client.email])
     end
 
-    it 'sends a bcc copy to the user' do
+    it 'sends a bcc copy to beth' do
       subject
-      expect(ActionMailer::Base.deliveries.first.bcc).to eq([user.email])
+      expect(ActionMailer::Base.deliveries.first.bcc).to eq(['beth@lemonandbasil.co'])
     end
   end
 end

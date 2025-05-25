@@ -101,7 +101,7 @@ describe ClientMenuMailer do
       end
 
       it 'includes kat in the bcc field' do
-        expect(mail.bcc).to match_array(['beth@lemonandbasil.co', 'info@lemonandbasil.co'])
+        expect(mail.bcc).to match_array(['beth@lemonandbasil.co', 'kat@lemonandbasil.co'])
       end
     end
   end

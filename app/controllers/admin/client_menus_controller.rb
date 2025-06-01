@@ -3,16 +3,16 @@ class Admin::ClientMenusController < AdminController
   before_action :set_client_menu_mailer_log, only: [:categories, :menu_items, :results, :staples, :staple_categories]
 
   def index
-    @client_menus = ClientMenu.all.order(created_at: :desc).page(params[:page]).per(10)
+    @client_menus = current_user.client_menus.all.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def new
     @client_menu = ClientMenu.new
-    @clients = Client.all.order(:last_name)
+    @clients = current_user.clients.all.order(:last_name)
   end
 
   def create
-    @client_menu = ClientMenu.new(client_menu_params)
+    @client_menu = current_user.client_menus.build(client_menu_params)
 
     if @client_menu.save
       redirect_to admin_client_menus_path, notice: 'Client Menu created!'
@@ -23,12 +23,12 @@ class Admin::ClientMenusController < AdminController
   end
 
   def edit
-    @client_menu = ClientMenu.find(params[:id])
-    @clients = Client.all.order(last_name: :asc)
+    @client_menu = current_user.client_menus.find(params[:id])
+    @clients = current_user.clients.all.order(last_name: :asc)
   end
 
   def update
-    @client_menu = ClientMenu.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:id])
 
     if @client_menu.update(client_menu_params)
       render 'update'
@@ -38,7 +38,7 @@ class Admin::ClientMenusController < AdminController
   end
 
   def show
-    @client_menu = ClientMenu.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:id])
 
     if @client_menu.client_menu_categories.none?
       redirect_to admin_client_menu_categories_path(params[:id])
@@ -62,13 +62,13 @@ class Admin::ClientMenusController < AdminController
   end
 
   def destroy
-    @client_menu = ClientMenu.find(params[:id])
+    @client_menu = current_user.client_menus.find(params[:id])
     @client_menu.destroy
     redirect_to admin_client_menus_path, notice: 'Client Menu deleted!'
   end
 
   def send_to_client
-    client_menu = ClientMenu.find(params[:client_menu_id])
+    client_menu = current_user.client_menus.find(params[:client_menu_id])
 
     ClientMenuMailer
       .with(client_menu: client_menu)
@@ -144,7 +144,7 @@ class Admin::ClientMenusController < AdminController
   end
 
   def set_client_menu
-    @client_menu = ClientMenu.find(params[:client_menu_id])
+    @client_menu = current_user.client_menus.find(params[:client_menu_id])
   end
 
   def set_client_menu_mailer_log

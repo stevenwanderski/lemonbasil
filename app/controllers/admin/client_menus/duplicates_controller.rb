@@ -1,12 +1,12 @@
 class Admin::ClientMenus::DuplicatesController < AdminController
   def new
-    @client_menu_to_copy = ClientMenu.find(params[:client_menu_id])
+    @client_menu_to_copy = current_user.client_menus.find(params[:client_menu_id])
     @client_menu = ClientMenu.new
-    @clients = Client.all.order(:last_name)
+    @clients = current_user.clients.all.order(:last_name)
   end
 
   def create
-    client_menu = ClientMenu.find(params[:client_menu_id])
+    client_menu = current_user.client_menus.find(params[:client_menu_id])
 
     values = {
       client_id: client_menu_params[:client_id],

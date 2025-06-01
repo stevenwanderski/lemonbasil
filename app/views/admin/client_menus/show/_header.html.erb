@@ -3,9 +3,11 @@
     <%= @client.full_name %>
   </div>
 
-  <div class="menu-header__date" id="client_menu_header_job_date">
-    Prep date: <%= l(@client_menu.job_date, format: :full_month) %>
-  </div>
+  <% if @client_menu.job_date.present? %>
+    <div class="menu-header__date" id="client_menu_header_job_date">
+      Prep date: <%= l(@client_menu.job_date, format: :full_month) %>
+    </div>
+  <% end %>
 
   <% if @client_menu_mailer_log.present? %>
     <style>

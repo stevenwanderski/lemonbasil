@@ -11,7 +11,8 @@ describe ClientMenu do
 
   describe '#duplicate!' do
     it 'creates a copy of the client menu' do
-      client_menu = create(:client_menu, job_date: '2021-01-01')
+      user = create(:user)
+      client_menu = create(:client_menu, user: user, job_date: '2021-01-01')
       category1 = create(:client_menu_category, client_menu: client_menu)
       item1 = create(:client_menu_item, client_menu_category: category1)
       staple_category1 = create(:staple_category, client_menu: client_menu)
@@ -27,6 +28,7 @@ describe ClientMenu do
       expect(menu.client_menu_items.count).to eq(1)
       expect(menu.staple_categories.count).to eq(1)
       expect(menu.staples.count).to eq(1)
+      expect(menu.user_id).to eq(user.id)
     end
   end
 end

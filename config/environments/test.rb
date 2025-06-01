@@ -8,6 +8,8 @@ Rails.application.configure do
 
   config.assets.debug = false
   config.assets.digest = false
+  config.assets.css_compressor = nil
+  config.log_level = :fatal
 
   config.cache_classes = false
   config.action_view.cache_template_loading = true

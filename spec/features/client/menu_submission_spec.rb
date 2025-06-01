@@ -1,8 +1,9 @@
 require 'spec_helper'
 
 describe 'Client: Menu Submission', js: true do
-  let!(:client) { create(:client, first_name: 'Frank', last_name: 'Zappa', email: 'frank@zappa.com') }
-  let!(:menu) { create(:client_menu, client: client, job_date: '2021-03-02', due_at: '2021-02-28', show_pricing: show_pricing, staples_enabled: staples_enabled) }
+  let!(:user) { create(:user) }
+  let!(:client) { create(:client, user: user, first_name: 'Frank', last_name: 'Zappa', email: 'frank@zappa.com') }
+  let!(:menu) { create(:client_menu, user: user, client: client, job_date: '2021-03-02', due_at: '2021-02-28', show_pricing: show_pricing, staples_enabled: staples_enabled) }
   let!(:category1) { create(:client_menu_category, client_menu: menu, name: 'Breakfast') }
   let!(:category2) { create(:client_menu_category, client_menu: menu, name: 'Dinner') }
   let!(:item1) { create(:client_menu_item, client_menu_category: category1, name: 'Eggs Benny', cost: 7) }

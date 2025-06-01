@@ -4,12 +4,17 @@
       <div class="client-menu__client-name">
         <%= @client.full_name %>
       </div>
-      <div class="client-menu__due-at">
-        Prep date: <%= l(@menu.job_date, format: :date_only) %>
-      </div>
-      <div class="client-menu__due-at">
-        Submit by: <%= l(@menu.due_at, format: :date_only) %>
-      </div>
+      <% if @menu.job_date.present? %>
+        <div class="client-menu__due-at">
+          Prep date: <%= l(@menu.job_date, format: :date_only) %>
+        </div>
+      <% end %>
+
+      <% if @menu.due_at.present? %>
+        <div class="client-menu__due-at">
+          Submit by: <%= l(@menu.due_at, format: :date_only) %>
+        </div>
+      <% end %>
     </div>
 
     <a href="/" class="logo">

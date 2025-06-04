@@ -1,0 +1,19 @@
+<div class="admin-header">
+  <h1>Account</h1>
+</div>
+
+<%= form_tag(admin_account_update_path, method: :put) do %>
+  <div class="form-item">
+    <%= label_tag :password, 'Password', class: 'label' %>
+    <%= password_field_tag :password, nil, class: 'input--text', autofocus: true %>
+  </div>
+
+  <div class="form-item">
+    <%= label_tag :password_confirmation, 'Confirm Password', class: 'label' %>
+    <%= password_field_tag :password_confirmation, nil, class: 'input--text' %>
+  </div>
+
+  <div class="form-actions">
+    <%= submit_tag 'Submit', class: 'button button--submit' %>
+  </div>
+<% end %>

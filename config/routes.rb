@@ -64,6 +64,8 @@ Rails.application.routes.draw do
       resources :staple_categories, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/staple_categories'
     end
 
+    get '/account', to: 'account#show', as: 'account'
+    put '/account', to: 'account#update', as: 'account_update'
 
     root to: redirect('/users/sign_in')
   end

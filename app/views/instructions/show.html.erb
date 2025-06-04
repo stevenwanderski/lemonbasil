@@ -3,7 +3,7 @@
     <h1><%= @meal.name %></h1>
 
     <div>
-      <%= link_to 'Back to Instructions', instructions_path %>
+      <%= link_to 'Back to Instructions', instructions_path(slug: params[:slug]) %>
     </div>
   </div>
 

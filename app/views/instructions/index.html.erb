@@ -10,7 +10,7 @@
     triggerSelectOnValidInput: false,
 
     onSelect: function (suggestion) {
-      window.location.href = `/instructions/${suggestion.data}`;
+      window.location.href = `/instructions/<%= params[:slug] %>/${suggestion.data}`;
     }
   });
 </script>

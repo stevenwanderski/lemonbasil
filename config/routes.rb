@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   post '/menus/:slug/staples', to: 'client_menu_submissions#save_staples', as: 'save_staples'
   get '/menus/:slug/staples_success', to: 'client_menu_submissions#staples_success', as: 'staples_success'
 
-  resources :instructions, only: [:index, :show]
+  get '/instructions/', to: redirect('/instructions/beth'), as: 'instructions_old'
+  get '/instructions/:slug', to: 'instructions#index', as: 'instructions'
+  get '/instructions/:slug/:id', to: 'instructions#show'
 
   get '/meals', to: redirect('/instructions')
   get '/meals/:id', to: redirect('/instructions/%{id}')

@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   get '/instructions/', to: redirect('/instructions/beth'), as: 'instructions_old'
   get '/instructions/:slug', to: 'instructions#index', as: 'instructions'
-  get '/instructions/:slug/:id', to: 'instructions#show'
+  get '/instructions/:slug/:id', to: 'instructions#show', as: 'instruction'
 
   get '/meals', to: redirect('/instructions')
   get '/meals/:id', to: redirect('/instructions/%{id}')

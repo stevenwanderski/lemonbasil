@@ -76,4 +76,5 @@ Rails.application.configure do
   }
 
   ENV['APP_HOST'] = 'http://localhost:3000'
+  Rails.application.routes.default_url_options[:host] = ENV['APP_HOST']
 end

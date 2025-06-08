@@ -1,0 +1,30 @@
+<div class="admin-header">
+  <h1>New User</h1>
+</div>
+
+<%= form_for(@user, url: admin_users_path) do |f| %>
+  <div class="form-item">
+    <%= f.label :email, class: 'label' %>
+    <%= f.email_field :email, class: 'input--text' %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :password, class: 'label' %>
+    <%= f.password_field :password, class: 'input--text' %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :password_confirmation, class: 'label' %>
+    <%= f.password_field :password_confirmation, class: 'input--text' %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :role, class: 'label' %>
+    <%= f.select :role, [['Admin', 'admin'], ['Staff', 'staff']], {}, class: 'input--text' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Submit', class: 'button button--submit' %>
+    <%= link_to 'Cancel', admin_users_path %>
+  </div>
+<% end %>

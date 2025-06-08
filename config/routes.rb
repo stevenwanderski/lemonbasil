@@ -44,6 +44,11 @@ Rails.application.routes.draw do
 
     resources :clients
     resources :instructions
+    resources :users do
+      member do
+        get '/switch_user', action: :switch_user, as: :switch_user
+      end
+    end
 
     resources :client_menus do
       get '/categories', action: :categories

@@ -1,0 +1,21 @@
+<div class="admin-header">
+  <h1>Edit User</h1>
+</div>
+
+<%= form_for(@user, url: admin_user_path) do |f| %>
+  <div class="form-item">
+    <%= f.label :email, class: 'label' %>
+    <%= f.email_field :email, class: 'input--text' %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :role, class: 'label' %>
+    <%= f.select :role, [['Admin', 'admin'], ['Staff', 'staff']], {}, class: 'input--text' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Submit', class: 'button button--submit' %>
+    <%= link_to 'Cancel', admin_users_path %>
+    <%= link_to 'Delete', admin_user_path(@user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'link--danger' %>
+  </div>
+<% end %>

@@ -1,0 +1,20 @@
+<div class="admin-header">
+  <h1>Users</h1>
+  <p><%= link_to '+ Add User', new_admin_user_path, class: 'button' %></p>
+</div>
+
+<div class="rows">
+  <% @users.each do |user| %>
+    <div class="row" data-id="<%= user.id %>">
+      <div class="row__name">
+        <%= link_to user.email, edit_admin_user_path(user) %>
+      </div>
+
+      <div class="row__name">
+        <%= link_to 'Login', switch_user_admin_user_path(user) %>
+      </div>
+    </div>
+  <% end %>
+
+  <%= paginate @users %>
+</div>

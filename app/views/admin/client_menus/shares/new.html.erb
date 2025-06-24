@@ -1,0 +1,29 @@
+<%= turbo_frame_tag 'modal' do %>
+  <%= render 'shared/modal' do %>
+    <h2>Share Menu</h2>
+
+    <%= form_for(@client_menu,
+        url: admin_client_menu_share_path(id: @client_menu.id),
+        data: { turbo_frame: '_top' }
+    ) do |f| %>
+      <div class="form-item">
+        <%= f.label :user_id, 'User', class: 'label' %>
+        <%= f.select :user_id,
+            @users.map {|u| [u.email, u.id] },
+            { prompt: '-- Select --' },
+            class: 'input--select required'
+        %>
+      </div>
+
+      <div class="form-actions">
+        <button class="button button--submit">
+          Submit
+        </button>
+
+        <button data-modal-close class="link">
+          Cancel
+        </button>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

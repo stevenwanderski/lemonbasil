@@ -47,6 +47,11 @@
           data: { turbo_frame: 'modal' }
       %>
 
+      <%= link_to 'Share Menu',
+          new_admin_client_menu_share_path(@client_menu),
+          data: { turbo_frame: 'modal' }
+      %>
+
       <%= link_to 'Public View',
           menu_slug_path(@client_menu.slug),
           target: '_blank'

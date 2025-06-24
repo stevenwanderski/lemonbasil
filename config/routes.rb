@@ -64,6 +64,7 @@ Rails.application.routes.draw do
 
       resources :categories, controller: 'client_menus/categories'
       resources :duplicates, only: [:new, :create], controller: 'client_menus/duplicates'
+      resources :shares, only: [:new, :update], controller: 'client_menus/shares'
       resources :items, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/items'
       resources :staples, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/staples'
       resources :staple_categories, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/staple_categories'

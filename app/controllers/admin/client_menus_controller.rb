@@ -3,7 +3,7 @@ class Admin::ClientMenusController < AdminController
   before_action :set_client_menu_mailer_log, only: [:categories, :menu_items, :results, :staples, :staple_categories]
 
   def index
-    @client_menus = current_user.client_menus.all.order(created_at: :desc).page(params[:page]).per(10)
+    @client_menus = current_user.client_menus.all.order(created_at: :desc).page(params[:page]).per(30)
   end
 
   def new

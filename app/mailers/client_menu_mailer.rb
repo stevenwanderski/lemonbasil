@@ -4,17 +4,18 @@ class ClientMenuMailer < ApplicationMailer
     @submission = @client_menu.newest_submission
 
     bcc = [
-      'Beth Hackett <beth@lemonandbasil.co>'
+      'beth@lemonandbasil.co',
+      @client_menu.user.email
     ]
 
     if @client_menu.is_kat?
-      bcc << 'Kat Szymanski <kat@lemonandbasil.co>'
+      bcc << 'kat@lemonandbasil.co'
     end
 
     mail(
       from: 'Lemon&Basil Menu Submission <hello@lemonandbasil.co>',
       to: "#{@client_menu.client.full_name} <#{@client_menu.client.email}>",
-      bcc: bcc,
+      bcc: bcc.uniq,
       subject: "Menu Submission: #{@client_menu.client.full_name} - #{@client_menu.job_date.strftime("%m/%d/%Y")}"
     )
   end

@@ -26,8 +26,8 @@ describe ClientMenuMailer do
       expect(mail.to).to eq([client.email])
     end
 
-    it 'sets `bbc` as lemonandbasil email' do
-      expect(mail.bcc).to eq(['beth@lemonandbasil.co'])
+    it 'sets `bbc` as lemonandbasil and the user email' do
+      expect(mail.bcc).to match_array(['beth@lemonandbasil.co', user.email])
     end
 
     it 'sets `from` as the campaign#success_email_from' do
@@ -101,7 +101,11 @@ describe ClientMenuMailer do
       end
 
       it 'includes kat in the bcc field' do
-        expect(mail.bcc).to match_array(['beth@lemonandbasil.co', 'kat@lemonandbasil.co'])
+        expect(mail.bcc).to match_array([
+          'beth@lemonandbasil.co',
+          'kat@lemonandbasil.co',
+          user.email
+        ])
       end
     end
   end

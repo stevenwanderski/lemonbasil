@@ -2,7 +2,7 @@
   <header>
     <div class="client-menu__meta">
       <div class="client-menu__client-name">
-        <%= @client.full_name %>
+        <%= @client.try(:full_name) || 'NO CLIENT' %>
       </div>
       <% if @menu.job_date.present? %>
         <div class="client-menu__due-at">

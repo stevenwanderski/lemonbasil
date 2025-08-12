@@ -24,8 +24,8 @@
         <%= f.label :client_id, 'Client', class: 'label' %>
         <%= f.select :client_id,
             @clients.map {|c| [c.full_name, c.id] },
-            { prompt: '-- Select --' },
-            class: 'input--select required'
+            { include_blank: '-- No client --' },
+            class: 'input--select'
         %>
       </div>
 

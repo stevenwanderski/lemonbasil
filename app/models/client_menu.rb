@@ -17,7 +17,7 @@
 #  user_id         :integer
 #
 class ClientMenu < ApplicationRecord
-  belongs_to :client
+  belongs_to :client, optional: true
   belongs_to :user
   has_many :client_menu_categories
   has_many :client_menu_items, through: :client_menu_categories

@@ -1,6 +1,6 @@
 <div class="menu-header">
   <div class="menu-header__name">
-    <%= @client.full_name %>
+    <%= @client.try(:full_name) || 'NO CLIENT' %>
   </div>
 
   <% if @client_menu.job_date.present? %>
@@ -47,20 +47,24 @@
           data: { turbo_frame: 'modal' }
       %>
 
-      <%= link_to 'Share Menu',
-          new_admin_client_menu_share_path(@client_menu),
-          data: { turbo_frame: 'modal' }
-      %>
+      <% if current_user.admin? && @client.nil? %>
+        <%= link_to 'Share Menu',
+            new_admin_client_menu_share_path(@client_menu),
+            data: { turbo_frame: 'modal' }
+        %>
+      <% end %>
 
       <%= link_to 'Public View',
           menu_slug_path(@client_menu.slug),
           target: '_blank'
       %>
 
-      <%= link_to 'Send to Client',
-          admin_client_menu_send_to_client_path(@client_menu),
-          data: { confirm: "Are you sure? This menu will be sent to #{@client_menu.client.email}" }
-      %>
+      <% if @client.present? %>
+        <%= link_to 'Send to Client',
+            admin_client_menu_send_to_client_path(@client_menu),
+            data: { confirm: "Are you sure? This menu will be sent to #{@client_menu.client.email}" }
+        %>
+      <% end %>
     </div>
   </div>
 </div>

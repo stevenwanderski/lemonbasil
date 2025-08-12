@@ -37,6 +37,7 @@
           <li><%= active_link_to 'Instructions', admin_instructions_path %></li>
 
           <% if current_user.admin? %>
+            <li><%= active_link_to 'Pages', admin_pages_path %></li>
             <li><%= active_link_to 'Users', admin_users_path %></li>
           <% end %>
 

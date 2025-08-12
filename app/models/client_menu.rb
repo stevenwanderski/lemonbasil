@@ -11,6 +11,7 @@
 #  slug            :string
 #  staples_enabled :boolean          default(FALSE)
 #  staples_notes   :text
+#  title           :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  client_id       :integer

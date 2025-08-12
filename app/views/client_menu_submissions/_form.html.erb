@@ -1,9 +1,20 @@
 <div class="client-menu">
   <header>
     <div class="client-menu__meta">
-      <div class="client-menu__client-name">
-        <%= @client.try(:full_name) || 'NO CLIENT' %>
-      </div>
+      <% if @menu.title.present? %>
+        <div class="client-menu__client-name">
+          <%= @menu.title %>
+        </div>
+
+        <div class="client-menu__due-at">
+          Client: <%= @client.try(:full_name) || 'NO CLIENT' %>
+        </div>
+      <% else %>
+        <div class="client-menu__client-name">
+          <%= @client.try(:full_name) || 'NO CLIENT' %>
+        </div>
+      <% end %>
+
       <% if @menu.job_date.present? %>
         <div class="client-menu__due-at">
           Prep date: <%= l(@menu.job_date, format: :date_only) %>

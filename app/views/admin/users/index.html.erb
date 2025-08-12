@@ -11,7 +11,7 @@
       </div>
 
       <div class="row__name">
-        <%= link_to 'Login', switch_user_admin_user_path(user) %>
+        <%= link_to 'Login', switch_user_admin_user_path(user), data: { turbo: false } %>
       </div>
     </div>
   <% end %>

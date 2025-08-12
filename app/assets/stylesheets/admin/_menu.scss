@@ -10,7 +10,14 @@
   }
 
   &__date {
-    font-size: 18px;
+    font-size: 16px;
+    margin-bottom: 2px;
+  }
+
+  &__allergies {
+    font-size: 16px;
+    color: #f00;
+    margin-bottom: 2px;
   }
 
   &__nav {

@@ -3,6 +3,7 @@
 # Table name: client_menus
 #
 #  id              :bigint           not null, primary key
+#  allergies       :string
 #  due_at          :datetime
 #  is_kat          :boolean          default(FALSE)
 #  job_date        :datetime

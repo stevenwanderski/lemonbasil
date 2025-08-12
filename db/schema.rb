@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_08_12_151446) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_12_152952) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -82,6 +82,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_08_12_151446) do
     t.boolean "is_kat", default: false
     t.integer "user_id"
     t.string "title"
+    t.string "allergies"
   end
 
   create_table "clients", force: :cascade do |t|

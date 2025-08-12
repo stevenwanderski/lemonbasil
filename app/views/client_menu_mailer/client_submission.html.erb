@@ -1,16 +1,36 @@
-<h1><%= @client_menu.client.full_name %> <span>Meal Prep Menu</span></h1>
+<h1>Menu Submission</h1>
 
 <div class="submission">
   <div class="submission__header">
+    <% if @client_menu.title.present? %>
+      <div class="submission__header-item">
+        Title: <%= @client_menu.title %>
+      </div>
+    <% end %>
+
+    <div class="submission__header-item">
+      Client: <%= @client_menu&.client&.full_name || 'NO CLIENT' %>
+    </div>
+
     <% if @client_menu.show_pricing? %>
-      <div class="submission__total">
+      <div class="submission__header-item">
         Total estimate: <strong>$<%= @submission.total %></strong>
       </div>
     <% end %>
 
-    <div class="submission__date">
+    <div class="submission__header-item">
+      Submission date: <%= l(@submission.created_at, format: :date_only) %>
+    </div>
+
+    <div class="submission__header-item">
       Prep date: <%= l(@client_menu.job_date, format: :date_only) %>
     </div>
+
+    <% if @client_menu.allergies.present? %>
+      <div class="submission__header-item allergies">
+        Allergies: <%= @client_menu.allergies %>
+      </div>
+    <% end %>
   </div>
 
   <% @submission.categories.each do |category| %>

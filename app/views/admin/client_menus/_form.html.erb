@@ -23,6 +23,13 @@
   </div>
 
   <div class="form-item">
+    <%= f.label :allergies, 'Allergies', class: 'label' %>
+    <%= f.text_field :allergies,
+        class: 'input--text'
+    %>
+  </div>
+
+  <div class="form-item">
     <%= f.label :client_id, 'Client', class: 'label' %>
     <%= f.select :client_id,
         @clients.map {|c| [c.full_name, c.id] },

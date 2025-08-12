@@ -19,6 +19,12 @@
     </div>
   <% end %>
 
+  <% if @client_menu.allergies.present? %>
+    <div class="menu-header__allergies">
+      Allergies: <%= @client_menu.allergies %>
+    </div>
+  <% end %>
+
   <% if @client_menu_mailer_log.present? %>
     <style>
       .pill-label {

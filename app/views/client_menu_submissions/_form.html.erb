@@ -26,6 +26,12 @@
           Submit by: <%= l(@menu.due_at, format: :date_only) %>
         </div>
       <% end %>
+
+      <% if @menu.allergies.present? %>
+        <div class="client-menu__allergies">
+          Allergies: <%= @menu.allergies %>
+        </div>
+      <% end %>
     </div>
 
     <a href="/" class="logo">

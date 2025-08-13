@@ -4,12 +4,12 @@
   <div class="submission__header">
     <% if @client_menu.title.present? %>
       <div class="submission__header-item">
-        Title: <%= @client_menu.title %>
+        <%= @client_menu.title %>
       </div>
     <% end %>
 
     <div class="submission__header-item">
-      Client: <%= @client_menu&.client&.full_name || 'NO CLIENT' %>
+      <%= @client_menu&.client&.full_name || 'NO CLIENT' %>
     </div>
 
     <% if @client_menu.show_pricing? %>

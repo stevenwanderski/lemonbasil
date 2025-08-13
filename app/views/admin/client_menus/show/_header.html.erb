@@ -5,7 +5,7 @@
     </div>
 
     <div class="menu-header__date">
-      Client: <%= @client.try(:full_name) || 'NO CLIENT' %>
+      <%= @client.try(:full_name) || 'NO CLIENT' %>
     </div>
   <% else %>
     <div class="menu-header__name">

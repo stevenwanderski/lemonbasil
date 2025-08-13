@@ -7,7 +7,7 @@
         </div>
 
         <div class="client-menu__due-at">
-          Client: <%= @client.try(:full_name) || 'NO CLIENT' %>
+          <%= @client.try(:full_name) || 'NO CLIENT' %>
         </div>
       <% else %>
         <div class="client-menu__client-name">

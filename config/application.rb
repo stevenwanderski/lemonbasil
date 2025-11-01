@@ -39,6 +39,7 @@ module Lemonbasil
     config.active_record.legacy_connection_handling = false
 
     config.time_zone = 'Central Time (US & Canada)'
+    config.action_view.logger = Logger.new(nil)
   end
 end
 

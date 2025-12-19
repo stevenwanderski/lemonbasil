@@ -4,6 +4,7 @@
 #
 #  id           :bigint           not null, primary key
 #  email        :string           not null
+#  event_date   :string
 #  message      :text
 #  name         :string           not null
 #  neighborhood :string

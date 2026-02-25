@@ -1,6 +1,6 @@
 class Admin::ClientsController < AdminController
   def index
-    @clients = current_user.clients.order(last_name: :asc).page(params[:page]).per(10)
+    @clients = current_user.clients.order(last_name: :asc).page(params[:page]).per(50)
   end
 
   def new
@@ -35,6 +35,11 @@ class Admin::ClientsController < AdminController
 
   def show
     @client = current_user.clients.find(params[:id])
+  end
+
+  def menus
+    @client = current_user.clients.find(params[:id])
+    @client_menus = current_user.client_menus.where(client: @client).order(created_at: :desc).page(params[:page]).per(30)
   end
 
   def destroy

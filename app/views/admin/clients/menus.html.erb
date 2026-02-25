@@ -1,0 +1,39 @@
+<div>
+  <div class="admin-header">
+    <h1>Menus for <%= @client.full_name %></h1>
+
+    <div>
+      <%= link_to '← Back to Clients', admin_clients_path, class: 'button' %>
+    </div>
+  </div>
+
+  <div class="rows">
+    <% if @client_menus.any? %>
+
+      <% @client_menus.each do |menu| %>
+        <div class="row">
+          <div class="row__name">
+            <%= link_to admin_client_menu_menu_items_path(menu) do %>
+              <% if menu.title.present? %>
+                <%= menu.title %> <span>- </span>
+              <% end %>
+
+              <%= @client.full_name %>
+
+              <% if menu.job_date.present? %>
+                <strong><%= l(menu.job_date, format: :full_month) %></strong>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= paginate @client_menus %>
+
+    <% else %>
+
+      <div>No menus for this client.</div>
+
+    <% end %>
+  </div>
+</div>

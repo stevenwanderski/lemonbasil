@@ -9,6 +9,7 @@
       <div class="row" data-id="<%= client.id %>">
         <div class="row__name">
           <%= link_to client.full_name, edit_admin_client_path(client) %>
+          <%= link_to 'View Menus', menus_admin_client_path(client) %>
         </div>
       </div>
     <% end %>

@@ -42,7 +42,11 @@ Rails.application.routes.draw do
     get '/pages/:slug', to: 'pages#edit', as: :page
     patch '/pages/:slug', to: 'pages#update', as: :update_page
 
-    resources :clients
+    resources :clients do
+      member do
+        get :menus
+      end
+    end
     resources :instructions
     resources :users do
       member do

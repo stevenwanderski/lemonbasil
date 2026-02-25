@@ -1,0 +1,39 @@
+<div>
+  <div class="admin-header">
+    <h1><%= Date::MONTHNAMES[@month] %> <%= @year %></h1>
+
+    <div>
+      <%= link_to '← Back to Monthly Menus', monthly_admin_client_menus_path, class: 'button' %>
+    </div>
+  </div>
+
+  <div class="rows">
+    <% if @client_menus.any? %>
+
+      <% @client_menus.each do |menu| %>
+        <div class="row">
+          <div class="row__name">
+            <%= link_to admin_client_menu_menu_items_path(menu) do %>
+              <% if menu.title.present? %>
+                <%= menu.title %> <span>- </span>
+              <% end %>
+
+              <%= menu&.client&.full_name || 'NO CLIENT' %>
+
+              <% if menu.job_date.present? %>
+                <strong><%= l(menu.job_date, format: :full_month) %></strong>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= paginate @client_menus %>
+
+    <% else %>
+
+      <div>No menus for this month.</div>
+
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<div>
+  <div class="admin-header">
+    <h1>Monthly Menus</h1>
+  </div>
+
+  <div class="rows">
+    <% if @months.any? %>
+
+      <% @months.each do |year, month| %>
+        <div class="row">
+          <div class="row__name">
+            <%= link_to "#{Date::MONTHNAMES[month]} #{year}", monthly_show_admin_client_menus_path(year, month) %>
+          </div>
+        </div>
+      <% end %>
+
+    <% else %>
+
+      <div>No menus with dates.</div>
+
+    <% end %>
+  </div>
+</div>

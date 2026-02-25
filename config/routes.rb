@@ -51,6 +51,10 @@ Rails.application.routes.draw do
     end
 
     resources :client_menus do
+      collection do
+        get '/monthly', action: :monthly
+        get '/monthly/:year/:month', action: :monthly_show, as: :monthly_show
+      end
       get '/categories', action: :categories
       get '/menu_items', action: :menu_items
       get '/staples', action: :staples

@@ -132,6 +132,29 @@ class Admin::ClientMenusController < AdminController
     @staple_categories = @client_menu.staple_categories.order(:weight)
   end
 
+  def monthly
+    @months = current_user.client_menus
+      .where.not(job_date: nil)
+      .select("EXTRACT(YEAR FROM job_date)::integer AS year, EXTRACT(MONTH FROM job_date)::integer AS month")
+      .distinct
+      .order(Arel.sql("year DESC, month DESC"))
+      .map { |r| [r.year, r.month] }
+  end
+
+  def monthly_show
+    year = params[:year].to_i
+    month = params[:month].to_i
+    start_date = Date.new(year, month, 1)
+    end_date = start_date.end_of_month
+
+    @year = year
+    @month = month
+    @client_menus = current_user.client_menus
+      .where(job_date: start_date..end_date)
+      .order(job_date: :asc)
+      .page(params[:page]).per(30)
+  end
+
   def staple_categories
     @client = @client_menu.client
     @staple_categories = @client_menu.staple_categories.order(:weight)

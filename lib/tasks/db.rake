@@ -13,6 +13,9 @@ namespace :db do
       # Download the latest backup to a file called latest.dump in tmp folder
       return if !system("heroku pg:backups:download -a #{environment} -o tmp/latest.dump")
 
+      # Prevents Rails from raising the ActiveRecord::ProtectedEnvironmentError (You are attempting to run a destructive action against your 'production' database.)
+      Rake::Task["db:environment:set"].invoke
+
       # restoring over an existing db won't remove
       # new migrated columns, which can lead to fun errors
       Rake::Task["db:drop"].invoke

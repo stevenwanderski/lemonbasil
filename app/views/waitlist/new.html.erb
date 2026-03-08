@@ -19,10 +19,12 @@
       </div>
 
       <div class="contact-form-item">
-        <%= f.label :start_date, 'preferred start date', class: 'job-apply-label' %>
-        <%= f.select :start_date, [
-          ['Fall Snacks 2025', 'Fall Snacks 2025'],
-          ['Fall Meal Prep 2025', 'Fall Meal Prep 2025']
+        <%= f.label :prep_service, 'desired prep service', class: 'job-apply-label' %>
+        <%= f.select :prep_service, [
+          ['snack prep', 'snack prep'],
+          ['meal prep', 'meal prep'],
+          ['postpartum prep', 'postpartum prep'],
+          ['care package prep', 'care package prep']
           ],
           { prompt: '-- select --' },
           class: 'job-apply-select required'

@@ -7,6 +7,7 @@
 #  message      :text
 #  name         :string
 #  neighborhood :string
+#  prep_service :string
 #  start_date   :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

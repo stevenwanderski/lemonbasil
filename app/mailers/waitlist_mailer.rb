@@ -5,7 +5,7 @@ class WaitlistMailer < ApplicationMailer
     mail(
       from: 'Lemon&Basil New Waitlist <hello@lemonandbasil.co>',
       to: 'Birdie <lemonandbasil.co@gmail.com>',
-      subject: "Waitlist: #{@waitlist.start_date}"
+      subject: "Waitlist: #{@waitlist.prep_service}"
     )
   end
 end

@@ -58,6 +58,7 @@ Rails.application.routes.draw do
       collection do
         get '/monthly', action: :monthly
         get '/monthly/:year/:month', action: :monthly_show, as: :monthly_show
+        get '/master', action: :master
       end
       get '/categories', action: :categories
       get '/menu_items', action: :menu_items

@@ -33,8 +33,9 @@
       <nav>
         <ul>
           <li><%= active_link_to 'Clients', admin_clients_path %></li>
-          <li><%= active_link_to 'Client Menus', admin_client_menus_path %></li>
+          <li><%= active_link_to 'Client Menus', admin_client_menus_path, active: :exclusive %></li>
           <li><%= active_link_to 'Monthly Menus', monthly_admin_client_menus_path %></li>
+          <li><%= active_link_to 'Master Menus', master_admin_client_menus_path %></li>
           <li><%= active_link_to 'Instructions', admin_instructions_path %></li>
 
           <% if current_user.admin? %>

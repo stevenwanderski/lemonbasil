@@ -132,6 +132,10 @@ class Admin::ClientMenusController < AdminController
     @staple_categories = @client_menu.staple_categories.order(:weight)
   end
 
+  def master
+    @client_menus = current_user.client_menus.where(client_id: nil).order(created_at: :desc).page(params[:page]).per(30)
+  end
+
   def monthly
     @months = current_user.client_menus
       .where.not(job_date: nil)

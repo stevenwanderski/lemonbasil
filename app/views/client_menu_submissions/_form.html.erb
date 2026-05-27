@@ -99,6 +99,8 @@
         <% end %>
       </div>
 
+      <%= render 'staples_form', f: f %>
+
       <div class="client-menu__notes">
         <%= f.label :notes, class: 'client-menu__notes-label' %>
         <%= f.text_area :notes, class: 'input--textarea' %>
@@ -114,8 +116,6 @@
       </div>
 
       <%= hidden_field_tag :client_menu_id, @menu.id %>
-
-      <%= render 'staples_form', f: f %>
     <% end %>
   </div>
 </div>

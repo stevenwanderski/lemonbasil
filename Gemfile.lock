@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/stevenwanderski/request-tracker-gem.git
+  revision: 7f36672ccd0a5d51798dee188f38ed9d9e292ebe
+  specs:
+    request_tracker (0.1.0)
+      rails (>= 7.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -338,6 +345,7 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (= 7.0.4)
   recaptcha
+  request_tracker!
   requestjs-rails
   rexml
   rspec-rails (~> 4.0.1)

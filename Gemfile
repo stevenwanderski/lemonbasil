@@ -23,6 +23,7 @@ gem 'stimulus-rails'
 gem 'requestjs-rails'
 gem 'akismet'
 gem 'httplog'
+gem "request_tracker", github: "stevenwanderski/request-tracker-gem"
 
 # Required for Ruby 3.1
 gem 'net-smtp'

@@ -21,6 +21,35 @@
       const url = '<%= admin_client_menu_update_staple_weights_path(client_menu) %>';
       const $list = $("#<%= dom_id(category) %>_list .sortable-list");
 
+      const $indicator = $('#staples_save_indicator');
+      const $icon = $indicator.find('.save-indicator__icon');
+      const $text = $indicator.find('.save-indicator__text');
+      let hideTimeout;
+
+      function showIndicator(state, message) {
+        clearTimeout(hideTimeout);
+        $indicator.removeClass('save-indicator--success save-indicator--error');
+
+        if (state === 'saving') {
+          $icon.html('<span class="save-indicator__spinner"></span>');
+        } else if (state === 'success') {
+          $indicator.addClass('save-indicator--success');
+          $icon.html('<span class="save-indicator__check">&#10003;</span>');
+        } else if (state === 'error') {
+          $indicator.addClass('save-indicator--error');
+          $icon.html('<span class="save-indicator__error">!</span>');
+        }
+
+        $text.text(message);
+        $indicator.addClass('is-visible');
+
+        if (state !== 'saving') {
+          hideTimeout = setTimeout(function() {
+            $indicator.removeClass('is-visible');
+          }, 2000);
+        }
+      }
+
       $list.sortable({
         handle: '.sortable-item__move',
 
@@ -29,10 +58,18 @@
             return $(this).data('staple-id');
           }).get();
 
+          showIndicator('saving', 'Saving...');
+
           $.ajax({
             url: url,
             method: 'POST',
-            data: { weights: weights }
+            data: { weights: weights },
+            success: function() {
+              showIndicator('success', 'Saved!');
+            },
+            error: function() {
+              showIndicator('error', 'Something went wrong. Please try again.');
+            }
           });
         }
       })

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/stevenwanderski/request-tracker-gem.git
-  revision: 5199756595bf10732924c9df7e230c43d00e19ca
+  revision: d2c8645ac0855ab562c01cbd266bd1f679829489
   specs:
     request_tracker (0.1.0)
       rails (>= 7.0)

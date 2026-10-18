@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_18_224002) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_18_230002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -157,6 +157,24 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_224002) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lemon_drop_ingredient_groups", force: :cascade do |t|
+    t.bigint "recipe_id", null: false
+    t.string "name"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_lemon_drop_ingredient_groups_on_recipe_id"
+  end
+
+  create_table "lemon_drop_ingredients", force: :cascade do |t|
+    t.bigint "ingredient_group_id", null: false
+    t.text "text", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ingredient_group_id"], name: "index_lemon_drop_ingredients_on_ingredient_group_id"
+  end
+
   create_table "lemon_drop_intro_sections", force: :cascade do |t|
     t.string "heading"
     t.text "body_html"
@@ -186,6 +204,34 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_224002) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lemon_drop_recipes", force: :cascade do |t|
+    t.bigint "recipes_section_id", null: false
+    t.integer "position", default: 0, null: false
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.string "kicker"
+    t.string "category"
+    t.string "menu_title"
+    t.text "menu_blurb"
+    t.integer "prep_minutes"
+    t.integer "cook_minutes"
+    t.string "time_note"
+    t.string "total_label"
+    t.integer "serves"
+    t.text "tip"
+    t.string "hero_focus", default: "center", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipes_section_id", "position"], name: "index_lemon_drop_recipes_on_recipes_section_id_and_position"
+    t.index ["recipes_section_id"], name: "index_lemon_drop_recipes_on_recipes_section_id"
+  end
+
+  create_table "lemon_drop_recipes_sections", force: :cascade do |t|
+    t.string "heading"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lemon_drop_sections", force: :cascade do |t|
     t.bigint "issue_id", null: false
     t.string "sectionable_type", null: false
@@ -202,6 +248,15 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_224002) do
     t.index ["issue_id", "position"], name: "index_lemon_drop_sections_on_issue_id_and_position"
     t.index ["issue_id"], name: "index_lemon_drop_sections_on_issue_id"
     t.index ["sectionable_type", "sectionable_id"], name: "index_lemon_drop_sections_on_sectionable"
+  end
+
+  create_table "lemon_drop_steps", force: :cascade do |t|
+    t.bigint "recipe_id", null: false
+    t.text "body", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_lemon_drop_steps_on_recipe_id"
   end
 
   create_table "lemon_drop_title_page_sections", force: :cascade do |t|
@@ -290,5 +345,9 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_224002) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "lemon_drop_ingredient_groups", "lemon_drop_recipes", column: "recipe_id"
+  add_foreign_key "lemon_drop_ingredients", "lemon_drop_ingredient_groups", column: "ingredient_group_id"
+  add_foreign_key "lemon_drop_recipes", "lemon_drop_recipes_sections", column: "recipes_section_id"
   add_foreign_key "lemon_drop_sections", "lemon_drop_issues", column: "issue_id"
+  add_foreign_key "lemon_drop_steps", "lemon_drop_recipes", column: "recipe_id"
 end

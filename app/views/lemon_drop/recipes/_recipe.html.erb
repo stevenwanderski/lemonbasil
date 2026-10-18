@@ -1,0 +1,39 @@
+<article class="recipe" id="<%= recipe.slug %>">
+  <div class="recipe-hero">
+    <% if recipe.hero_image.attached? %>
+      <%= image_tag recipe.hero_image.variant(:hero), alt: recipe.title, style: "object-position: center #{recipe.hero_focus}" %>
+    <% end %>
+    <h2><% if recipe.kicker.present? %><small><span><%= recipe.kicker %></span></small><% end %><span><%= recipe.title %></span></h2>
+  </div>
+  <div class="wrap">
+    <% if recipe.time_line %>
+      <p class="meta mono-caps"><%= recipe.time_line %></p>
+    <% end %>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <% recipe.ingredient_groups.each do |group| %>
+          <% if group.name.present? %>
+            <h4><%= group.name %></h4>
+          <% end %>
+          <ul>
+            <% group.ingredients.each do |ingredient| %>
+              <li><%= ingredient.text %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <% recipe.steps.each do |step| %>
+            <li><%= step.body %></li>
+          <% end %>
+        </ol>
+        <% if recipe.tip.present? %>
+          <p class="tip"><%= recipe.tip %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</article>

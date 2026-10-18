@@ -87,6 +87,8 @@ section { padding: 88px 0; }
 .dish p { margin: 2px 0 0; color: var(--ink-soft); font-size: 15px; }
 
 /* ---------- recipes ---------- */
+.recipes-head { padding: 88px 0 48px; }
+.recipes-head h2 { font-size: clamp(44px, 7vw, 72px); }
 .recipe { padding: 0 0 96px; }
 .recipe-hero { position: relative; height: clamp(320px, 52vw, 520px); overflow: hidden; }
 .recipe-hero img { width: 100%; height: 100%; object-fit: cover; }

@@ -18,6 +18,11 @@
 #
 class LemonDrop::Issue < ApplicationRecord
   has_many :sections, -> { order(:position) }, dependent: :destroy
+  has_many :recipes_sections, through: :sections, source: :sectionable, source_type: 'LemonDrop::RecipesSection'
+  # Every Recipe in the Issue, in page order: Section position, then Recipe
+  # position.
+  has_many :recipes, -> { reorder('lemon_drop_sections.position', 'lemon_drop_recipes.position') },
+    through: :recipes_sections
 
   enum status: { draft: 'draft', published: 'published' }
 
@@ -26,6 +31,14 @@ class LemonDrop::Issue < ApplicationRecord
   validates :title, :slug, :starts_on, :ends_on, presence: true
   validates :slug, uniqueness: true
   validate :ends_on_not_before_starts_on
+
+  # Section anchors and Recipe slugs share the page's id space. Leaves out
+  # the record asking, so it doesn't collide with itself.
+  def taken_page_ids(except: nil)
+    other_sections = except.is_a?(LemonDrop::Section) ? sections.excluding(except) : sections
+    other_recipes = except.is_a?(LemonDrop::Recipe) ? recipes.excluding(except) : recipes
+    other_sections.pluck(:anchor) + other_recipes.pluck(:slug)
+  end
 
   # "oct 19–23", or "oct 30–nov 3" when the dates span two months.
   def date_label

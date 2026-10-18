@@ -31,6 +31,7 @@ class LemonDrop::Section < ApplicationRecord
     LemonDrop::TitlePageSection
     LemonDrop::IntroSection
     LemonDrop::HeroSection
+    LemonDrop::RecipesSection
     LemonDrop::OutroSection
   ].freeze
 
@@ -44,20 +45,22 @@ class LemonDrop::Section < ApplicationRecord
   before_validation :set_default_anchor
 
   validates :anchor, presence: true, uniqueness: { scope: :issue_id }
+  validate :anchor_not_a_recipe_slug
 
   private
 
   # Defaults from the Section type ("title-page"), with a number added when
-  # the Issue already uses it ("title-page-2").
+  # the Issue already uses it as an anchor or Recipe slug ("title-page-2").
   def set_default_anchor
     return if anchor.present? || issue.nil? || sectionable.nil?
 
     base = sectionable.model_name.element.delete_suffix('_section').dasherize
-    taken = issue.sections.where.not(id: id).pluck(:anchor)
+    self.anchor = LemonDrop.unique_page_id(base, issue.taken_page_ids(except: self))
+  end
 
-    candidate = base
-    number = 1
-    candidate = "#{base}-#{number += 1}" while taken.include?(candidate)
-    self.anchor = candidate
+  def anchor_not_a_recipe_slug
+    return if anchor.blank? || issue.nil?
+
+    errors.add(:anchor, :taken) if issue.recipes.exists?(slug: anchor)
   end
 end

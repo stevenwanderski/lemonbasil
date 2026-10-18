@@ -14,7 +14,7 @@ Vocabulary: see `/GLOSSARY.md`. Decisions: see `/docs/adr/`.
 |---|---|
 | Admin authentication/authorization | Devise + `User#admin?` (`role == 'admin'`). The app's `AdminController` only requires sign-in (non-admin chef users can reach `/admin`), so every lemon-drop admin controller inherits from `Admin::LemonDrop::BaseController < AdminController`, whose `before_action` redirects non-admins to `admin_clients_path` (same as `Admin::UsersController`). Nav link shown to admins only. No new roles. |
 | Admin UI | The app's custom `Admin::` controllers, `admin` layout and sidebar nav, admin SCSS, Turbo + Stimulus. |
-| File storage | Active Storage (install its migrations) on **Cloudflare R2** via the S3 service, plus `image_processing` / libvips. Production currently uses `:local`, which doesn't persist on Heroku (ADR 0005). |
+| File storage | Active Storage (install its migrations) on **AWS S3** (public bucket, plain S3 URLs) via the S3 service and `aws-sdk-s3`, plus `image_processing` / libvips. Production currently uses `:local`, which doesn't persist on Heroku (ADR 0005). |
 | Rich text | **Tiptap** WYSIWYG (Stimulus controller, esbuild), stored as sanitized HTML in a `text` column. No Action Text, no Markdown in the editor (ADR 0004). |
 | Background jobs | None added. Rails' default `:async` adapter is enough: variants are generated on request, and duplicated issues reuse blobs. |
 | Change history | `paper_trail` (new to the app). |
@@ -225,7 +225,7 @@ All published issues and recipes are **public**: no login, indexable by search e
 **Requirements**
 - Responsive at phone widths (single column under ~760px), no horizontal scroll.
 - Image variants: hero/cover ~1600w, grid/thumbnail ~600w; serve WebP where supported; lazy-load below the fold.
-- Images are served from a **public R2 bucket on a custom domain** (`public: true` in `storage.yml`), so URLs are permanent and cacheable. They work for Open Graph and don't route through Heroku (ADR 0005).
+- Images are served from a **public S3 bucket** at plain S3 URLs (`public: true` in `storage.yml`), so URLs are permanent and cacheable. They work for Open Graph and don't route through Heroku. No custom image domain in v1 (ADR 0005).
 - Print stylesheet: grocery list and individual recipes print cleanly.
 - `schema.org/Recipe` JSON-LD on recipe pages and for each recipe on issue pages.
 - Open Graph tags from `primary_title_page` (cover image, heading, date label), with the fallback in §3.
@@ -268,7 +268,7 @@ All routes require the existing admin role, enforced by `Admin::LemonDrop::BaseC
 
 **Rich text fields** (Intro and Outro bodies) use the Tiptap editor, limited to paragraphs, bold, italic, links and lists.
 
-**Images**: uploaded through the section and recipe forms. Accept JPEG/PNG/WebP up to 15 MB (no HEIC in v1); strip EXIF location data.
+**Images**: uploaded through the section and recipe forms. Accept JPEG/PNG/WebP up to 15 MB (no HEIC in v1); strip EXIF location data **on upload, before the file is stored**, so originals in the public bucket never contain it; in the same step, scale originals down to at most 2400px on the longest side.
 
 ---
 

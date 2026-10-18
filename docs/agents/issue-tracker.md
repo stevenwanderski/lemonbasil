@@ -9,9 +9,11 @@ Issues and specs for this repo live in Linear: workspace **Happy Code**, team **
 - **Read an issue**: `get_issue` with the identifier (e.g. `HAP-12`), `includeRelations: true` when blocking matters; `list_comments` for its comments.
 - **List issues**: `list_issues` filtered by `project: "Lemon & Basil"` plus label/state filters as needed.
 - **Sub-issues**: a spec is a parent issue; tickets broken out of it are created with `parentId` set to the spec's identifier.
+- **Ticket order**: a spec's tickets are titled `<Feature> NN: <title>` with a zero-padded number in suggested build order (`Lemon Drop 02: …`), so sorting by title gives the build order. HAP numbers don't follow it.
 - **Comment**: `save_comment` on the issue.
 - **Apply / remove labels**: `save_issue` with `addLabels` / `removeLabels`.
-- **Close**: set `state` to **Done** (completed) or **Canceled** (won't do), with a comment explaining why.
+- **Start**: set `state` to **In Progress** and `assignee: "me"`.
+- **Close**: set `state` to **Done** (completed) or **Canceled** (won't do), with a comment explaining why. A ticket is Done as soon as its work is committed and pushed; don't wait for merge or deploy. The comment names the commit and summarises what landed.
 - **Blocking**: Linear's native relations, via `save_issue` `blockedBy` / `blocks`. A ticket is unblocked when every blocker is Done or Canceled.
 
 ## When a skill says "publish to the issue tracker"

@@ -92,3 +92,9 @@ file's contents (`active_storage_validations` with `spoofing_protection`,
 which uses the `file` command). Originals are stored as uploaded, including
 any location data, so pages must only ever show variants saved with
 `saver: { strip: true }`, never the original.
+
+When attaching images in code (seeds, scripts, specs), pass an
+`ActionDispatch::Http::UploadedFile`, which is what a form submits. The type
+check reads file contents only from that class: `attach(io: ...)` raises
+`ActiveStorage::IntegrityError`, and a `Rack::Test::UploadedFile` is rejected
+as a spoofed type. `spec/support/uploaded_image.rb` shows how.

@@ -1,3 +1,21 @@
+# == Schema Information
+#
+# Table name: lemon_drop_issues
+#
+#  id           :bigint           not null, primary key
+#  ends_on      :date             not null
+#  published_at :datetime
+#  slug         :string           not null
+#  starts_on    :date             not null
+#  status       :string           default("draft"), not null
+#  title        :string           not null
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+# Indexes
+#
+#  index_lemon_drop_issues_on_slug  (slug) UNIQUE
+#
 class LemonDrop::Issue < ApplicationRecord
   has_many :sections, -> { order(:position) }, dependent: :destroy
 

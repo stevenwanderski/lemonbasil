@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_18_223002) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_18_224002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -148,6 +148,23 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_223002) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lemon_drop_hero_sections", force: :cascade do |t|
+    t.text "heading"
+    t.string "background_focus", default: "center", null: false
+    t.string "text_color", default: "light", null: false
+    t.string "min_height", default: "tall", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lemon_drop_intro_sections", force: :cascade do |t|
+    t.string "heading"
+    t.text "body_html"
+    t.string "signoff"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lemon_drop_issues", force: :cascade do |t|
     t.string "title", null: false
     t.string "slug", null: false
@@ -158,6 +175,15 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_223002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["slug"], name: "index_lemon_drop_issues_on_slug", unique: true
+  end
+
+  create_table "lemon_drop_outro_sections", force: :cascade do |t|
+    t.string "heading"
+    t.text "body_html"
+    t.string "cta_label"
+    t.string "cta_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "lemon_drop_sections", force: :cascade do |t|

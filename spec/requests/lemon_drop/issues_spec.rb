@@ -3,14 +3,6 @@ require 'spec_helper'
 RSpec.describe 'LemonDrop::Issues', type: :request do
   let(:issue) { create(:lemon_drop_issue, :published, starts_on: Date.new(2026, 10, 19), ends_on: Date.new(2026, 10, 23)) }
 
-  # What a form submission hands the model.
-  def uploaded_image(name)
-    tempfile = Tempfile.new(name, binmode: true)
-    IO.copy_stream(Rails.root.join('lemon-drop/images', name).to_s, tempfile)
-    tempfile.rewind
-    ActionDispatch::Http::UploadedFile.new(tempfile: tempfile, filename: name, type: 'image/jpeg')
-  end
-
   def add_title_page(heading, **section_attributes)
     create(:lemon_drop_section,
       issue: issue,

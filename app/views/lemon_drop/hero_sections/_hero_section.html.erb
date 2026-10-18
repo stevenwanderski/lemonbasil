@@ -1,0 +1,12 @@
+<%= tag.section class: "hero hero-#{hero_section.min_height} hero-text-#{hero_section.text_color}",
+      style: ("background-image: url(#{url_for(hero_section.background_image.variant(:background))}); background-position: center #{hero_section.background_focus};" if hero_section.background_image.attached?),
+      aria: { label: hero_section.heading_lines.join(' ') } do %>
+  <div class="stack">
+    <% hero_section.heading_lines.each_with_index do |line, index| %>
+      <h2><%= line %></h2>
+      <% if index.zero? && hero_section.overlay_image.attached? %>
+        <%= image_tag hero_section.overlay_image.variant(:overlay), alt: '' %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

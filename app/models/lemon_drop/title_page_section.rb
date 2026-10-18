@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: lemon_drop_title_page_sections
+#
+#  id         :bigint           not null, primary key
+#  date_label :string
+#  heading    :string
+#  tagline    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class LemonDrop::TitlePageSection < ApplicationRecord
   include LemonDrop::Sectionable
 

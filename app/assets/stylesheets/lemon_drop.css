@@ -150,6 +150,7 @@ section { padding: 88px 0; }
 .mini ul { margin: 0; padding-left: 20px; }
 .mini p { margin: 0 0 6px; }
 .mini .use { margin-top: 10px; }
+.disclaimer { margin: 48px 0 0; max-width: 720px; font: 12.5px/1.6 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
 
 /* ---------- outro (e.g. "book your holiday party!") ---------- */
 .outro h2 { font-size: clamp(48px, 8vw, 80px); margin-bottom: 40px; }

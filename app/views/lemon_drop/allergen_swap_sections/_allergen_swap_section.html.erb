@@ -1,0 +1,51 @@
+<section class="allergen-swap">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <div class="swaps-head">
+      <h2><%= allergen_swap_section.heading %></h2>
+      <% if allergen_swap_section.icon.attached? %>
+        <%= image_tag allergen_swap_section.icon.variant(:icon), alt: '' %>
+      <% end %>
+    </div>
+    <div class="swaps-grid">
+      <% if allergen_swap_section.swap_groups.any? %>
+        <div class="swap-box">
+          <% allergen_swap_section.swap_groups.includes(:swaps).each do |group| %>
+            <h3><%= group.name %></h3>
+            <ul>
+              <% group.swaps.each do |swap| %>
+                <li><b><%= swap.from_text %></b> → <%= swap.to_text %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+      <% allergen_swap_section.swap_recipes.each do |swap_recipe| %>
+        <div class="mini">
+          <h3><%= swap_recipe.title %></h3>
+          <% if swap_recipe.yield_label.present? %>
+            <p class="makes"><%= swap_recipe.yield_label %></p>
+          <% end %>
+          <% if swap_recipe.ingredient_lines.any? %>
+            <h4>What you need:</h4>
+            <ul>
+              <% swap_recipe.ingredient_lines.each do |ingredient| %>
+                <li><%= ingredient %></li>
+              <% end %>
+            </ul>
+          <% end %>
+          <% if swap_recipe.step_lines.any? %>
+            <h4>What you do:</h4>
+            <% swap_recipe.step_lines.each do |step| %>
+              <p><%= step %></p>
+            <% end %>
+          <% end %>
+          <% if swap_recipe.use_for.present? %>
+            <p class="use"><b>Use for:</b> <%= swap_recipe.use_for %></p>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <p class="disclaimer"><%= allergen_swap_section.display_disclaimer %></p>
+  </div>
+</section>

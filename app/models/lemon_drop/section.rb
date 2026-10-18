@@ -32,6 +32,8 @@ class LemonDrop::Section < ApplicationRecord
     LemonDrop::IntroSection
     LemonDrop::HeroSection
     LemonDrop::RecipesSection
+    LemonDrop::GroceryListSection
+    LemonDrop::AllergenSwapSection
     LemonDrop::OutroSection
   ].freeze
 

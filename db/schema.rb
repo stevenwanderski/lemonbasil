@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_18_230002) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_18_233001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -148,6 +148,37 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_230002) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lemon_drop_allergen_swap_sections", force: :cascade do |t|
+    t.string "heading"
+    t.text "disclaimer"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "lemon_drop_grocery_groups", force: :cascade do |t|
+    t.bigint "grocery_list_section_id", null: false
+    t.string "name"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grocery_list_section_id"], name: "index_lemon_drop_grocery_groups_on_grocery_list_section_id"
+  end
+
+  create_table "lemon_drop_grocery_items", force: :cascade do |t|
+    t.bigint "grocery_group_id", null: false
+    t.text "text", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grocery_group_id"], name: "index_lemon_drop_grocery_items_on_grocery_group_id"
+  end
+
+  create_table "lemon_drop_grocery_list_sections", force: :cascade do |t|
+    t.string "heading"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lemon_drop_hero_sections", force: :cascade do |t|
     t.text "heading"
     t.string "background_focus", default: "center", null: false
@@ -259,6 +290,38 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_230002) do
     t.index ["recipe_id"], name: "index_lemon_drop_steps_on_recipe_id"
   end
 
+  create_table "lemon_drop_swap_groups", force: :cascade do |t|
+    t.bigint "allergen_swap_section_id", null: false
+    t.string "name"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["allergen_swap_section_id"], name: "index_lemon_drop_swap_groups_on_allergen_swap_section_id"
+  end
+
+  create_table "lemon_drop_swap_recipes", force: :cascade do |t|
+    t.bigint "allergen_swap_section_id", null: false
+    t.string "title", null: false
+    t.string "yield_label"
+    t.text "ingredients"
+    t.text "steps"
+    t.string "use_for"
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["allergen_swap_section_id"], name: "index_lemon_drop_swap_recipes_on_allergen_swap_section_id"
+  end
+
+  create_table "lemon_drop_swaps", force: :cascade do |t|
+    t.bigint "swap_group_id", null: false
+    t.string "from_text", null: false
+    t.string "to_text", null: false
+    t.integer "position", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["swap_group_id"], name: "index_lemon_drop_swaps_on_swap_group_id"
+  end
+
   create_table "lemon_drop_title_page_sections", force: :cascade do |t|
     t.string "heading"
     t.string "tagline"
@@ -345,9 +408,14 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_230002) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "lemon_drop_grocery_groups", "lemon_drop_grocery_list_sections", column: "grocery_list_section_id"
+  add_foreign_key "lemon_drop_grocery_items", "lemon_drop_grocery_groups", column: "grocery_group_id"
   add_foreign_key "lemon_drop_ingredient_groups", "lemon_drop_recipes", column: "recipe_id"
   add_foreign_key "lemon_drop_ingredients", "lemon_drop_ingredient_groups", column: "ingredient_group_id"
   add_foreign_key "lemon_drop_recipes", "lemon_drop_recipes_sections", column: "recipes_section_id"
   add_foreign_key "lemon_drop_sections", "lemon_drop_issues", column: "issue_id"
   add_foreign_key "lemon_drop_steps", "lemon_drop_recipes", column: "recipe_id"
+  add_foreign_key "lemon_drop_swap_groups", "lemon_drop_allergen_swap_sections", column: "allergen_swap_section_id"
+  add_foreign_key "lemon_drop_swap_recipes", "lemon_drop_allergen_swap_sections", column: "allergen_swap_section_id"
+  add_foreign_key "lemon_drop_swaps", "lemon_drop_swap_groups", column: "swap_group_id"
 end

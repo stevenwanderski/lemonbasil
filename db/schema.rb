@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_18_213615) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_18_223002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -148,6 +148,44 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_213615) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lemon_drop_issues", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "slug", null: false
+    t.date "starts_on", null: false
+    t.date "ends_on", null: false
+    t.string "status", default: "draft", null: false
+    t.datetime "published_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_lemon_drop_issues_on_slug", unique: true
+  end
+
+  create_table "lemon_drop_sections", force: :cascade do |t|
+    t.bigint "issue_id", null: false
+    t.string "sectionable_type", null: false
+    t.bigint "sectionable_id", null: false
+    t.integer "position", default: 0, null: false
+    t.boolean "visible", default: true, null: false
+    t.string "theme", default: "cream", null: false
+    t.string "anchor", null: false
+    t.boolean "show_in_toc", default: false, null: false
+    t.string "toc_label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id", "anchor"], name: "index_lemon_drop_sections_on_issue_id_and_anchor", unique: true
+    t.index ["issue_id", "position"], name: "index_lemon_drop_sections_on_issue_id_and_position"
+    t.index ["issue_id"], name: "index_lemon_drop_sections_on_issue_id"
+    t.index ["sectionable_type", "sectionable_id"], name: "index_lemon_drop_sections_on_sectionable"
+  end
+
+  create_table "lemon_drop_title_page_sections", force: :cascade do |t|
+    t.string "heading"
+    t.string "tagline"
+    t.string "date_label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "meals", force: :cascade do |t|
     t.string "name"
     t.text "instructions"
@@ -226,4 +264,5 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_213615) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "lemon_drop_sections", "lemon_drop_issues", column: "issue_id"
 end

@@ -1,0 +1,13 @@
+<% content_for :title, "the lemon drop · #{@issue.title}" %>
+
+<% @sections.each do |section| %>
+  <%= tag.div id: section.anchor, class: "theme-#{section.theme}" do %>
+    <%= render section.sectionable %>
+  <% end %>
+<% end %>
+
+<footer class="mono-caps">
+  the lemon drop · <%= @issue.footer_date_label %>
+  <br>
+  <%= link_to 'lemon & basil', root_path, class: 'home' %>
+</footer>

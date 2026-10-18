@@ -25,7 +25,7 @@ module Lemonbasil
     config.load_defaults 7.0
 
     config.assets.precompile += %w( application.js admin.js )
-    config.assets.precompile += %w( application.css admin.css )
+    config.assets.precompile += %w( application.css admin.css lemon_drop.css )
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers

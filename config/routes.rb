@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   post '/waitlist', to: 'waitlist#create'
   get '/waitlist-success', to: 'waitlist#success'
 
+  get '/drops/:slug', to: 'lemon_drop/issues#show', as: 'lemon_drop_issue'
+
   get '/menus/:slug', to: 'client_menu_submissions#new', as: 'menu_slug'
   get '/menus/:slug/success', to: 'client_menu_submissions#success', as: 'menu_slug_success'
 

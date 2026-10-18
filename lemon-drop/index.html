@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>the lemon drop · oct 19–23</title>
+<meta name="description" content="the lemon drop — your weekly meal plan for oct 19–23: recipes, grocery list, allergen swaps & holiday party booking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Inter:wght@400;600;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f3f1ec;
+    --ink: #3a2c2e;
+    --ink-soft: #5b4f50;
+    --sage: #a9c49a;
+    --sage-deep: #8fae80;
+    --mustard: #f1d88f;
+    --rule: rgba(58, 44, 46, .25);
+    --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+    --body: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --mono: "Courier Prime", "Courier New", monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font: 16px/1.6 var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 800; letter-spacing: -.02em; line-height: 1; margin: 0; }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 88px 0; }
+
+  /* running header, like the "—— THE LEMON DROP" rule on each slide */
+  .runner {
+    display: flex; align-items: center; gap: 14px;
+    font: 12px var(--mono); text-transform: uppercase; letter-spacing: .12em;
+    margin-bottom: 48px;
+  }
+  .runner::before { content: ""; flex: 1; border-top: 1px dashed var(--ink); opacity: .6; }
+
+  .mono-caps { font-family: var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+
+  /* ---------- cover ---------- */
+  .cover { padding: 56px 0 72px; text-align: center; }
+  .cover h1 { font-size: clamp(48px, 9vw, 96px); margin-bottom: 36px; }
+  .cover img { width: min(100%, 520px); margin: 0 auto; aspect-ratio: 3 / 4; object-fit: cover; }
+  .cover .tag { margin: 32px auto 0; display: inline-block; font-size: 15px; }
+  .cover .tag span { display: block; padding: 6px 28px; }
+  .cover .tag span + span { border-top: 1px dashed var(--ink); }
+  .cover .tag::before, .cover .tag::after { content: ""; display: block; border-top: 1px dashed var(--ink); }
+
+  /* ---------- hello ---------- */
+  .hello { background: var(--cream); }
+  .hello .inner { max-width: 640px; margin: 0 auto; }
+  .hello .lemon { width: 150px; margin: 0 auto 48px; mix-blend-mode: multiply; }
+  .hello h2 { font-size: 44px; margin-bottom: 28px; }
+  .hello p { font-family: var(--mono); font-size: 16px; line-height: 1.7; }
+  .hello .sig { text-align: right; font: 800 40px var(--display); margin-top: 32px; }
+
+  /* ---------- contents ---------- */
+  .contents h2 { font: 400 clamp(30px, 5vw, 44px) var(--mono); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 28px; }
+  .contents ul { list-style: none; padding: 0; margin: 0; font: clamp(22px, 3.5vw, 30px)/1.9 var(--mono); }
+  .contents li::before { content: "•"; margin-right: 14px; }
+  .contents a { text-decoration: none; border-bottom: 1px dashed transparent; }
+  .contents a:hover { border-bottom-color: var(--ink); }
+
+  /* ---------- let's cook banner ---------- */
+  .lets-cook {
+    position: relative; min-height: 80vh; padding: 0;
+    background: url(images/crispy-chickpeas.jpg) center / cover;
+    display: grid; place-items: center; overflow: hidden;
+  }
+  .lets-cook .stack { display: grid; justify-items: center; gap: 12px; padding: 48px 0; }
+  .lets-cook h2 { font-size: clamp(80px, 16vw, 168px); color: #f3f1ec; opacity: .92; }
+  .lets-cook img { width: clamp(110px, 16vw, 160px); mix-blend-mode: screen; }
+
+  /* ---------- menu ---------- */
+  .menu .mortar { width: 150px; margin: 0 auto 24px; mix-blend-mode: multiply; }
+  .menu h2 { text-align: center; font-size: clamp(40px, 6vw, 56px); margin-bottom: 48px; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+  .menu-cat { text-align: right; border-bottom: 1px solid var(--rule); padding-bottom: 6px; margin: 0 0 18px; font-size: 13px; }
+  .menu-col > .menu-cat:not(:first-child) { margin-top: 40px; }
+  .dish { margin-bottom: 22px; }
+  .dish a { font-weight: 700; text-decoration: none; }
+  .dish a:hover { text-decoration: underline; }
+  .dish p { margin: 2px 0 0; color: var(--ink-soft); font-size: 15px; }
+
+  /* ---------- recipes ---------- */
+  .recipe { padding: 0 0 96px; }
+  .recipe-hero { position: relative; height: clamp(320px, 52vw, 520px); overflow: hidden; }
+  .recipe-hero img { width: 100%; height: 100%; object-fit: cover; }
+  .recipe-hero h2 {
+    position: absolute; left: 24px; bottom: 28px;
+    max-width: calc(100% - 48px);
+    font-size: clamp(40px, 7vw, 72px);
+  }
+  .recipe-hero h2 span {
+    background: var(--sage); padding: 2px 12px 6px;
+    box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    line-height: 1.12;
+  }
+  .recipe-hero h2 small { display: block; font-size: .5em; margin-bottom: 4px; }
+  .recipe-hero h2 small span { background: var(--mustard); }
+  .recipe .meta { text-align: center; font-size: 12.5px; margin: 28px 0 40px; }
+  .recipe-body { display: grid; grid-template-columns: 5fr 7fr; gap: 48px; }
+  .recipe h3 { font-size: 26px; margin-bottom: 18px; }
+  .need h4 { font-size: 15px; margin: 22px 0 4px; }
+  .need h4:first-of-type { margin-top: 0; }
+  .need ul { list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  .need li { padding: 3px 0; border-bottom: 1px dotted var(--rule); }
+  .do ol { margin: 0; padding-left: 22px; font-size: 15.5px; }
+  .do li { margin-bottom: 12px; padding-left: 4px; }
+  .tip {
+    margin-top: 32px; padding: 18px 20px;
+    background: var(--mustard);
+    font: 13.5px/1.6 var(--mono); text-transform: uppercase; letter-spacing: .06em;
+  }
+
+  /* ---------- grocery + swaps (sage pages) ---------- */
+  .sage { background: var(--sage); }
+  .grocery-head { display: flex; align-items: flex-end; gap: 24px; margin-bottom: 48px; }
+  .grocery-head img { width: 150px; mix-blend-mode: multiply; }
+  .grocery-head h2, .swaps-head h2 { font-size: clamp(44px, 7vw, 72px); }
+  .grocery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .grocery-grid h3 { font: 700 13px var(--mono); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+  .grocery-grid ul { list-style: none; padding: 0; margin: 0; font-size: 14.5px; }
+  .grocery-grid li { padding: 4px 0 4px 26px; position: relative; border-bottom: 1px solid rgba(58,44,46,.12); }
+  .grocery-grid li::before {
+    content: ""; position: absolute; left: 0; top: 8px;
+    width: 13px; height: 13px; border: 1.5px solid var(--ink); border-radius: 2px;
+  }
+
+  .swaps-head { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 48px; }
+  .swaps-head img { width: 170px; mix-blend-mode: multiply; }
+  .swaps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px 56px; align-items: start; }
+  .swap-box { border: 1.5px dashed var(--ink); padding: 24px; }
+  .swap-box h3, .mini h3 { font: 700 14px var(--body); text-transform: uppercase; letter-spacing: .02em; margin: 0 0 10px; }
+  .swap-box h3:not(:first-child) { margin-top: 28px; }
+  .swap-box ul { list-style: none; padding: 0; margin: 0; font-size: 15px; }
+  .swap-box li { padding: 3px 0; }
+  .swap-box b { font-weight: 700; }
+  .mini { font-size: 15px; }
+  .mini .makes { font-weight: 700; margin: 0 0 8px; }
+  .mini h4 { font-size: 15px; margin: 12px 0 4px; }
+  .mini ul { margin: 0; padding-left: 20px; }
+  .mini p { margin: 0 0 6px; }
+  .mini .use { margin-top: 10px; }
+
+  /* ---------- party ---------- */
+  .party h2 { font-size: clamp(48px, 8vw, 80px); margin-bottom: 40px; }
+  .party-photos { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+  .party-photos img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+  .party-photos img:first-child { object-position: center bottom; }
+  .party p { font-family: var(--mono); font-size: 16.5px; line-height: 1.75; max-width: 720px; }
+
+  footer { padding: 40px 0 56px; text-align: center; font-size: 12px; }
+
+  @media (max-width: 760px) {
+    section { padding: 64px 0; }
+    .wrap { padding: 0 16px; }
+    .menu-grid, .recipe-body, .swaps-grid { grid-template-columns: 1fr; }
+    .menu-col + .menu-col > .menu-cat:first-child { margin-top: 40px; }
+    .grocery-grid { grid-template-columns: 1fr 1fr; }
+    .recipe-hero h2 { left: 16px; bottom: 20px; max-width: calc(100% - 32px); }
+    .swaps-head img, .grocery-head img { width: 110px; }
+  }
+  @media (max-width: 440px) {
+    .grocery-grid { grid-template-columns: 1fr; }
+    .party-photos { grid-template-columns: 1fr; }
+    .party-photos img { aspect-ratio: 4 / 3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- cover -->
+<header class="cover">
+  <div class="wrap">
+    <h1>the lemon drop</h1>
+    <img src="images/chickpea-stew.jpg" alt="Golden chickpea stew topped with crispy chickpeas and cilantro">
+    <div class="tag mono-caps"><span>your weekly meal plan</span><span>oct 19–23</span></div>
+  </div>
+</header>
+
+<!-- hello -->
+<section class="hello">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <div class="inner">
+      <img class="lemon" src="images/lemon-slice.png" alt="">
+      <h2>hello!</h2>
+      <p>it’s mid october and i’m fully in it. there’s a specific quality of light this time of year that always does something to me, the way it hits a roasted delicata squash or a steamy bowl of golden chickpea stew and turns everything warm and amber and a little magical.</p>
+      <p>i find myself drawn to the colors before i even think about the flavors. the deep orange of sweet potato, the forest green of lacinato kale, the brownish-gold of caramelized onion. this week’s menu is built entirely around that feeling. cook it slowly, eat with intention, and let october do its thing.</p>
+      <div class="sig">xx beth</div>
+    </div>
+  </div>
+</section>
+
+<!-- contents -->
+<section class="contents">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <h2>this week’s drop</h2>
+    <ul>
+      <li><a href="#menu">recipes</a></li>
+      <li><a href="#grocery">grocery list</a></li>
+      <li><a href="#swaps">allergen swaps</a></li>
+      <li><a href="#party">let’s party!</a></li>
+    </ul>
+  </div>
+</section>
+
+<!-- let's cook -->
+<section class="lets-cook" aria-label="let's cook">
+  <div class="stack">
+    <h2>let’s</h2>
+    <img src="images/fork-knife.png" alt="">
+    <h2>cook</h2>
+  </div>
+</section>
+
+<!-- menu -->
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <img class="mortar" src="images/mortar.png" alt="">
+    <h2>your menu</h2>
+    <div class="menu-grid">
+      <div class="menu-col">
+        <div class="menu-cat mono-caps">entrees</div>
+        <div class="dish"><a href="#gnocchi">Brown Butter Gnocchi</a><p>gnocchi, brown butter, roasted delicata squash, toasted walnuts, crispy sage, shaved parm</p></div>
+        <div class="dish"><a href="#harissa-chicken">One Pan Harissa Chicken</a><p>chicken thighs, harissa, roasted carrots &amp; chickpeas, lemon, fresh herbs, over couscous</p></div>
+        <div class="dish"><a href="#ragu">Beef &amp; Mushroom Ragu</a><p>ground beef, mixed mushrooms, white beans, red wine, tomato paste, pappardelle, imported parm, basil</p></div>
+        <div class="dish"><a href="#acorn-squash">Stuffed Acorn Squash</a><p>roasted acorn squash stuffed with ground italian sausage, wild rice, dried cranberry, toasted pepitas, fresh herbs, maple-balsamic drizzle</p></div>
+        <div class="dish"><a href="#turkey-kale-soup">Easy Freeze Smoky Turkey &amp; Kale Soup</a><p>ground turkey, white bean, lacinato kale, fresh herbs, crusty bread</p></div>
+      </div>
+      <div class="menu-col">
+        <div class="menu-cat mono-caps">soup</div>
+        <div class="dish"><a href="#chickpea-stew">Chickpea Stew</a><p>chickpeas, spinach, turmeric, garlic, ginger, chili flakes, coconut milk, crispy chickpeas, fresh whole cilantro sprigs + greek yogurt &amp; pita</p></div>
+        <div class="menu-cat mono-caps">snack</div>
+        <div class="dish"><a href="#pumpkin-hummus">Pumpkin Hummus</a><p>pumpkin, chickpeas, tahini, maple syrup, warm spices, served with apple slices &amp; pita</p></div>
+        <div class="menu-cat mono-caps">breakfast</div>
+        <div class="dish"><a href="#egg-bake">Harvest Egg Bake</a><p>eggs, roasted sweet potato, caramelized onion, goat cheese, fresh sage</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- chickpea stew -->
+<article class="recipe" id="chickpea-stew">
+  <div class="recipe-hero">
+    <img src="images/chickpea-stew.jpg" alt="Chickpea stew with crispy chickpeas and cilantro" style="object-position: center 40%">
+    <h2><span>chickpea stew</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 15 mins / cook time: 30 mins / total time: 45 mins / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Produce</h4>
+        <ul>
+          <li>4 garlic cloves, thinly sliced</li>
+          <li>1 inch fresh ginger, grated</li>
+          <li>3 big handfuls fresh baby spinach</li>
+          <li>handful fresh cilantro, whole sprigs</li>
+          <li>1 lemon, juiced</li>
+        </ul>
+        <h4>Pantry</h4>
+        <ul>
+          <li>good olive oil</li>
+          <li>2 cans chickpeas (15 oz each), drained and rinsed</li>
+          <li>1 can full fat coconut milk (14 oz)</li>
+          <li>turmeric</li>
+          <li>smoked paprika</li>
+          <li>chili flakes</li>
+          <li>s&amp;p</li>
+          <li>warm pita for serving</li>
+        </ul>
+        <h4>Dairy</h4>
+        <ul>
+          <li>greek yogurt for serving</li>
+        </ul>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Set aside about 1/2 c of the chickpeas for crisping. Heat a generous pour of olive oil in a large heavy pot or dutch oven over medium-high. Add the 1/2c reserved chickpeas and cook without stirring 3-4 mins until deeply golden and crispy on one side. Toss and cook 2 more mins. Remove and set aside. These are our garnish.</li>
+          <li>In the same pot reduce heat to medium. Add more evoo, garlic &amp; ginger, cook low and slow 2-3 mins until very soft and fragrant but NOT browned.</li>
+          <li>Add turmeric, smoked paprika, and chili flakes directly to the oil &amp; let bloom 30-60 seconds.</li>
+          <li>Add remaining chickpeas and crush about a third of them against the side of the pot with a wooden spoon.</li>
+          <li>Pour in coconut milk, stir everything together and bring to a simmer. Cook uncovered 15-20 mins until thickened and deeply flavored. Season with lemon juice and s&amp;p, and stir in spinach until just wilted.</li>
+          <li>Sprinkle with crispy chickpeas, whole cilantro sprigs, a generous dollop of greek yogurt, and warm pita alongside.</li>
+        </ol>
+        <p class="tip">When you want something warming and nourishing that comes together in under an hour, this is the stew. Please please be sure to consume your cilantro leaves whole!</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- brown butter gnocchi -->
+<article class="recipe" id="gnocchi">
+  <div class="recipe-hero">
+    <img src="images/gnocchi.jpg" alt="Brown butter gnocchi with crispy sage leaves" style="object-position: center 45%">
+    <h2><span>brown butter gnocchi</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 10 mins / cook time: 20 mins / total time: 30 mins / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Produce</h4>
+        <ul>
+          <li>1 large delicata squash, halved, seeded, and sliced into half moons</li>
+          <li>a large handful fresh sage leaves</li>
+          <li>1 lemon, juiced and zested</li>
+        </ul>
+        <h4>Pantry</h4>
+        <ul>
+          <li>good olive oil</li>
+          <li>walnuts, roughly chopped and toasted</li>
+          <li>s&amp;p</li>
+          <li>2 packages store bought gnocchi (16 oz each)</li>
+        </ul>
+        <h4>Dairy</h4>
+        <ul>
+          <li>6 tbsp kerrygold butter</li>
+          <li>imported parmesan, shaved, for serving</li>
+        </ul>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Preheat oven to 425°f. Toss delicata squash with olive oil and s&amp;p. No need to peel, the skin is completely edible and tender once roasted. Spread on a parchment-lined sheet and roast 20-25 mins until golden and caramelized at the edges.</li>
+          <li>Make the brown butter. Melt kerrygold in a large skillet over medium heat, swirling occasionally, until golden and nutty, 3-4 mins. Add sage leaves and fry 1 min until crisp. Watch the butter closely after the sage goes in. It can go from brown to burnt quickly.</li>
+          <li>Cook gnocchi per package directions. They’re done when they float to the surface, usually 2-3 mins.</li>
+          <li>Drain &amp; add gnocchi to the brown butter in a single layer and cook without stirring 2-3 mins until lightly golden and slightly crispy on one side. Toss gently.</li>
+          <li>Add roasted delicata squash and toasted walnuts. Squeeze in lemon juice &amp; zest. Toss everything together gently.</li>
+          <li>Serve with shaved parm &amp; an extra pinch of s&amp;p.</li>
+        </ol>
+        <p class="tip">Delicata squash is this month’s produce moment. It’s sweet, nutty &amp; roasts into something almost jammy at the edges. Unlike most winter squash you don’t need to peel it. The skin is thin and completely tender once roasted which means less prep, more flavor &amp; fiber.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- harissa chicken -->
+<article class="recipe" id="harissa-chicken">
+  <div class="recipe-hero">
+    <img src="images/harissa-chicken.jpg" alt="Charred harissa chicken thighs">
+    <h2><span>harissa chicken</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 15 mins + marinating / cook time: 40 mins / total time: 1hr / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Produce</h4>
+        <ul>
+          <li>4 large carrots, peeled and cut into chunks</li>
+          <li>1 can chickpeas (15 oz), drained, rinsed, and completely dried</li>
+          <li>4 garlic cloves, minced</li>
+          <li>1 lemon, juiced and zested</li>
+          <li>a large handful fresh flat-leaf parsley, chopped</li>
+          <li>a small handful fresh mint, torn</li>
+        </ul>
+        <h4>Pantry</h4>
+        <ul>
+          <li>harissa paste</li>
+          <li>good olive oil</li>
+          <li>smoked paprika</li>
+          <li>cumin</li>
+          <li>2c better than bouillon chicken base</li>
+          <li>s&amp;p</li>
+        </ul>
+        <p class="tip">A well-seasoned bouillon broth produces couscous that tastes more complex &amp; intentional</p>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Whisk together harissa, olive oil, garlic, lemon zest, smoked paprika, cumin, and s&amp;p. Coat chicken thighs all over and marinate at least 4 hours, overnight is better.</li>
+          <li>Preheat oven to 425°f. Toss carrots and dried chickpeas with olive oil, smoked paprika, s&amp;p. Spread on a large sheet pan or in a roasting dish &amp; nestle marinated chicken thighs skin side up among the vegetables.</li>
+          <li>Roast 35-40 mins until skin is deeply golden and caramelized and internal temperature reaches 165°f. The chickpeas will crisp and the carrots will caramelize in the chicken fat as it renders.</li>
+          <li>Make couscous per package directions using bouillon instead of water.</li>
+          <li>Serve chicken and roasted vegetables over couscous with fresh parsley, mint, and a squeeze of lemon.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- beef & shroom ragu -->
+<article class="recipe" id="ragu">
+  <div class="recipe-hero">
+    <img src="images/ragu.jpg" alt="Pappardelle with beef and mushroom ragù and grated parmesan">
+    <h2><span>beef &amp; shroom ragú</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 20 mins / cook time: 1 hour / total time: 1 hour 20 mins / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Produce</h4>
+        <ul>
+          <li>1 large yellow onion, finely diced</li>
+          <li>4 garlic cloves, minced</li>
+          <li>1# mixed mushrooms, roughly chopped (cremini, shiitake, oyster, whatever looks best)</li>
+          <li>a very large handful fresh basil, divided</li>
+          <li>1 lemon, zested</li>
+        </ul>
+        <h4>Pantry</h4>
+        <ul>
+          <li>good olive oil</li>
+          <li>1/2 c dry red wine</li>
+          <li>tomato paste</li>
+          <li>1c better than bouillon beef base</li>
+          <li>1 can white beans (15 oz), drained and rinsed</li>
+          <li>1 lb pappardelle</li>
+          <li>s&amp;p</li>
+        </ul>
+        <h4>Dairy</h4>
+        <ul>
+          <li>imported parm, freshly grated for serving</li>
+          <li>2 tbsp kerrygold butter</li>
+        </ul>
+        <h4>Meat</h4>
+        <ul>
+          <li>2# ground beef</li>
+        </ul>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Heat olive oil in a large heavy pot over medium. Add onion and cook low and slow 8-10 mins until very soft and golden. Add garlic and cook 1 min more.</li>
+          <li>Add mushrooms &amp; cook over medium-high heat without stirring 4-5 mins until deeply golden and all their moisture has cooked off. This step is important! Mushrooms that are stirred too soon steam instead of caramelize and the flavor is completely different.</li>
+          <li>Add ground beef and cook, breaking it up, until browned, 6-8 mins. Season generously with s&amp;p.</li>
+          <li>Add tomato paste and let it bloom 30-60 seconds. Pour in red wine and scrape up any fond from the bottom of the pot. Let reduce by half.</li>
+          <li>Add bouillon broth, white beans, and lemon zest. Stir in a large handful of torn basil. Bring to a simmer then reduce heat to low and cook uncovered 30-35 mins until the sauce has thickened and deepened. Taste &amp; adjust seasoning.</li>
+          <li>Cook pappardelle in very well-salted water until al dente. Before draining scoop out 1 c pasta water. Toss pasta with ragu and a knob of butter, adding pasta water as needed until silky and well coated.</li>
+          <li>Serve with remaining fresh basil and a generous shower of imported parm.</li>
+        </ol>
+        <p class="tip">Mushrooms need high heat &amp; patience. Add them to a hot pan and leave them alone for several minutes before stirring. They release a significant amount of moisture as they cook and that moisture needs to evaporate completely before any browning can happen. Once the pan is dry and the mushrooms are golden they develop a deep, almost meaty flavor that makes this ragu taste significantly more complex than a standard beef sauce.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- stuffed acorn squash -->
+<article class="recipe" id="acorn-squash">
+  <div class="recipe-hero">
+    <img src="images/acorn-squash.jpg" alt="Roasted acorn squash halves stuffed with wild rice, sausage and cranberries" style="object-position: center 45%">
+    <h2><span>stuffed acorn squash</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 20 mins / cook time: 50 mins / total time: 1 hour 10 mins / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Produce</h4>
+        <ul>
+          <li>3 medium acorn squash, halved and seeded</li>
+          <li>1 small yellow onion, finely diced</li>
+          <li>3 garlic cloves, minced</li>
+          <li>a small handful fresh flat-leaf parsley, chopped</li>
+          <li>a small handful fresh thyme, leaves stripped</li>
+          <li>1 lemon, juiced</li>
+        </ul>
+        <h4>Pantry</h4>
+        <ul>
+          <li>good olive oil</li>
+          <li>1 c wild rice, cooked per package directions</li>
+          <li>1/3 c dried cranberries</li>
+          <li>1/3 c pepitas, toasted</li>
+          <li>balsamic vinegar</li>
+          <li>maple syrup</li>
+          <li>s&amp;p</li>
+        </ul>
+        <h4>Meat</h4>
+        <ul>
+          <li>1# ground italian sausage</li>
+        </ul>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Preheat oven to 400°f. Brush acorn squash halves with olive oil and season with s&amp;p. Place cut side down on a parchment-lined sheet and roast 30-35 mins until completely tender and caramelized on the cut side.</li>
+          <li>While squash roasts cook wild rice per package directions. In a separate pan cook italian sausage over medium-high, breaking it up, until browned and cooked through, 6-8 mins. Add onion and garlic to the sausage and cook 3-4 mins until soft.</li>
+          <li>Combine cooked wild rice, sausage mixture, dried cranberries, toasted pepitas, fresh thyme, parsley, and a squeeze of lemon. Season with s&amp;p and toss to combine.</li>
+          <li>Flip roasted squash halves cut side up. Fill each generously with the rice and sausage mixture, mounding it slightly over the top.</li>
+          <li>Make the maple balsamic drizzle. Whisk together equal parts maple syrup and balsamic vinegar with a pinch of s&amp;p. Drizzle generously over the filled squash.</li>
+          <li>Return to the oven for 10-12 mins until everything is warmed through and the drizzle has caramelized slightly.</li>
+        </ol>
+        <p class="tip">The squash as a vessel, baby. The cut side down method is key. The natural sugars caramelize directly against the hot parchment and give you a golden, jammy surface. So gorge.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- smoky turkey & kale soup -->
+<article class="recipe" id="turkey-kale-soup">
+  <div class="recipe-hero">
+    <img src="images/turkey-meatballs.jpg" alt="Browned turkey meatballs on a white plate">
+    <h2><small><span>easy freeze</span></small><span>smoky turkey &amp;&nbsp;kale soup</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 15 mins / cook time: 35 mins / total time: 50 mins / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Produce</h4>
+        <ul>
+          <li>1 large yellow onion, diced</li>
+          <li>4 garlic cloves, minced</li>
+          <li>1 bunch lacinato kale, stems removed &amp; roughly chopped</li>
+          <li>handful parsley, chopped</li>
+          <li>1 lemon, juiced</li>
+        </ul>
+        <h4>Pantry</h4>
+        <ul>
+          <li>good olive oil</li>
+          <li>tomato paste</li>
+          <li>4c better than bouillon chicken base</li>
+          <li>1 can white beans (15 oz), drained &amp; rinsed</li>
+          <li>smoked paprika</li>
+          <li>chili flakes</li>
+          <li>s&amp;p</li>
+          <li>crusty bread for serving</li>
+        </ul>
+        <h4>Meat</h4>
+        <ul>
+          <li>2# ground turkey</li>
+        </ul>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Heat olive oil in a large pot over medium-high. Add ground turkey and cook, breaking it up, until browned, 6-8 mins. Season with smoked paprika, chili flakes, s&amp;p.</li>
+          <li>Add onion and cook 4-5 mins until soft. Add garlic, cook 1 min. Add tomato paste, let bloom ~30 secs.</li>
+          <li>Pour in broth and add white beans. Bring to a boil then reduce to a simmer and cook 15 mins until slightly thickened.</li>
+          <li>Add kale and simmer 8-10 mins until tender. Finish with lemon juice and fresh parsley. Taste &amp; adjust seasoning.</li>
+          <li>To freeze: cool completely and portion into airtight containers. Freeze up to 3 months. Reheat on the stovetop with a splash of broth if needed.</li>
+          <li>Serve with crusty bread.</li>
+        </ol>
+        <p class="tip">The leaves are flatter, more tender, and slightly less bitter than curly kale which means they hold up beautifully in a long simmer without turning army green or falling apart. Add it toward the end and give it just enough time to become silky and tender without losing its color.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- pumpkin hummus -->
+<article class="recipe" id="pumpkin-hummus">
+  <div class="recipe-hero">
+    <img src="images/pumpkin-hummus.jpg" alt="Pumpkin hummus with pepitas, sage and pita" style="object-position: center 40%">
+    <h2><span>pumpkin hummus</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 10 mins / cook time: 20 mins / total time: 30 mins / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Pantry</h4>
+        <ul>
+          <li>1 can pumpkin puree (15 oz)</li>
+          <li>1 can chickpeas (15 oz), drained and rinsed, liquid reserved</li>
+          <li>tahini</li>
+          <li>maple syrup</li>
+          <li>good olive oil</li>
+          <li>cinnamon</li>
+          <li>cumin</li>
+          <li>smoked paprika</li>
+          <li>a pinch of cayenne</li>
+          <li>s&amp;p</li>
+          <li>apple slices and warm pita</li>
+        </ul>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Spread canned pumpkin puree in a thin even layer on a parchment-lined sheet. Roast at 400°f for 15-18 mins until slightly darkened at the edges and caramelized. This drives off excess moisture and concentrates the flavor significantly. Let cool slightly.</li>
+          <li>Add roasted pumpkin, chickpeas, tahini, maple syrup, cumin, cinnamon, smoked paprika, cayenne, and s&amp;p to a food processor. Blend until smooth, 2-3 mins. Option to add a little water at a time until it reaches a smooth, creamy consistency. Taste &amp; adjust maple and spices.</li>
+          <li>Transfer to a bowl. Finish with a drizzle of good olive oil and a pinch of smoked paprika and top with any herbs you have on hand.</li>
+          <li>Serve with apple slices and warm pita.</li>
+        </ol>
+        <p class="tip">If you want to go a step further, roasting a fresh sugar pumpkin is even better. Halve it, scoop the seeds, brush with olive oil, and roast cut side down at 400°f for 45-50 mins until completely tender. Scoop the flesh, blend until smooth, and use cup for cup in place of canned. Save the seeds, toss with olive oil and flaky salt, and roast alongside. Nothing goes to waste.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- harvest egg bake -->
+<article class="recipe" id="egg-bake">
+  <div class="recipe-hero">
+    <img src="images/egg-bake.jpg" alt="Wooden bowl of rolled oats">
+    <h2><span>harvest egg bake</span></h2>
+  </div>
+  <div class="wrap">
+    <p class="meta mono-caps">prep time: 15 mins / cook time: 35 mins / total time: 50 mins / serves: 5</p>
+    <div class="recipe-body">
+      <div class="need">
+        <h3>what you need</h3>
+        <h4>Produce</h4>
+        <ul>
+          <li>1 sweet potato, peeled and small diced</li>
+          <li>1 large yellow onion, thinly sliced</li>
+          <li>a few fresh sage leaves, roughly chopped</li>
+          <li>a small handful fresh flat-leaf parsley, chopped</li>
+          <li>1 lemon, juiced</li>
+        </ul>
+        <h4>Pantry</h4>
+        <ul>
+          <li>good olive oil</li>
+          <li>kerrygold butter</li>
+          <li>s&amp;p</li>
+        </ul>
+        <h4>Dairy</h4>
+        <ul>
+          <li>10 large eggs</li>
+          <li>1/4 c heavy cream or whole milk</li>
+          <li>4 oz goat cheese, crumbled</li>
+        </ul>
+      </div>
+      <div class="do">
+        <h3>what you do</h3>
+        <ol>
+          <li>Preheat oven to 400°f. Toss sweet potato with olive oil and s&amp;p. Spread on a parchment-lined sheet and roast 20-25 mins until golden and caramelized. Set aside.</li>
+          <li>While sweet potato roasts caramelize the onion. Melt butter in an oven-safe skillet over medium-low. Add sliced onion and a pinch of salt. Cook low and slow, stirring occasionally, 20-25 mins until deeply golden and jammy. Add fresh sage in the last 2 mins.</li>
+          <li>Add roasted sweet potato to the caramelized onion skillet and stir to combine.</li>
+          <li>Whisk together eggs, heavy cream, parsley, and s&amp;p until smooth. Pour over the vegetables in the skillet.</li>
+          <li>Dot goat cheese generously across the surface.</li>
+          <li>Bake 22-25 mins until the center is just set and the top is lightly golden. Rest 5 mins before slicing.</li>
+          <li>Slice into portions and store in airtight containers in the fridge up to 5 days.</li>
+        </ol>
+        <p class="tip">One skillet, one oven, 50 mins, and breakfast is done for the week. The caramelized onion and roasted sweet potato do most of the heavy lifting here and both can be prepped simultaneously while the other cooks. By the time the eggs go in the whole thing comes together in under five minutes of active work.</p>
+      </div>
+    </div>
+  </div>
+</article>
+
+<!-- grocery list -->
+<section class="sage" id="grocery">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <div class="grocery-head">
+      <img src="images/bowl.png" alt="">
+      <h2>your grocery list</h2>
+    </div>
+    <div class="grocery-grid">
+      <div>
+        <h3>Produce</h3>
+        <ul>
+          <li>1 large delicata squash</li>
+          <li>3 medium acorn squash</li>
+          <li>1 large sweet potato</li>
+          <li>4 large carrots</li>
+          <li>3 big handfuls fresh baby spinach</li>
+          <li>1 large bunch lacinato kale</li>
+          <li>1# mixed mushrooms</li>
+          <li>3 large yellow onions</li>
+          <li>1 small yellow onion</li>
+          <li>4 heads of garlic</li>
+          <li>fresh ginger</li>
+          <li>3 lemons</li>
+          <li>1 lemon</li>
+          <li>apple slices for serving</li>
+          <li>fresh flat-leaf parsley</li>
+          <li>fresh basil</li>
+          <li>fresh mint</li>
+          <li>fresh sage</li>
+          <li>fresh thyme</li>
+          <li>fresh cilantro</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Pantry</h3>
+        <ul>
+          <li>good olive oil</li>
+          <li>harissa paste</li>
+          <li>tahini</li>
+          <li>tomato paste</li>
+          <li>maple syrup</li>
+          <li>balsamic vinegar</li>
+          <li>better than bouillon chicken base</li>
+          <li>better than bouillon beef base</li>
+          <li>3 cans chickpeas (15 oz each)</li>
+          <li>1 can full fat coconut milk (14 oz)</li>
+          <li>1 can crushed tomatoes (14 oz)</li>
+          <li>2 cans white beans (15 oz each)</li>
+          <li>1 can pumpkin puree (15 oz)</li>
+          <li>dry red wine</li>
+          <li>1 lb pappardelle</li>
+          <li>2 packages store bought gnocchi (16 oz each)</li>
+          <li>couscous</li>
+          <li>1 c wild rice</li>
+          <li>1/3 c dried cranberries</li>
+          <li>walnuts</li>
+          <li>pepitas</li>
+          <li>smoked paprika</li>
+          <li>cumin</li>
+          <li>turmeric</li>
+          <li>chili flakes</li>
+          <li>s&amp;p</li>
+          <li>flaky sea salt</li>
+          <li>warm pita</li>
+          <li>crusty bread</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Dairy/Eggs</h3>
+        <ul>
+          <li>kerrygold butter</li>
+          <li>imported parmesan</li>
+          <li>4 oz goat cheese</li>
+          <li>greek yogurt</li>
+          <li>10 large eggs</li>
+          <li>1/4 c heavy cream or whole milk</li>
+        </ul>
+        <h3 style="margin-top: 32px">Meat &amp; Seafood</h3>
+        <ul>
+          <li>8 bone-in skin-on chicken thighs</li>
+          <li>2# ground beef</li>
+          <li>2# ground turkey</li>
+          <li>1# ground italian sausage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- allergen swaps -->
+<section class="sage" id="swaps">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <div class="swaps-head">
+      <h2>allergen<br>swaps</h2>
+      <img src="images/stacked-bowls.png" alt="">
+    </div>
+    <div class="swaps-grid">
+      <div class="swap-box">
+        <h3>Gluten-free swaps</h3>
+        <ul>
+          <li><b>pappardelle</b> → gf pasta</li>
+          <li><b>gnocchi</b> → potato starch gnocchi</li>
+          <li><b>crusty bread &amp; pita</b> → gf bread &amp; pita</li>
+        </ul>
+        <h3>Dairy-free swaps</h3>
+        <ul>
+          <li><b>parm</b> → nutritional yeast</li>
+          <li><b>butter</b> → Miyoko’s vegan butter</li>
+          <li><b>shredded mozz</b> → cashew cream</li>
+          <li><b>greek yogurt</b> → coconut yogurt</li>
+          <li><b>heavy cream</b> → coconut yogurt or oat milk</li>
+          <li><b>goat cheese</b> → cashew cream</li>
+        </ul>
+      </div>
+
+      <div class="mini">
+        <h3>Cashew ricotta</h3>
+        <p class="makes">Makes ~1½ cups</p>
+        <h4>What you need:</h4>
+        <ul>
+          <li>1c raw cashews</li>
+          <li>2 tbsp lemon juice</li>
+          <li>2 tbsp water</li>
+          <li>¼ tsp sea salt</li>
+          <li>1 clove garlic (optional)</li>
+        </ul>
+        <h4>What you do:</h4>
+        <p>Soak cashews in hot water for 30 mins (or cold water for 4 hours). Drain well.</p>
+        <p>Add all ingredients to a blender/food processor.</p>
+        <p>Blend until smooth and creamy, scraping down sides as needed. Add more water 1 tbsp at a time if too thick.</p>
+        <p>Taste and adjust salt or lemon as needed.</p>
+        <p>Store in fridge up to 5 days.</p>
+      </div>
+
+      <div class="mini">
+        <h3>Cashew cream</h3>
+        <p class="makes">Makes ~1 cup</p>
+        <h4>What you need:</h4>
+        <ul>
+          <li>1 c raw cashews</li>
+          <li>½ c water</li>
+          <li>1 tbsp lemon juice</li>
+          <li>Pinch of salt</li>
+        </ul>
+        <h4>What you do:</h4>
+        <p>Soak cashews in hot water for 30 mins. Drain well.</p>
+        <p>Blend cashews with fresh water, lemon juice, and salt until silky smooth, about 2 mins.</p>
+        <p>Use immediately or store in fridge up to 5 days.</p>
+        <p>Thin with more water if needed for sauces.</p>
+        <p class="use"><b>Use for:</b> Creamy pasta sauces, drizzling over bowls, stirring into soups</p>
+      </div>
+
+      <div class="mini">
+        <h3>Cashew queso</h3>
+        <p class="makes">Makes ~1½ cups</p>
+        <h4>What you need:</h4>
+        <ul>
+          <li>1 c raw cashews</li>
+          <li>½ c water</li>
+          <li>3 tbsp nutritional yeast</li>
+          <li>1 tbsp lime juice</li>
+          <li>1 small jalapeño, seeds removed</li>
+          <li>½ tsp cumin</li>
+          <li>½ tsp garlic powder</li>
+          <li>¼ tsp sea salt</li>
+        </ul>
+        <h4>What you do:</h4>
+        <p>Soak cashews in hot water for 30 mins. Drain well.</p>
+        <p>Add all ingredients to blender. Blend until completely smooth, 2-3 mins.</p>
+        <p>Taste and adjust lime, salt, or spice level.</p>
+        <p>Warm gently in a small pot if you want it hot, stirring frequently.</p>
+        <p>Store in fridge up to 5 days.</p>
+        <p class="use"><b>Use for:</b> Enchilada bake topping, drizzling over bowls, dipping</p>
+      </div>
+
+      <div class="mini">
+        <h3>Cashew parmesan</h3>
+        <p class="makes">Makes ~¾ cup</p>
+        <h4>What you need:</h4>
+        <ul>
+          <li>½ c raw cashews</li>
+          <li>3 tbsp nutritional yeast</li>
+          <li>½ tsp garlic powder</li>
+          <li>¼ tsp sea salt</li>
+        </ul>
+        <h4>What you do:</h4>
+        <p>Add all ingredients to a food processor.</p>
+        <p>Pulse until it resembles grated parmesan (coarse crumbs, not powder).</p>
+        <p>Store in an airtight jar in fridge up to 2 weeks.</p>
+        <p class="use"><b>Use for:</b> Sprinkling on pasta, salads, roasted vegetables</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- holiday party -->
+<section class="party" id="party">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <h2>book your<br>holiday party!</h2>
+    <div class="party-photos">
+      <img src="images/party-1.jpg" alt="Garden table set with heirloom tomatoes and sunflowers">
+      <img src="images/party-2.jpg" alt="Dining room table set for a dinner party with candles and flowers">
+      <img src="images/party-3.jpg" alt="Family style spread with salmon, grilled chicken and crostini">
+    </div>
+    <p>our dinner party calendar is filling up and the good dates go fast. We’re currently booking passed apps, dinner parties, brunches, &amp; holiday gatherings into january, with some dates still avail. whether you’re envisioning an intimate plated dinner, a festive family style spread, a cocktail party with passed bites, or someone to handle all the prep before your guests arrive, we’ve got you.</p>
+    <p>reach out now to talk deets, dates &amp; pricing.</p>
+  </div>
+</section>
+
+<footer class="mono-caps">the lemon drop · oct 19–23</footer>
+
+</body>
+</html>

@@ -1,3 +1,35 @@
+# == Schema Information
+#
+# Table name: lemon_drop_recipes
+#
+#  id                 :bigint           not null, primary key
+#  category           :string
+#  cook_minutes       :integer
+#  hero_focus         :string           default("center"), not null
+#  kicker             :string
+#  menu_blurb         :text
+#  menu_title         :string
+#  position           :integer          default(0), not null
+#  prep_minutes       :integer
+#  serves             :integer
+#  slug               :string           not null
+#  time_note          :string
+#  tip                :text
+#  title              :string           not null
+#  total_label        :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  recipes_section_id :bigint           not null
+#
+# Indexes
+#
+#  index_lemon_drop_recipes_on_recipes_section_id               (recipes_section_id)
+#  index_lemon_drop_recipes_on_recipes_section_id_and_position  (recipes_section_id,position)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (recipes_section_id => lemon_drop_recipes_sections.id)
+#
 class LemonDrop::Recipe < ApplicationRecord
   belongs_to :recipes_section
   has_one :section, through: :recipes_section

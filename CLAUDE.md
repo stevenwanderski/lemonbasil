@@ -84,3 +84,7 @@ Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `
 ### Domain docs
 
 Single-context: `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Lemon drop
+
+`lemon-drop/SPEC.md` (full spec) and `lemon-drop/index.html` (reference markup) back every lemon drop ticket. Attaching images in specs: see `README.md`.

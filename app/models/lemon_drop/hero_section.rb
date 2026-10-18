@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: lemon_drop_hero_sections
+#
+#  id               :bigint           not null, primary key
+#  background_focus :string           default("center"), not null
+#  heading          :text
+#  min_height       :string           default("tall"), not null
+#  text_color       :string           default("light"), not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#
 class LemonDrop::HeroSection < ApplicationRecord
   include LemonDrop::Sectionable
 

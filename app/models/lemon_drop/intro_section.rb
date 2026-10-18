@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: lemon_drop_intro_sections
+#
+#  id         :bigint           not null, primary key
+#  body_html  :text
+#  heading    :string
+#  signoff    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class LemonDrop::IntroSection < ApplicationRecord
   include LemonDrop::Sectionable
 

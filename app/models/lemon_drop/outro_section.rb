@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: lemon_drop_outro_sections
+#
+#  id         :bigint           not null, primary key
+#  body_html  :text
+#  cta_label  :string
+#  cta_url    :string
+#  heading    :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 class LemonDrop::OutroSection < ApplicationRecord
   include LemonDrop::Sectionable
 

@@ -23,6 +23,10 @@ gem 'stimulus-rails'
 gem 'requestjs-rails'
 gem 'akismet'
 gem 'httplog'
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick'
+gem 'active_storage_validations'
+gem 'aws-sdk-s3', require: false
 
 # Required for Ruby 3.1
 gem 'net-smtp'

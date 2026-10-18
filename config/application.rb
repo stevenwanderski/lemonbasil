@@ -35,6 +35,9 @@ module Lemonbasil
     # Don't generate system test files.
     config.generators.system_tests = nil
 
+    # ImageMagick, not the Rails 7 default libvips (see docs/adr/0008).
+    config.active_storage.variant_processor = :mini_magick
+
     config.active_record.default_timezone = :utc
     config.active_record.legacy_connection_handling = false
 

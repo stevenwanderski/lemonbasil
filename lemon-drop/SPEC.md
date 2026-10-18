@@ -14,7 +14,7 @@ Vocabulary: see `/GLOSSARY.md`. Decisions: see `/docs/adr/`.
 |---|---|
 | Admin authentication/authorization | Devise + `User#admin?` (`role == 'admin'`). The app's `AdminController` only requires sign-in (non-admin chef users can reach `/admin`), so every lemon-drop admin controller inherits from `Admin::LemonDrop::BaseController < AdminController`, whose `before_action` redirects non-admins to `admin_clients_path` (same as `Admin::UsersController`). Nav link shown to admins only. No new roles. |
 | Admin UI | The app's custom `Admin::` controllers, `admin` layout and sidebar nav, admin SCSS, Turbo + Stimulus. |
-| File storage | Active Storage (install its migrations) on **AWS S3** (public bucket, plain S3 URLs) via the S3 service and `aws-sdk-s3`, plus `image_processing` / libvips. Production currently uses `:local`, which doesn't persist on Heroku (ADR 0005). |
+| File storage | Active Storage (install its migrations) on **AWS S3** (public bucket, plain S3 URLs) via the S3 service and `aws-sdk-s3`, plus `image_processing` with ImageMagick (`mini_magick`, ADR 0008). Production currently uses `:local`, which doesn't persist on Heroku (ADR 0005). |
 | Rich text | **Tiptap** WYSIWYG (Stimulus controller, esbuild), stored as sanitized HTML in a `text` column. No Action Text, no Markdown in the editor (ADR 0004). |
 | Background jobs | None added. Rails' default `:async` adapter is enough: variants are generated on request, and duplicated issues reuse blobs. |
 | Change history | `paper_trail` (new to the app). |
@@ -268,7 +268,7 @@ All routes require the existing admin role, enforced by `Admin::LemonDrop::BaseC
 
 **Rich text fields** (Intro and Outro bodies) use the Tiptap editor, limited to paragraphs, bold, italic, links and lists.
 
-**Images**: uploaded through the section and recipe forms. Accept JPEG/PNG/WebP up to 15 MB (no HEIC in v1); strip EXIF location data **on upload, before the file is stored**, so originals in the public bucket never contain it; in the same step, scale originals down to at most 2400px on the longest side.
+**Images**: uploaded through the section and recipe forms. Accept JPEG/PNG/WebP up to 15 MB (no HEIC in v1); the type is checked from the file's contents (`active_storage_validations` with `spoofing_protection`). Originals are stored as uploaded (plain Active Storage), so pages **only ever show variants**, saved with metadata stripped (`saver: { strip: true }`), so readers never get location data; originals are never linked.
 
 ---
 

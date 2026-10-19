@@ -11,6 +11,9 @@ class LemonDrop::GroceryListSection < ApplicationRecord
   include LemonDrop::Sectionable
 
   has_many :grocery_groups, -> { order(:position) }, dependent: :destroy
+  # The form edits every group in one save; a new group left empty is ignored.
+  accepts_nested_attributes_for :grocery_groups, allow_destroy: true,
+    reject_if: ->(attributes) { attributes['id'].blank? && attributes.values_at('name', 'items_text').all?(&:blank?) }
 
   has_one_attached :icon do |attachable|
     attachable.variant :icon, resize_to_limit: [600, 600], saver: { strip: true }

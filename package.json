@@ -6,6 +6,7 @@
     "@hotwired/turbo-rails": "^7.2.4",
     "@rails/request.js": "^0.0.8",
     "@rails/ujs": "^7.0.4",
+    "@stimulus-components/rails-nested-form": "^5.0.0",
     "@tiptap/core": "~3.31.4",
     "@tiptap/extension-bold": "~3.31.4",
     "@tiptap/extension-document": "~3.31.4",

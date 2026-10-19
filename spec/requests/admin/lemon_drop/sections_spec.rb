@@ -254,6 +254,142 @@ RSpec.describe 'Admin::LemonDrop::Sections', type: :request do
       end
     end
 
+    describe 'the Grocery List form' do
+      let(:section) { add_section(build(:lemon_drop_grocery_list_section), position: 1) }
+      let(:grocery_list) { section.sectionable }
+
+      def groups_params(groups, **fields)
+        { lemon_drop_section: { sectionable_attributes: { **fields, grocery_groups_attributes: groups.each_with_index.to_h { |group, index| [index.to_s, group] } } } }
+      end
+
+      it 'turns each group’s lines into its items in order, skipping blank lines, and shows the same lines again' do
+        get edit_admin_lemon_drop_issue_section_path(issue, section)
+        expect(response.body).to include('data-controller="nested-form"', 'name="lemon_drop_section[sectionable_attributes][icon]"')
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: groups_params(
+          [{ name: 'Produce', items_text: "1 delicata squash\r\n\r\n  2 lemons  \r\n1 bunch basil\n", position: '1' },
+           { name: 'Pantry', items_text: 'tahini', position: '2' }],
+          heading: 'shop this', icon: image_upload('lemon-slice.png')
+        )
+
+        expect(response).to redirect_to(edit_admin_lemon_drop_issue_section_path(issue, section))
+        expect(grocery_list.reload.heading).to eq('shop this')
+        expect(grocery_list.icon.filename.to_s).to eq('lemon-slice.png')
+        expect(grocery_list.grocery_groups.map { |group| [group.name, group.grocery_items.map(&:text)] })
+          .to eq([['Produce', ['1 delicata squash', '2 lemons', '1 bunch basil']], ['Pantry', ['tahini']]])
+
+        get edit_admin_lemon_drop_issue_section_path(issue, section)
+        # Rails starts every textarea with a newline, which browsers drop.
+        textareas = Nokogiri::HTML(response.body).css('ol.nested-list textarea[name$="[items_text]"]').map { |area| area.text.delete_prefix("\n") }
+        expect(textareas).to eq(["1 delicata squash\n2 lemons\n1 bunch basil", 'tahini'])
+      end
+
+      it 'renames, reorders and deletes groups in one save' do
+        produce = create(:lemon_drop_grocery_group, grocery_list_section: grocery_list, name: 'Produce', position: 1,
+          grocery_items: [build(:lemon_drop_grocery_item, text: 'lemons')])
+        pantry = create(:lemon_drop_grocery_group, grocery_list_section: grocery_list, name: 'Pantry', position: 2)
+        dairy = create(:lemon_drop_grocery_group, grocery_list_section: grocery_list, name: 'Dairy', position: 3)
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: groups_params([
+          { id: produce.id, name: 'Fruit & veg', items_text: 'lemons', position: '2' },
+          { id: pantry.id, name: 'Pantry', items_text: '', position: '3', _destroy: '1' },
+          { id: dairy.id, name: 'Dairy/Eggs', items_text: 'eggs', position: '1' }
+        ])
+
+        expect(grocery_list.reload.grocery_groups.map(&:name)).to eq(['Dairy/Eggs', 'Fruit & veg'])
+        expect(LemonDrop::GroceryGroup.exists?(pantry.id)).to be(false)
+        expect(produce.reload.grocery_items.map(&:text)).to eq(['lemons'])
+      end
+    end
+
+    describe 'the Allergen Swap form' do
+      let(:section) { add_section(build(:lemon_drop_allergen_swap_section), position: 1) }
+      let(:allergen_swap) { section.sectionable }
+
+      def swap_params(groups: [], recipes: [], **fields)
+        indexed = ->(rows) { rows.each_with_index.to_h { |row, index| [index.to_s, row] } }
+        { lemon_drop_section: { sectionable_attributes: {
+          **fields, swap_groups_attributes: indexed.(groups), swap_recipes_attributes: indexed.(recipes)
+        } } }
+      end
+
+      it 'reads swaps written with → or ->, in order, and shows them again with →' do
+        patch admin_lemon_drop_issue_section_path(issue, section), params: swap_params(
+          heading: "allergen\nswaps", disclaimer: 'ask your doctor.', icon: image_upload('bowl.png'),
+          groups: [{ name: 'Dairy-free', position: '1', swaps_text: "parm → nutritional yeast\r\n\r\nbutter -> olive oil\nricotta→cashew ricotta (recipe below)" }]
+        )
+
+        expect(response).to redirect_to(edit_admin_lemon_drop_issue_section_path(issue, section))
+        expect(allergen_swap.reload).to have_attributes(heading: "allergen\nswaps", disclaimer: 'ask your doctor.')
+        expect(allergen_swap.icon.filename.to_s).to eq('bowl.png')
+        expect(allergen_swap.swap_groups.sole.swaps.map { |swap| [swap.from_text, swap.to_text, swap.position] }).to eq([
+          ['parm', 'nutritional yeast', 1], ['butter', 'olive oil', 2], ['ricotta', 'cashew ricotta (recipe below)', 3]
+        ])
+
+        get edit_admin_lemon_drop_issue_section_path(issue, section)
+        textarea = Nokogiri::HTML(response.body).at_css('ol.nested-list textarea[name$="[swaps_text]"]')
+        expect(textarea.text.delete_prefix("\n")).to eq("parm → nutritional yeast\nbutter → olive oil\nricotta → cashew ricotta (recipe below)")
+      end
+
+      it 'refuses a swap line without an arrow, naming the line, and keeps what was typed' do
+        group = create(:lemon_drop_swap_group, allergen_swap_section: allergen_swap, name: 'Dairy-free',
+          swaps: [build(:lemon_drop_swap, from_text: 'parm', to_text: 'nutritional yeast')])
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: swap_params(
+          groups: [{ id: group.id, name: 'Dairy-free', position: '1', swaps_text: "butter -> olive oil\n\noat milk instead of cream" }]
+        )
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include('Dairy-free, line 3 (“oat milk instead of cream”) needs an arrow: from → to')
+        expect(response.body).to include("butter -&gt; olive oil\n\noat milk instead of cream</textarea>")
+        expect(group.reload.swaps.map(&:from_text)).to eq(['parm'])
+      end
+
+      it 'shows a refused save as the Admin left it: groups in the dragged order, removed ones still hidden' do
+        nuts = create(:lemon_drop_swap_group, allergen_swap_section: allergen_swap, name: 'Nut-free', position: 1)
+        dairy = create(:lemon_drop_swap_group, allergen_swap_section: allergen_swap, name: 'Dairy-free', position: 2)
+        gluten = create(:lemon_drop_swap_group, allergen_swap_section: allergen_swap, name: 'Gluten-free', position: 3)
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: swap_params(groups: [
+          { id: nuts.id, name: 'Nut-free', swaps_text: 'no arrow here', position: '3' },
+          { id: dairy.id, name: 'Dairy-free', swaps_text: '', position: '1', _destroy: '1' },
+          { id: gluten.id, name: 'Gluten-free', swaps_text: '', position: '2' }
+        ])
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        rows = Nokogiri::HTML(response.body).css('ol.nested-list')[0].css('li.nested-row')
+        expect(rows.map { |row| [row.at_css('input[name$="[name]"]')['value'], row['style']] })
+          .to eq([['Dairy-free', 'display: none'], ['Gluten-free', nil], ['Nut-free', nil]])
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: swap_params(groups: [
+          { id: nuts.id, name: 'Nut-free', swaps_text: '', position: '1' },
+          { id: dairy.id, name: 'Dairy-free', swaps_text: '', position: '2' },
+          { id: gluten.id, name: 'Gluten-free', swaps_text: '', position: '3' }
+        ])
+
+        expect(allergen_swap.reload.swap_groups.map(&:name)).to eq(%w[Nut-free Dairy-free Gluten-free])
+      end
+
+      it 'adds, edits, reorders and deletes swap recipes in one save' do
+        ricotta = create(:lemon_drop_swap_recipe, allergen_swap_section: allergen_swap, title: 'Cashew ricotta', position: 1)
+        cream = create(:lemon_drop_swap_recipe, allergen_swap_section: allergen_swap, title: 'Cashew cream', position: 2)
+
+        get edit_admin_lemon_drop_issue_section_path(issue, section)
+        expect(response.body).to include('name="lemon_drop_section[sectionable_attributes][swap_recipes_attributes][NEW_RECORD][use_for]"')
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: swap_params(recipes: [
+          { id: ricotta.id, title: 'Cashew ricotta', position: '2' },
+          { id: cream.id, title: 'Cashew cream', position: '3', _destroy: '1' },
+          { title: 'Oat cream', yield_label: 'Makes 1 cup', ingredients: "1 c oats\n2 c water", steps: "Blend.\nStrain.",
+            use_for: 'the soup', position: '1' }
+        ])
+
+        expect(allergen_swap.reload.swap_recipes.map(&:title)).to eq(['Oat cream', 'Cashew ricotta'])
+        expect(allergen_swap.swap_recipes.first).to have_attributes(yield_label: 'Makes 1 cup', ingredient_lines: ['1 c oats', '2 c water'],
+          step_lines: ['Blend.', 'Strain.'], use_for: 'the soup')
+      end
+    end
+
     describe 'the Menu Overview form' do
       let(:section) { add_section(build(:lemon_drop_menu_overview_section, category_order: %w[soup entree]), position: 1) }
 

@@ -18,6 +18,12 @@ class LemonDrop::AllergenSwapSection < ApplicationRecord
 
   has_many :swap_groups, -> { order(:position) }, dependent: :destroy
   has_many :swap_recipes, -> { order(:position) }, dependent: :destroy
+  # The form edits every group and swap recipe in one save; new ones left
+  # empty are ignored.
+  accepts_nested_attributes_for :swap_groups, allow_destroy: true,
+    reject_if: ->(attributes) { attributes['id'].blank? && attributes.values_at('name', 'swaps_text').all?(&:blank?) }
+  accepts_nested_attributes_for :swap_recipes, allow_destroy: true,
+    reject_if: ->(attributes) { attributes['id'].blank? && attributes.except('position', '_destroy').values.all?(&:blank?) }
 
   has_one_attached :icon do |attachable|
     attachable.variant :icon, resize_to_limit: [600, 600], saver: { strip: true }

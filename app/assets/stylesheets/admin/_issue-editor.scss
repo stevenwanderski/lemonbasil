@@ -129,3 +129,26 @@
     margin-bottom: 4px;
   }
 }
+
+// Groups and swap recipes edited inside a Section form, one card per row.
+.nested-list {
+  list-style: none;
+  max-width: 600px;
+  margin-bottom: 12px;
+}
+
+.nested-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: $gray-lightest;
+  border: solid $gray-light 2px;
+  border-radius: 4px;
+
+  .form-item:last-child {
+    margin-bottom: 0;
+  }
+}

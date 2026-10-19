@@ -3,6 +3,12 @@ module LemonDrop
     'lemon_drop_'
   end
 
+  # Text typed or pasted one entry per line: each line trimmed, blank ones
+  # left out.
+  def self.lines(text)
+    text.to_s.lines.map(&:strip).reject(&:blank?)
+  end
+
   # Section anchors and Recipe slugs share an Issue page's id space: returns
   # base, or base with a number added ("recipes-2") when it's already taken.
   def self.unique_page_id(base, taken)

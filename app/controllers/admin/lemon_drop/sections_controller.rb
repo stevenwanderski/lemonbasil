@@ -7,6 +7,11 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
     'LemonDrop::HeroSection' => %i[heading background_image overlay_image background_focus text_color min_height],
     'LemonDrop::TableOfContentsSection' => %i[heading],
     'LemonDrop::MenuOverviewSection' => [:heading, :icon, { category_order: [] }],
+    'LemonDrop::GroceryListSection' => [:heading, :icon, { grocery_groups_attributes: %i[id name items_text position _destroy] }],
+    'LemonDrop::AllergenSwapSection' => [:heading, :icon, :disclaimer, {
+      swap_groups_attributes: %i[id name swaps_text position _destroy],
+      swap_recipes_attributes: %i[id title yield_label ingredients steps use_for position _destroy]
+    }],
     # images lists the signed ids of the saved images to keep, then any new
     # files: the set as a whole replaces the old one.
     'LemonDrop::OutroSection' => [:heading, :body_html, :cta_label, :cta_url, { images: [] }]

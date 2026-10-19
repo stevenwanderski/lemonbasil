@@ -1,0 +1,22 @@
+<%# Rows of a has_many edited in the Section form; yields each row's form
+    builder for its fields. Rows are added from a template (rails-nested-form),
+    marked for deletion with Remove, and dragged into order: the sortable
+    controller numbers the position fields when the form submits. %>
+<% row_class = f.object.class.reflect_on_association(association).klass %>
+<div data-controller="nested-form" data-nested-form-wrapper-selector-value=".nested-row">
+  <template data-nested-form-target="template">
+    <%= f.fields_for association, row_class.new, child_index: 'NEW_RECORD', include_id: false do |row| %>
+      <%= render layout: 'admin/lemon_drop/sections/forms/nested_row', locals: { row: row } do %><%= yield row %><% end %>
+    <% end %>
+  </template>
+
+  <ol class="nested-list" data-controller="sortable" data-sortable-draggable-value=".nested-row">
+    <%# In position order, which after a refused save is the order submitted. %>
+    <%= f.fields_for association, f.object.public_send(association).sort_by { |record| record.position.to_i }, include_id: false do |row| %>
+      <%= render layout: 'admin/lemon_drop/sections/forms/nested_row', locals: { row: row } do %><%= yield row %><% end %>
+    <% end %>
+    <li data-nested-form-target="target" hidden></li>
+  </ol>
+
+  <button type="button" class="button" data-action="nested-form#add"><%= add_label %></button>
+</div>

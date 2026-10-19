@@ -17,9 +17,10 @@ module Admin::LemonDropHelper
   end
 
   # The Section's own errors and its type's, leaving out the generic
-  # "Sectionable is invalid".
+  # "Sectionable is invalid". A group's own errors are whole sentences, so
+  # they show as written ("Dairy-free, line 2 … needs an arrow").
   def section_error_messages(section)
     section.errors.reject { |error| error.attribute.to_s.start_with?('sectionable') }.map(&:full_message) +
-      section.sectionable.errors.full_messages
+      section.sectionable.errors.map { |error| error.attribute.to_s.end_with?('.base') ? error.message : error.full_message }.uniq
   end
 end

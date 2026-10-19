@@ -19,5 +19,19 @@
 #
 class LemonDrop::GroceryGroup < ApplicationRecord
   belongs_to :grocery_list_section
-  has_many :grocery_items, -> { order(:position) }, dependent: :destroy
+  has_many :grocery_items, -> { order(:position) }, dependent: :destroy, autosave: true
+
+  # The items as the form edits them: one per line, top first.
+  def items_text
+    grocery_items.reject(&:marked_for_destruction?).map(&:text).join("\n")
+  end
+
+  # Replaces the items with one per line, in order, when saved.
+  def items_text=(text)
+    lines = LemonDrop.lines(text)
+    return if lines == LemonDrop.lines(items_text)
+
+    grocery_items.each(&:mark_for_destruction)
+    lines.each.with_index(1) { |line, position| grocery_items.build(text: line, position: position) }
+  end
 end

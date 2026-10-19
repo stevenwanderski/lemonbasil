@@ -12,3 +12,6 @@ application.register("sortable", SortableController)
 
 import RichTextController from "./rich_text_controller"
 application.register("rich-text", RichTextController)
+
+import RailsNestedForm from "@stimulus-components/rails-nested-form"
+application.register("nested-form", RailsNestedForm)

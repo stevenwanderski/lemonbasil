@@ -29,10 +29,10 @@ class LemonDrop::SwapRecipe < ApplicationRecord
   validates :title, presence: true
 
   def ingredient_lines
-    ingredients.to_s.lines.map(&:strip).reject(&:blank?)
+    LemonDrop.lines(ingredients)
   end
 
   def step_lines
-    steps.to_s.lines.map(&:strip).reject(&:blank?)
+    LemonDrop.lines(steps)
   end
 end

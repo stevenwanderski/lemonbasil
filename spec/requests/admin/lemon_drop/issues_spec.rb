@@ -217,8 +217,6 @@ RSpec.describe 'Admin::LemonDrop::Issues', type: :request do
       it 'renders a Draft as readers will see it, which the public cannot' do
         issue = create(:lemon_drop_issue)
         create(:lemon_drop_section, issue: issue, sectionable: build(:lemon_drop_intro_section, heading: 'hello from the draft'))
-        create(:lemon_drop_section, issue: issue, visible: false,
-          sectionable: build(:lemon_drop_intro_section, heading: 'hidden away'))
 
         get edit_admin_lemon_drop_issue_path(issue)
         expect(response.body).to match(%r{<a target="_blank" href="#{admin_lemon_drop_issue_preview_path(issue)}">Preview</a>})
@@ -227,7 +225,7 @@ RSpec.describe 'Admin::LemonDrop::Issues', type: :request do
 
         expect(response).to have_http_status(200)
         expect(response.body).to include('hello from the draft', 'the lemon drop · oct 19–23')
-        expect(response.body).not_to include('hidden away', 'Lemon&Basil Admin')
+        expect(response.body).not_to include('Lemon&Basil Admin')
         expect { get lemon_drop_issue_path(issue.slug) }.to raise_error(ActiveRecord::RecordNotFound)
       end
 

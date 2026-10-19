@@ -9,7 +9,6 @@
 #  show_in_toc      :boolean          default(FALSE), not null
 #  theme            :string           default("cream"), not null
 #  toc_label        :string
-#  visible          :boolean          default(TRUE), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  issue_id         :bigint           not null
@@ -53,8 +52,6 @@ class LemonDrop::Section < ApplicationRecord
 
   enum theme: { cream: 'cream', sage: 'sage' }, _prefix: true
 
-  scope :visible, -> { where(visible: true) }
-
   before_validation :set_default_anchor
 
   validates :anchor, presence: true, uniqueness: { scope: :issue_id }
@@ -70,7 +67,7 @@ class LemonDrop::Section < ApplicationRecord
       clone.slug = LemonDrop.unique_page_id(original.slug, taken).tap { |slug| taken << slug } if clone.is_a?(LemonDrop::Recipe)
     end
 
-    issue.insert_section(copy, position: position + 1, **slice(:visible, :theme, :show_in_toc, :toc_label).symbolize_keys)
+    issue.insert_section(copy, position: position + 1, **slice(:theme, :show_in_toc, :toc_label).symbolize_keys)
   end
 
   # The Table of Contents entry: the TOC label, or else the Section heading.

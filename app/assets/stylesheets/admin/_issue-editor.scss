@@ -75,10 +75,6 @@
     &.is-selected {
       border-color: $secondary;
     }
-
-    &.is-hidden > a {
-      opacity: .5;
-    }
   }
 
   &__add {

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_19_130001) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_19_200000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -275,7 +275,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_19_130001) do
     t.string "sectionable_type", null: false
     t.bigint "sectionable_id", null: false
     t.integer "position", default: 0, null: false
-    t.boolean "visible", default: true, null: false
     t.string "theme", default: "cream", null: false
     t.string "anchor", null: false
     t.boolean "show_in_toc", default: false, null: false

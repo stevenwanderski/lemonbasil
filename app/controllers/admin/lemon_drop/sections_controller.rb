@@ -65,7 +65,7 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   private
 
   def section_params
-    params.require(:lemon_drop_section).permit(:visible, :theme, :anchor, :show_in_toc, :toc_label,
+    params.require(:lemon_drop_section).permit(:theme, :anchor, :show_in_toc, :toc_label,
       sectionable_attributes: SECTIONABLE_PARAMS.fetch(@section.sectionable_type, []))
   end
 

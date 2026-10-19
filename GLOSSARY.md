@@ -16,10 +16,6 @@ _Avoid_: post, edition, week, drop (except in public URLs)
 One block of an Issue's page, of one Section type, at one position. An Issue may hold any number of Sections of any type, in any order.
 _Avoid_: block, slide, page
 
-**Hidden section**:
-A Section kept on its Issue but not rendered, listed in the Table of Contents or checked by Publish-blocking checks. It's where new work on a Published Issue starts.
-_Avoid_: disabled, draft section
-
 **Section type**:
 The kind of a Section: Title Page, Intro, Table of Contents, Hero, Menu Overview, Recipes, Grocery List, Allergen Swap or Outro.
 
@@ -41,7 +37,7 @@ _Avoid_: live (in code), released
 An automatic review of an Issue's content that reports a problem (e.g. a grocery item no Recipe uses). Most only warn.
 
 **Publish-blocking check**:
-A Content check that must pass for an Issue to be Published or for a Published Issue to be saved. These checks look only at visible Sections.
+A Content check that must pass for an Issue to be Published or for a Published Issue to be saved.
 
 **Import**:
 Turning a week's content, written as JSON in a Claude chat, into a Draft Issue. An Import never publishes.

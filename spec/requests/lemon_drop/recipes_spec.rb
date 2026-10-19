@@ -157,12 +157,6 @@ RSpec.describe 'LemonDrop Recipes', type: :request do
       expect { get lemon_drop_recipe_path(issue.slug, 'chickpea-stew') }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    it "returns 404 when the Recipe's Recipes Section is hidden" do
-      add_recipe(add_recipes_section(visible: false), title: 'chickpea stew')
-
-      expect { get lemon_drop_recipe_path(issue.slug, 'chickpea-stew') }.to raise_error(ActiveRecord::RecordNotFound)
-    end
-
     it 'returns 404 for a Recipe of another Issue' do
       create(:lemon_drop_recipe, title: 'chickpea stew')
 

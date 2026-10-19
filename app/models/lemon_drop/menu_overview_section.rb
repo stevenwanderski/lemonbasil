@@ -30,12 +30,12 @@ class LemonDrop::MenuOverviewSection < ApplicationRecord
     (category_order + LemonDrop::Recipe.categories.keys).uniq
   end
 
-  # Built from the page itself: every Recipe in the Issue's visible Recipes
+  # Built from the page itself: every Recipe in the Issue's Recipes
   # Sections, as [category, recipes] pairs in category order, leaving out
   # empty categories.
   def categories
     @categories ||= begin
-      recipes = section.issue.visible_recipes.group_by(&:category)
+      recipes = section.issue.recipes.group_by(&:category)
       full_category_order.filter_map do |category|
         [category, recipes[category]] if recipes[category]
       end

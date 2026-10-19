@@ -21,7 +21,7 @@ RSpec.describe 'Admin::LemonDrop::Sections', type: :request do
     {
       'add a Section' => -> { post admin_lemon_drop_issue_sections_path(issue), params: { section_type: 'IntroSection' } },
       'edit a Section' => -> { get edit_admin_lemon_drop_issue_section_path(issue, section) },
-      'update a Section' => -> { patch admin_lemon_drop_issue_section_path(issue, section), params: { lemon_drop_section: { visible: '0' } } },
+      'update a Section' => -> { patch admin_lemon_drop_issue_section_path(issue, section), params: { lemon_drop_section: { theme: 'sage' } } },
       'duplicate a Section' => -> { post duplicate_admin_lemon_drop_issue_section_path(issue, section) },
       'delete a Section' => -> { delete admin_lemon_drop_issue_section_path(issue, section) },
       'reorder Sections' => -> { patch reorder_admin_lemon_drop_issue_sections_path(issue), params: { section_ids: [section.id] } }
@@ -30,7 +30,7 @@ RSpec.describe 'Admin::LemonDrop::Sections', type: :request do
         instance_exec(&request)
 
         expect(response).to redirect_to(admin_clients_path)
-        expect(issue.sections.reload.map { |s| [s.id, s.visible] }).to eq([[section.id, true]])
+        expect(issue.sections.reload.map { |s| [s.id, s.theme] }).to eq([[section.id, 'cream']])
       end
     end
   end
@@ -39,18 +39,18 @@ RSpec.describe 'Admin::LemonDrop::Sections', type: :request do
     before { login_as(admin, scope: :user) }
 
     describe 'the Section list' do
-      it 'shows every Section in page order with its type, heading and visibility, linking to its form' do
-        hero = add_section(build(:lemon_drop_hero_section), position: 2, visible: false)
+      it 'shows every Section in page order with its type and heading, linking to its form' do
+        hero = add_section(build(:lemon_drop_hero_section), position: 2)
         title_page = add_section(build(:lemon_drop_title_page_section), position: 1)
         toc = add_section(build(:lemon_drop_table_of_contents_section), position: 3)
 
         get edit_admin_lemon_drop_issue_path(issue)
 
-        rows = response.body.scan(%r{<li class="section-list__row( is-hidden)?" data-id="(\d+)">.*?<a href="([^"]+)">\s*<strong>([^<]+)</strong>\s*<span>([^<]*)</span>}m)
+        rows = response.body.scan(%r{<li class="section-list__row" data-id="(\d+)">.*?<a href="([^"]+)">\s*<strong>([^<]+)</strong>\s*<span>([^<]*)</span>}m)
         expect(rows).to eq([
-          [nil, title_page.id.to_s, edit_admin_lemon_drop_issue_section_path(issue, title_page), 'Title Page', 'the lemon drop'],
-          [' is-hidden', hero.id.to_s, edit_admin_lemon_drop_issue_section_path(issue, hero), 'Hero', 'let’s cook'],
-          [nil, toc.id.to_s, edit_admin_lemon_drop_issue_section_path(issue, toc), 'Table of Contents', 'this week’s drop']
+          [title_page.id.to_s, edit_admin_lemon_drop_issue_section_path(issue, title_page), 'Title Page', 'the lemon drop'],
+          [hero.id.to_s, edit_admin_lemon_drop_issue_section_path(issue, hero), 'Hero', 'let’s cook'],
+          [toc.id.to_s, edit_admin_lemon_drop_issue_section_path(issue, toc), 'Table of Contents', 'this week’s drop']
         ])
       end
     end
@@ -66,27 +66,6 @@ RSpec.describe 'Admin::LemonDrop::Sections', type: :request do
 
         get edit_admin_lemon_drop_issue_path(issue)
         expect(response.body[settings_link, 1]).to eq(' is-selected')
-      end
-    end
-
-    describe 'hiding and showing a Section' do
-      it 'hides a Section from its row, keeping it on the Issue, and shows it again' do
-        section = add_section(build(:lemon_drop_title_page_section), position: 1)
-
-        get edit_admin_lemon_drop_issue_path(issue)
-        expect(response.body).to match(%r{<form class="button_to" method="post" action="#{admin_lemon_drop_issue_section_path(issue, section)}">.*?<button[^>]*type="submit">Hide</button>}m)
-
-        patch admin_lemon_drop_issue_section_path(issue, section), params: { lemon_drop_section: { visible: '0' } },
-          headers: { 'HTTP_REFERER' => edit_admin_lemon_drop_issue_path(issue) }
-
-        expect(response).to redirect_to(edit_admin_lemon_drop_issue_path(issue))
-        expect(section.reload.visible).to be(false)
-        follow_redirect!
-        expect(response.body).to match(%r{<button[^>]*type="submit">Show</button>})
-
-        patch admin_lemon_drop_issue_section_path(issue, section), params: { lemon_drop_section: { visible: '1' } }
-
-        expect(section.reload.visible).to be(true)
       end
     end
 

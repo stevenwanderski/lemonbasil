@@ -89,19 +89,10 @@ class LemonDrop::Issue < ApplicationRecord
   end
 
   # What readers see, in page order; the preview shows exactly the same.
-  # Visible Sections, less any with nothing to show (a Menu Overview with no
+  # Every Section, less any with nothing to show (a Menu Overview with no
   # Recipes).
   def page_sections
-    visible_sections.reject { |section| section.sectionable.skipped? }
-  end
-
-  def visible_sections
-    sections.visible.includes(:sectionable)
-  end
-
-  # The Recipes readers see, in page order: those in visible Recipes Sections.
-  def visible_recipes
-    recipes.where(lemon_drop_sections: { visible: true })
+    sections.includes(:sectionable).reject { |section| section.sectionable.skipped? }
   end
 
   # The first-published time is set once and kept through any later
@@ -139,9 +130,9 @@ class LemonDrop::Issue < ApplicationRecord
     "#{start}–#{finish}"
   end
 
-  # The date in the page footer: the first visible Title Page's, or the Issue's.
+  # The date in the page footer: the first Title Page's, or the Issue's.
   def footer_date_label
-    title_page = sections.visible.lemon_drop_title_page_sections.first&.sectionable
+    title_page = sections.lemon_drop_title_page_sections.first&.sectionable
     title_page&.display_date_label || date_label
   end
 

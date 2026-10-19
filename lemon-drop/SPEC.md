@@ -83,7 +83,7 @@ Use Rails **`delegated_type`**: a shared `sections` table holds ordering and com
 
 Convenience readers:
 - `recipes`: all recipes across **all** Recipes sections, in page order (section position, then recipe position).
-- `primary_title_page`: the first visible Title Page section, used for the archive card and Open Graph tags. If there is none, fall back to the issue title and the first recipe's hero image.
+- `primary_title_page`: the first Title Page section, used for the archive card and Open Graph tags. If there is none, fall back to the issue title and the first recipe's hero image.
 
 Scopes: `published`.
 
@@ -93,7 +93,6 @@ Scopes: `published`.
 | issue_id | ref | |
 | sectionable_type / sectionable_id | delegated type | one of the nine types below |
 | position | integer | order on the page; drag-to-reorder |
-| visible | boolean | default true; hidden sections are kept but not rendered |
 | theme | enum | background: `cream`, `sage`; extendable (`dark`, `photo`, …) |
 | anchor | string | URL fragment, unique within issue **across section anchors and recipe slugs** (they share the page's `id` space); defaulted from type/heading (e.g. `grocery-list`), with a numeric suffix when taken (`recipes-2`) |
 | show_in_toc | boolean | whether the Table of Contents lists this section |
@@ -124,7 +123,7 @@ Scopes: `published`.
 |---|---|---|
 | heading | string | "this week's drop" |
 
-Entries are **generated** from the issue's other visible sections with `show_in_toc = true`, in page order, using `toc_label` and linking to `#anchor`. Nothing to keep in sync by hand.
+Entries are **generated** from the issue's other sections with `show_in_toc = true`, in page order, using `toc_label` and linking to `#anchor`. Nothing to keep in sync by hand.
 
 **4. HeroSection** (full-bleed banner, e.g. "let's cook")
 | Column | Type | Notes |
@@ -143,7 +142,7 @@ Entries are **generated** from the issue's other visible sections with `show_in_
 | icon | attachment | optional (mortar & pestle) |
 | category_order | string array / text | order of category columns; default `entree, soup, salad, snack, breakfast, side, dessert` |
 
-Contents are **generated** from **all** of the issue's recipes in visible Recipes sections, in page order, grouped by `category`, showing `menu_title` and `menu_blurb`, each linking to the recipe's anchor. Empty categories are omitted. If there are no recipes, the admin shows a warning and the public page skips this section. (Decided: no per-section recipe scope in v1. Adding one later means a `recipe_scope` column and an optional import key.)
+Contents are **generated** from **all** of the issue's recipes in its Recipes sections, in page order, grouped by `category`, showing `menu_title` and `menu_blurb`, each linking to the recipe's anchor. Empty categories are omitted. If there are no recipes, the admin shows a warning and the public page skips this section. (Decided: no per-section recipe scope in v1. Adding one later means a `recipe_scope` column and an optional import key.)
 
 **6. RecipesSection**
 | Column | Type | Notes |
@@ -209,18 +208,18 @@ Contents are **generated** from **all** of the issue's recipes in visible Recipe
 | Route | Content |
 |---|---|
 | `GET /drops` | Archive of published issues, newest first, 12 per page (Kaminari) (cover image, title page heading, date label) |
-| `GET /drops/:slug` | Full issue page: visible sections rendered in `position` order |
-| `GET /drops/:slug/recipes/:recipe_slug` | Standalone recipe page (same recipe partial), linkable and printable. 404 if the recipe's Recipes section is hidden. |
+| `GET /drops/:slug` | Full issue page: sections rendered in `position` order |
+| `GET /drops/:slug/recipes/:recipe_slug` | Standalone recipe page (same recipe partial), linkable and printable. |
 
 Public URLs use **`/drops`**. The model stays `Issue`; map it in routes, e.g. `resources :drops, controller: "lemon_drop/issues", param: :slug, only: [:index, :show]`. Pages render in the self-contained `lemon_drop` layout (§1).
 
 All published issues and recipes are **public**: no login, indexable by search engines, with the SEO items below.
 
 **Rendering**
-- The issue view loops over `issue.sections.visible` and renders `sections/_<type>` for each one, wrapped in an element with `id="<anchor>"` and the theme class. No section order is hard-coded.
+- The issue view loops over `issue.sections` and renders `sections/_<type>` for each one, wrapped in an element with `id="<anchor>"` and the theme class. No section order is hard-coded.
 - Each recipe renders with `id="<recipe slug>"` so Table of Contents and Menu Overview links work.
 - Default order for a new issue matches the reference: Title Page → Intro → Table of Contents → Hero → Menu Overview → Recipes → Grocery List → Allergen Swap → Outro.
-- The dashed running header ("the lemon drop") is hard-coded in the partials, not a field. The footer reads "the lemon drop · <date>", where the date is the first visible Title Page's `date_label`, falling back to the issue's dates.
+- The dashed running header ("the lemon drop") is hard-coded in the partials, not a field. The footer reads "the lemon drop · <date>", where the date is the first Title Page's `date_label`, falling back to the issue's dates.
 
 **Requirements**
 - Responsive at phone widths (single column under ~760px), no horizontal scroll.
@@ -244,13 +243,13 @@ All routes require the existing admin role, enforced by `Admin::LemonDrop::BaseC
 - **Duplicate issue** opens a small form asking for the new title, `starts_on` and `ends_on` (prefilled with the original's dates + 7 days), then deep-copies every section, recipe, grocery list and swap (including image attachments) into a new draft with a fresh slug. This replaces recipe sharing: to reuse last week's recipe, duplicate the issue or copy a single recipe (below).
 
 **Issue editor** (the main screen)
-- Left: the section list in page order. Each row shows the type, heading, visibility toggle and a drag handle. Drag-to-reorder (sections, recipes, groups, swap recipes) uses SortableJS in a Stimulus controller that posts new positions with `@rails/request.js`, stored in `position` columns (ADR 0007). Sections can be reordered (drag), added (any type, any number of times, inserted at a chosen position), duplicated within the issue, hidden, or deleted. Deleting a Recipes section that still has recipes asks whether to delete them or move them to another Recipes section in the issue.
+- Left: the section list in page order. Each row shows the type, heading and a drag handle. Drag-to-reorder (sections, recipes, groups, swap recipes) uses SortableJS in a Stimulus controller that posts new positions with `@rails/request.js`, stored in `position` columns (ADR 0007). Sections can be reordered (drag), added (any type, any number of times, inserted at a chosen position), duplicated within the issue, or deleted. There is no hiding: an unwanted section is deleted. Deleting a Recipes section that still has recipes asks whether to delete them or move them to another Recipes section in the issue.
 - Right: the selected section's form. Each section type has its own form with the fields in §3 plus the shared fields (theme, anchor, show in TOC, TOC label).
 - Issue settings: title, slug, dates.
 - **Preview** button renders the public page for any status, in a new tab.
 - **Publish** and **Unpublish** buttons; publishing is always manual. Publishing runs the checks in §7.
 - **Published issues stay editable, and saved changes go live immediately**, including edits to recipes and sections. There is no separate "republish" step or draft copy. Because of this:
-  - Saving a published issue runs the publish-blocking checks in §7; a save that would fail them is rejected with errors, so the live page never ends up broken. The checks consider **visible sections only** (ADR 0006): to add new content to a live issue, add the section hidden, build it up, then make it visible (that save runs the checks). Recipes added to a visible Recipes section must be complete when saved, so the recipe form takes the hero image in the same save.
+  - Saving a published issue runs the publish-blocking checks in §7; a save that would fail them is rejected with errors, so the live page never ends up broken. Sections can't be hidden, so how a new, still-incomplete section on a live issue gets past the checks is open (see ADR 0006). Recipes added to a Recipes section must be complete when saved, so the recipe form takes the hero image in the same save.
   - The editor shows a clear "Live: changes are public when saved" banner on published issues.
   - Keep a change history for issues and everything in them with `paper_trail` (whodunnit = the admin). The history screen lists an issue's changes. Reverting works one record at a time: restore a single record's earlier version, or recreate a deleted record along with its children where feasible. There are no whole-issue snapshots. **Image changes can't be reverted in v1**: paper_trail versions rows, not files, and Active Storage purges replaced images. To undo an image change, re-upload the old image.
 
@@ -381,7 +380,7 @@ The issue is an ordered `sections` array; each element has a `type` and that typ
 
 Rules:
 - Required: `schema_version`, `issue.title`, `issue.starts_on`, `sections`, and each section's `type`. Per recipe: `title`, `category`, `ingredient_groups`, `steps`. Everything else is optional and falls back to the defaults in §3.
-- Shared section fields (`theme`, `visible`, `anchor`, `show_in_toc`, `toc_label`) are allowed on any section.
+- Shared section fields (`theme`, `anchor`, `show_in_toc`, `toc_label`) are allowed on any section.
 - Any number of sections of any type is valid, in any order (§3).
 - `body_markdown` is converted to HTML on import with `kramdown` (already in the app), then sanitized with the same allowlist as the editor.
 - Unknown keys are rejected so typos surface instead of being silently dropped.
@@ -396,13 +395,13 @@ Provide a "Claude export instructions" text on the admin Import page (and keep i
 
 Warnings never block import. **Bold** items block publishing.
 
-Checks look across **all** sections of each type (e.g. every Grocery List against every recipe in the issue). Missing section types are never errors. **Publish-blocking checks consider visible sections only** (ADR 0006); warnings also report on hidden sections.
+Checks look across **all** sections of each type (e.g. every Grocery List against every recipe in the issue). Missing section types are never errors. Publish-blocking checks and warnings look at every section.
 
-- **Issue has no visible sections.**
+- **Issue has no sections.**
 - **A Title Page section has no cover image.**
 - **Recipe has no hero image, no steps, or no ingredients.**
 - **Hero section has no background image.**
-- No visible Title Page section (the archive and link previews will use the fallback).
+- No Title Page section (the archive and link previews will use the fallback).
 - Menu Overview present but the issue has no recipes.
 - Table of Contents present but no sections are marked `show_in_toc`.
 - Empty sections (e.g. a Recipes section with no recipes, a Grocery List with no items).
@@ -463,7 +462,7 @@ Build v1 so the import logic is a reusable service object (`LemonDrop::Importer.
 - ✅ The reference issue's real problems (missing chicken thighs/couscous in the harissa chicken ingredients, unused crushed tomatoes in the grocery list) are flagged.
 
 Tests (three seams; assert observable behavior, not internals):
-- **HTTP request specs (primary):** public rendering, ordering and visibility under `/drops` (Hidden sections, Draft 404s, Recipes in Hidden sections 404, repeated/missing Section types, anchor/slug uniqueness); admin-role authorization (a signed-in non-admin is turned away); publish/unpublish and Publish-blocking checks, including saves to Published Issues and Hidden sections being exempt; slug lock; draft-only delete; duplicate and copy-recipe independence; revert; rich text sanitization.
+- **HTTP request specs (primary):** public rendering, ordering under `/drops` (Draft 404s, repeated/missing Section types, anchor/slug uniqueness); admin-role authorization (a signed-in non-admin is turned away); publish/unpublish and Publish-blocking checks, including saves to Published Issues; slug lock; draft-only delete; duplicate and copy-recipe independence; revert; rich text sanitization.
 - **`LemonDrop::Importer` (`preview` / `commit!`):** valid reference JSON, path-specific errors, unknown keys, repeated Section types, Markdown → sanitized HTML, replace-draft (refused for Published), transaction rollback, never publishes, Import record, reference-issue warnings.
 - **Feature specs (`spec/features`, Capybara + Firefox, `js: true`)** only for JavaScript flows: reorder Sections → preview, Tiptap saves formatted text, import → preview → commit.
 - **Content check matching heuristics** get direct tests for their edge cases only.

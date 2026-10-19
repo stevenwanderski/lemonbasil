@@ -42,16 +42,6 @@ RSpec.describe 'LemonDrop::Issues', type: :request do
       expect(response.body).to match(/second.*first/m)
     end
 
-    it 'leaves out Hidden sections' do
-      add_title_page('shown')
-      add_title_page('hidden away', visible: false)
-
-      get lemon_drop_issue_path(issue.slug)
-
-      expect(response.body).to include('shown')
-      expect(response.body).not_to include('hidden away')
-    end
-
     it 'gives several Title Pages unique anchors' do
       3.times { |n| add_title_page("cover #{n}") }
 
@@ -77,11 +67,11 @@ RSpec.describe 'LemonDrop::Issues', type: :request do
       expect(response.body).to include('<span>oct 19–23</span>', 'the lemon drop · oct 19–23')
     end
 
-    it "shows the first visible Title Page's date label in the footer" do
-      create(:lemon_drop_section, issue: issue, visible: false,
-        sectionable: build(:lemon_drop_title_page_section, date_label: 'hidden week'))
-      create(:lemon_drop_section, issue: issue,
+    it "shows the first Title Page's date label in the footer" do
+      create(:lemon_drop_section, issue: issue, position: 1,
         sectionable: build(:lemon_drop_title_page_section, date_label: 'harvest week'))
+      create(:lemon_drop_section, issue: issue, position: 2,
+        sectionable: build(:lemon_drop_title_page_section, date_label: 'second cover week'))
 
       get lemon_drop_issue_path(issue.slug)
 

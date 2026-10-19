@@ -30,7 +30,9 @@ class LemonDrop::Section < ApplicationRecord
   TYPES = %w[
     LemonDrop::TitlePageSection
     LemonDrop::IntroSection
+    LemonDrop::TableOfContentsSection
     LemonDrop::HeroSection
+    LemonDrop::MenuOverviewSection
     LemonDrop::RecipesSection
     LemonDrop::GroceryListSection
     LemonDrop::AllergenSwapSection
@@ -48,6 +50,11 @@ class LemonDrop::Section < ApplicationRecord
 
   validates :anchor, presence: true, uniqueness: { scope: :issue_id }
   validate :anchor_not_a_recipe_slug
+
+  # The Table of Contents entry: the TOC label, or else the Section heading.
+  def display_toc_label
+    toc_label.presence || sectionable.heading.to_s.squish
+  end
 
   private
 

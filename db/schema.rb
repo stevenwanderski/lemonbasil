@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_18_233001) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_19_130001) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -226,6 +226,13 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_233001) do
     t.index ["slug"], name: "index_lemon_drop_issues_on_slug", unique: true
   end
 
+  create_table "lemon_drop_menu_overview_sections", force: :cascade do |t|
+    t.string "heading"
+    t.string "category_order", default: ["entree", "soup", "salad", "snack", "breakfast", "side", "dessert"], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "lemon_drop_outro_sections", force: :cascade do |t|
     t.string "heading"
     t.text "body_html"
@@ -320,6 +327,12 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_18_233001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["swap_group_id"], name: "index_lemon_drop_swaps_on_swap_group_id"
+  end
+
+  create_table "lemon_drop_table_of_contents_sections", force: :cascade do |t|
+    t.string "heading"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "lemon_drop_title_page_sections", force: :cascade do |t|

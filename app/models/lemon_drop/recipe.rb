@@ -49,7 +49,7 @@ class LemonDrop::Recipe < ApplicationRecord
 
   before_validation :set_default_slug
 
-  validates :title, :slug, presence: true
+  validates :title, :slug, :category, presence: true
   validate :slug_unique_within_issue
   validates :hero_image,
     content_type: { in: %w[image/jpeg image/png image/webp], spoofing_protection: true },
@@ -64,6 +64,11 @@ class LemonDrop::Recipe < ApplicationRecord
     parts << "total time: #{total_time_label}" if total_time_label
     parts << "serves: #{serves}" if serves
     parts.join(' / ').presence
+  end
+
+  # The name on the Menu Overview: the menu title, or else the title.
+  def display_menu_title
+    menu_title.presence || title
   end
 
   def total_time_label

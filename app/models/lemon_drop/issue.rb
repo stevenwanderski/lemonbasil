@@ -35,8 +35,19 @@ class LemonDrop::Issue < ApplicationRecord
   validate :slug_unchanged_once_published
 
   # What readers see, in page order; the preview shows exactly the same.
+  # Visible Sections, less any with nothing to show (a Menu Overview with no
+  # Recipes).
+  def page_sections
+    visible_sections.reject { |section| section.sectionable.skipped? }
+  end
+
   def visible_sections
     sections.visible.includes(:sectionable)
+  end
+
+  # The Recipes readers see, in page order: those in visible Recipes Sections.
+  def visible_recipes
+    recipes.where(lemon_drop_sections: { visible: true })
   end
 
   # The first-published time is set once and kept through any later

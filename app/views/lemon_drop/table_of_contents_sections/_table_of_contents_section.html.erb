@@ -1,0 +1,11 @@
+<section class="contents">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <h2><%= table_of_contents_section.heading %></h2>
+    <ul>
+      <% table_of_contents_section.entries.each do |entry| %>
+        <li><%= link_to entry.display_toc_label, "##{entry.anchor}" %></li>
+      <% end %>
+    </ul>
+  </div>
+</section>

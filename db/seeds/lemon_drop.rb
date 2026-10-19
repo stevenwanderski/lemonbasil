@@ -8,9 +8,7 @@
 
 return if LemonDrop::Issue.exists?(slug: '2026-10-19')
 
-# Images go in as uploads, the way a form hands them over. A raw IO doesn't
-# work: the upload check's spoofing protection reads it to the end, and
-# Active Storage then raises ActiveStorage::IntegrityError.
+# Images go in as uploads, the way a form hands them over.
 lemon_drop_image = lambda do |name|
   tempfile = Tempfile.new(name, binmode: true)
   IO.copy_stream(Rails.root.join('lemon-drop/images', name).to_s, tempfile)

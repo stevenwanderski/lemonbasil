@@ -25,7 +25,7 @@ gem 'akismet'
 gem 'httplog'
 gem 'image_processing', '~> 1.2'
 gem 'mini_magick'
-gem 'active_storage_validations'
+gem 'active_storage_validations', '~> 3.0'
 gem 'aws-sdk-s3', require: false
 
 # Required for Ruby 3.1

@@ -18,7 +18,9 @@ end
 
 describe 'Lemon drop image attachments' do
   before(:all) do
-    ActiveRecord::Base.connection.create_table(:lemon_drop_image_test_records, force: true)
+    ActiveRecord::Base.connection.create_table(:lemon_drop_image_test_records, force: true) do |t|
+      t.string :title
+    end
     LemonDropImageTestRecord.reset_column_information
   end
 
@@ -85,6 +87,46 @@ describe 'Lemon drop image attachments' do
       record = LemonDropImageTestRecord.create!(photos: [upload(image_bytes('.jpg'), 'a.jpg'), upload(image_bytes('.png'), 'b.png', 'image/png')])
 
       expect(record.photos.count).to eq(2)
+    end
+  end
+
+  # Each update loads a fresh copy, with no pending attachment changes: the
+  # case active_storage_validations 1.x crashed on (HAP-35).
+  describe 'saving a record that already has images' do
+    it 'keeps an attached image when other fields change' do
+      record = LemonDropImageTestRecord.create!(cover_image: upload(image_bytes('.jpg'), 'photo.jpg'))
+
+      LemonDropImageTestRecord.find(record.id).update!(title: 'renamed')
+
+      expect(record.reload).to have_attributes(title: 'renamed')
+      expect(record.cover_image).to be_attached
+    end
+
+    it 'keeps attached images on a many-image attachment when other fields change' do
+      record = LemonDropImageTestRecord.create!(photos: [upload(image_bytes('.jpg'), 'a.jpg'), upload(image_bytes('.png'), 'b.png', 'image/png')])
+
+      LemonDropImageTestRecord.find(record.id).update!(title: 'renamed')
+
+      expect(record.reload.photos.count).to eq(2)
+    end
+
+    it 'still rejects a non-image swapped in for an attached image' do
+      created = LemonDropImageTestRecord.create!(cover_image: upload(image_bytes('.jpg'), 'photo.jpg'))
+      record = LemonDropImageTestRecord.find(created.id)
+
+      expect(record.update(cover_image: upload('just some text', 'swapped.jpg'))).to be(false)
+      expect(record.errors.details[:cover_image].pluck(:error)).to include(:content_type_spoofed)
+      expect(created.reload.cover_image.filename.to_s).to eq('photo.jpg')
+    end
+
+    it 'still rejects a non-image added to attached images' do
+      created = LemonDropImageTestRecord.create!(photos: [upload(image_bytes('.jpg'), 'a.jpg')])
+      record = LemonDropImageTestRecord.find(created.id)
+
+      record.photos.attach(upload('nope', 'b.png', 'image/png'))
+
+      expect(record).not_to be_valid
+      expect(record.errors.details[:photos].pluck(:error)).to include(:content_type_spoofed)
     end
   end
 

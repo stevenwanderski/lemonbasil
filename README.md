@@ -93,8 +93,10 @@ which uses the `file` command). Originals are stored as uploaded, including
 any location data, so pages must only ever show variants saved with
 `saver: { strip: true }`, never the original.
 
-When attaching images in code (seeds, scripts, specs), pass an
-`ActionDispatch::Http::UploadedFile`, which is what a form submits. The type
-check reads file contents only from that class: `attach(io: ...)` raises
-`ActiveStorage::IntegrityError`, and a `Rack::Test::UploadedFile` is rejected
-as a spoofed type. `spec/support/uploaded_image.rb` shows how.
+When attaching images in code (seeds, scripts, specs), any usual form works:
+an `ActionDispatch::Http::UploadedFile` (what a form submits),
+`attach(io: ..., filename: ...)` or a `Rack::Test::UploadedFile`. The type
+check reads each new file's contents. Images already attached aren't re-read
+when a record is saved (needs active_storage_validations 2.x or later; 1.x
+crashed there, see HAP-35). `spec/support/uploaded_image.rb` builds an upload
+from the reference images.

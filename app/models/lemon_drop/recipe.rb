@@ -35,7 +35,11 @@ class LemonDrop::Recipe < ApplicationRecord
   has_one :section, through: :recipes_section
   has_one :issue, through: :section
   has_many :ingredient_groups, -> { order(:position) }, dependent: :destroy
-  has_many :steps, -> { order(:position) }, dependent: :destroy
+  has_many :steps, -> { order(:position) }, dependent: :destroy, autosave: true
+  # The form edits every ingredient group in one save; a new group left empty
+  # is ignored.
+  accepts_nested_attributes_for :ingredient_groups, allow_destroy: true,
+    reject_if: ->(attributes) { attributes['id'].blank? && attributes.values_at('name', 'ingredients_text').all?(&:blank?) }
 
   has_one_attached :hero_image do |attachable|
     attachable.variant :hero, resize_to_limit: [1600, 1600], saver: { strip: true }
@@ -64,6 +68,32 @@ class LemonDrop::Recipe < ApplicationRecord
     parts << "total time: #{total_time_label}" if total_time_label
     parts << "serves: #{serves}" if serves
     parts.join(' / ').presence
+  end
+
+  # The steps as the form edits them: one per line, top first.
+  def steps_text
+    steps.reject(&:marked_for_destruction?).map(&:body).join("\n")
+  end
+
+  # Replaces the steps with one per line, in order, when saved.
+  def steps_text=(text)
+    lines = LemonDrop.lines(text)
+    return if lines == LemonDrop.lines(steps_text)
+
+    steps.each(&:mark_for_destruction)
+    lines.each.with_index(1) { |line, position| steps.build(body: line, position: position) }
+  end
+
+  # Moves this Recipe to the end of another Recipes Section in the same Issue,
+  # closing the gap it leaves.
+  def move_to(other)
+    from = recipes_section
+    return if other == from
+
+    transaction do
+      update!(recipes_section: other, position: other.recipes.maximum(:position).to_i + 1)
+      from.renumber_recipes
+    end
   end
 
   # The name on the Menu Overview: the menu title, or else the title.

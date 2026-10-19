@@ -1,0 +1,31 @@
+<% section = f.object.section %>
+<div class="form-item">
+  <%= f.label :heading, class: 'label' %>
+  <%= f.text_field :heading, class: 'input--text' %>
+  <p class="hint">Optional; usually blank, so the Recipes start straight away.</p>
+</div>
+
+<div class="form-item">
+  <span class="label">Recipes</span>
+  <% recipes = f.object.recipes.to_a %>
+  <% if recipes.any? %>
+    <p class="hint">Drag to reorder.</p>
+    <%= tag.ol class: 'recipe-list', data: { controller: 'sortable', sortable_url_value: reorder_admin_lemon_drop_issue_section_recipes_path(issue, section),
+          sortable_param_value: 'recipe_ids[]' } do %>
+      <% recipes.each do |recipe| %>
+        <%= tag.li class: 'recipe-list__row', data: { id: recipe.id } do %>
+          <span class="drag-handle" title="Drag to reorder">⠿</span>
+          <%= link_to edit_admin_lemon_drop_issue_section_recipe_path(issue, section, recipe) do %>
+            <strong><%= recipe.title %></strong>
+            <span><%= recipe.category&.humanize %></span>
+          <% end %>
+          <%= link_to 'Delete', admin_lemon_drop_issue_section_recipe_path(issue, section, recipe), class: 'link--danger',
+                data: { turbo_method: :delete, turbo_confirm: "Delete #{recipe.title}?" } %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <p class="hint">No Recipes yet.</p>
+  <% end %>
+  <%= link_to '+ Add recipe', new_admin_lemon_drop_issue_section_recipe_path(issue, section), class: 'button' %>
+</div>

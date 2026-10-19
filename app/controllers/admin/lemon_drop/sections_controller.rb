@@ -6,6 +6,7 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
     'LemonDrop::IntroSection' => %i[heading body_html signoff icon],
     'LemonDrop::HeroSection' => %i[heading background_image overlay_image background_focus text_color min_height],
     'LemonDrop::TableOfContentsSection' => %i[heading],
+    'LemonDrop::RecipesSection' => %i[heading],
     'LemonDrop::MenuOverviewSection' => [:heading, :icon, { category_order: [] }],
     'LemonDrop::GroceryListSection' => [:heading, :icon, { grocery_groups_attributes: %i[id name items_text position _destroy] }],
     'LemonDrop::AllergenSwapSection' => [:heading, :icon, :disclaimer, {
@@ -53,8 +54,11 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
     redirect_to edit_admin_lemon_drop_issue_section_path(@issue, copy), notice: 'Section duplicated!'
   end
 
+  # A Recipes Section's Recipes are deleted with it, or moved to the Recipes
+  # Section named by move_recipes_to.
   def destroy
-    @issue.remove_section(@section)
+    target = @issue.sections.lemon_drop_recipes_sections.excluding(@section).find(params[:move_recipes_to]) if params[:move_recipes_to].present?
+    @issue.remove_section(@section, move_recipes_to: target&.sectionable)
     redirect_to edit_admin_lemon_drop_issue_path(@issue), notice: 'Section deleted!'
   end
 

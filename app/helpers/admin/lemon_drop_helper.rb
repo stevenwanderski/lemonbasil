@@ -11,6 +11,20 @@ module Admin::LemonDropHelper
     recipe_count.positive? ? "Delete #{name} and its #{pluralize(recipe_count, 'Recipe')}?" : "Delete #{name}?"
   end
 
+  # The Issue's other Recipes Sections, where section's Recipes can be moved.
+  # Empty for any other Section type.
+  def recipe_move_targets(section)
+    return [] unless section.lemon_drop_recipes_section?
+
+    section.issue.sections.lemon_drop_recipes_sections.excluding(section).includes(:sectionable).to_a
+  end
+
+  # "Recipes: weeknight dinners (#recipes-2)": the anchor tells apart Recipes
+  # Sections with no heading.
+  def recipes_section_label(section)
+    "#{section_summary(section)} (##{section.anchor})"
+  end
+
   # Where a new Section can go: the top, or after any of the sections.
   def section_positions_for(sections)
     [['At the top', 1]] + sections.map.with_index(2) { |section, position| ["After #{section_summary(section)}", position] }

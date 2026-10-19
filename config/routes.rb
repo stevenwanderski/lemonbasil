@@ -89,6 +89,10 @@ Rails.application.routes.draw do
         resources :sections, only: [:create, :edit, :update, :destroy] do
           post :duplicate, on: :member
           patch :reorder, on: :collection
+          resources :recipes, only: [:new, :create, :edit, :update, :destroy] do
+            patch :move, on: :member
+            patch :reorder, on: :collection
+          end
         end
       end
     end

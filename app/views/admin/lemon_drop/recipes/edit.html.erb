@@ -1,0 +1,19 @@
+<%= render layout: 'admin/lemon_drop/issues/editor', locals: { issue: @issue, selected: @section } do %>
+  <div class="issue-editor__panel-header">
+    <h2>Recipe: <%= @recipe.title_in_database %></h2>
+    <%= link_to '← Back to the Recipes Section', edit_admin_lemon_drop_issue_section_path(@issue, @section) %>
+    <%= link_to 'Delete', admin_lemon_drop_issue_section_recipe_path(@issue, @section, @recipe), class: 'link--danger',
+          data: { turbo_method: :delete, turbo_confirm: "Delete #{@recipe.title_in_database}?" } %>
+  </div>
+
+  <% move_targets = recipe_move_targets(@section) %>
+  <% if move_targets.any? %>
+    <%= form_with url: move_admin_lemon_drop_issue_section_recipe_path(@issue, @section, @recipe), method: :patch, class: 'recipe-move' do |mf| %>
+      <%= mf.label :to_section_id, 'Move to', class: 'label' %>
+      <%= mf.select :to_section_id, move_targets.map { |target| [recipes_section_label(target), target.id] }, {}, class: 'input--select' %>
+      <%= mf.submit 'Move', class: 'button' %>
+    <% end %>
+  <% end %>
+
+  <%= render 'form', recipe: @recipe, url: admin_lemon_drop_issue_section_recipe_path(@issue, @section, @recipe), method: :patch %>
+<% end %>

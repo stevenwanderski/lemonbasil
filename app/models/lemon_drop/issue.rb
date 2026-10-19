@@ -66,10 +66,13 @@ class LemonDrop::Issue < ApplicationRecord
     end
   end
 
-  # Deletes a Section and closes the gap it leaves.
-  def remove_section(section)
+  # Deletes a Section and closes the gap it leaves. A Recipes Section's
+  # Recipes go with it, unless move_recipes_to names another of the Issue's
+  # Recipes Sections to move them to, in their order, at its end.
+  def remove_section(section, move_recipes_to: nil)
     with_lock do
-      section.destroy!
+      section.sectionable.recipes.to_a.each { |recipe| recipe.move_to(move_recipes_to) } if move_recipes_to
+      section.reload.destroy!
       reorder_sections(sections.ids)
     end
   end

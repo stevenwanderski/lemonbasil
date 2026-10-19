@@ -1,0 +1,8 @@
+<%= render layout: 'admin/lemon_drop/issues/editor', locals: { issue: @issue, selected: @section } do %>
+  <div class="issue-editor__panel-header">
+    <h2>New Recipe</h2>
+    <%= link_to '← Back to the Recipes Section', edit_admin_lemon_drop_issue_section_path(@issue, @section) %>
+  </div>
+
+  <%= render 'form', recipe: @recipe, url: admin_lemon_drop_issue_section_recipes_path(@issue, @section), method: :post %>
+<% end %>

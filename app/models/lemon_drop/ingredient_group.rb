@@ -19,5 +19,20 @@
 #
 class LemonDrop::IngredientGroup < ApplicationRecord
   belongs_to :recipe
-  has_many :ingredients, -> { order(:position) }, dependent: :destroy
+  has_many :ingredients, -> { order(:position) }, dependent: :destroy, autosave: true
+
+  # The ingredients as the form edits them: one per line, top first.
+  def ingredients_text
+    ingredients.reject(&:marked_for_destruction?).map(&:text).join("\n")
+  end
+
+  # Replaces the ingredients with one per line, in order, when saved. Each
+  # line is kept as written, only trimmed; blank lines are skipped.
+  def ingredients_text=(text)
+    lines = LemonDrop.lines(text)
+    return if lines == LemonDrop.lines(ingredients_text)
+
+    ingredients.each(&:mark_for_destruction)
+    lines.each.with_index(1) { |line, position| ingredients.build(text: line, position: position) }
+  end
 end

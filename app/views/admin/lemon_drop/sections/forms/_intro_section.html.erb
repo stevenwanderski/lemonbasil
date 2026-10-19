@@ -1,0 +1,10 @@
+<div class="form-item">
+  <%= f.label :heading, class: 'label' %>
+  <%= f.text_field :heading, class: 'input--text' %>
+</div>
+<%= render 'admin/lemon_drop/sections/forms/rich_text_field', f: f, name: :body_html, label: 'Letter' %>
+<div class="form-item">
+  <%= f.label :signoff, 'Sign-off', class: 'label' %>
+  <%= f.text_field :signoff, class: 'input--text' %>
+</div>
+<%= render 'admin/lemon_drop/sections/forms/image_field', f: f, name: :icon, label: 'Icon', variant: :icon %>

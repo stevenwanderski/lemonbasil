@@ -3,9 +3,13 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   # forms in later Lemon Drop tickets.
   SECTIONABLE_PARAMS = {
     'LemonDrop::TitlePageSection' => %i[heading tagline date_label cover_image],
+    'LemonDrop::IntroSection' => %i[heading body_html signoff icon],
     'LemonDrop::HeroSection' => %i[heading background_image overlay_image background_focus text_color min_height],
     'LemonDrop::TableOfContentsSection' => %i[heading],
-    'LemonDrop::MenuOverviewSection' => [:heading, :icon, { category_order: [] }]
+    'LemonDrop::MenuOverviewSection' => [:heading, :icon, { category_order: [] }],
+    # images lists the signed ids of the saved images to keep, then any new
+    # files: the set as a whole replaces the old one.
+    'LemonDrop::OutroSection' => [:heading, :body_html, :cta_label, :cta_url, { images: [] }]
   }.freeze
 
   before_action :set_issue

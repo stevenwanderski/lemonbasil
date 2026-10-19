@@ -177,6 +177,83 @@ RSpec.describe 'Admin::LemonDrop::Sections', type: :request do
       end
     end
 
+    describe 'the Intro form' do
+      it 'saves the heading, sign-off, icon and the body, keeping only the editor’s formatting' do
+        section = add_section(build(:lemon_drop_intro_section), position: 1)
+
+        get edit_admin_lemon_drop_issue_section_path(issue, section)
+        expect(response.body).to include('data-controller="rich-text"', 'name="lemon_drop_section[sectionable_attributes][body_html]"',
+          'name="lemon_drop_section[sectionable_attributes][icon]"')
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: { lemon_drop_section: { sectionable_attributes: {
+          heading: 'hi there', signoff: 'xo beth', icon: image_upload('mortar.png'),
+          body_html: '<h1>big</h1><p style="color: red">it’s <strong>soup</strong> <em>season</em>, <a href="https://x.co" onclick="steal()">read</a></p>' \
+                     '<ul><li>one</li></ul><script>alert(1)</script><img src="x.png"><a href="javascript:alert(1)">bad</a>'
+        } } }
+
+        expect(response).to redirect_to(edit_admin_lemon_drop_issue_section_path(issue, section))
+        intro = section.sectionable.reload
+        expect(intro).to have_attributes(heading: 'hi there', signoff: 'xo beth')
+        expect(intro.body_html).to eq(
+          'big<p>it’s <strong>soup</strong> <em>season</em>, <a href="https://x.co">read</a></p><ul><li>one</li></ul><a>bad</a>'
+        )
+        expect(intro.icon.filename.to_s).to eq('mortar.png')
+      end
+    end
+
+    describe 'the Outro form' do
+      let(:section) { add_section(build(:lemon_drop_outro_section), position: 1) }
+
+      def outro_params(**fields)
+        { lemon_drop_section: { sectionable_attributes: fields } }
+      end
+
+      def kept(*images)
+        images.map(&:signed_id)
+      end
+
+      it 'saves the heading, body and CTA, and adds and removes images in one save' do
+        section.sectionable.update!(images: [uploaded_image('party-1.jpg'), uploaded_image('party-2.jpg')])
+        party_1, party_2 = section.sectionable.images.to_a
+
+        get edit_admin_lemon_drop_issue_section_path(issue, section)
+        expect(response.body).to include('data-controller="rich-text"', 'multiple="multiple"')
+        keep_boxes = Nokogiri::HTML(response.body).css('input[type=checkbox][name="lemon_drop_section[sectionable_attributes][images][]"]')
+        expect(keep_boxes.map { |box| [box['value'], box['checked']] }).to eq(kept(party_1, party_2).map { |id| [id, 'checked'] })
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: outro_params(
+          heading: "let’s\nparty", body_html: '<p>book <b>now</b></p><h2>x</h2>', cta_label: 'email us', cta_url: 'mailto:hello@lemonandbasil.co',
+          images: ['', *kept(party_2), image_upload('party-3.jpg')]
+        )
+
+        expect(response).to redirect_to(edit_admin_lemon_drop_issue_section_path(issue, section))
+        outro = section.sectionable.reload
+        expect(outro).to have_attributes(heading: "let’s\nparty", body_html: '<p>book <b>now</b></p>x',
+          cta_label: 'email us', cta_url: 'mailto:hello@lemonandbasil.co')
+        expect(outro.images.map { |image| image.filename.to_s }).to eq(%w[party-2.jpg party-3.jpg])
+      end
+
+      it 'refuses a seventh image and keeps the six already there' do
+        section.sectionable.update!(images: Array.new(6) { uploaded_image('party-1.jpg') })
+
+        patch admin_lemon_drop_issue_section_path(issue, section), params: outro_params(
+          images: ['', *kept(*section.sectionable.images), image_upload('party-3.jpg')]
+        )
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to match(%r{<ul class="form-errors">\s*<li>Images [^<]+</li>})
+        expect(section.sectionable.reload.images.map { |image| image.filename.to_s }).to eq(['party-1.jpg'] * 6)
+      end
+
+      it 'refuses a CTA link that isn’t https or mailto' do
+        patch admin_lemon_drop_issue_section_path(issue, section), params: outro_params(cta_label: 'go', cta_url: 'javascript:alert(1)')
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response.body).to include('Button link must start with https:// or mailto:')
+        expect(section.sectionable.reload.cta_url).to be_nil
+      end
+    end
+
     describe 'the Menu Overview form' do
       let(:section) { add_section(build(:lemon_drop_menu_overview_section, category_order: %w[soup entree]), position: 1) }
 

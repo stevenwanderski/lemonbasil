@@ -9,3 +9,6 @@ application.register("client-menu", ClientMenuController)
 
 import SortableController from "./sortable_controller"
 application.register("sortable", SortableController)
+
+import RichTextController from "./rich_text_controller"
+application.register("rich-text", RichTextController)

@@ -12,6 +12,8 @@
 class LemonDrop::IntroSection < ApplicationRecord
   include LemonDrop::Sectionable
 
+  before_save { self.body_html = LemonDrop::RichText.sanitize(body_html) if body_html_changed? }
+
   has_one_attached :icon do |attachable|
     attachable.variant :icon, resize_to_limit: [600, 600], saver: { strip: true }
   end

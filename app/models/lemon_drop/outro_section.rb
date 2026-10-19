@@ -13,6 +13,8 @@
 class LemonDrop::OutroSection < ApplicationRecord
   include LemonDrop::Sectionable
 
+  before_save { self.body_html = LemonDrop::RichText.sanitize(body_html) if body_html_changed? }
+
   has_many_attached :images do |attachable|
     attachable.variant :grid, resize_to_limit: [800, 800], saver: { strip: true }
   end

@@ -1,16 +1,4 @@
-<div class="admin-header">
-  <div>
-    <h1><%= @issue.title %></h1>
-    <p>
-      <strong><%= @issue.status.humanize %></strong>
-      · <%= link_to 'Preview', admin_lemon_drop_issue_preview_path(@issue), target: '_blank' %>
-    </p>
-  </div>
-  <% if @issue.published? %>
-    <%= button_to 'Unpublish', admin_lemon_drop_issue_publication_path(@issue), method: :delete, class: 'button', form: { data: { turbo_confirm: 'Take this Issue off the public site?' } } %>
-  <% else %>
-    <%= button_to 'Publish', admin_lemon_drop_issue_publication_path(@issue), class: 'button' %>
-  <% end %>
-</div>
-
-<%= render 'form', issue: @issue %>
+<%= render layout: 'editor', locals: { issue: @issue, selected: nil } do %>
+  <h2>Issue settings</h2>
+  <%= render 'form', issue: @issue %>
+<% end %>

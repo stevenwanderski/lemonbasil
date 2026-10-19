@@ -12,6 +12,20 @@ module LemonDrop
     candidate
   end
 
+  # Attaches a fresh copy of each of from's images to to, so the two records
+  # never share a stored file.
+  def self.copy_attachments(from, to)
+    from.class.reflect_on_all_attachments.each do |reflection|
+      attached = from.public_send(reflection.name)
+      attachments = reflection.macro == :has_many_attached ? attached.attachments : [attached.attachment].compact
+      next if attachments.empty?
+
+      to.public_send(reflection.name).attach(*attachments.map do |attachment|
+        { io: StringIO.new(attachment.download), filename: attachment.filename.to_s, content_type: attachment.content_type }
+      end)
+    end
+  end
+
   # Splits items into at most count columns, keeping their order, where the
   # longest column (by the block's size for each item) comes out shortest.
   # The Menu Overview and Grocery List fill their grids this way.

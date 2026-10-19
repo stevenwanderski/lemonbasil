@@ -6,3 +6,6 @@ import { application } from "./application"
 
 import ClientMenuController from "./client_menu_controller"
 application.register("client-menu", ClientMenuController)
+
+import SortableController from "./sortable_controller"
+application.register("sortable", SortableController)

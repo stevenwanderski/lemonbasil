@@ -10,6 +10,7 @@ class Admin::LemonDrop::IssuesController < Admin::LemonDrop::BaseController
 
   def create
     @issue = ::LemonDrop::Issue.new(issue_params)
+    @issue.build_default_sections
 
     if @issue.save
       redirect_to edit_admin_lemon_drop_issue_path(@issue), notice: 'Issue created!'

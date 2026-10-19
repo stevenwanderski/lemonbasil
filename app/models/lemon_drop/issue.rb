@@ -34,6 +34,57 @@ class LemonDrop::Issue < ApplicationRecord
   validate :ends_on_not_before_starts_on
   validate :slug_unchanged_once_published
 
+  # "New issue" starts from the reference layout (lemon-drop/index.html): the
+  # nine Section types in order, with its headings, anchors, themes and Table
+  # of Contents entries. Built in memory, so they save with the Issue.
+  def build_default_sections
+    [
+      [LemonDrop::TitlePageSection.new(heading: 'the lemon drop', tagline: 'your weekly meal plan'), { anchor: 'title-page' }],
+      [LemonDrop::IntroSection.new(heading: 'hello!'), { anchor: 'intro' }],
+      [LemonDrop::TableOfContentsSection.new(heading: 'this week’s drop'), { anchor: 'table-of-contents' }],
+      [LemonDrop::HeroSection.new(heading: "let’s\ncook"), { anchor: 'hero' }],
+      [LemonDrop::MenuOverviewSection.new(heading: 'your menu'), { anchor: 'menu', show_in_toc: true, toc_label: 'recipes' }],
+      [LemonDrop::RecipesSection.new, { anchor: 'recipes' }],
+      [LemonDrop::GroceryListSection.new(heading: 'your grocery list'),
+       { anchor: 'grocery', theme: 'sage', show_in_toc: true, toc_label: 'grocery list' }],
+      [LemonDrop::AllergenSwapSection.new(heading: "allergen\nswaps"),
+       { anchor: 'swaps', theme: 'sage', show_in_toc: true, toc_label: 'allergen swaps' }],
+      [LemonDrop::OutroSection.new, { anchor: 'party' }]
+    ].each.with_index(1) do |(sectionable, attributes), position|
+      sections.build(sectionable: sectionable, position: position, **attributes)
+    end
+  end
+
+  # Adds a Section at position (1 is the top), moving the rest down one.
+  def insert_section(sectionable, position:, **attributes)
+    with_lock do
+      section = sections.create!(sectionable: sectionable, position: 0, **attributes)
+      ids = sections.excluding(section).ids
+      ids.insert(position.to_i.clamp(1, ids.size + 1) - 1, section.id)
+      reorder_sections(ids)
+      section
+    end
+  end
+
+  # Deletes a Section and closes the gap it leaves.
+  def remove_section(section)
+    with_lock do
+      section.destroy!
+      reorder_sections(sections.ids)
+    end
+  end
+
+  # Stores the order given, as every one of the Issue's Section ids top
+  # first, in position: 1, 2, 3…
+  def reorder_sections(ids)
+    ids = ids.map(&:to_i)
+    with_lock do
+      raise ArgumentError, 'not exactly this Issue’s Sections' unless ids.sort == sections.ids.sort
+
+      ids.each.with_index(1) { |id, position| sections.where(id: id).update_all(position: position) }
+    end
+  end
+
   # What readers see, in page order; the preview shows exactly the same.
   # Visible Sections, less any with nothing to show (a Menu Overview with no
   # Recipes).

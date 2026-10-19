@@ -39,8 +39,17 @@ class LemonDrop::Section < ApplicationRecord
     LemonDrop::OutroSection
   ].freeze
 
+  # What a duplicate copies along with each Section type's own fields.
+  DUPLICATED_CHILDREN = {
+    'LemonDrop::RecipesSection' => { recipes: [:steps, { ingredient_groups: :ingredients }] },
+    'LemonDrop::GroceryListSection' => { grocery_groups: :grocery_items },
+    'LemonDrop::AllergenSwapSection' => [{ swap_groups: :swaps }, :swap_recipes]
+  }.freeze
+
   belongs_to :issue
   delegated_type :sectionable, types: TYPES, dependent: :destroy
+  # The Section form saves the type's own fields along with the shared ones.
+  accepts_nested_attributes_for :sectionable, update_only: true
 
   enum theme: { cream: 'cream', sage: 'sage' }, _prefix: true
 
@@ -50,6 +59,19 @@ class LemonDrop::Section < ApplicationRecord
 
   validates :anchor, presence: true, uniqueness: { scope: :issue_id }
   validate :anchor_not_a_recipe_slug
+
+  # A copy right after this Section, with its own copy of everything in it.
+  # Images are copied, not shared, so deleting or replacing one never
+  # touches the other. The anchor and any Recipe slugs get fresh defaults.
+  def duplicate
+    taken = issue.taken_page_ids
+    copy = sectionable.deep_clone(include: DUPLICATED_CHILDREN.fetch(sectionable_type, [])) do |original, clone|
+      LemonDrop.copy_attachments(original, clone)
+      clone.slug = LemonDrop.unique_page_id(original.slug, taken).tap { |slug| taken << slug } if clone.is_a?(LemonDrop::Recipe)
+    end
+
+    issue.insert_section(copy, position: position + 1, **slice(:visible, :theme, :show_in_toc, :toc_label).symbolize_keys)
+  end
 
   # The Table of Contents entry: the TOC label, or else the Section heading.
   def display_toc_label

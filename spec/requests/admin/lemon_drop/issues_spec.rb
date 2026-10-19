@@ -102,6 +102,24 @@ RSpec.describe 'Admin::LemonDrop::Issues', type: :request do
           ends_on: Date.new(2026, 10, 23), status: 'draft', published_at: nil)
       end
 
+      it 'starts the Draft with the nine Sections of the reference layout' do
+        post admin_lemon_drop_issues_path, params: { lemon_drop_issue: { title: 'oct 26–30', starts_on: '2026-10-26', ends_on: '2026-10-30' } }
+
+        sections = LemonDrop::Issue.last.sections
+        expect(sections.map { |section| [section.sectionable_type.demodulize, section.sectionable.heading] }).to eq([
+          ['TitlePageSection', 'the lemon drop'], ['IntroSection', 'hello!'], ['TableOfContentsSection', 'this week’s drop'],
+          ['HeroSection', "let’s\ncook"], ['MenuOverviewSection', 'your menu'], ['RecipesSection', nil],
+          ['GroceryListSection', 'your grocery list'], ['AllergenSwapSection', "allergen\nswaps"], ['OutroSection', nil]
+        ])
+        expect(sections.map(&:position)).to eq((1..9).to_a)
+        expect(sections.map(&:anchor)).to eq(%w[title-page intro table-of-contents hero menu recipes grocery swaps party])
+        expect(sections.select(&:theme_sage?).map(&:anchor)).to eq(%w[grocery swaps])
+        expect(sections.select(&:show_in_toc).map { |section| [section.anchor, section.toc_label] }).to eq([
+          %w[menu recipes], ['grocery', 'grocery list'], ['swaps', 'allergen swaps']
+        ])
+        expect(sections.first.sectionable.tagline).to eq('your weekly meal plan')
+      end
+
       it 'shows the errors when the Issue is invalid' do
         post admin_lemon_drop_issues_path, params: { lemon_drop_issue: { title: '', starts_on: '2026-10-19', ends_on: '2026-10-12' } }
 

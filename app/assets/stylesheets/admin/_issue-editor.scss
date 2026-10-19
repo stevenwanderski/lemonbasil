@@ -1,0 +1,110 @@
+// The lemon drop Issue editor: Section list on the left, form on the right.
+.issue-editor {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: 40px;
+  align-items: start;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__panel-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+
+    h2 {
+      flex: 1;
+    }
+  }
+}
+
+.section-list {
+  list-style: none;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 6px;
+    background: $white;
+    border: solid $gray-light 2px;
+    border-radius: 4px;
+
+    > a {
+      flex: 1;
+      min-width: 0;
+
+      strong, span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      span {
+        font-size: 14px;
+        color: $gray-dark;
+      }
+    }
+
+    &.is-selected {
+      border-color: $secondary;
+    }
+
+    &.is-hidden > a {
+      opacity: .5;
+    }
+  }
+
+  &__add {
+    display: grid;
+    gap: 8px;
+    margin-top: 20px;
+  }
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: 20px;
+  color: $gray-medium;
+  touch-action: none;
+  user-select: none;
+}
+
+.category-order {
+  list-style: none;
+  max-width: 300px;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    margin-bottom: 4px;
+    background: $gray-lightest;
+    border-radius: 4px;
+  }
+}
+
+.form-fieldset {
+  border: none;
+  border-top: solid $gray-light 2px;
+  padding-top: 20px;
+  margin-top: 30px;
+
+  legend {
+    font-weight: 600;
+    padding-right: 10px;
+  }
+}
+
+.image-field__preview {
+  display: block;
+  max-width: 240px;
+  max-height: 180px;
+  margin-bottom: 10px;
+}

@@ -86,6 +86,10 @@ Rails.application.routes.draw do
       resources :issues, except: :show do
         resource :publication, only: [:create, :destroy]
         resource :preview, only: :show, controller: '/lemon_drop/previews'
+        resources :sections, only: [:create, :edit, :update, :destroy] do
+          post :duplicate, on: :member
+          patch :reorder, on: :collection
+        end
       end
     end
 

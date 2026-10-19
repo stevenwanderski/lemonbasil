@@ -1,0 +1,9 @@
+<% content_for :title, "the lemon drop · #{@recipe.title}" %>
+
+<%= render @recipe %>
+
+<footer class="mono-caps">
+  <%= link_to "the lemon drop · #{@issue.footer_date_label}", lemon_drop_issue_path(@issue.slug) %>
+  <br>
+  <%= link_to 'lemon & basil', root_path, class: 'home' %>
+</footer>

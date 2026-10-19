@@ -6,3 +6,12 @@ import { application } from "./application"
 
 import ClientMenuController from "./client_menu_controller"
 application.register("client-menu", ClientMenuController)
+
+import SortableController from "./sortable_controller"
+application.register("sortable", SortableController)
+
+import RichTextController from "./rich_text_controller"
+application.register("rich-text", RichTextController)
+
+import RailsNestedForm from "@stimulus-components/rails-nested-form"
+application.register("nested-form", RailsNestedForm)

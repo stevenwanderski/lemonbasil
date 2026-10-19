@@ -1,0 +1,21 @@
+<div class="form-item">
+  <%= f.label :heading, class: 'label' %>
+  <%= f.text_area :heading, rows: 3, class: 'input--textarea' %>
+  <p class="hint">One line per row of large text.</p>
+</div>
+<%= render 'admin/lemon_drop/sections/forms/image_field', f: f, name: :background_image, label: 'Background image', variant: :background %>
+<div class="form-item">
+  <%= f.label :background_focus, 'Keep in view', class: 'label' %>
+  <%= f.select :background_focus, LemonDrop::HeroSection.background_focus.keys.map { |focus| [focus.humanize, focus] }, {}, class: 'input--select' %>
+</div>
+<%= render 'admin/lemon_drop/sections/forms/image_field', f: f, name: :overlay_image, label: 'Image between the lines', variant: :overlay %>
+<div class="form-item form-item--flex">
+  <div>
+    <%= f.label :text_color, class: 'label' %>
+    <%= f.select :text_color, LemonDrop::HeroSection.text_colors.keys.map { |color| [color.humanize, color] }, {}, class: 'input--select' %>
+  </div>
+  <div>
+    <%= f.label :min_height, 'Height', class: 'label' %>
+    <%= f.select :min_height, LemonDrop::HeroSection.min_heights.keys.map { |height| [height.humanize, height] }, {}, class: 'input--select' %>
+  </div>
+</div>

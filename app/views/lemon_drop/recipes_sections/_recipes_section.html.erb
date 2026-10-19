@@ -1,0 +1,6 @@
+<% if recipes_section.heading.present? %>
+  <div class="wrap recipes-head">
+    <h2><%= recipes_section.heading %></h2>
+  </div>
+<% end %>
+<%= render recipes_section.recipes.includes(:steps, ingredient_groups: :ingredients, hero_image_attachment: :blob) %>

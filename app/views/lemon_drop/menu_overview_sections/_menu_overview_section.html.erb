@@ -1,0 +1,21 @@
+<section class="menu">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <% if menu_overview_section.icon.attached? %>
+      <%= image_tag menu_overview_section.icon.variant(:icon), class: 'mortar', alt: '' %>
+    <% end %>
+    <h2><%= menu_overview_section.heading %></h2>
+    <div class="menu-grid">
+      <% menu_overview_section.columns.each do |column| %>
+        <div class="menu-col">
+          <% column.each do |category, recipes| %>
+            <div class="menu-cat mono-caps"><%= LemonDrop::MenuOverviewSection::CATEGORY_LABELS[category] %></div>
+            <% recipes.each do |recipe| %>
+              <div class="dish"><%= link_to recipe.display_menu_title, "##{recipe.slug}" %><%= tag.p recipe.menu_blurb if recipe.menu_blurb.present? %></div>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

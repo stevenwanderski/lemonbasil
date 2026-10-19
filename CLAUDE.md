@@ -70,3 +70,21 @@ No linter (rubocop/eslint) is configured.
 - Time zone: `Central Time (US & Canada)`
 - Environment variables via `dotenv-rails` (`.env` files)
 - Module name: `Lemonbasil`
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live in Linear (team HAP, project "Lemon & Basil"), accessed through the Linear MCP connector. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five-role vocabulary (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Lemon drop
+
+`lemon-drop/SPEC.md` (full spec) and `lemon-drop/index.html` (reference markup) back every lemon drop ticket. Attaching images in specs: see `README.md`.

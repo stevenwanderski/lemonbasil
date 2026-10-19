@@ -1,0 +1,12 @@
+<header class="cover">
+  <div class="wrap">
+    <h1><%= title_page_section.heading %></h1>
+    <% if title_page_section.cover_image.attached? %>
+      <%= image_tag title_page_section.cover_image.variant(:cover), alt: '' %>
+    <% end %>
+    <div class="tag mono-caps">
+      <span><%= title_page_section.tagline %></span>
+      <span><%= title_page_section.display_date_label %></span>
+    </div>
+  </div>
+</header>

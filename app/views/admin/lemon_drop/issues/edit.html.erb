@@ -1,0 +1,4 @@
+<%= render layout: 'editor', locals: { issue: @issue, selected: nil } do %>
+  <h2>Issue settings</h2>
+  <%= render 'form', issue: @issue %>
+<% end %>

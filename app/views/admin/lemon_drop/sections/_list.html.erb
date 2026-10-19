@@ -1,0 +1,23 @@
+<% sections = issue.sections.includes(:sectionable).to_a %>
+<%= tag.ol class: 'section-list', data: { controller: 'sortable', sortable_url_value: reorder_admin_lemon_drop_issue_sections_path(issue),
+      sortable_param_value: 'section_ids[]' } do %>
+  <% sections.each do |section| %>
+    <%= tag.li class: ['section-list__row', ('is-hidden' unless section.visible), ('is-selected' if section == selected)],
+          data: { id: section.id } do %>
+      <span class="drag-handle" title="Drag to reorder">⠿</span>
+      <%= link_to edit_admin_lemon_drop_issue_section_path(issue, section) do %>
+        <strong><%= section.sectionable.model_name.human %></strong>
+        <span><%= section.sectionable.heading.to_s.squish %></span>
+      <% end %>
+      <%= button_to section.visible ? 'Hide' : 'Show', admin_lemon_drop_issue_section_path(issue, section), method: :patch,
+            params: { lemon_drop_section: { visible: !section.visible } }, class: 'link' %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= form_with url: admin_lemon_drop_issue_sections_path(issue), class: 'section-list__add' do |f| %>
+  <%= f.label :section_type, 'Add a Section', class: 'label' %>
+  <%= f.select :section_type, LemonDrop::Section::TYPES.map { |type| [type.constantize.model_name.human, type.demodulize] } %>
+  <%= f.select :position, options_for_select(section_positions_for(sections), sections.size + 1) %>
+  <%= f.submit 'Add', class: 'button' %>
+<% end %>

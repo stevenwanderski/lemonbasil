@@ -1,0 +1,3 @@
+# Lemon drop reordering uses SortableJS and `position`, not jQuery UI and `weight`
+
+Existing admin screens reorder with jQuery UI `sortable`, post to `update_*_weights` actions, and store a `weight` column. The lemon drop editor deliberately uses SortableJS in a Stimulus controller posting with `@rails/request.js`, and stores order in `position` columns. This follows the app's newer Hotwire pattern, works on touch screens without a plugin, and `position` matches the domain language (a Section's place on the page). Don't "fix" it to match the older screens; and don't migrate the older screens as part of this feature.

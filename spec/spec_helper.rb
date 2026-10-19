@@ -5,6 +5,8 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'selenium/webdriver'
 
+Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |file| require file }
+
 Selenium::WebDriver::Firefox::Binary.path = "/Applications/Firefox.app/Contents/MacOS/firefox"
 
 ActiveRecord::Migration.maintain_test_schema!

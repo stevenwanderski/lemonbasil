@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   post '/waitlist', to: 'waitlist#create'
   get '/waitlist-success', to: 'waitlist#success'
 
+  get '/drops/:slug', to: 'lemon_drop/issues#show', as: 'lemon_drop_issue'
+  get '/drops/:slug/recipes/:recipe_slug', to: 'lemon_drop/recipes#show', as: 'lemon_drop_recipe'
+
   get '/menus/:slug', to: 'client_menu_submissions#new', as: 'menu_slug'
   get '/menus/:slug/success', to: 'client_menu_submissions#success', as: 'menu_slug_success'
 
@@ -77,6 +80,21 @@ Rails.application.routes.draw do
       resources :items, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/items'
       resources :staples, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/staples'
       resources :staple_categories, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/staple_categories'
+    end
+
+    namespace :lemon_drop do
+      resources :issues, except: :show do
+        resource :publication, only: [:create, :destroy]
+        resource :preview, only: :show, controller: '/lemon_drop/previews'
+        resources :sections, only: [:create, :edit, :update, :destroy] do
+          post :duplicate, on: :member
+          patch :reorder, on: :collection
+          resources :recipes, only: [:new, :create, :edit, :update, :destroy] do
+            patch :move, on: :member
+            patch :reorder, on: :collection
+          end
+        end
+      end
     end
 
     get '/account', to: 'account#show', as: 'account'

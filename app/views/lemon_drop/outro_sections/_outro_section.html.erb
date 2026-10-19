@@ -1,0 +1,17 @@
+<section class="outro">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <h2><%= lemon_drop_heading outro_section.heading %></h2>
+    <% if outro_section.images.attached? %>
+      <div class="outro-photos">
+        <% outro_section.images.each do |image| %>
+          <%= image_tag image.variant(:grid), alt: '' %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="body"><%= lemon_drop_rich_text outro_section.body_html %></div>
+    <% if outro_section.cta_url.present? %>
+      <%= link_to outro_section.cta_label, outro_section.cta_url, class: 'cta' %>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+<div class="form-item">
+  <%= f.label :heading, class: 'label' %>
+  <%= f.text_field :heading, class: 'input--text' %>
+</div>
+<%= render 'admin/lemon_drop/sections/forms/image_field', f: f, name: :icon, label: 'Icon', variant: :icon %>
+
+<div class="form-item">
+  <span class="label">Groups</span>
+  <p class="hint">One item per line; blank lines are skipped. Drag to reorder.</p>
+  <%= render layout: 'admin/lemon_drop/sections/forms/nested_list', locals: { f: f, association: :grocery_groups, add_label: '+ Add group' } do |group_form| %>
+    <div class="form-item">
+      <%= group_form.label :name, 'Group name', class: 'label' %>
+      <%= group_form.text_field :name, class: 'input--text' %>
+    </div>
+    <div class="form-item">
+      <%= group_form.label :items_text, 'Items', class: 'label' %>
+      <%= group_form.text_area :items_text, rows: 6, class: 'input--textarea' %>
+    </div>
+  <% end %>
+</div>

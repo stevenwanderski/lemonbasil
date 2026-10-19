@@ -1,0 +1,11 @@
+<%# One row of a nested list; yields for its own fields. After a refused save,
+    a removed row stays hidden, as Remove left it. %>
+<%= tag.li class: 'nested-row', data: { new_record: row.object.new_record? },
+      style: ('display: none' if row.object.marked_for_destruction?) do %>
+  <span class="drag-handle" title="Drag to reorder">⠿</span>
+  <div class="nested-row__fields"><%= yield %></div>
+  <%= row.hidden_field :id if row.object.persisted? %>
+  <%= row.hidden_field :position, data: { sortable_position: true } %>
+  <%= row.hidden_field :_destroy %>
+  <button type="button" class="link link--danger" data-action="nested-form#remove">Remove</button>
+<% end %>

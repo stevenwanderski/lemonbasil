@@ -1,0 +1,25 @@
+<%# The Issue editor: the Section list on the left, and on the right the
+    selected Section's form, or the Issue settings when none is selected. %>
+<div class="admin-header">
+  <div>
+    <h1><%= link_to issue.title, edit_admin_lemon_drop_issue_path(issue) %></h1>
+    <p>
+      <strong><%= issue.status.humanize %></strong>
+      · <%= link_to 'Preview', admin_lemon_drop_issue_preview_path(issue), target: '_blank' %>
+    </p>
+  </div>
+  <% if issue.published? %>
+    <%= button_to 'Unpublish', admin_lemon_drop_issue_publication_path(issue), method: :delete, class: 'button', form: { data: { turbo_confirm: 'Take this Issue off the public site?' } } %>
+  <% else %>
+    <%= button_to 'Publish', admin_lemon_drop_issue_publication_path(issue), class: 'button' %>
+  <% end %>
+</div>
+
+<div class="issue-editor">
+  <aside class="issue-editor__sections">
+    <%= render 'admin/lemon_drop/sections/list', issue: issue, selected: selected %>
+  </aside>
+  <div class="issue-editor__panel">
+    <%= yield %>
+  </div>
+</div>

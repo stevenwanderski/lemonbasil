@@ -1,0 +1,55 @@
+<div class="form-item">
+  <%= f.label :heading, class: 'label' %>
+  <%= f.text_area :heading, rows: 2, class: 'input--textarea' %>
+  <p class="hint">One line per row of large text.</p>
+</div>
+<%= render 'admin/lemon_drop/sections/forms/image_field', f: f, name: :icon, label: 'Icon', variant: :icon %>
+
+<div class="form-item">
+  <span class="label">Swap groups</span>
+  <p class="hint">One swap per line, written from → to (or from -> to). Drag to reorder.</p>
+  <%= render layout: 'admin/lemon_drop/sections/forms/nested_list', locals: { f: f, association: :swap_groups, add_label: '+ Add swap group' } do |group_form| %>
+    <div class="form-item">
+      <%= group_form.label :name, 'Group name', class: 'label' %>
+      <%= group_form.text_field :name, class: 'input--text' %>
+    </div>
+    <div class="form-item">
+      <%= group_form.label :swaps_text, 'Swaps', class: 'label' %>
+      <%= group_form.text_area :swaps_text, rows: 6, class: 'input--textarea', placeholder: 'parm → nutritional yeast' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="form-item">
+  <span class="label">Swap recipes</span>
+  <p class="hint">Small recipes the swaps point to, such as cashew ricotta. Drag to reorder.</p>
+  <%= render layout: 'admin/lemon_drop/sections/forms/nested_list', locals: { f: f, association: :swap_recipes, add_label: '+ Add swap recipe' } do |recipe_form| %>
+    <div class="form-item form-item--flex">
+      <div>
+        <%= recipe_form.label :title, class: 'label' %>
+        <%= recipe_form.text_field :title, class: 'input--text' %>
+      </div>
+      <div>
+        <%= recipe_form.label :yield_label, 'Yield', class: 'label' %>
+        <%= recipe_form.text_field :yield_label, class: 'input--text', placeholder: 'Makes ~1 cup' %>
+      </div>
+    </div>
+    <div class="form-item">
+      <%= recipe_form.label :ingredients, 'Ingredients (one per line)', class: 'label' %>
+      <%= recipe_form.text_area :ingredients, rows: 4, class: 'input--textarea' %>
+    </div>
+    <div class="form-item">
+      <%= recipe_form.label :steps, 'Steps (one per line)', class: 'label' %>
+      <%= recipe_form.text_area :steps, rows: 4, class: 'input--textarea' %>
+    </div>
+    <div class="form-item">
+      <%= recipe_form.label :use_for, 'Use for', class: 'label' %>
+      <%= recipe_form.text_field :use_for, class: 'input--text', placeholder: 'the ragu' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="form-item">
+  <%= f.label :disclaimer, class: 'label' %>
+  <%= f.text_area :disclaimer, rows: 3, class: 'input--textarea' %>
+</div>

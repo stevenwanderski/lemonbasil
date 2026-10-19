@@ -1,0 +1,135 @@
+# == Schema Information
+#
+# Table name: lemon_drop_recipes
+#
+#  id                 :bigint           not null, primary key
+#  category           :string
+#  cook_minutes       :integer
+#  hero_focus         :string           default("center"), not null
+#  kicker             :string
+#  menu_blurb         :text
+#  menu_title         :string
+#  position           :integer          default(0), not null
+#  prep_minutes       :integer
+#  serves             :integer
+#  slug               :string           not null
+#  time_note          :string
+#  tip                :text
+#  title              :string           not null
+#  total_label        :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  recipes_section_id :bigint           not null
+#
+# Indexes
+#
+#  index_lemon_drop_recipes_on_recipes_section_id               (recipes_section_id)
+#  index_lemon_drop_recipes_on_recipes_section_id_and_position  (recipes_section_id,position)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (recipes_section_id => lemon_drop_recipes_sections.id)
+#
+class LemonDrop::Recipe < ApplicationRecord
+  belongs_to :recipes_section
+  has_one :section, through: :recipes_section
+  has_one :issue, through: :section
+  has_many :ingredient_groups, -> { order(:position) }, dependent: :destroy
+  has_many :steps, -> { order(:position) }, dependent: :destroy, autosave: true
+  # The form edits every ingredient group in one save; a new group left empty
+  # is ignored.
+  accepts_nested_attributes_for :ingredient_groups, allow_destroy: true,
+    reject_if: ->(attributes) { attributes['id'].blank? && attributes.values_at('name', 'ingredients_text').all?(&:blank?) }
+
+  has_one_attached :hero_image do |attachable|
+    attachable.variant :hero, resize_to_limit: [1600, 1600], saver: { strip: true }
+  end
+
+  enum category: {
+    entree: 'entree', soup: 'soup', salad: 'salad', snack: 'snack',
+    breakfast: 'breakfast', side: 'side', dessert: 'dessert'
+  }
+  enum hero_focus: { top: 'top', center: 'center', bottom: 'bottom' }, _prefix: :focus
+
+  before_validation :set_default_slug
+
+  validates :title, :slug, :category, presence: true
+  validate :slug_unique_within_issue
+  validates :hero_image,
+    content_type: { in: %w[image/jpeg image/png image/webp], spoofing_protection: true },
+    size: { less_than_or_equal_to: 15.megabytes }
+
+  # "prep time: 15 mins + marinating / cook time: 40 mins / total time: 1hr /
+  # serves: 5", leaving out any part without a value.
+  def time_line
+    parts = []
+    parts << "prep time: #{[duration_label(prep_minutes), time_note.presence].compact.join(' ')}" if prep_minutes
+    parts << "cook time: #{duration_label(cook_minutes)}" if cook_minutes
+    parts << "total time: #{total_time_label}" if total_time_label
+    parts << "serves: #{serves}" if serves
+    parts.join(' / ').presence
+  end
+
+  # The steps as the form edits them: one per line, top first.
+  def steps_text
+    steps.reject(&:marked_for_destruction?).map(&:body).join("\n")
+  end
+
+  # Replaces the steps with one per line, in order, when saved.
+  def steps_text=(text)
+    lines = LemonDrop.lines(text)
+    return if lines == LemonDrop.lines(steps_text)
+
+    steps.each(&:mark_for_destruction)
+    lines.each.with_index(1) { |line, position| steps.build(body: line, position: position) }
+  end
+
+  # Moves this Recipe to the end of another Recipes Section in the same Issue,
+  # closing the gap it leaves.
+  def move_to(other)
+    from = recipes_section
+    return if other == from
+
+    transaction do
+      update!(recipes_section: other, position: other.recipes.maximum(:position).to_i + 1)
+      from.renumber_recipes
+    end
+  end
+
+  # The name on the Menu Overview: the menu title, or else the title.
+  def display_menu_title
+    menu_title.presence || title
+  end
+
+  def total_time_label
+    return total_label if total_label.present?
+    return if prep_minutes.nil? && cook_minutes.nil?
+
+    duration_label(prep_minutes.to_i + cook_minutes.to_i)
+  end
+
+  private
+
+  # "45 mins", "1 hour", "1 hour 20 mins", "2 hours".
+  def duration_label(minutes)
+    hours, mins = minutes.divmod(60)
+    [
+      ("#{hours} #{'hour'.pluralize(hours)}" if hours.positive?),
+      ("#{mins} #{'min'.pluralize(mins)}" if mins.positive? || hours.zero?)
+    ].compact.join(' ')
+  end
+
+  # Defaults from the title ("chickpea-stew"), with a number added when the
+  # Issue already uses it as a Recipe slug or Section anchor ("chickpea-stew-2").
+  def set_default_slug
+    return if slug.present? || title.blank?
+
+    self.slug = issue ? LemonDrop.unique_page_id(title.parameterize, issue.taken_page_ids(except: self)) : title.parameterize
+  end
+
+  def slug_unique_within_issue
+    return if slug.blank? || issue.nil?
+
+    errors.add(:slug, :taken) if issue.taken_page_ids(except: self).include?(slug)
+  end
+end

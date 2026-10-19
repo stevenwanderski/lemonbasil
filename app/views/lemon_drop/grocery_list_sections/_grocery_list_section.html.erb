@@ -1,0 +1,25 @@
+<section class="grocery-list">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <div class="grocery-head">
+      <% if grocery_list_section.icon.attached? %>
+        <%= image_tag grocery_list_section.icon.variant(:icon), alt: '' %>
+      <% end %>
+      <h2><%= grocery_list_section.heading %></h2>
+    </div>
+    <div class="grocery-grid">
+      <% grocery_list_section.columns.each do |column| %>
+        <div class="grocery-col">
+          <% column.each do |group| %>
+            <h3><%= group.name %></h3>
+            <ul>
+              <% group.grocery_items.each do |item| %>
+                <li><%= item.text %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>

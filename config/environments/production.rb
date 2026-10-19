@@ -35,8 +35,11 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
-  # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  # Store uploaded files on S3 (see config/storage.yml and the README). The S3
+  # service is built at boot and raises without its settings, so fall back to
+  # local disk until AWS_S3_BUCKET is set; otherwise a deploy made before the
+  # bucket exists would take the whole site down.
+  config.active_storage.service = ENV["AWS_S3_BUCKET"].present? ? :amazon : :local
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true

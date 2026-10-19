@@ -1,0 +1,10 @@
+<%# One image upload, showing the saved image (never one from a refused upload). %>
+<% attached = f.object.public_send(name) %>
+<div class="form-item">
+  <%= f.label name, label, class: 'label' %>
+  <% if attached.attached? && attached.attachment.persisted? %>
+    <%= image_tag attached.variant(variant), class: 'image-field__preview', alt: '' %>
+  <% end %>
+  <%= f.file_field name, accept: 'image/jpeg,image/png,image/webp' %>
+  <p class="hint">JPEG, PNG or WebP, up to 15 MB.</p>
+</div>

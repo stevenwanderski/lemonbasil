@@ -1,0 +1,15 @@
+<section class="intro">
+  <div class="wrap">
+    <div class="runner">the lemon drop</div>
+    <div class="inner">
+      <% if intro_section.icon.attached? %>
+        <%= image_tag intro_section.icon.variant(:icon), class: 'icon', alt: '' %>
+      <% end %>
+      <h2><%= intro_section.heading %></h2>
+      <div class="body"><%= lemon_drop_rich_text intro_section.body_html %></div>
+      <% if intro_section.signoff.present? %>
+        <div class="sig"><%= intro_section.signoff %></div>
+      <% end %>
+    </div>
+  </div>
+</section>

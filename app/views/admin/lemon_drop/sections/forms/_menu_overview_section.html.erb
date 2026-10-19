@@ -1,0 +1,19 @@
+<div class="form-item">
+  <%= f.label :heading, class: 'label' %>
+  <%= f.text_field :heading, class: 'input--text' %>
+</div>
+<%= render 'admin/lemon_drop/sections/forms/image_field', f: f, name: :icon, label: 'Icon', variant: :icon %>
+<div class="form-item">
+  <span class="label">Category order</span>
+  <p class="hint">Drag to set the order of the menu’s categories. Recipes come from every visible Recipes Section.</p>
+  <%# Submitted in the order shown, so dragging a row reorders the field. %>
+  <ol class="category-order" data-controller="sortable">
+    <% f.object.full_category_order.each do |category| %>
+      <li class="category-order__row">
+        <span class="drag-handle" title="Drag to reorder">⠿</span>
+        <%= LemonDrop::MenuOverviewSection::CATEGORY_LABELS[category] %>
+        <%= hidden_field_tag "#{f.object_name}[category_order][]", category, id: nil %>
+      </li>
+    <% end %>
+  </ol>
+</div>

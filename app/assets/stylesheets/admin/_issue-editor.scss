@@ -1,0 +1,205 @@
+// The lemon drop Issue editor: Section list on the left, form on the right.
+.issue-editor {
+  display: grid;
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  gap: 40px;
+  align-items: start;
+
+  @media (max-width: 760px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__panel-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+
+    h2 {
+      flex: 1;
+    }
+  }
+}
+
+.section-list {
+  list-style: none;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 6px;
+    background: $white;
+    border: solid $gray-light 2px;
+    border-radius: 4px;
+
+    > a {
+      flex: 1;
+      min-width: 0;
+
+      strong, span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      span {
+        font-size: 14px;
+        color: $gray-dark;
+      }
+    }
+
+    &.is-selected {
+      border-color: $secondary;
+    }
+
+    &.is-hidden > a {
+      opacity: .5;
+    }
+  }
+
+  &__add {
+    display: grid;
+    gap: 8px;
+    margin-top: 20px;
+  }
+}
+
+.drag-handle {
+  cursor: grab;
+  font-size: 20px;
+  color: $gray-medium;
+  touch-action: none;
+  user-select: none;
+}
+
+.category-order {
+  list-style: none;
+  max-width: 300px;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 10px;
+    margin-bottom: 4px;
+    background: $gray-lightest;
+    border-radius: 4px;
+  }
+}
+
+.form-fieldset {
+  border: none;
+  border-top: solid $gray-light 2px;
+  padding-top: 20px;
+  margin-top: 30px;
+
+  legend {
+    font-weight: 600;
+    padding-right: 10px;
+  }
+}
+
+.image-field__preview {
+  display: block;
+  max-width: 240px;
+  max-height: 180px;
+  margin-bottom: 10px;
+}
+
+// Saved photos on a Section form, each with its Keep checkbox.
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+  margin-bottom: 10px;
+
+  li {
+    width: 120px;
+  }
+
+  img {
+    display: block;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-bottom: 4px;
+  }
+}
+
+// Groups and swap recipes edited inside a Section form, one card per row.
+.nested-list {
+  list-style: none;
+  max-width: 600px;
+  margin-bottom: 12px;
+}
+
+.nested-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 12px;
+  padding: 14px;
+  margin-bottom: 10px;
+  background: $gray-lightest;
+  border: solid $gray-light 2px;
+  border-radius: 4px;
+
+  .form-item:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// A Recipes Section's Recipes, dragged into order from its form.
+.recipe-list {
+  list-style: none;
+  max-width: 600px;
+  margin-bottom: 12px;
+
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    margin-bottom: 6px;
+    background: $gray-lightest;
+    border: solid $gray-light 2px;
+    border-radius: 4px;
+
+    > a {
+      flex: 1;
+      min-width: 0;
+
+      span {
+        margin-left: 6px;
+        font-size: 14px;
+        color: $gray-dark;
+      }
+    }
+  }
+}
+
+.recipe-move {
+  display: flex;
+  align-items: end;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.section-delete {
+  margin-bottom: 20px;
+
+  summary {
+    cursor: pointer;
+  }
+
+  form {
+    display: grid;
+    gap: 8px;
+    max-width: 400px;
+    margin-top: 8px;
+  }
+}

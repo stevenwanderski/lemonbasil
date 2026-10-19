@@ -30,6 +30,21 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  activerecord:
+    models:
+      lemon_drop/title_page_section: Title Page
+      lemon_drop/intro_section: Intro
+      lemon_drop/table_of_contents_section: Table of Contents
+      lemon_drop/hero_section: Hero
+      lemon_drop/menu_overview_section: Menu Overview
+      lemon_drop/recipes_section: Recipes
+      lemon_drop/grocery_list_section: Grocery List
+      lemon_drop/allergen_swap_section: Allergen Swap
+      lemon_drop/outro_section: Outro
+    attributes:
+      lemon_drop/outro_section:
+        cta_label: Button label
+        cta_url: Button link
   time:
     formats:
       full_month: "%B %e, %Y"

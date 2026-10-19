@@ -11,4 +11,16 @@ module LemonDrop
     candidate = "#{base}-#{number += 1}" while taken.include?(candidate)
     candidate
   end
+
+  # Splits items into at most count columns, keeping their order, where the
+  # longest column (by the block's size for each item) comes out shortest.
+  # The Menu Overview and Grocery List fill their grids this way.
+  def self.balanced_columns(items, count, &size)
+    return items.map { |item| [item] } if items.size <= count
+
+    cuts = (1...items.size).to_a.combination(count - 1).min_by do |points|
+      [0, *points, items.size].each_cons(2).map { |from, to| items[from...to].sum(&size) }.max
+    end
+    [0, *cuts, items.size].each_cons(2).map { |from, to| items[from...to] }
+  end
 end

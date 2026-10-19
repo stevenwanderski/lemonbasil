@@ -128,6 +128,7 @@ section { padding: 88px 0; }
 .grocery-head h2, .swaps-head h2 { font-size: clamp(44px, 7vw, 72px); }
 .grocery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 .grocery-grid h3 { font: 700 13px var(--mono); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; }
+.grocery-grid ul + h3 { margin-top: 32px; }
 .grocery-grid ul { list-style: none; padding: 0; margin: 0; font-size: 14.5px; }
 .grocery-grid li { padding: 4px 0 4px 26px; position: relative; border-bottom: 1px solid rgba(58,44,46,.12); }
 .grocery-grid li::before {

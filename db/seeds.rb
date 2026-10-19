@@ -294,3 +294,6 @@ Menu.create!([
     weight: 8
   }
 ])
+
+# The lemon drop reference Issue, never in production (see the file).
+load Rails.root.join('db/seeds/lemon_drop.rb') if Rails.env.development? || Rails.env.test?

@@ -40,14 +40,8 @@ class LemonDrop::MenuOverviewSection < ApplicationRecord
     categories.empty?
   end
 
-  # The categories split into two columns, keeping their order, at the point
-  # where the columns' Recipe counts come out most even.
+  # The categories in the reference's two columns, as even as they'll go.
   def columns
-    return [categories] if categories.size < 2
-
-    split = (1...categories.size).min_by do |index|
-      [categories.first(index), categories.drop(index)].map { |column| column.sum { |_, recipes| recipes.size } }.max
-    end
-    [categories.first(split), categories.drop(split)]
+    LemonDrop.balanced_columns(categories, 2) { |_, recipes| recipes.size }
   end
 end

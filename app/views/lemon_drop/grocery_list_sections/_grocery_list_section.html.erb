@@ -8,14 +8,16 @@
       <h2><%= grocery_list_section.heading %></h2>
     </div>
     <div class="grocery-grid">
-      <% grocery_list_section.grocery_groups.includes(:grocery_items).each do |group| %>
-        <div>
-          <h3><%= group.name %></h3>
-          <ul>
-            <% group.grocery_items.each do |item| %>
-              <li><%= item.text %></li>
-            <% end %>
-          </ul>
+      <% grocery_list_section.columns.each do |column| %>
+        <div class="grocery-col">
+          <% column.each do |group| %>
+            <h3><%= group.name %></h3>
+            <ul>
+              <% group.grocery_items.each do |item| %>
+                <li><%= item.text %></li>
+              <% end %>
+            </ul>
+          <% end %>
         </div>
       <% end %>
     </div>

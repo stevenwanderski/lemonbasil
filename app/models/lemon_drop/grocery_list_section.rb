@@ -19,4 +19,9 @@ class LemonDrop::GroceryListSection < ApplicationRecord
   validates :icon,
     content_type: { in: %w[image/jpeg image/png image/webp], spoofing_protection: true },
     size: { less_than_or_equal_to: 15.megabytes }
+
+  # The groups in the reference's three columns, as even as they'll go.
+  def columns
+    LemonDrop.balanced_columns(grocery_groups.includes(:grocery_items).to_a, 3) { |group| group.grocery_items.size }
+  end
 end

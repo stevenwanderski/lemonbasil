@@ -28,7 +28,7 @@ RSpec.describe 'LemonDrop Grocery List and Allergen Swap Sections', type: :reque
 
       expect(page).to match(%r{<div class="grocery-head">\s*<img[^>]+bowl\.png[^>]*>\s*<h2>your grocery list</h2>})
       expect(response.body).to match(
-        %r{<div class="grocery-grid">\s*<div>\s*<h3>Produce</h3>\s*<ul>\s*<li>1 large delicata squash</li>\s*<li>fresh sage</li>\s*</ul>\s*</div>\s*<div>\s*<h3>Pantry</h3>}
+        %r{<div class="grocery-grid">\s*<div class="grocery-col">\s*<h3>Produce</h3>\s*<ul>\s*<li>1 large delicata squash</li>\s*<li>fresh sage</li>\s*</ul>\s*</div>\s*<div class="grocery-col">\s*<h3>Pantry</h3>}
       )
     end
 

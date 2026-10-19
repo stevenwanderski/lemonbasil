@@ -55,6 +55,20 @@ RSpec.describe 'Admin::LemonDrop::Sections', type: :request do
       end
     end
 
+    describe 'the Issue settings link' do
+      it 'leads back to the Issue settings from a Section, and is selected on them' do
+        section = add_section(build(:lemon_drop_title_page_section), position: 1)
+        settings_link = %r{<a class="issue-settings-link( is-selected)?" href="#{edit_admin_lemon_drop_issue_path(issue)}">Issue settings</a>}
+
+        get edit_admin_lemon_drop_issue_section_path(issue, section)
+        expect(response.body[settings_link, 1]).to be_nil
+        expect(response.body).to match(settings_link)
+
+        get edit_admin_lemon_drop_issue_path(issue)
+        expect(response.body[settings_link, 1]).to eq(' is-selected')
+      end
+    end
+
     describe 'hiding and showing a Section' do
       it 'hides a Section from its row, keeping it on the Issue, and shows it again' do
         section = add_section(build(:lemon_drop_title_page_section), position: 1)

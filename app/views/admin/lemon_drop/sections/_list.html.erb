@@ -1,4 +1,6 @@
 <% sections = issue.sections.includes(:sectionable).to_a %>
+<%= link_to 'Issue settings', edit_admin_lemon_drop_issue_path(issue),
+      class: ['issue-settings-link', ('is-selected' if selected.nil?)] %>
 <%= tag.ol class: 'section-list', data: { controller: 'sortable', sortable_url_value: reorder_admin_lemon_drop_issue_sections_path(issue),
       sortable_param_value: 'section_ids[]' } do %>
   <% sections.each do |section| %>

@@ -21,6 +21,26 @@
   }
 }
 
+// Back to the Issue's own settings, above its Section list.
+.issue-settings-link {
+  display: block;
+  padding: 10px;
+  margin-bottom: 16px;
+  background: $white;
+  border: solid $gray-light 2px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.is-selected {
+    border-color: $secondary;
+  }
+}
+
 .section-list {
   list-style: none;
 

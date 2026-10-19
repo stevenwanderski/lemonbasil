@@ -3,6 +3,6 @@ class LemonDrop::IssuesController < ApplicationController
 
   def show
     @issue = LemonDrop::Issue.published.find_by!(slug: params[:slug])
-    @sections = @issue.sections.visible.includes(:sectionable)
+    @sections = @issue.visible_sections
   end
 end

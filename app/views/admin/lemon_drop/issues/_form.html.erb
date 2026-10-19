@@ -1,0 +1,41 @@
+<%= form_with model: [:admin, issue] do |f| %>
+  <% if issue.errors.any? %>
+    <ul class="form-errors">
+      <% issue.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div class="form-item">
+    <%= f.label :title, class: 'label' %>
+    <%= f.text_field :title, class: 'input--text' %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :slug, class: 'label' %>
+    <%= f.text_field :slug, class: 'input--text', placeholder: 'defaults to the start date', disabled: issue.slug_locked? %>
+    <% if issue.slug_locked? %>
+      <p>Locked since the first publish, so shared links keep working.</p>
+    <% end %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :starts_on, class: 'label' %>
+    <%= f.date_field :starts_on, class: 'input--text' %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :ends_on, class: 'label' %>
+    <%= f.date_field :ends_on, class: 'input--text' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Submit', class: 'button button--submit' %>
+    <%= link_to 'Cancel', admin_lemon_drop_issues_path %>
+    <% if issue.persisted? && issue.draft? %>
+      <%= link_to 'Delete', admin_lemon_drop_issue_path(issue), class: 'link--danger',
+            data: { turbo_method: :delete, turbo_confirm: 'Delete this Issue and everything in it?' } %>
+    <% end %>
+  </div>
+<% end %>

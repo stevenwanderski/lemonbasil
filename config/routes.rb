@@ -82,6 +82,13 @@ Rails.application.routes.draw do
       resources :staple_categories, only: [:new, :create, :edit, :update, :destroy], controller: 'client_menus/staple_categories'
     end
 
+    namespace :lemon_drop do
+      resources :issues, except: :show do
+        resource :publication, only: [:create, :destroy]
+        resource :preview, only: :show, controller: '/lemon_drop/previews'
+      end
+    end
+
     get '/account', to: 'account#show', as: 'account'
     put '/account', to: 'account#update', as: 'account_update'
 

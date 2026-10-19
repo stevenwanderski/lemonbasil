@@ -27,10 +27,33 @@ class LemonDrop::Issue < ApplicationRecord
   enum status: { draft: 'draft', published: 'published' }
 
   before_validation :set_default_slug
+  before_destroy :ensure_draft, prepend: true
 
   validates :title, :slug, :starts_on, :ends_on, presence: true
   validates :slug, uniqueness: true
   validate :ends_on_not_before_starts_on
+  validate :slug_unchanged_once_published
+
+  # What readers see, in page order; the preview shows exactly the same.
+  def visible_sections
+    sections.visible.includes(:sectionable)
+  end
+
+  # The first-published time is set once and kept through any later
+  # unpublishing and republishing.
+  def publish!
+    update!(status: 'published', published_at: published_at || Time.current)
+  end
+
+  def unpublish!
+    update!(status: 'draft')
+  end
+
+  # Shared links never break: the slug is fixed from the first publish on,
+  # even if the Issue goes back to Draft.
+  def slug_locked?
+    published_at_in_database.present?
+  end
 
   # Section anchors and Recipe slugs share the page's id space. Leaves out
   # the record asking, so it doesn't collide with itself.
@@ -61,6 +84,18 @@ class LemonDrop::Issue < ApplicationRecord
 
   def set_default_slug
     self.slug = starts_on.iso8601 if slug.blank? && starts_on.present?
+  end
+
+  # A Published Issue must be unpublished before it can be deleted.
+  def ensure_draft
+    return if draft?
+
+    errors.add(:base, 'Unpublish this Issue before deleting it')
+    throw :abort
+  end
+
+  def slug_unchanged_once_published
+    errors.add(:slug, "can't be changed once the Issue has been published") if slug_changed? && slug_locked?
   end
 
   def ends_on_not_before_starts_on

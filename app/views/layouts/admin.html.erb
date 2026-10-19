@@ -41,6 +41,7 @@
           <% if current_user.admin? %>
             <li><%= active_link_to 'Pages', admin_pages_path %></li>
             <li><%= active_link_to 'Users', admin_users_path %></li>
+            <li><%= active_link_to 'Lemon Drop', admin_lemon_drop_issues_path %></li>
           <% end %>
 
           <br><br><br><br>

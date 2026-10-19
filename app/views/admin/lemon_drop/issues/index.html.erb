@@ -1,0 +1,28 @@
+<div class="admin-header">
+  <h1>Lemon Drop</h1>
+  <p><%= link_to '+ Add Issue', new_admin_lemon_drop_issue_path, class: 'button' %></p>
+</div>
+
+<p>
+  <%= active_link_to 'All', admin_lemon_drop_issues_path, active: params[:status].blank? %>
+  <% LemonDrop::Issue.statuses.each_key do |status| %>
+    · <%= active_link_to status.humanize, admin_lemon_drop_issues_path(status: status), active: params[:status] == status %>
+  <% end %>
+</p>
+
+<div class="rows">
+  <% if @issues.any? %>
+    <% @issues.each do |issue| %>
+      <div class="row" data-id="<%= issue.id %>">
+        <div class="row__name">
+          <%= link_to issue.title, edit_admin_lemon_drop_issue_path(issue) %>
+        </div>
+        <div><%= issue.starts_on.strftime('%b %-d, %Y') %> – <%= issue.ends_on.strftime('%b %-d, %Y') %></div>
+        <div><%= issue.status.humanize %></div>
+        <div><%= issue.published_at&.strftime('%b %-d, %Y %-l:%M %p') %></div>
+      </div>
+    <% end %>
+  <% else %>
+    <div>No issues.</div>
+  <% end %>
+</div>

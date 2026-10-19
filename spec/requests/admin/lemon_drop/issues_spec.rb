@@ -75,6 +75,22 @@ RSpec.describe 'Admin::LemonDrop::Issues', type: :request do
         expect(response.body).to include('Oct 19, 2026 – Oct 23, 2026', 'Draft', 'Published', 'Oct 25, 2026 9:30 AM')
       end
 
+      it 'links each Published Issue to its public page, and no Draft' do
+        published = create(:lemon_drop_issue, :published, title: 'a published one')
+        draft = create(:lemon_drop_issue, title: 'a draft one')
+        public_link = ->(issue) { %(<a target="_blank" href="#{lemon_drop_issue_path(issue.slug)}">Public view</a>) }
+
+        get admin_lemon_drop_issues_path
+        expect(response.body).to include(public_link.(published))
+        expect(response.body).not_to include(public_link.(draft))
+
+        get edit_admin_lemon_drop_issue_path(published)
+        expect(response.body).to include(public_link.(published))
+
+        get edit_admin_lemon_drop_issue_path(draft)
+        expect(response.body).not_to include('Public view')
+      end
+
       it 'filters by status' do
         create(:lemon_drop_issue, title: 'a draft one')
         create(:lemon_drop_issue, :published, title: 'a published one')

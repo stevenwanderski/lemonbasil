@@ -17,6 +17,7 @@
       <th>Dates</th>
       <th>Status</th>
       <th>Published</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -27,11 +28,12 @@
           <td><%= issue.starts_on.strftime('%b %-d, %Y') %> – <%= issue.ends_on.strftime('%b %-d, %Y') %></td>
           <td><span class="status-pill status-pill--<%= issue.status %>"><%= issue.status.humanize %></span></td>
           <td class="data-table__muted"><%= issue.published_at&.strftime('%b %-d, %Y %-l:%M %p') || '—' %></td>
+          <td><%= link_to 'Public view', lemon_drop_issue_path(issue.slug), target: '_blank' if issue.published? %></td>
         </tr>
       <% end %>
     <% else %>
       <tr>
-        <td colspan="4" class="data-table__empty">No issues.</td>
+        <td colspan="5" class="data-table__empty">No issues.</td>
       </tr>
     <% end %>
   </tbody>

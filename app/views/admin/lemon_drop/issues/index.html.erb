@@ -10,19 +10,29 @@
   <% end %>
 </p>
 
-<div class="rows">
-  <% if @issues.any? %>
-    <% @issues.each do |issue| %>
-      <div class="row" data-id="<%= issue.id %>">
-        <div class="row__name">
-          <%= link_to issue.title, edit_admin_lemon_drop_issue_path(issue) %>
-        </div>
-        <div><%= issue.starts_on.strftime('%b %-d, %Y') %> – <%= issue.ends_on.strftime('%b %-d, %Y') %></div>
-        <div><%= issue.status.humanize %></div>
-        <div><%= issue.published_at&.strftime('%b %-d, %Y %-l:%M %p') %></div>
-      </div>
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Dates</th>
+      <th>Status</th>
+      <th>Published</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if @issues.any? %>
+      <% @issues.each do |issue| %>
+        <tr data-id="<%= issue.id %>">
+          <td class="data-table__primary"><%= link_to issue.title, edit_admin_lemon_drop_issue_path(issue) %></td>
+          <td><%= issue.starts_on.strftime('%b %-d, %Y') %> – <%= issue.ends_on.strftime('%b %-d, %Y') %></td>
+          <td><span class="status-pill status-pill--<%= issue.status %>"><%= issue.status.humanize %></span></td>
+          <td class="data-table__muted"><%= issue.published_at&.strftime('%b %-d, %Y %-l:%M %p') || '—' %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4" class="data-table__empty">No issues.</td>
+      </tr>
     <% end %>
-  <% else %>
-    <div>No issues.</div>
-  <% end %>
-</div>
+  </tbody>
+</table>

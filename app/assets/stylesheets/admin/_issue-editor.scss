@@ -4,6 +4,7 @@
   grid-template-columns: minmax(240px, 320px) 1fr;
   gap: 40px;
   align-items: start;
+  padding-bottom: 80px;
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;

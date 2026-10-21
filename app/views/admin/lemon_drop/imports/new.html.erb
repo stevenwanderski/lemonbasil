@@ -1,0 +1,37 @@
+<div class="admin-header">
+  <h1>Import an Issue</h1>
+</div>
+
+<p>Paste a week’s JSON from Claude, or upload it as a <code>.json</code> file. You’ll see a preview before anything is created, and the import is always a Draft.</p>
+
+<% if @importer&.errors.present? %>
+  <ul class="form-errors import-errors">
+    <% @importer.errors.each do |error| %>
+      <li><code><%= error.path %></code> <%= error.message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%# Turbo only follows a form post that redirects; the preview is rendered. %>
+<%= form_with url: preview_admin_lemon_drop_imports_path, multipart: true, data: { turbo: false } do |f| %>
+  <div class="form-item">
+    <%= f.label :raw_json, 'JSON', class: 'label' %>
+    <%= f.text_area :raw_json, value: @importer&.raw_json, class: 'input--textarea import-json', spellcheck: false %>
+  </div>
+
+  <div class="form-item">
+    <%= f.label :file, 'Or upload a .json file', class: 'label' %>
+    <%= f.file_field :file, accept: '.json,application/json' %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit 'Preview', class: 'button button--submit' %>
+    <%= link_to 'Cancel', admin_lemon_drop_issues_path %>
+  </div>
+<% end %>
+
+<details class="claude-instructions">
+  <summary>Claude export instructions</summary>
+  <p class="hint">Paste these into the Claude Project’s instructions, so its replies come back in this format.</p>
+  <pre><%= LemonDrop::Importer.claude_instructions %></pre>
+</details>

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "issue": {
+    "title": "oct 19-23",
+    "starts_on": "2026-10-19",
+    "ends_on": "2026-10-23"
+  },
+  "sections": [
+    {
+      "type": "title_page",
+      "heading": "the lemon drop",
+      "tagline": "your weekly meal plan",
+      "date_label": "oct 19-23",
+      "image_hint": "overhead shot of the chickpea stew"
+    },
+    {
+      "type": "intro",
+      "heading": "hello!",
+      "body_markdown": "it's mid october and i'm fully in it...\n\ni find myself drawn to...",
+      "signoff": "xx beth"
+    },
+    { "type": "table_of_contents", "heading": "this week's drop" },
+    {
+      "type": "hero",
+      "heading_lines": ["let's", "cook"],
+      "text_color": "light",
+      "image_hint": "crispy chickpeas on a sheet pan"
+    },
+    { "type": "menu_overview", "heading": "your menu" },
+    {
+      "type": "recipes",
+      "toc_label": "recipes",
+      "recipes": [
+        {
+          "title": "chickpea stew",
+          "kicker": null,
+          "category": "soup",
+          "menu_title": "Chickpea Stew",
+          "menu_blurb": "chickpeas, spinach, turmeric, garlic, ginger, ...",
+          "prep_minutes": 15,
+          "cook_minutes": 30,
+          "time_note": null,
+          "serves": 5,
+          "ingredient_groups": [
+            { "name": "Produce", "items": ["4 garlic cloves, thinly sliced", "1 inch fresh ginger, grated"] },
+            { "name": "Pantry", "items": ["good olive oil", "2 cans chickpeas (15 oz each), drained and rinsed"] }
+          ],
+          "steps": ["Set aside about 1/2 c of the chickpeas for crisping...", "In the same pot reduce heat..."],
+          "tip": "When you want something warming and nourishing...",
+          "image_hint": "the stew in a glass bowl with cilantro"
+        }
+      ]
+    },
+    {
+      "type": "grocery_list",
+      "heading": "your grocery list",
+      "theme": "sage",
+      "groups": [
+        { "name": "Produce", "items": ["1 large delicata squash", "3 medium acorn squash"] }
+      ]
+    },
+    {
+      "type": "allergen_swap",
+      "heading": "allergen swaps",
+      "theme": "sage",
+      "swap_groups": [
+        { "name": "Gluten-free swaps", "swaps": [{ "from": "pappardelle", "to": "gf pasta" }] }
+      ],
+      "swap_recipes": [
+        {
+          "title": "Cashew ricotta",
+          "yield_label": "Makes ~1½ cups",
+          "ingredients": ["1c raw cashews", "2 tbsp lemon juice"],
+          "steps": ["Soak cashews in hot water for 30 mins...", "Add all ingredients to a blender..."],
+          "use_for": null
+        }
+      ]
+    },
+    {
+      "type": "outro",
+      "heading": "book your holiday party!",
+      "toc_label": "let's party!",
+      "body_markdown": "our dinner party calendar is filling up...",
+      "cta_label": null,
+      "cta_url": null,
+      "image_hints": ["garden table with tomatoes", "dining room set for dinner", "family style spread"]
+    }
+  ]
+}

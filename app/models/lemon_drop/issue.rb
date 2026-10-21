@@ -18,6 +18,7 @@
 #
 class LemonDrop::Issue < ApplicationRecord
   has_many :sections, -> { order(:position) }, dependent: :destroy
+  has_many :imports, dependent: :nullify
   has_many :recipes_sections, through: :sections, source: :sectionable, source_type: 'LemonDrop::RecipesSection'
   # Every Recipe in the Issue, in page order: Section position, then Recipe
   # position.

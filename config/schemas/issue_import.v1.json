@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lemonandbasil.co/schemas/issue_import.v1.json",
+  "title": "The lemon drop: one week's Issue",
+  "description": "An Issue as an ordered list of Sections. Array order becomes page order. Unknown keys are rejected.",
+  "type": "object",
+  "required": ["schema_version", "issue", "sections"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "const": 1 },
+    "issue": {
+      "type": "object",
+      "required": ["title", "starts_on"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "starts_on": { "type": "string", "format": "date" },
+        "ends_on": { "type": ["string", "null"], "format": "date" }
+      }
+    },
+    "sections": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/section" }
+    }
+  },
+  "$defs": {
+    "text": { "type": ["string", "null"] },
+    "minutes": { "type": ["integer", "null"], "minimum": 0 },
+    "focus": { "enum": ["top", "center", "bottom", null] },
+    "lines": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+
+    "section": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {
+          "enum": [
+            "title_page", "intro", "table_of_contents", "hero", "menu_overview",
+            "recipes", "grocery_list", "allergen_swap", "outro"
+          ]
+        },
+        "theme": { "enum": ["cream", "sage", null] },
+        "anchor": { "type": ["string", "null"], "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "show_in_toc": { "type": ["boolean", "null"] },
+        "toc_label": { "$ref": "#/$defs/text" }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "title_page" } } }, "then": { "$ref": "#/$defs/title_page" } },
+        { "if": { "properties": { "type": { "const": "intro" } } }, "then": { "$ref": "#/$defs/intro" } },
+        { "if": { "properties": { "type": { "const": "table_of_contents" } } }, "then": { "$ref": "#/$defs/table_of_contents" } },
+        { "if": { "properties": { "type": { "const": "hero" } } }, "then": { "$ref": "#/$defs/hero" } },
+        { "if": { "properties": { "type": { "const": "menu_overview" } } }, "then": { "$ref": "#/$defs/menu_overview" } },
+        { "if": { "properties": { "type": { "const": "recipes" } } }, "then": { "$ref": "#/$defs/recipes" } },
+        { "if": { "properties": { "type": { "const": "grocery_list" } } }, "then": { "$ref": "#/$defs/grocery_list" } },
+        { "if": { "properties": { "type": { "const": "allergen_swap" } } }, "then": { "$ref": "#/$defs/allergen_swap" } },
+        { "if": { "properties": { "type": { "const": "outro" } } }, "then": { "$ref": "#/$defs/outro" } }
+      ],
+      "unevaluatedProperties": false
+    },
+
+    "title_page": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" },
+        "tagline": { "$ref": "#/$defs/text" },
+        "date_label": { "$ref": "#/$defs/text" },
+        "image_hint": { "$ref": "#/$defs/text" }
+      }
+    },
+    "intro": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" },
+        "body_markdown": { "$ref": "#/$defs/text" },
+        "signoff": { "$ref": "#/$defs/text" },
+        "image_hint": { "$ref": "#/$defs/text" }
+      }
+    },
+    "table_of_contents": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" }
+      }
+    },
+    "hero": {
+      "properties": {
+        "heading_lines": { "$ref": "#/$defs/lines" },
+        "text_color": { "enum": ["light", "dark", null] },
+        "min_height": { "enum": ["medium", "tall", null] },
+        "background_focus": { "$ref": "#/$defs/focus" },
+        "image_hint": { "$ref": "#/$defs/text" }
+      }
+    },
+    "menu_overview": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" },
+        "category_order": { "type": "array", "items": { "$ref": "#/$defs/category" }, "uniqueItems": true },
+        "image_hint": { "$ref": "#/$defs/text" }
+      }
+    },
+    "recipes": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" },
+        "recipes": { "type": "array", "items": { "$ref": "#/$defs/recipe" } }
+      }
+    },
+    "grocery_list": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["items"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/$defs/text" },
+              "items": { "$ref": "#/$defs/lines" }
+            }
+          }
+        },
+        "image_hint": { "$ref": "#/$defs/text" }
+      }
+    },
+    "allergen_swap": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" },
+        "disclaimer": { "$ref": "#/$defs/text" },
+        "swap_groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["swaps"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/$defs/text" },
+              "swaps": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["from", "to"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "from": { "type": "string", "minLength": 1 },
+                    "to": { "type": "string", "minLength": 1 }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "swap_recipes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title"],
+            "additionalProperties": false,
+            "properties": {
+              "title": { "type": "string", "minLength": 1 },
+              "yield_label": { "$ref": "#/$defs/text" },
+              "ingredients": { "$ref": "#/$defs/lines" },
+              "steps": { "$ref": "#/$defs/lines" },
+              "use_for": { "$ref": "#/$defs/text" }
+            }
+          }
+        },
+        "image_hint": { "$ref": "#/$defs/text" }
+      }
+    },
+    "outro": {
+      "properties": {
+        "heading": { "$ref": "#/$defs/text" },
+        "body_markdown": { "$ref": "#/$defs/text" },
+        "cta_label": { "$ref": "#/$defs/text" },
+        "cta_url": { "type": ["string", "null"], "pattern": "^(https://|mailto:)\\S+$" },
+        "image_hints": { "$ref": "#/$defs/lines" }
+      }
+    },
+
+    "category": { "enum": ["entree", "soup", "salad", "snack", "breakfast", "side", "dessert"] },
+    "recipe": {
+      "type": "object",
+      "required": ["title", "category", "ingredient_groups", "steps"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "slug": { "type": ["string", "null"], "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "kicker": { "$ref": "#/$defs/text" },
+        "category": { "$ref": "#/$defs/category" },
+        "menu_title": { "$ref": "#/$defs/text" },
+        "menu_blurb": { "$ref": "#/$defs/text" },
+        "prep_minutes": { "$ref": "#/$defs/minutes" },
+        "cook_minutes": { "$ref": "#/$defs/minutes" },
+        "time_note": { "$ref": "#/$defs/text" },
+        "total_label": { "$ref": "#/$defs/text" },
+        "serves": { "type": ["integer", "null"], "minimum": 1 },
+        "ingredient_groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["items"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "$ref": "#/$defs/text" },
+              "items": { "$ref": "#/$defs/lines" }
+            }
+          }
+        },
+        "steps": { "$ref": "#/$defs/lines" },
+        "tip": { "$ref": "#/$defs/text" },
+        "hero_focus": { "$ref": "#/$defs/focus" },
+        "image_hint": { "$ref": "#/$defs/text" }
+      }
+    }
+  }
+}

@@ -83,6 +83,9 @@ Rails.application.routes.draw do
     end
 
     namespace :lemon_drop do
+      resources :imports, only: [:new, :create] do
+        post :preview, on: :collection
+      end
       resources :issues, except: :show do
         resource :publication, only: [:create, :destroy]
         resource :preview, only: :show, controller: '/lemon_drop/previews'

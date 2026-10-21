@@ -1,0 +1,36 @@
+<% preview = @importer.preview %>
+<div class="admin-header">
+  <h1>Preview: <%= preview.title %></h1>
+</div>
+
+<p><%= preview.starts_on %> – <%= preview.ends_on %> · <%= pluralize(preview.sections.size, 'Section') %></p>
+
+<ol class="import-preview">
+  <% preview.sections.each do |section| %>
+    <li>
+      <details>
+        <summary>
+          <strong><%= section.label %><%= ": #{section.counts}" if section.counts %></strong>
+          <span><%= section.heading %></span>
+        </summary>
+        <% if section.details.any? %>
+          <ul>
+            <% section.details.each do |detail| %>
+              <li><%= detail %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="hint">Nothing more to show.</p>
+        <% end %>
+      </details>
+    </li>
+  <% end %>
+</ol>
+
+<%= form_with url: admin_lemon_drop_imports_path do |f| %>
+  <%= f.hidden_field :raw_json, value: @importer.raw_json %>
+  <div class="form-actions">
+    <%= f.submit 'Create Draft Issue', class: 'button button--submit' %>
+    <%= link_to 'Start over', new_admin_lemon_drop_import_path %>
+  </div>
+<% end %>

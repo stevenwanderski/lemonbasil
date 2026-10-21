@@ -1,0 +1,57 @@
+.import-json {
+  height: 320px;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 18px;
+}
+
+.import-errors {
+  color: $red;
+  padding-left: 20px;
+
+  li {
+    margin-bottom: 6px;
+  }
+}
+
+.import-preview {
+  padding-left: 24px;
+  margin-bottom: 30px;
+
+  > li {
+    margin-bottom: 10px;
+  }
+
+  summary {
+    cursor: pointer;
+
+    span {
+      margin-left: 8px;
+      color: lighten($gray-dark, 20%);
+    }
+  }
+
+  ul {
+    margin: 8px 0 0;
+    font-size: 14px;
+  }
+}
+
+.claude-instructions {
+  margin-top: 50px;
+
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  pre {
+    white-space: pre-wrap;
+    font-size: 12px;
+    max-height: 500px;
+    overflow: auto;
+    background: #f6f6f6;
+    padding: 15px;
+    border-radius: 4px;
+  }
+}

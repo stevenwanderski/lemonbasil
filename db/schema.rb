@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_19_200000) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_21_162703) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -186,6 +186,16 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_19_200000) do
     t.string "min_height", default: "tall", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "lemon_drop_imports", force: :cascade do |t|
+    t.text "raw_json", null: false
+    t.bigint "user_id", null: false
+    t.bigint "issue_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["issue_id"], name: "index_lemon_drop_imports_on_issue_id"
+    t.index ["user_id"], name: "index_lemon_drop_imports_on_user_id"
   end
 
   create_table "lemon_drop_ingredient_groups", force: :cascade do |t|
@@ -422,6 +432,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_19_200000) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "lemon_drop_grocery_groups", "lemon_drop_grocery_list_sections", column: "grocery_list_section_id"
   add_foreign_key "lemon_drop_grocery_items", "lemon_drop_grocery_groups", column: "grocery_group_id"
+  add_foreign_key "lemon_drop_imports", "lemon_drop_issues", column: "issue_id"
+  add_foreign_key "lemon_drop_imports", "users"
   add_foreign_key "lemon_drop_ingredient_groups", "lemon_drop_recipes", column: "recipe_id"
   add_foreign_key "lemon_drop_ingredients", "lemon_drop_ingredient_groups", column: "ingredient_group_id"
   add_foreign_key "lemon_drop_recipes", "lemon_drop_recipes_sections", column: "recipes_section_id"

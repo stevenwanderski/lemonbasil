@@ -4,9 +4,6 @@
     <%= link_to '← Issue editor', edit_admin_lemon_drop_issue_path(@issue), class: 'live-editor__back' %>
     <h1 class="live-editor__title"><%= @issue.title %></h1>
     <span class="status-pill status-pill--<%= @issue.status %>"><%= @issue.status.humanize %></span>
-    <% if @issue.published? %>
-      <span class="live-editor__live" title="This Issue is published: every Save changes the public page.">Saves go live</span>
-    <% end %>
 
     <div class="live-editor__actions">
       <div class="live-editor__widths" role="group" aria-label="Page width">

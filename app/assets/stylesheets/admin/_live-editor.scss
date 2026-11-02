@@ -60,16 +60,6 @@ $live-editor-panel: 400px;
     padding: 5px 10px;
   }
 
-  // A caution, not a success: a Save on a Published Issue goes public.
-  &__live {
-    padding: 5px 10px;
-    border-radius: 999px;
-    background: #fff4d6;
-    color: #8a5a00;
-    font-size: 12px;
-    font-weight: 600;
-  }
-
   &__actions {
     display: flex;
     align-items: center;
@@ -104,15 +94,6 @@ $live-editor-panel: 400px;
   &__actions .button {
     font-size: 14px;
     line-height: 1;
-  }
-
-  // Narrow: the warning keeps its place; the long name gives way.
-  @media (max-width: 760px) {
-    &__live {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 120px;
-    }
   }
 
   &__body {

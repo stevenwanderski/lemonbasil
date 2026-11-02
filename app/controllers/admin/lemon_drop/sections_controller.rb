@@ -50,16 +50,34 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
     end
   end
 
-  # The drawer's unsaved changes, as the page would show them. Nothing is
-  # saved. Images are left out: they can only be shown once stored.
+  # The drawer's unsaved changes, as the page would show them. Images show
+  # once uploaded: the drawer uploads a picked file straight away and sends
+  # its signed id; a file sent with the form instead is left out. Nothing is
+  # kept: replacing an attachment in memory can touch the database, so it's
+  # all rolled back.
   # shortcut: only the Section itself is previewed, so a Table of Contents
   # catches up on Save; render it from these in-memory changes if that matters.
   def preview
     attributes = section_params
-    attachments = @section.sectionable.class.attachment_reflections.keys
-    attributes[:sectionable_attributes] = attributes[:sectionable_attributes].except(*attachments) if attributes[:sectionable_attributes]
-    @section.assign_attributes(attributes)
-    render_page_sections(@section)
+    sectionable_attributes = attributes[:sectionable_attributes]
+    @section.sectionable.class.attachment_reflections.each_key do |name|
+      value = sectionable_attributes&.dig(name)
+      next if value.nil?
+
+      if value.is_a?(Array)
+        sectionable_attributes[name] = value.grep(String)
+      elsif !value.is_a?(String) || value.blank?
+        sectionable_attributes.delete(name)
+      end
+    end
+
+    html = nil
+    ActiveRecord::Base.transaction do
+      @section.assign_attributes(attributes)
+      html = page_sections_html(@section)
+      raise ActiveRecord::Rollback
+    end
+    render html: html
   end
 
   # The drag in the Section list posts every Section id, top first.
@@ -86,7 +104,11 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   private
 
   def render_page_sections(*sections)
-    render html: helpers.safe_join(sections.map do |section|
+    render html: page_sections_html(*sections)
+  end
+
+  def page_sections_html(*sections)
+    helpers.safe_join(sections.map do |section|
       render_to_string(partial: 'lemon_drop/issues/page_section', locals: { section: section, editable: true })
     end)
   end

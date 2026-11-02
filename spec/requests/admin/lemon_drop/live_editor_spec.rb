@@ -114,7 +114,63 @@ RSpec.describe 'Admin::LemonDrop live editor', type: :request do
       expect(intro.sectionable.reload).to have_attributes(heading: 'hello!', body_html: '<p>soup season</p>')
     end
 
-    it 'leaves images out of a preview' do
+    describe 'images uploaded from the drawer' do
+      def uploaded(name)
+        ActiveStorage::Blob.create_and_upload!(io: File.open(Rails.root.join('lemon-drop/images', name)), filename: name)
+      end
+
+      def preview_icon(signed_id)
+        post preview_admin_lemon_drop_issue_section_path(issue, intro), params: { lemon_drop_section: {
+          sectionable_attributes: { heading: 'not yet', icon: signed_id }
+        } }
+      end
+
+      it 'previews a new image by its signed id, attaching nothing' do
+        blob = uploaded('lemon-slice.png')
+
+        expect { preview_icon(blob.signed_id) }.not_to change(ActiveStorage::Attachment, :count)
+
+        expect(response.body).to include('<h2>not yet</h2>', 'class="icon"')
+        expect(intro.sectionable.reload.icon).not_to be_attached
+      end
+
+      it 'previews a replacement image, leaving the saved one attached' do
+        saved = uploaded('lemon-slice.png')
+        intro.sectionable.update!(icon: saved.signed_id)
+        replacement = uploaded('bowl.png')
+
+        preview_icon(replacement.signed_id)
+
+        expect(response.body).to include('class="icon"')
+        expect(intro.sectionable.reload.icon.blob).to eq(saved)
+        expect(ActiveStorage::Blob.exists?(saved.id)).to be(true)
+      end
+
+      it 'previews new Outro photos alongside the kept ones, attaching nothing' do
+        outro = create(:lemon_drop_section, issue: issue, position: 3, sectionable: build(:lemon_drop_outro_section))
+        kept = uploaded('party-1.jpg')
+        outro.sectionable.update!(images: [kept.signed_id])
+        added = uploaded('party-2.jpg')
+
+        post preview_admin_lemon_drop_issue_section_path(issue, outro), params: { lemon_drop_section: {
+          sectionable_attributes: { images: ['', kept.signed_id, added.signed_id] }
+        } }
+
+        expect(response.body.scan('<img').size).to eq(2)
+        expect(outro.sectionable.reload.images.blobs).to eq([kept])
+      end
+
+      it 'saves an image by its signed id' do
+        blob = uploaded('lemon-slice.png')
+
+        save_from_drawer(sectionable_attributes: { icon: blob.signed_id })
+
+        expect(response).to have_http_status(200)
+        expect(intro.sectionable.reload.icon.blob).to eq(blob)
+      end
+    end
+
+    it 'leaves out an image file sent with a preview, rather than uploading it' do
       expect do
         post preview_admin_lemon_drop_issue_section_path(issue, intro), params: { lemon_drop_section: {
           sectionable_attributes: { heading: 'not yet', icon: image_upload('lemon-slice.png') }

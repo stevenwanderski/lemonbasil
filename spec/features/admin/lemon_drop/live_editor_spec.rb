@@ -71,6 +71,37 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     expect(intro.sectionable.reload).to have_attributes(heading: 'hello!', body_html: '<p>soup season</p>')
   end
 
+  it 'shows a picked image on the page at once, attaching it only on Save' do
+    visit admin_lemon_drop_issue_live_editor_path(issue)
+
+    within_frame(page_frame) do
+      expect(page).to have_no_css('.intro img.icon')
+      find("[data-section-id='#{intro.id}']").click
+    end
+    within('.live-editor__drawer') { attach_file 'Icon', Rails.root.join('lemon-drop/images/lemon-slice.png') }
+
+    within_frame(page_frame) { expect(page).to have_css('.intro img.icon') }
+    expect(ActiveStorage::Blob.unattached.count).to eq(1)
+    expect(intro.sectionable.reload.icon).not_to be_attached
+
+    within('.live-editor__drawer') { click_button 'Close' }
+    within_frame(page_frame) do
+      expect(page).to have_no_css('.intro img.icon')
+      find("[data-section-id='#{intro.id}']").click
+    end
+    within('.live-editor__drawer') do
+      attach_file 'Icon', Rails.root.join('lemon-drop/images/lemon-slice.png')
+      expect(page).to have_css('[data-uploaded-for]', visible: false)
+      click_button 'Save'
+    end
+
+    expect(page).to have_no_css('.live-editor__drawer form')
+    within_frame(page_frame) { expect(page).to have_css('.intro img.icon') }
+    expect(intro.sectionable.reload.icon).to be_attached
+    # The second pick is the one attached; the first is left for the cleanup task.
+    expect(ActiveStorage::Blob.unattached.count).to eq(1)
+  end
+
   it 'shows a refused save in the drawer, saving nothing, and Close puts the page back' do
     visit admin_lemon_drop_issue_live_editor_path(issue)
 

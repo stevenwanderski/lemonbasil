@@ -20,7 +20,7 @@
       <% end %>
     </ul>
   <% end %>
-  <%= f.file_field :images, multiple: true, accept: 'image/jpeg,image/png,image/webp' %>
+  <%= f.file_field :images, multiple: true, accept: 'image/jpeg,image/png,image/webp', direct_upload: true %>
   <p class="hint">Up to six JPEG, PNG or WebP photos, up to 15 MB each.</p>
 </div>
 <%= render 'admin/lemon_drop/sections/forms/rich_text_field', f: f, name: :body_html, label: 'Body' %>

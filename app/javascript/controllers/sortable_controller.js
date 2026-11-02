@@ -6,7 +6,7 @@ import Sortable from "sortablejs"
 // Drag-to-reorder by the .drag-handle in each row (ADR 0007). With a url, a
 // drop sends every row's data-id, top first, as the param, then reloads so
 // the page shows the order as stored (the new one, or the old one if the
-// save was refused). Without one, only the rows move: form fields inside them
+// save was refused), unless a listener cancels sortable:saved. Without one, only the rows move: form fields inside them
 // submit in their new order, and each row's [data-sortable-position] field
 // is numbered 1, 2, 3… on a drop (and again as the form submits, for rows
 // added since); the drop is announced as an input, so the live editor
@@ -49,7 +49,9 @@ export default class extends Controller {
     const body = new FormData()
     this.sortable.toArray().forEach(id => body.append(this.paramValue, id))
 
-    await patch(this.urlValue, { body })
-    Turbo.visit(window.location.href, { action: "replace" })
+    const response = await patch(this.urlValue, { body })
+    // A page that shows the new order itself (the live editor) cancels this.
+    const saved = this.dispatch("saved", { detail: { response }, cancelable: true })
+    if (!saved.defaultPrevented) Turbo.visit(window.location.href, { action: "replace" })
   }
 }

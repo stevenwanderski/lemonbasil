@@ -10,7 +10,7 @@
   <% recipes = f.object.recipes.to_a %>
   <% if recipes.any? %>
     <p class="hint">Drag to reorder.</p>
-    <%= tag.ol class: 'recipe-list', data: { controller: 'sortable', sortable_url_value: reorder_admin_lemon_drop_issue_section_recipes_path(issue, section),
+    <%= tag.ol class: 'recipe-list', data: { controller: 'sortable', sortable_url_value: reorder_admin_lemon_drop_issue_section_recipes_path(issue, section, drawer: (1 if local_assigns[:drawer])),
           sortable_param_value: 'recipe_ids[]' } do %>
       <% recipes.each do |recipe| %>
         <%= tag.li class: 'recipe-list__row', data: { id: recipe.id } do %>

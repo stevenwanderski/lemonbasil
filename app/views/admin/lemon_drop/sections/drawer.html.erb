@@ -13,7 +13,7 @@
         class: 'link--danger live-editor__delete', form: { data: delete_data.merge(delete_confirm: section_delete_confirm(@section)) } %>
 <% end %>
 
-<%= render 'form', section: @section, issue: @issue,
+<%= render 'form', section: @section, issue: @issue, drawer: true,
       url: admin_lemon_drop_issue_section_path(@issue, @section, drawer: 1),
       form_options: { data: { turbo: false, action: 'submit->live-editor#save input->live-editor#preview change->live-editor#preview',
         preview_url: preview_admin_lemon_drop_issue_section_path(@issue, @section) } } %>

@@ -68,9 +68,12 @@ class Admin::LemonDrop::RecipesController < Admin::LemonDrop::BaseController
     redirect_to edit_admin_lemon_drop_issue_section_path(@issue, target), notice: 'Recipe moved!'
   end
 
-  # The drag in the Recipe list posts every Recipe id, top first.
+  # The drag in the Recipe list posts every Recipe id, top first. From the
+  # live editor, it answers with the Recipes Section and the Menu Overview.
   def reorder
     @recipes_section.reorder_recipes(params.require(:recipe_ids))
+    return render html: live_page_html(sections: [@section, *menu_overviews]) if params[:drawer]
+
     head :no_content
   rescue ArgumentError
     head :unprocessable_entity

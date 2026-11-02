@@ -230,6 +230,19 @@ export default class extends Controller {
     this.open(link.dataset.sectionId)
   }
 
+  // A Recipe list drag in the drawer, already stored: the page shows the new
+  // order instead of the editor reloading. A refused one reopens the Section,
+  // so the list goes back to the stored order.
+  async reordered(event) {
+    event.preventDefault()
+    const { response } = event.detail
+    if (!response.ok) return this.open(this.selected.match(/\d+/)[0])
+
+    this.replaceSections(await response.html)
+    // Close now puts back the stored order, not the one from before the drag.
+    this.saved = this.find(this.selected)?.cloneNode(true)
+  }
+
   // The Section list shows the saved heading.
   updateOutline(form) {
     const heading = form.querySelector('[name="lemon_drop_section[sectionable_attributes][heading]"]')

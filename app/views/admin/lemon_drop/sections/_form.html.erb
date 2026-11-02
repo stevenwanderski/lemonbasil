@@ -12,7 +12,7 @@
 
   <% if lookup_context.exists?(section.sectionable.model_name.element, ['admin/lemon_drop/sections/forms'], true) %>
     <%= f.fields_for :sectionable, include_id: false do |sf| %>
-      <%= render "admin/lemon_drop/sections/forms/#{section.sectionable.model_name.element}", f: sf, issue: issue %>
+      <%= render "admin/lemon_drop/sections/forms/#{section.sectionable.model_name.element}", f: sf, issue: issue, drawer: local_assigns[:drawer] %>
     <% end %>
   <% else %>
     <p class="hint">This Section's own content can't be edited here yet. Its page settings are below.</p>

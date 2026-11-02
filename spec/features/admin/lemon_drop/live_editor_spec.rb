@@ -256,6 +256,24 @@ describe 'Admin: Lemon Drop: live editor', js: true do
       expect(recipes.sectionable.recipes.reload).to be_empty
     end
 
+    it 'reorders Recipes from the drawer without reloading the editor' do
+      other = create(:lemon_drop_recipe, recipes_section: recipes.sectionable, title: 'harissa chicken', position: recipe.position + 1)
+      visit admin_lemon_drop_issue_live_editor_path(issue)
+
+      within('.live-editor__outline') { click_button 'Recipes' }
+      execute_script('window.stillHere = true')
+      within('.live-editor__drawer') do
+        all('.recipe-list__row').last.find('.drag-handle').drag_to(first('.recipe-list__row'), delay: 0.2)
+      end
+
+      within_frame(page_frame) do
+        expect(page).to have_css('[data-recipe-id]:first-of-type h2', text: 'harissa chicken')
+      end
+      expect(page).to have_css('.live-editor__drawer .recipe-list__row:first-child', text: 'harissa chicken')
+      expect(evaluate_script('window.stillHere')).to be(true)
+      expect(recipes.sectionable.recipes.reload).to eq([other, recipe])
+    end
+
     it 'opens a Recipe from its Section’s list, and adds one, in the drawer' do
       visit admin_lemon_drop_issue_live_editor_path(issue)
 

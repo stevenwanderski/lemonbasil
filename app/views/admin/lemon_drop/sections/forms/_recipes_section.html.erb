@@ -22,7 +22,8 @@
             <span><%= recipe.category&.humanize %></span>
           <% end %>
           <%= link_to 'Delete', admin_lemon_drop_issue_section_recipe_path(issue, section, recipe), class: 'link--danger',
-                data: { turbo_method: :delete, turbo_confirm: "Delete #{recipe.title}?" } %>
+                data: { turbo_method: :delete, turbo_confirm: "Delete #{recipe.title}?", action: 'live-editor#destroyRecipe:prevent',
+                  delete_url: admin_lemon_drop_issue_section_recipe_path(issue, section, recipe, drawer: 1), section_id: section.id } %>
         <% end %>
       <% end %>
     <% end %>

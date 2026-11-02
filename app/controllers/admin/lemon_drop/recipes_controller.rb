@@ -76,9 +76,12 @@ class Admin::LemonDrop::RecipesController < Admin::LemonDrop::BaseController
     head :unprocessable_entity
   end
 
+  # From the live editor, answers with its Recipes Section and the Menu Overview.
   def destroy
     @recipe.destroy!
     @recipes_section.renumber_recipes
+    return render html: live_page_html(sections: [@section, *menu_overviews]) if params[:drawer]
+
     redirect_to edit_admin_lemon_drop_issue_section_path(@issue, @section), notice: 'Recipe deleted!'
   end
 

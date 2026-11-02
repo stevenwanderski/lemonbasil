@@ -211,6 +211,31 @@ describe 'Admin: Lemon Drop: live editor', js: true do
       expect(recipe.ingredient_groups.reload.map(&:name)).to eq(%w[Produce Pantry])
     end
 
+    it 'deletes a Recipe from its drawer, and one from its Section’s list' do
+      other = create(:lemon_drop_recipe, recipes_section: recipes.sectionable, title: 'harissa chicken')
+      visit admin_lemon_drop_issue_live_editor_path(issue)
+
+      within_frame(page_frame) { find("[data-recipe-id='#{recipe.id}']").click }
+      within('.live-editor__drawer') do
+        accept_confirm('Delete chickpea stew?') { click_button 'Delete Recipe' }
+      end
+
+      expect(page).to have_no_css('.live-editor__drawer form')
+      within_frame(page_frame) do
+        expect(page).to have_no_css("[data-recipe-id='#{recipe.id}']")
+        expect(page).to have_css("[data-recipe-id='#{other.id}']")
+      end
+
+      within('.live-editor__outline') { click_button 'Recipes' }
+      within('.live-editor__drawer') do
+        accept_confirm('Delete harissa chicken?') { click_link 'Delete' }
+        expect(page).to have_content('No Recipes yet.')
+      end
+      within_frame(page_frame) { expect(page).to have_no_css('[data-recipe-id]') }
+      expect(page).to have_current_path(admin_lemon_drop_issue_live_editor_path(issue))
+      expect(recipes.sectionable.recipes.reload).to be_empty
+    end
+
     it 'opens a Recipe from its Section’s list, and adds one, in the drawer' do
       visit admin_lemon_drop_issue_live_editor_path(issue)
 

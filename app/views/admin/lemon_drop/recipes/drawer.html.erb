@@ -3,6 +3,12 @@
   <h2><%= @recipe.persisted? ? "Recipe: #{@recipe.title_in_database}" : 'New Recipe' %></h2>
 </div>
 
+<% if @recipe.persisted? %>
+  <%= button_to 'Delete Recipe', admin_lemon_drop_issue_section_recipe_path(@issue, @section, @recipe, drawer: 1), method: :delete,
+        class: 'link--danger live-editor__delete',
+        form: { data: { turbo: false, action: 'submit->live-editor#destroy', delete_confirm: "Delete #{@recipe.title_in_database}?" } } %>
+<% end %>
+
 <%# A new Recipe has nothing on the page yet, so it previews on Save. %>
 <%= render 'form', recipe: @recipe,
       url: @recipe.persisted? ? admin_lemon_drop_issue_section_recipe_path(@issue, @section, @recipe, drawer: 1) : admin_lemon_drop_issue_section_recipes_path(@issue, @section, drawer: 1),

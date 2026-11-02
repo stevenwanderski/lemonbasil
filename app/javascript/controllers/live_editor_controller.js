@@ -182,8 +182,8 @@ export default class extends Controller {
     }
   }
 
-  // Deletes the open Section: it leaves the page and the Section list, and
-  // the Sections it fed (contents, menu) come back from the server.
+  // Deletes the open Section or Recipe: it leaves the page (and the Section
+  // list), and the Sections it fed (contents, menu) come back from the server.
   async destroy(event) {
     event.preventDefault()
     const form = event.target
@@ -198,6 +198,22 @@ export default class extends Controller {
     this.saved = null
     this.replaceSections(await response.html)
     this.hide()
+  }
+
+  // From a Recipes Section's Recipe list, in the drawer: deletes the Recipe,
+  // then reopens the Section's form so the list shows it gone.
+  async destroyRecipe(event) {
+    const link = event.currentTarget
+    if (!confirm(link.dataset.turboConfirm)) return
+
+    const body = new FormData()
+    body.append("_method", "delete")
+    const response = await post(link.dataset.deleteUrl, { body, responseKind: "html" })
+    if (!response.ok) return
+
+    this.saved = null
+    this.replaceSections(await response.html)
+    this.open(link.dataset.sectionId)
   }
 
   // The Section list shows the saved heading.

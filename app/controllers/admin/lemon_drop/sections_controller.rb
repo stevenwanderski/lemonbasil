@@ -39,7 +39,7 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   # other Sections' headings and labels); a refused save, with the form.
   def update
     if @section.update(section_params)
-      return render_page_sections if params[:drawer]
+      return render_page_sections(@section, *@issue.sections.lemon_drop_table_of_contents_sections.excluding(@section)) if params[:drawer]
 
       redirect_back fallback_location: edit_admin_lemon_drop_issue_section_path(@issue, @section), notice: 'Section updated!'
     elsif params[:drawer]
@@ -48,6 +48,18 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
       flash.now[:error] = 'Could not save'
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  # The drawer's unsaved changes, as the page would show them. Nothing is
+  # saved. Images are left out: they can only be shown once stored.
+  # shortcut: only the Section itself is previewed, so a Table of Contents
+  # catches up on Save; render it from these in-memory changes if that matters.
+  def preview
+    attributes = section_params
+    attachments = @section.sectionable.class.attachment_reflections.keys
+    attributes[:sectionable_attributes] = attributes[:sectionable_attributes].except(*attachments) if attributes[:sectionable_attributes]
+    @section.assign_attributes(attributes)
+    render_page_sections(@section)
   end
 
   # The drag in the Section list posts every Section id, top first.
@@ -73,8 +85,7 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
 
   private
 
-  def render_page_sections
-    sections = [@section, *@issue.sections.lemon_drop_table_of_contents_sections.excluding(@section)]
+  def render_page_sections(*sections)
     render html: helpers.safe_join(sections.map do |section|
       render_to_string(partial: 'lemon_drop/issues/page_section', locals: { section: section, editable: true })
     end)

@@ -26,7 +26,10 @@ RSpec.describe 'Admin::LemonDrop live editor', type: :request do
     {
       'open the live editor' => -> { get admin_lemon_drop_issue_live_editor_path(issue) },
       'open a Section in the drawer' => -> { get edit_admin_lemon_drop_issue_section_path(issue, intro, drawer: 1) },
-      'save from the drawer' => -> { save_from_drawer(sectionable_attributes: { heading: 'hacked' }) }
+      'save from the drawer' => -> { save_from_drawer(sectionable_attributes: { heading: 'hacked' }) },
+      'preview from the drawer' => lambda {
+        post preview_admin_lemon_drop_issue_section_path(issue, intro), params: { lemon_drop_section: { theme: 'sage' } }
+      }
     }.each do |action, request|
       it "is sent to the clients page instead of being able to #{action}" do
         instance_exec(&request)
@@ -60,7 +63,9 @@ RSpec.describe 'Admin::LemonDrop live editor', type: :request do
       get edit_admin_lemon_drop_issue_section_path(issue, intro, drawer: 1)
 
       expect(response.body).not_to include('<html')
-      expect(response.body).to include('data-action="submit-&gt;live-editor#save"', 'data-turbo="false"')
+      expect(response.body).to include('data-turbo="false"',
+        'data-action="submit-&gt;live-editor#save input-&gt;live-editor#preview change-&gt;live-editor#preview"',
+        %(data-preview-url="#{preview_admin_lemon_drop_issue_section_path(issue, intro)}"))
       expect(response.body).to include(%(action="#{admin_lemon_drop_issue_section_path(issue, intro, drawer: 1)}"))
       expect(response.body).to include('data-controller="rich-text"', 'name="lemon_drop_section[sectionable_attributes][icon]"')
     end
@@ -92,6 +97,33 @@ RSpec.describe 'Admin::LemonDrop live editor', type: :request do
       expect(response.body).not_to include('<html')
       expect(intro.reload.anchor).to eq('intro')
       expect(intro.sectionable.reload.heading).to eq('hello!')
+    end
+
+    it 'previews unsaved changes as the page renders them, saving nothing' do
+      expect do
+        post preview_admin_lemon_drop_issue_section_path(issue, intro), params: { lemon_drop_section: {
+          theme: 'sage', sectionable_attributes: { heading: 'not yet', body_html: '<p>draft <em>body</em></p>' }
+        } }
+      end.not_to(change { intro.reload.updated_at })
+
+      expect(response).to have_http_status(200)
+      expect(response.body).to include(%(<div id="intro" class="theme-sage" data-section-id="#{intro.id}">))
+      expect(response.body).to include('<h2>not yet</h2>', '<em>body</em>')
+      expect(response.body).not_to include(%(data-section-id="#{contents.id}"))
+      expect(intro.reload.theme).to eq('cream')
+      expect(intro.sectionable.reload).to have_attributes(heading: 'hello!', body_html: '<p>soup season</p>')
+    end
+
+    it 'leaves images out of a preview' do
+      expect do
+        post preview_admin_lemon_drop_issue_section_path(issue, intro), params: { lemon_drop_section: {
+          sectionable_attributes: { heading: 'not yet', icon: image_upload('lemon-slice.png') }
+        } }
+      end.not_to change(ActiveStorage::Blob, :count)
+
+      expect(response.body).to include('<h2>not yet</h2>')
+      expect(response.body).not_to include('class="icon"')
+      expect(intro.sectionable.reload.icon).not_to be_attached
     end
 
     it 'still redirects a save from the Section editor' do

@@ -45,7 +45,33 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     expect(intro.sectionable.reload).to have_attributes(heading: 'hi there', body_html: '<p>soup season, stew time</p>')
   end
 
-  it 'shows a refused save in the drawer and leaves the page alone' do
+  it 'shows changes on the page as they are typed, saving nothing until Save, and Close puts the page back' do
+    visit admin_lemon_drop_issue_live_editor_path(issue)
+
+    within_frame(page_frame) { find("[data-section-id='#{intro.id}']").click }
+    within('.live-editor__drawer') do
+      fill_in 'Heading', with: 'typing away'
+      editor = find('.rich-text__editor [contenteditable="true"]')
+      editor.click
+      editor.send_keys(:end, ', still typing')
+    end
+
+    within_frame(page_frame) do
+      expect(page).to have_css('.intro h2', text: 'typing away')
+      expect(page).to have_css('.intro .body p', text: 'soup season, still typing')
+    end
+    expect(intro.sectionable.reload.heading).to eq('hello!')
+
+    within('.live-editor__drawer') { click_button 'Close' }
+
+    within_frame(page_frame) do
+      expect(page).to have_css('.intro h2', text: 'hello!')
+      expect(page).to have_no_content('still typing')
+    end
+    expect(intro.sectionable.reload).to have_attributes(heading: 'hello!', body_html: '<p>soup season</p>')
+  end
+
+  it 'shows a refused save in the drawer, saving nothing, and Close puts the page back' do
     visit admin_lemon_drop_issue_live_editor_path(issue)
 
     within_frame(page_frame) { find("[data-section-id='#{intro.id}']").click }
@@ -55,7 +81,9 @@ describe 'Admin: Lemon Drop: live editor', js: true do
       click_button 'Save'
       expect(page).to have_content('Anchor has already been taken')
     end
+    expect(intro.sectionable.reload.heading).to eq('hello!')
 
+    within('.live-editor__drawer') { click_button 'Close' }
     within_frame(page_frame) { expect(page).to have_css('.intro h2', text: 'hello!') }
   end
 end

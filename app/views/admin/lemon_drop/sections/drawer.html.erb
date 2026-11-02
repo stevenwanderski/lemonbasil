@@ -5,4 +5,5 @@
 
 <%= render 'form', section: @section, issue: @issue,
       url: admin_lemon_drop_issue_section_path(@issue, @section, drawer: 1),
-      form_options: { data: { turbo: false, action: 'submit->live-editor#save' } } %>
+      form_options: { data: { turbo: false, action: 'submit->live-editor#save input->live-editor#preview change->live-editor#preview',
+        preview_url: preview_admin_lemon_drop_issue_section_path(@issue, @section) } } %>

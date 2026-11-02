@@ -92,6 +92,7 @@ Rails.application.routes.draw do
         resource :live_editor, only: :show
         resources :sections, only: [:create, :edit, :update, :destroy] do
           post :duplicate, on: :member
+          post :preview, on: :member
           patch :reorder, on: :collection
           resources :recipes, only: [:new, :create, :edit, :update, :destroy] do
             patch :move, on: :member

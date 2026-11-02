@@ -76,6 +76,9 @@ export default class extends Controller {
 
   save() {
     this.inputTarget.value = this.editor.isEmpty ? "" : this.editor.getHTML()
+    // A script setting a value fires no event; anything watching the form
+    // (the live editor's preview) needs one.
+    this.inputTarget.dispatchEvent(new Event("input", { bubbles: true }))
   }
 
   refreshButtons() {

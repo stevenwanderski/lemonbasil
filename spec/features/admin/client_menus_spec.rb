@@ -58,12 +58,14 @@ describe 'Admin: Client Menus', js: true do
       expect(page).to_not have_content('New Client Menu')
     end
 
-    it 'shows validation message' do
+    # The client became optional (fff0585); no field is required now.
+    it 'saves a menu with no client' do
       visit admin_client_menus_path
       click_link '+ Add Client Menu'
       click_button 'Save'
 
-      expect(page).to have_content('This field is required')
+      expect(page).to have_content('Client Menu created!')
+      expect(page).to have_content('NO CLIENT')
     end
   end
 end

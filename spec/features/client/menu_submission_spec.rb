@@ -119,7 +119,7 @@ describe 'Client: Menu Submission', js: true do
         visit menu_slug_path(slug: menu.slug)
 
         check 'Eggs Benny'
-        click_link 'click here!'
+        click_link 'Click here to save on staples'
         check 'Beans'
         fill_in 'Staple Notes', with: 'I have beans.'
         click_button 'Submit Order'
@@ -131,7 +131,7 @@ describe 'Client: Menu Submission', js: true do
 
       it 'shows and hides the staples form' do
         visit menu_slug_path(slug: menu.slug)
-        click_link 'click here!'
+        click_link 'Click here to save on staples'
         expect(page).to have_content('Staples')
 
         click_link 'Nevermind, skip!'

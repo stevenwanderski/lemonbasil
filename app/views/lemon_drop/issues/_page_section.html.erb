@@ -1,0 +1,5 @@
+<%# One Section on the page. In the live editor it carries its id, so a click
+    finds its form and a save finds what to replace. %>
+<%= tag.div id: section.anchor, class: "theme-#{section.theme}", data: ({ section_id: section.id } if local_assigns[:editable]) do %>
+  <%= render partial: section.sectionable.to_partial_path, object: section.sectionable %>
+<% end %>

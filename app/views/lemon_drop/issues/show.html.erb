@@ -1,9 +1,24 @@
 <% content_for :title, "the lemon drop · #{@issue.title}" %>
 
+<% if @editable %>
+  <style>
+    [data-section-id] { cursor: pointer; }
+    [data-section-id]:hover { outline: 3px dashed #c9a227; outline-offset: -3px; }
+  </style>
+  <script>
+    // In the live editor's iframe: a click tells the editor which Section to
+    // open, from the moment the page parses (not after every image loads).
+    // Links stay put, so the iframe never leaves the page.
+    document.addEventListener('click', function (event) {
+      if (event.target.closest('a')) event.preventDefault()
+      var section = event.target.closest('[data-section-id]')
+      if (section) parent.postMessage({ sectionId: section.dataset.sectionId }, location.origin)
+    })
+  </script>
+<% end %>
+
 <% @sections.each do |section| %>
-  <%= tag.div id: section.anchor, class: "theme-#{section.theme}" do %>
-    <%= render section.sectionable %>
-  <% end %>
+  <%= render 'lemon_drop/issues/page_section', section: section, editable: @editable %>
 <% end %>
 
 <footer class="mono-caps">

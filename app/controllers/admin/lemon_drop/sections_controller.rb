@@ -29,12 +29,21 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
     redirect_to edit_admin_lemon_drop_issue_section_path(@issue, section), notice: "#{section.sectionable.model_name.human} added!"
   end
 
+  # With drawer, just the form, for the live editor's drawer.
   def edit
+    render :drawer, layout: false if params[:drawer]
   end
 
+  # From the live editor's drawer, a save answers with the Section as the
+  # page renders it, plus every Table of Contents (its entries come from the
+  # other Sections' headings and labels); a refused save, with the form.
   def update
     if @section.update(section_params)
+      return render_page_sections if params[:drawer]
+
       redirect_back fallback_location: edit_admin_lemon_drop_issue_section_path(@issue, @section), notice: 'Section updated!'
+    elsif params[:drawer]
+      render :drawer, layout: false, status: :unprocessable_entity
     else
       flash.now[:error] = 'Could not save'
       render :edit, status: :unprocessable_entity
@@ -63,6 +72,13 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   end
 
   private
+
+  def render_page_sections
+    sections = [@section, *@issue.sections.lemon_drop_table_of_contents_sections.excluding(@section)]
+    render html: helpers.safe_join(sections.map do |section|
+      render_to_string(partial: 'lemon_drop/issues/page_section', locals: { section: section, editable: true })
+    end)
+  end
 
   def section_params
     params.require(:lemon_drop_section).permit(:theme, :anchor, :show_in_toc, :toc_label,

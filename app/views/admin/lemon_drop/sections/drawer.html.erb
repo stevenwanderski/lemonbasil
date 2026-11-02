@@ -1,0 +1,8 @@
+<div class="live-editor__drawer-header">
+  <h2><%= @section.sectionable.model_name.human %></h2>
+  <button type="button" class="link" data-action="live-editor#close">Close</button>
+</div>
+
+<%= render 'form', section: @section, issue: @issue,
+      url: admin_lemon_drop_issue_section_path(@issue, @section, drawer: 1),
+      form_options: { data: { turbo: false, action: 'submit->live-editor#save' } } %>

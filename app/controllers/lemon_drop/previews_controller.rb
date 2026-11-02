@@ -8,6 +8,7 @@ class LemonDrop::PreviewsController < Admin::LemonDrop::BaseController
   def show
     @issue = LemonDrop::Issue.find(params[:issue_id])
     @sections = @issue.page_sections
+    @editable = params[:editable].present?
     render 'lemon_drop/issues/show'
   end
 end

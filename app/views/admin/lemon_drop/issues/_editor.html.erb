@@ -6,6 +6,7 @@
     <p>
       <strong><%= issue.status.humanize %></strong>
       · <%= link_to 'Preview', admin_lemon_drop_issue_preview_path(issue), target: '_blank' %>
+      · <%= link_to 'Live editor', admin_lemon_drop_issue_live_editor_path(issue) %>
       <% if issue.published? %>
         · <%= link_to 'Public view', lemon_drop_issue_path(issue.slug), target: '_blank' %>
       <% end %>

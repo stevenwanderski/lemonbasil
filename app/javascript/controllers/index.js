@@ -15,3 +15,6 @@ application.register("rich-text", RichTextController)
 
 import RailsNestedForm from "@stimulus-components/rails-nested-form"
 application.register("nested-form", RailsNestedForm)
+
+import LiveEditorController from "./live_editor_controller"
+application.register("live-editor", LiveEditorController)

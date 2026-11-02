@@ -78,7 +78,10 @@ describe 'Admin: Lemon Drop: live editor', js: true do
       expect(page).to have_no_css('.intro img.icon')
       find("[data-section-id='#{intro.id}']").click
     end
-    within('.live-editor__drawer') { attach_file 'Icon', Rails.root.join('lemon-drop/images/lemon-slice.png') }
+    within('.live-editor__drawer') do
+      attach_file 'Icon', Rails.root.join('lemon-drop/images/lemon-slice.png')
+      expect(page).to have_css('img.image-field__preview[src^="blob:"]', count: 1)
+    end
 
     within_frame(page_frame) { expect(page).to have_css('.intro img.icon') }
     expect(ActiveStorage::Blob.unattached.count).to eq(1)

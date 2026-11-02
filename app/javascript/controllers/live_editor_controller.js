@@ -61,6 +61,7 @@ export default class extends Controller {
     form.querySelectorAll(`[data-uploaded-for="${input.id}"]`).forEach(element => element.remove())
     input.dataset.name ||= input.name
     input.name = input.dataset.name
+    this.showThumbnails(input)
     const buttons = form.querySelectorAll("[type=submit]")
     buttons.forEach(button => button.disabled = true)
 
@@ -81,6 +82,20 @@ export default class extends Controller {
       buttons.forEach(button => button.disabled = false)
     }
     this.showPreview(form)
+  }
+
+  // The drawer's thumbnails show the new pick straight from the files. One
+  // image replaces the saved thumbnail; several go beside the kept ones.
+  showThumbnails(input) {
+    if (!input.multiple) {
+      const saved = input.closest(".form-item")?.querySelector(".image-field__preview:not([data-uploaded-for])")
+      if (saved) saved.style.display = input.files.length ? "none" : ""
+    }
+    Array.from(input.files).forEach(file => {
+      const thumbnail = Object.assign(document.createElement("img"), { className: "image-field__preview", src: URL.createObjectURL(file), alt: "" })
+      thumbnail.dataset.uploadedFor = input.id
+      input.before(thumbnail)
+    })
   }
 
   directUpload(file, url) {

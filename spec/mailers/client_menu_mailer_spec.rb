@@ -37,7 +37,8 @@ describe ClientMenuMailer do
     it 'lists all menu selections' do
       body = Capybara.string(mail.body.encoded)
 
-      expect(body).to have_content('Frank Zappa Meal Prep Menu')
+      expect(body).to have_content('Menu Submission')
+      expect(body).to have_content('Frank Zappa')
       expect(body).to have_content('Total estimate: $22')
       expect(body).to have_content('Prep date: 3/2/2021')
 
@@ -61,7 +62,8 @@ describe ClientMenuMailer do
       it 'hides the pricing' do
         body = Capybara.string(mail.body.encoded)
 
-        expect(body).to have_content('Frank Zappa Meal Prep Menu')
+        expect(body).to have_content('Menu Submission')
+        expect(body).to have_content('Frank Zappa')
         expect(body).to_not have_content('Total estimate: $22')
         expect(body).to have_content('Prep date: 3/2/2021')
 

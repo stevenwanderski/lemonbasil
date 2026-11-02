@@ -41,7 +41,7 @@ section { padding: 88px 0; }
 /* ---------- cover ---------- */
 .cover { padding: 56px 0 72px; text-align: center; }
 .cover h1 { font-size: clamp(48px, 9vw, 96px); margin-bottom: 36px; }
-.cover img { width: min(100%, 520px); margin: 0 auto; aspect-ratio: 3 / 4; object-fit: cover; }
+.cover img { width: 100%; max-width: 520px; margin: 0 auto; aspect-ratio: 3 / 4; object-fit: cover; }
 .cover .tag { margin: 32px auto 0; display: inline-block; font-size: 15px; }
 .cover .tag span { display: block; padding: 6px 28px; }
 .cover .tag span + span { border-top: 1px dashed var(--ink); }

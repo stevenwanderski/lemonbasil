@@ -3,4 +3,6 @@
     <h2><%= recipes_section.heading %></h2>
   </div>
 <% end %>
-<%= render recipes_section.recipes.includes(:steps, ingredient_groups: :ingredients, hero_image_attachment: :blob) %>
+<%# A named partial, so it resolves the same from the admin's live editor. %>
+<%= render partial: 'lemon_drop/recipes/recipe', collection: recipes_section.recipes.includes(:steps, ingredient_groups: :ingredients, hero_image_attachment: :blob),
+      locals: { editable: local_assigns[:editable] } %>

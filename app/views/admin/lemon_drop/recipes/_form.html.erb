@@ -1,5 +1,6 @@
 <%# Everything a Recipe needs, hero image included, saved together. %>
-<%= form_with model: recipe, url: url, method: method do |f| %>
+<% form_options ||= {} %>
+<%= form_with model: recipe, url: url, method: method, **form_options do |f| %>
   <% if recipe.errors.any? %>
     <ul class="form-errors">
       <% recipe.errors.full_messages.uniq.each do |message| %>

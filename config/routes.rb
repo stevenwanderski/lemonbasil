@@ -96,6 +96,7 @@ Rails.application.routes.draw do
           patch :reorder, on: :collection
           resources :recipes, only: [:new, :create, :edit, :update, :destroy] do
             patch :move, on: :member
+            post :preview, on: :member
             patch :reorder, on: :collection
           end
         end

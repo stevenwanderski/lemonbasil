@@ -2,18 +2,21 @@
 
 <% if @editable %>
   <style>
-    [data-section-id] { cursor: pointer; }
-    [data-section-id]:hover { outline: 3px dashed #c9a227; outline-offset: -3px; }
-    [data-section-id][data-selected] { outline: 3px solid #c9a227; outline-offset: -3px; }
+    [data-section-id], [data-recipe-id] { cursor: pointer; }
+    /* Over a Recipe, only the Recipe is outlined, not its Section too. */
+    [data-section-id]:hover:not(:has([data-recipe-id]:hover)), [data-recipe-id]:hover { outline: 3px dashed #c9a227; outline-offset: -3px; }
+    [data-section-id][data-selected], [data-recipe-id][data-selected] { outline: 3px solid #c9a227; outline-offset: -3px; }
   </style>
   <script>
-    // In the live editor's iframe: a click tells the editor which Section to
-    // open, from the moment the page parses (not after every image loads).
+    // In the live editor's iframe: a click tells the editor which Section, or
+    // which Recipe in it, to open, from the moment the page parses (not after
+    // every image loads).
     // Links stay put, so the iframe never leaves the page.
     document.addEventListener('click', function (event) {
       if (event.target.closest('a')) event.preventDefault()
       var section = event.target.closest('[data-section-id]')
-      if (section) parent.postMessage({ sectionId: section.dataset.sectionId }, location.origin)
+      var recipe = event.target.closest('[data-recipe-id]')
+      if (section) parent.postMessage({ sectionId: section.dataset.sectionId, recipeId: recipe && recipe.dataset.recipeId }, location.origin)
     })
   </script>
 <% end %>

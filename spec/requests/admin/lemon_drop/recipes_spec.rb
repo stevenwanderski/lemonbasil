@@ -50,7 +50,7 @@ RSpec.describe 'Admin::LemonDrop::Recipes', type: :request do
 
         get edit_admin_lemon_drop_issue_section_path(issue, section)
 
-        rows = response.body.scan(%r{<li class="recipe-list__row" data-id="(\d+)">.*?<a href="([^"]+)">\s*<strong>([^<]+)</strong>}m)
+        rows = response.body.scan(%r{<li class="recipe-list__row" data-id="(\d+)">.*?<a [^>]*href="([^"]+)"[^>]*>\s*<strong>([^<]+)</strong>}m)
         expect(rows).to eq([
           [first.id.to_s, edit_admin_lemon_drop_issue_section_recipe_path(issue, section, first), 'chickpea stew'],
           [second.id.to_s, edit_admin_lemon_drop_issue_section_recipe_path(issue, section, second), 'harissa chicken']

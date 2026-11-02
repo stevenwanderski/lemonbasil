@@ -15,7 +15,9 @@
       <% recipes.each do |recipe| %>
         <%= tag.li class: 'recipe-list__row', data: { id: recipe.id } do %>
           <span class="drag-handle" title="Drag to reorder">⠿</span>
-          <%= link_to edit_admin_lemon_drop_issue_section_recipe_path(issue, section, recipe) do %>
+          <%# In the live editor's drawer, the Recipe opens in the drawer. %>
+          <%= link_to edit_admin_lemon_drop_issue_section_recipe_path(issue, section, recipe),
+                data: { action: 'live-editor#chooseRecipe:prevent', section_id: section.id, recipe_id: recipe.id } do %>
             <strong><%= recipe.title %></strong>
             <span><%= recipe.category&.humanize %></span>
           <% end %>
@@ -27,5 +29,6 @@
   <% else %>
     <p class="hint">No Recipes yet.</p>
   <% end %>
-  <%= link_to '+ Add recipe', new_admin_lemon_drop_issue_section_recipe_path(issue, section), class: 'button' %>
+  <%= link_to '+ Add recipe', new_admin_lemon_drop_issue_section_recipe_path(issue, section), class: 'button',
+        data: { action: 'live-editor#newRecipe:prevent', section_id: section.id } %>
 </div>

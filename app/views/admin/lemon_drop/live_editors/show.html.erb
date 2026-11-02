@@ -1,5 +1,7 @@
 <%= tag.div class: 'live-editor', data: { controller: 'live-editor', action: 'message@window->live-editor#pick',
-      live_editor_form_url_value: edit_admin_lemon_drop_issue_section_path(@issue, ':id', drawer: 1) } do %>
+      live_editor_form_url_value: edit_admin_lemon_drop_issue_section_path(@issue, ':id', drawer: 1),
+      live_editor_recipe_form_url_value: edit_admin_lemon_drop_issue_section_recipe_path(@issue, ':section_id', ':id', drawer: 1),
+      live_editor_new_recipe_url_value: new_admin_lemon_drop_issue_section_recipe_path(@issue, ':section_id', drawer: 1) } do %>
   <header class="live-editor__bar">
     <%= link_to '← Issue editor', edit_admin_lemon_drop_issue_path(@issue), class: 'live-editor__back' %>
     <h1 class="live-editor__title"><%= @issue.title %></h1>

@@ -152,4 +152,55 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     expect(evaluate_script("document.querySelector('.live-editor__page').clientWidth")).to eq(386)
     expect(page).to have_css('button[aria-pressed="true"]', text: 'Phone')
   end
+
+  describe 'Recipes' do
+    let!(:recipes) do
+      create(:lemon_drop_section, issue: issue, position: 3, anchor: 'recipes', sectionable: build(:lemon_drop_recipes_section))
+    end
+    let!(:recipe) { create(:lemon_drop_recipe, recipes_section: recipes.sectionable, title: 'chickpea stew') }
+
+    it 'clicks a Recipe on the page, previews it while typing, and saves it' do
+      visit admin_lemon_drop_issue_live_editor_path(issue)
+
+      within_frame(page_frame) { find("[data-recipe-id='#{recipe.id}']").click }
+      within('.live-editor__drawer') do
+        expect(page).to have_css('h2', text: 'Recipe: chickpea stew')
+        fill_in 'Title', with: 'white bean stew'
+      end
+
+      within_frame(page_frame) do
+        expect(page).to have_css("[data-recipe-id='#{recipe.id}'][data-selected] h2", text: 'white bean stew')
+      end
+      expect(recipe.reload.title).to eq('chickpea stew')
+
+      within('.live-editor__drawer') { click_button 'Save' }
+
+      expect(page).to have_no_css('.live-editor__drawer form')
+      within_frame(page_frame) { expect(page).to have_css("[data-recipe-id='#{recipe.id}'] h2", text: 'white bean stew') }
+      expect(recipe.reload.title).to eq('white bean stew')
+    end
+
+    it 'opens a Recipe from its Section’s list, and adds one, in the drawer' do
+      visit admin_lemon_drop_issue_live_editor_path(issue)
+
+      within('.live-editor__outline') { click_button 'Recipes' }
+      within('.live-editor__drawer') { click_link 'chickpea stew' }
+      within('.live-editor__drawer') { expect(page).to have_css('h2', text: 'Recipe: chickpea stew') }
+      expect(page).to have_current_path(admin_lemon_drop_issue_live_editor_path(issue))
+
+      within('.live-editor__drawer') { click_button '← All sections' }
+      within('.live-editor__outline') { click_button 'Recipes' }
+      within('.live-editor__drawer') do
+        click_link '+ Add recipe'
+        expect(page).to have_css('h2', text: 'New Recipe')
+        fill_in 'Title', with: 'harissa chicken'
+        select 'Entree', from: 'Category'
+        click_button 'Save'
+      end
+
+      expect(page).to have_no_css('.live-editor__drawer form')
+      within_frame(page_frame) { expect(page).to have_css('[data-recipe-id] h2', text: 'harissa chicken') }
+      expect(recipes.sectionable.recipes.pluck(:title)).to eq(['chickpea stew', 'harissa chicken'])
+    end
+  end
 end

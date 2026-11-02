@@ -10,42 +10,66 @@ import { DirectUpload } from "@rails/activestorage"
 // opening another Section) puts the saved Section back. A picked image is
 // uploaded at once (Active Storage direct upload) and the form carries its
 // signed id instead of the file, so the preview can show it and Save only
-// attaches it. Sections the server renders are swapped into the page by
-// data-section-id.
+// attaches it. A Recipe inside a Recipes Section opens and previews the same
+// way, on its own. What the server renders is swapped into the page by
+// data-section-id or data-recipe-id.
 export default class extends Controller {
   static targets = ["page", "canvas", "outline", "drawer", "widthButton"]
-  static values = { formUrl: String }
+  static values = { formUrl: String, recipeFormUrl: String, newRecipeUrl: String }
 
   pick(event) {
     if (event.origin !== window.location.origin || event.source !== this.pageTarget.contentWindow) return
 
-    this.open(event.data.sectionId)
+    const { sectionId, recipeId } = event.data
+    recipeId ? this.openRecipe(sectionId, recipeId) : this.open(sectionId)
   }
 
   // From the panel's Section list: open it, and bring it into view.
   async choose(event) {
     const id = event.currentTarget.dataset.sectionId
     await this.open(id)
-    this.findSection(id)?.scrollIntoView({ block: "start", behavior: "smooth" })
+    this.find(sectionKey(id))?.scrollIntoView({ block: "start", behavior: "smooth" })
   }
 
-  async open(id) {
+  // From a Recipes Section's Recipe list, in the drawer.
+  async chooseRecipe(event) {
+    const { sectionId, recipeId } = event.currentTarget.dataset
+    await this.openRecipe(sectionId, recipeId)
+    this.find(recipeKey(recipeId))?.scrollIntoView({ block: "start", behavior: "smooth" })
+  }
+
+  // A blank Recipe form: nothing on the page yet, so nothing to select.
+  newRecipe(event) {
+    this.load(this.newRecipeUrlValue.replace(":section_id", event.currentTarget.dataset.sectionId), null)
+  }
+
+  open(id) {
+    return this.load(this.formUrlValue.replace(":id", id), sectionKey(id))
+  }
+
+  openRecipe(sectionId, id) {
+    return this.load(this.recipeFormUrlValue.replace(":section_id", sectionId).replace(":id", id), recipeKey(id))
+  }
+
+  // Loads a form into the drawer for the page element the key selects.
+  async load(url, key) {
     this.close()
-    const response = await get(this.formUrlValue.replace(":id", id), { responseKind: "html" })
+    const response = await get(url, { responseKind: "html" })
     if (!response.ok) return
 
-    this.saved = this.findSection(id)?.cloneNode(true)
-    this.selectedId = id
-    this.findSection(id)?.setAttribute("data-selected", "")
+    const element = key && this.find(key)
+    this.saved = element?.cloneNode(true)
+    this.selected = key
+    element?.setAttribute("data-selected", "")
     this.drawerTarget.innerHTML = await response.html
     this.drawerTarget.hidden = false
     this.outlineTarget.hidden = true
     this.element.classList.add("is-editing")
   }
 
-  // Leaves without saving: the page goes back to the saved Section.
+  // Leaves without saving: the page goes back to the saved Section or Recipe.
   close() {
-    if (this.saved) this.findSection(this.saved.dataset.sectionId)?.replaceWith(this.saved)
+    if (this.saved) this.find(this.selected)?.replaceWith(this.saved)
     this.hide()
   }
 
@@ -53,8 +77,8 @@ export default class extends Controller {
     clearTimeout(this.previewTimer)
     this.previews = (this.previews || 0) + 1 // so a preview still on its way is ignored
     this.saved = null
-    if (this.selectedId) this.findSection(this.selectedId)?.removeAttribute("data-selected")
-    this.selectedId = null
+    if (this.selected) this.find(this.selected)?.removeAttribute("data-selected")
+    this.selected = null
     this.drawerTarget.hidden = true
     this.drawerTarget.innerHTML = ""
     this.outlineTarget.hidden = false
@@ -120,6 +144,8 @@ export default class extends Controller {
   }
 
   async showPreview(form) {
+    if (!form.dataset.previewUrl) return // a new Recipe shows on Save
+
     const body = new FormData(form)
     body.delete("_method")
     // A file still here wasn't uploaded (its upload failed); don't send it on
@@ -159,7 +185,7 @@ export default class extends Controller {
   // The Section list shows the saved heading.
   updateOutline(form) {
     const heading = form.querySelector('[name="lemon_drop_section[sectionable_attributes][heading]"]')
-    const row = this.outlineTarget.querySelector(`[data-section-id="${this.selectedId}"] [data-live-editor-heading]`)
+    const row = this.selected && this.outlineTarget.querySelector(`${this.selected} [data-live-editor-heading]`)
     if (heading && row) row.textContent = heading.value.replace(/\s+/g, " ").trim()
   }
 
@@ -174,16 +200,21 @@ export default class extends Controller {
     })
   }
 
-  findSection(id) {
-    return this.pageTarget.contentDocument.querySelector(`[data-section-id="${id}"]`)
+  find(key) {
+    return this.pageTarget.contentDocument.querySelector(key)
   }
 
+  // Each top-level element the server sent replaces its match on the page.
   replaceSections(html) {
     const template = this.pageTarget.contentDocument.createElement("template")
     template.innerHTML = html
-    Array.from(template.content.children).forEach(section => {
-      if (section.dataset.sectionId === this.selectedId) section.setAttribute("data-selected", "")
-      this.findSection(section.dataset.sectionId)?.replaceWith(section)
+    Array.from(template.content.children).forEach(element => {
+      const key = element.dataset.recipeId ? recipeKey(element.dataset.recipeId) : sectionKey(element.dataset.sectionId)
+      if (key === this.selected) element.setAttribute("data-selected", "")
+      this.find(key)?.replaceWith(element)
     })
   }
 }
+
+const sectionKey = id => `[data-section-id="${id}"]`
+const recipeKey = id => `[data-recipe-id="${id}"]`

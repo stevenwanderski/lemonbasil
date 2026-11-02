@@ -1,4 +1,7 @@
-<article class="recipe" id="<%= recipe.slug %>">
+<%# In the live editor it carries its id, so a click opens it and a save
+    finds what to replace. There, it can also hold unsaved changes: anything
+    marked for removal is left out, and groups show in their new order. %>
+<%= tag.article class: 'recipe', id: recipe.slug, data: ({ recipe_id: recipe.id } if local_assigns[:editable]) do %>
   <div class="recipe-hero">
     <% if recipe.hero_image.attached? %>
       <%= image_tag recipe.hero_image.variant(:hero), alt: recipe.title, style: "object-position: center #{recipe.hero_focus}" %>
@@ -12,12 +15,12 @@
     <div class="recipe-body">
       <div class="need">
         <h3>what you need</h3>
-        <% recipe.ingredient_groups.each do |group| %>
+        <% recipe.ingredient_groups.reject(&:marked_for_destruction?).sort_by { |group| group.position.to_i }.each do |group| %>
           <% if group.name.present? %>
             <h4><%= group.name %></h4>
           <% end %>
           <ul>
-            <% group.ingredients.each do |ingredient| %>
+            <% group.ingredients.reject(&:marked_for_destruction?).each do |ingredient| %>
               <li><%= ingredient.text %></li>
             <% end %>
           </ul>
@@ -26,7 +29,7 @@
       <div class="do">
         <h3>what you do</h3>
         <ol>
-          <% recipe.steps.each do |step| %>
+          <% recipe.steps.reject(&:marked_for_destruction?).each do |step| %>
             <li><%= step.body %></li>
           <% end %>
         </ol>
@@ -36,4 +39,4 @@
       </div>
     </div>
   </div>
-</article>
+<% end %>

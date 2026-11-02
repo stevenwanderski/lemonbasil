@@ -39,7 +39,7 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   # other Sections' headings and labels); a refused save, with the form.
   def update
     if @section.update(section_params)
-      return render_page_sections(@section, *@issue.sections.lemon_drop_table_of_contents_sections.excluding(@section)) if params[:drawer]
+      return render html: live_page_html(sections: [@section, *@issue.sections.lemon_drop_table_of_contents_sections.excluding(@section)]) if params[:drawer]
 
       redirect_back fallback_location: edit_admin_lemon_drop_issue_section_path(@issue, @section), notice: 'Section updated!'
     elsif params[:drawer]
@@ -50,34 +50,17 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
     end
   end
 
-  # The drawer's unsaved changes, as the page would show them. Images show
-  # once uploaded: the drawer uploads a picked file straight away and sends
-  # its signed id; a file sent with the form instead is left out. Nothing is
-  # kept: replacing an attachment in memory can touch the database, so it's
-  # all rolled back.
+  # The drawer's unsaved changes, as the page would show them; nothing is
+  # kept. Images show once uploaded (see previewable_attachments).
   # shortcut: only the Section itself is previewed, so a Table of Contents
   # catches up on Save; render it from these in-memory changes if that matters.
   def preview
     attributes = section_params
-    sectionable_attributes = attributes[:sectionable_attributes]
-    @section.sectionable.class.attachment_reflections.each_key do |name|
-      value = sectionable_attributes&.dig(name)
-      next if value.nil?
-
-      if value.is_a?(Array)
-        sectionable_attributes[name] = value.grep(String)
-      elsif !value.is_a?(String) || value.blank?
-        sectionable_attributes.delete(name)
-      end
-    end
-
-    html = nil
-    ActiveRecord::Base.transaction do
+    previewable_attachments(attributes[:sectionable_attributes], @section.sectionable.class)
+    render_preview do
       @section.assign_attributes(attributes)
-      html = page_sections_html(@section)
-      raise ActiveRecord::Rollback
+      live_page_html(sections: [@section])
     end
-    render html: html
   end
 
   # The drag in the Section list posts every Section id, top first.
@@ -102,16 +85,6 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   end
 
   private
-
-  def render_page_sections(*sections)
-    render html: page_sections_html(*sections)
-  end
-
-  def page_sections_html(*sections)
-    helpers.safe_join(sections.map do |section|
-      render_to_string(partial: 'lemon_drop/issues/page_section', locals: { section: section, editable: true })
-    end)
-  end
 
   def section_params
     params.require(:lemon_drop_section).permit(:theme, :anchor, :show_in_toc, :toc_label,

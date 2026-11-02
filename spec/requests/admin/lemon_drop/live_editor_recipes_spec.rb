@@ -71,6 +71,16 @@ RSpec.describe 'Admin::LemonDrop live editor: Recipes', type: :request do
       expect(section_html.css('[data-recipe-id] h2').map(&:text)).to eq(['chickpea stew', 'harissa chicken'])
     end
 
+    it 'deletes a Recipes Section from the drawer, moving its Recipes, and answers with what changed' do
+      other = create(:lemon_drop_section, issue: issue, position: 3, anchor: 'more', sectionable: build(:lemon_drop_recipes_section))
+
+      delete admin_lemon_drop_issue_section_path(issue, section, drawer: 1), params: { move_recipes_to: other.id }
+
+      expect(page_elements.map { |element| element['data-section-id'] }).to eq([other.id.to_s, menu.id.to_s])
+      expect(page_elements.first.css('[data-recipe-id] h2').map(&:text)).to eq(['chickpea stew'])
+      expect(issue.sections.reload).to eq([menu, other])
+    end
+
     it 'shows a refused save in the drawer' do
       patch admin_lemon_drop_issue_section_recipe_path(issue, section, recipe, drawer: 1), params: { lemon_drop_recipe: { title: '' } }
 

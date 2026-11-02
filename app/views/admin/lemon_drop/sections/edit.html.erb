@@ -10,23 +10,7 @@
   </div>
 
   <% if move_targets.any? && @section.sectionable.recipes.any? %>
-    <%# A Recipes Section that still has Recipes asks what happens to them. %>
-    <details class="section-delete">
-      <summary class="link--danger">Delete…</summary>
-      <%= form_with url: admin_lemon_drop_issue_section_path(@issue, @section), method: :delete,
-            data: { turbo_confirm: 'Delete this Recipes Section?' } do |df| %>
-        <p>This Section has <%= pluralize(@section.sectionable.recipes.size, 'Recipe') %>.</p>
-        <label class="form-item--checkbox">
-          <%= df.radio_button :move_recipes_to, '', checked: true %> Delete them too
-        </label>
-        <% move_targets.each do |target| %>
-          <label class="form-item--checkbox">
-            <%= df.radio_button :move_recipes_to, target.id %> Move them to <%= recipes_section_label(target) %>
-          </label>
-        <% end %>
-        <%= df.submit 'Delete Section', class: 'button' %>
-      <% end %>
-    </details>
+    <%= render 'delete_recipes_section', section: @section, issue: @issue, move_targets: move_targets %>
   <% end %>
 
   <%= render 'form', section: @section, issue: @issue, url: admin_lemon_drop_issue_section_path(@issue, @section) %>

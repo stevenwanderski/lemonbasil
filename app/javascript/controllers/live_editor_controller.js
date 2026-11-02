@@ -182,6 +182,24 @@ export default class extends Controller {
     }
   }
 
+  // Deletes the open Section: it leaves the page and the Section list, and
+  // the Sections it fed (contents, menu) come back from the server.
+  async destroy(event) {
+    event.preventDefault()
+    const form = event.target
+    if (!confirm(form.dataset.deleteConfirm)) return
+
+    // The form's hidden _method field makes this the DELETE it asks for.
+    const response = await post(form.action, { body: new FormData(form), responseKind: "html" })
+    if (!response.ok) return
+
+    this.find(this.selected)?.remove()
+    this.outlineTarget.querySelector(this.selected)?.closest("li")?.remove()
+    this.saved = null
+    this.replaceSections(await response.html)
+    this.hide()
+  }
+
   // The Section list shows the saved heading.
   updateOutline(form) {
     const heading = form.querySelector('[name="lemon_drop_section[sectionable_attributes][heading]"]')

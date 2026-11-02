@@ -1,0 +1,19 @@
+<%# A Recipes Section that still has Recipes asks what happens to them. In
+    the live editor's drawer, form_data hands the delete to the editor. %>
+<% form_data ||= {} %>
+<details class="section-delete">
+  <summary class="link--danger">Delete…</summary>
+  <%= form_with url: admin_lemon_drop_issue_section_path(issue, section, drawer: (1 if form_data.any?)), method: :delete,
+        data: { turbo_confirm: 'Delete this Recipes Section?', delete_confirm: 'Delete this Recipes Section?' }.merge(form_data) do |df| %>
+    <p>This Section has <%= pluralize(section.sectionable.recipes.size, 'Recipe') %>.</p>
+    <label class="form-item--checkbox">
+      <%= df.radio_button :move_recipes_to, '', checked: true %> Delete them too
+    </label>
+    <% move_targets.each do |target| %>
+      <label class="form-item--checkbox">
+        <%= df.radio_button :move_recipes_to, target.id %> Move them to <%= recipes_section_label(target) %>
+      </label>
+    <% end %>
+    <%= df.submit 'Delete Section', class: 'button' %>
+  <% end %>
+</details>

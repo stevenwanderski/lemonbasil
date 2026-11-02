@@ -165,6 +165,19 @@ $live-editor-panel: 400px;
     display: none;
   }
 
+  &__delete {
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  // Delete sits above the form, out of the way of Save.
+  &__drawer .section-delete,
+  &__drawer form.button_to {
+    margin-bottom: 20px;
+  }
+
   &__drawer-header {
     margin-bottom: 20px;
 

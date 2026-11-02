@@ -143,6 +143,23 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     within_frame(page_frame) { expect(page).to have_no_css('[data-selected]') }
   end
 
+  it 'deletes a Section from the drawer, taking it off the page and the list' do
+    visit admin_lemon_drop_issue_live_editor_path(issue)
+
+    within_frame(page_frame) { find("[data-section-id='#{outro.id}']").click }
+    within('.live-editor__drawer') do
+      accept_confirm('Delete this Outro Section?') { click_button 'Delete Section' }
+    end
+
+    expect(page).to have_no_css('.live-editor__drawer form')
+    within('.live-editor__outline') { expect(page).to have_no_button('Outro') }
+    within_frame(page_frame) do
+      expect(page).to have_no_css("[data-section-id='#{outro.id}']")
+      expect(page).to have_css('.intro')
+    end
+    expect(issue.sections.reload).to eq([intro])
+  end
+
   it 'shows the page at a phone’s width' do
     visit admin_lemon_drop_issue_live_editor_path(issue)
 
@@ -181,7 +198,7 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     end
 
     it 'previews dragged ingredient groups in their new order' do
-      create(:lemon_drop_ingredient_group, recipe: recipe, name: 'Pantry', position: 2)
+      create(:lemon_drop_ingredient_group, recipe: recipe, name: 'Pantry', position: recipe.ingredient_groups.first.position + 1)
       visit admin_lemon_drop_issue_live_editor_path(issue)
 
       within_frame(page_frame) { find("[data-recipe-id='#{recipe.id}']").click }

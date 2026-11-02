@@ -3,6 +3,16 @@
   <h2><%= @section.sectionable.model_name.human %></h2>
 </div>
 
+<%# Delete goes through the live editor, which takes the Section off the page. %>
+<% delete_data = { turbo: false, action: 'submit->live-editor#destroy' } %>
+<% move_targets = recipe_move_targets(@section) %>
+<% if move_targets.any? && @section.sectionable.recipes.any? %>
+  <%= render 'delete_recipes_section', section: @section, issue: @issue, move_targets: move_targets, form_data: delete_data %>
+<% else %>
+  <%= button_to 'Delete Section', admin_lemon_drop_issue_section_path(@issue, @section, drawer: 1), method: :delete,
+        class: 'link--danger live-editor__delete', form: { data: delete_data.merge(delete_confirm: section_delete_confirm(@section)) } %>
+<% end %>
+
 <%= render 'form', section: @section, issue: @issue,
       url: admin_lemon_drop_issue_section_path(@issue, @section, drawer: 1),
       form_options: { data: { turbo: false, action: 'submit->live-editor#save input->live-editor#preview change->live-editor#preview',

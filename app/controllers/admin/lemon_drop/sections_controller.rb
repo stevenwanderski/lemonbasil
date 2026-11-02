@@ -77,10 +77,17 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
   end
 
   # A Recipes Section's Recipes are deleted with it, or moved to the Recipes
-  # Section named by move_recipes_to.
+  # Section named by move_recipes_to. From the live editor's drawer, it
+  # answers with the Sections that change: any Table of Contents and Menu
+  # Overview, and the Recipes Section the Recipes moved to.
   def destroy
     target = @issue.sections.lemon_drop_recipes_sections.excluding(@section).find(params[:move_recipes_to]) if params[:move_recipes_to].present?
     @issue.remove_section(@section, move_recipes_to: target&.sectionable)
+    if params[:drawer]
+      return render html: live_page_html(sections: [*target, *@issue.sections.lemon_drop_table_of_contents_sections,
+        *@issue.sections.lemon_drop_menu_overview_sections])
+    end
+
     redirect_to edit_admin_lemon_drop_issue_path(@issue), notice: 'Section deleted!'
   end
 

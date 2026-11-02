@@ -1,19 +1,22 @@
 <%= tag.div class: 'live-editor', data: { controller: 'live-editor', action: 'message@window->live-editor#pick',
       live_editor_form_url_value: edit_admin_lemon_drop_issue_section_path(@issue, ':id', drawer: 1) } do %>
   <header class="live-editor__bar">
-    <%= link_to '← Issue', edit_admin_lemon_drop_issue_path(@issue), class: 'live-editor__back' %>
-    <h1><%= @issue.title %></h1>
+    <%= link_to '← Issue editor', edit_admin_lemon_drop_issue_path(@issue), class: 'live-editor__back' %>
+    <h1 class="live-editor__title"><%= @issue.title %></h1>
     <span class="status-pill status-pill--<%= @issue.status %>"><%= @issue.status.humanize %></span>
     <% if @issue.published? %>
-      <span class="live-editor__live">Live: changes are public when saved</span>
+      <span class="live-editor__live" title="This Issue is published: every Save changes the public page.">Saves go live</span>
     <% end %>
-    <div class="live-editor__widths" role="group" aria-label="Page width">
-      <button type="button" class="button is-active" aria-pressed="true" data-live-editor-target="widthButton"
-              data-action="live-editor#setWidth" data-width="desktop">Desktop</button>
-      <button type="button" class="button" aria-pressed="false" data-live-editor-target="widthButton"
-              data-action="live-editor#setWidth" data-width="phone">Phone</button>
+
+    <div class="live-editor__actions">
+      <div class="live-editor__widths" role="group" aria-label="Page width">
+        <button type="button" class="is-active" aria-pressed="true" data-live-editor-target="widthButton"
+                data-action="live-editor#setWidth" data-width="desktop">Desktop</button>
+        <button type="button" aria-pressed="false" data-live-editor-target="widthButton"
+                data-action="live-editor#setWidth" data-width="phone">Phone</button>
+      </div>
+      <%= link_to 'Preview ↗', admin_lemon_drop_issue_preview_path(@issue), target: '_blank', class: 'button' %>
     </div>
-    <%= link_to 'Preview', admin_lemon_drop_issue_preview_path(@issue), target: '_blank', class: 'button' %>
   </header>
 
   <div class="live-editor__body">

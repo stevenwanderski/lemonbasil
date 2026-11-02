@@ -15,37 +15,97 @@ $live-editor-panel: 400px;
   flex-direction: column;
   height: 100vh;
 
+  // One row, everything centred on it at one line height.
   &__bar {
     display: flex;
     align-items: center;
-    gap: 14px;
-    padding: 10px 16px;
+    gap: 12px;
+    height: 56px;
+    flex-shrink: 0;
+    padding: 0 16px;
     border-bottom: solid $gray-light 2px;
     background: $white;
-
-    h1 {
-      font-size: 18px;
-    }
+    line-height: 1;
+    white-space: nowrap;
   }
 
   &__back {
-    font-weight: bold;
+    padding-right: 12px;
+    border-right: solid $gray-light 2px;
+    font-size: 14px;
+    font-weight: 500;
+    color: lighten($gray-dark, 25%);
+
+    &:hover {
+      color: $gray-dark;
+    }
   }
 
+  &__title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .status-pill {
+    line-height: 1;
+    padding: 5px 10px;
+  }
+
+  // A caution, not a success: a Save on a Published Issue goes public.
   &__live {
-    font-size: 13px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: #fff4d6;
+    color: #8a5a00;
+    font-size: 12px;
     font-weight: 600;
-    color: darken($green, 15%);
   }
 
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+  }
+
+  // Desktop | Phone, one control.
   &__widths {
     display: flex;
-    gap: 4px;
-    margin-left: auto;
+    padding: 3px;
+    border-radius: 20px;
+    background: $gray-light;
 
-    .button.is-active {
-      background: $gray-dark;
-      color: $white;
+    button {
+      padding: 6px 14px;
+      border: none;
+      border-radius: 17px;
+      background: transparent;
+      font-size: 14px;
+      line-height: 1;
+      cursor: pointer;
+
+      &.is-active {
+        background: $white;
+        font-weight: 600;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+      }
+    }
+  }
+
+  &__actions .button {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  // Narrow: the warning keeps its place; the long name gives way.
+  @media (max-width: 760px) {
+    &__live {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 120px;
     }
   }
 

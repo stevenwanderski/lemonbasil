@@ -180,6 +180,20 @@ describe 'Admin: Lemon Drop: live editor', js: true do
       expect(recipe.reload.title).to eq('white bean stew')
     end
 
+    it 'previews dragged ingredient groups in their new order' do
+      create(:lemon_drop_ingredient_group, recipe: recipe, name: 'Pantry', position: 2)
+      visit admin_lemon_drop_issue_live_editor_path(issue)
+
+      within_frame(page_frame) { find("[data-recipe-id='#{recipe.id}']").click }
+      within('.live-editor__drawer') do
+        rows = all('.nested-row')
+        rows.last.find('.drag-handle').drag_to(rows.first, delay: 0.2)
+      end
+
+      within_frame(page_frame) { expect(page).to have_css('.need h4:first-of-type', text: 'Pantry') }
+      expect(recipe.ingredient_groups.reload.map(&:name)).to eq(%w[Produce Pantry])
+    end
+
     it 'opens a Recipe from its Section’s list, and adds one, in the drawer' do
       visit admin_lemon_drop_issue_live_editor_path(issue)
 

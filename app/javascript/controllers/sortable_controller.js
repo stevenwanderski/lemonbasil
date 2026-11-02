@@ -8,7 +8,9 @@ import Sortable from "sortablejs"
 // the page shows the order as stored (the new one, or the old one if the
 // save was refused). Without one, only the rows move: form fields inside them
 // submit in their new order, and each row's [data-sortable-position] field
-// is numbered 1, 2, 3… as the form submits.
+// is numbered 1, 2, 3… on a drop (and again as the form submits, for rows
+// added since); the drop is announced as an input, so the live editor
+// previews it.
 export default class extends Controller {
   static values = { url: String, param: String, draggable: { type: String, default: ">*" } }
 
@@ -38,7 +40,11 @@ export default class extends Controller {
   }
 
   async save(event) {
-    if (!this.hasUrlValue || event.oldIndex === event.newIndex) return
+    if (event.oldIndex === event.newIndex) return
+    if (!this.hasUrlValue) {
+      this.numberPositions()
+      return this.element.dispatchEvent(new Event("input", { bubbles: true }))
+    }
 
     const body = new FormData()
     this.sortable.toArray().forEach(id => body.append(this.paramValue, id))

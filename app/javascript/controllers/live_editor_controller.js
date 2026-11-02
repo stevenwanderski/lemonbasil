@@ -13,7 +13,7 @@ import { DirectUpload } from "@rails/activestorage"
 // attaches it. Sections the server renders are swapped into the page by
 // data-section-id.
 export default class extends Controller {
-  static targets = ["page", "drawer"]
+  static targets = ["page", "canvas", "outline", "drawer", "widthButton"]
   static values = { formUrl: String }
 
   pick(event) {
@@ -22,14 +22,25 @@ export default class extends Controller {
     this.open(event.data.sectionId)
   }
 
+  // From the panel's Section list: open it, and bring it into view.
+  async choose(event) {
+    const id = event.currentTarget.dataset.sectionId
+    await this.open(id)
+    this.findSection(id)?.scrollIntoView({ block: "start", behavior: "smooth" })
+  }
+
   async open(id) {
     this.close()
     const response = await get(this.formUrlValue.replace(":id", id), { responseKind: "html" })
     if (!response.ok) return
 
     this.saved = this.findSection(id)?.cloneNode(true)
+    this.selectedId = id
+    this.findSection(id)?.setAttribute("data-selected", "")
     this.drawerTarget.innerHTML = await response.html
     this.drawerTarget.hidden = false
+    this.outlineTarget.hidden = true
+    this.element.classList.add("is-editing")
   }
 
   // Leaves without saving: the page goes back to the saved Section.
@@ -42,8 +53,12 @@ export default class extends Controller {
     clearTimeout(this.previewTimer)
     this.previews = (this.previews || 0) + 1 // so a preview still on its way is ignored
     this.saved = null
+    if (this.selectedId) this.findSection(this.selectedId)?.removeAttribute("data-selected")
+    this.selectedId = null
     this.drawerTarget.hidden = true
     this.drawerTarget.innerHTML = ""
+    this.outlineTarget.hidden = false
+    this.element.classList.remove("is-editing")
   }
 
   // Waits for a pause in typing, then shows the form's values on the page.
@@ -134,10 +149,29 @@ export default class extends Controller {
 
     if (response.ok) {
       this.replaceSections(html)
+      this.updateOutline(form)
       this.hide()
     } else {
       this.drawerTarget.innerHTML = html
     }
+  }
+
+  // The Section list shows the saved heading.
+  updateOutline(form) {
+    const heading = form.querySelector('[name="lemon_drop_section[sectionable_attributes][heading]"]')
+    const row = this.outlineTarget.querySelector(`[data-section-id="${this.selectedId}"] [data-live-editor-heading]`)
+    if (heading && row) row.textContent = heading.value.replace(/\s+/g, " ").trim()
+  }
+
+  // Desktop fills the canvas; Phone shows the page at a phone's width.
+  setWidth(event) {
+    const width = event.currentTarget.dataset.width
+    this.canvasTarget.classList.toggle("is-phone", width === "phone")
+    this.widthButtonTargets.forEach(button => {
+      const active = button.dataset.width === width
+      button.classList.toggle("is-active", active)
+      button.setAttribute("aria-pressed", active)
+    })
   }
 
   findSection(id) {
@@ -148,6 +182,7 @@ export default class extends Controller {
     const template = this.pageTarget.contentDocument.createElement("template")
     template.innerHTML = html
     Array.from(template.content.children).forEach(section => {
+      if (section.dataset.sectionId === this.selectedId) section.setAttribute("data-selected", "")
       this.findSection(section.dataset.sectionId)?.replaceWith(section)
     })
   }

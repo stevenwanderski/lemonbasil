@@ -1,6 +1,6 @@
 <div class="live-editor__drawer-header">
+  <button type="button" class="link" data-action="live-editor#close">← All sections</button>
   <h2><%= @section.sectionable.model_name.human %></h2>
-  <button type="button" class="link" data-action="live-editor#close">Close</button>
 </div>
 
 <%= render 'form', section: @section, issue: @issue,

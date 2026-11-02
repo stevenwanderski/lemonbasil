@@ -62,7 +62,7 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     end
     expect(intro.sectionable.reload.heading).to eq('hello!')
 
-    within('.live-editor__drawer') { click_button 'Close' }
+    within('.live-editor__drawer') { click_button '← All sections' }
 
     within_frame(page_frame) do
       expect(page).to have_css('.intro h2', text: 'hello!')
@@ -87,7 +87,7 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     expect(ActiveStorage::Blob.unattached.count).to eq(1)
     expect(intro.sectionable.reload.icon).not_to be_attached
 
-    within('.live-editor__drawer') { click_button 'Close' }
+    within('.live-editor__drawer') { click_button '← All sections' }
     within_frame(page_frame) do
       expect(page).to have_no_css('.intro img.icon')
       find("[data-section-id='#{intro.id}']").click
@@ -117,7 +117,39 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     end
     expect(intro.sectionable.reload.heading).to eq('hello!')
 
-    within('.live-editor__drawer') { click_button 'Close' }
+    within('.live-editor__drawer') { click_button '← All sections' }
     within_frame(page_frame) { expect(page).to have_css('.intro h2', text: 'hello!') }
+  end
+
+  it 'keeps the page’s width while a Section is open, picked from the panel’s list' do
+    page.current_window.resize_to(1400, 900)
+    visit admin_lemon_drop_issue_live_editor_path(issue)
+    expect(page).to have_no_css('.sidebar')
+    width = evaluate_script("document.querySelector('.live-editor__page').clientWidth")
+
+    within('.live-editor__outline') { click_button 'Intro' }
+
+    within('.live-editor__drawer') { expect(page).to have_field('Heading', with: 'hello!') }
+    expect(page).to have_no_css('.live-editor__outline')
+    expect(evaluate_script("document.querySelector('.live-editor__page').clientWidth")).to eq(width)
+    within_frame(page_frame) { expect(page).to have_css("[data-section-id='#{intro.id}'][data-selected]") }
+
+    within('.live-editor__drawer') do
+      fill_in 'Heading', with: 'hi there'
+      click_button 'Save'
+    end
+
+    within('.live-editor__outline') { expect(page).to have_button('Intro hi there') }
+    within_frame(page_frame) { expect(page).to have_no_css('[data-selected]') }
+  end
+
+  it 'shows the page at a phone’s width' do
+    visit admin_lemon_drop_issue_live_editor_path(issue)
+
+    click_button 'Phone'
+
+    expect(page).to have_css('.live-editor__canvas.is-phone')
+    expect(evaluate_script("document.querySelector('.live-editor__page').clientWidth")).to eq(386)
+    expect(page).to have_css('button[aria-pressed="true"]', text: 'Phone')
   end
 end

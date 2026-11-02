@@ -1,19 +1,43 @@
-<div class="admin-header">
-  <div>
-    <h1><%= link_to @issue.title, edit_admin_lemon_drop_issue_path(@issue) %>: live editor</h1>
-    <p>
-      <strong><%= @issue.status.humanize %></strong>
-      <% if @issue.published? %>
-        · Live: changes are public when saved
-      <% end %>
-      · Click a Section to edit it
-    </p>
-  </div>
-</div>
-
 <%= tag.div class: 'live-editor', data: { controller: 'live-editor', action: 'message@window->live-editor#pick',
       live_editor_form_url_value: edit_admin_lemon_drop_issue_section_path(@issue, ':id', drawer: 1) } do %>
-  <iframe class="live-editor__page" title="The Issue page" data-live-editor-target="page"
-          src="<%= admin_lemon_drop_issue_preview_path(@issue, editable: 1) %>"></iframe>
-  <aside class="live-editor__drawer" data-live-editor-target="drawer" hidden></aside>
+  <header class="live-editor__bar">
+    <%= link_to '← Issue', edit_admin_lemon_drop_issue_path(@issue), class: 'live-editor__back' %>
+    <h1><%= @issue.title %></h1>
+    <span class="status-pill status-pill--<%= @issue.status %>"><%= @issue.status.humanize %></span>
+    <% if @issue.published? %>
+      <span class="live-editor__live">Live: changes are public when saved</span>
+    <% end %>
+    <div class="live-editor__widths" role="group" aria-label="Page width">
+      <button type="button" class="button is-active" aria-pressed="true" data-live-editor-target="widthButton"
+              data-action="live-editor#setWidth" data-width="desktop">Desktop</button>
+      <button type="button" class="button" aria-pressed="false" data-live-editor-target="widthButton"
+              data-action="live-editor#setWidth" data-width="phone">Phone</button>
+    </div>
+    <%= link_to 'Preview', admin_lemon_drop_issue_preview_path(@issue), target: '_blank', class: 'button' %>
+  </header>
+
+  <div class="live-editor__body">
+    <div class="live-editor__canvas" data-live-editor-target="canvas">
+      <iframe class="live-editor__page" title="The Issue page" data-live-editor-target="page"
+              src="<%= admin_lemon_drop_issue_preview_path(@issue, editable: 1) %>"></iframe>
+    </div>
+
+    <aside class="live-editor__panel">
+      <div class="live-editor__outline" data-live-editor-target="outline">
+        <h2>Sections</h2>
+        <p class="hint">Click a Section on the page, or pick one here.</p>
+        <ol>
+          <% @issue.sections.includes(:sectionable).each do |section| %>
+            <li>
+              <button type="button" data-action="live-editor#choose" data-section-id="<%= section.id %>">
+                <strong><%= section.sectionable.model_name.human %></strong>
+                <span data-live-editor-heading><%= section.sectionable.heading.to_s.squish %></span>
+              </button>
+            </li>
+          <% end %>
+        </ol>
+      </div>
+      <div class="live-editor__drawer" data-live-editor-target="drawer" hidden></div>
+    </aside>
+  </div>
 <% end %>

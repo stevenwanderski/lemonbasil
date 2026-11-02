@@ -1,44 +1,147 @@
-// The live editor: the Issue page in an iframe, the clicked Section's form
-// in a drawer on the right.
+// The live editor, full screen: a top bar, then the Issue page in an iframe
+// beside a panel of fixed width. The panel shows the Section list, or the
+// chosen Section's form; either way the page's width never changes, so it
+// never reflows when a Section is opened.
+$live-editor-panel: 400px;
+
+.admin--live-editor {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+}
+
 .live-editor {
   display: flex;
-  gap: 20px;
-  height: calc(100vh - 180px);
-  min-height: 500px;
+  flex-direction: column;
+  height: 100vh;
 
-  &__page {
-    flex: 1;
-    min-width: 0;
-    border: solid $gray-light 2px;
-    border-radius: 4px;
+  &__bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 16px;
+    border-bottom: solid $gray-light 2px;
+    background: $white;
+
+    h1 {
+      font-size: 18px;
+    }
   }
 
-  &__drawer {
-    flex: 0 0 420px;
-    overflow-y: auto;
-    padding: 0 10px 40px;
+  &__back {
+    font-weight: bold;
+  }
 
-    &[hidden] {
-      display: none;
+  &__live {
+    font-size: 13px;
+    font-weight: 600;
+    color: darken($green, 15%);
+  }
+
+  &__widths {
+    display: flex;
+    gap: 4px;
+    margin-left: auto;
+
+    .button.is-active {
+      background: $gray-dark;
+      color: $white;
     }
+  }
+
+  &__body {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__canvas {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    background: $gray-lightest;
+
+    &.is-phone .live-editor__page {
+      width: 390px;
+      border-left: solid $gray-light 2px;
+      border-right: solid $gray-light 2px;
+    }
+  }
+
+  &__page {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: $white;
+  }
+
+  &__panel {
+    flex: 0 0 $live-editor-panel;
+    overflow-y: auto;
+    padding: 16px 20px 40px;
+    border-left: solid $gray-light 2px;
+    background: $white;
+  }
+
+  &__outline {
+    ol {
+      list-style: none;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 6px;
+      border: solid $gray-light 2px;
+      border-radius: 4px;
+      background: $white;
+      text-align: left;
+      cursor: pointer;
+
+      &:hover {
+        border-color: $gray-medium;
+      }
+    }
+
+    span {
+      display: block;
+      font-size: 13px;
+      color: lighten($gray-dark, 20%);
+    }
+  }
+
+  &__outline[hidden],
+  &__drawer[hidden] {
+    display: none;
   }
 
   &__drawer-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    margin-bottom: 20px;
+
+    h2 {
+      margin-top: 8px;
+    }
   }
 
-  @media (max-width: 760px) {
-    flex-direction: column;
-    height: auto;
-
-    &__page {
-      height: 70vh;
+  // Too narrow for the page and the panel side by side: the page gets the
+  // width, and the panel slides over it only while a Section is open.
+  @media (max-width: 1100px) {
+    &__panel {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: $live-editor-panel;
+      max-width: 100%;
+      box-shadow: -6px 0 20px rgba(0, 0, 0, 0.15);
     }
 
-    &__drawer {
-      flex-basis: auto;
+    &.is-editing &__panel {
+      display: block;
     }
   }
 }

@@ -35,6 +35,8 @@ $live-editor-panel: 400px;
     font-size: 14px;
     font-weight: 500;
     color: lighten($gray-dark, 25%);
+    position: relative;
+    top: 1px; // like the title, its text sits a touch high in its box
 
     &:hover {
       color: $gray-dark;
@@ -47,6 +49,10 @@ $live-editor-panel: 400px;
     text-overflow: ellipsis;
     font-size: 18px;
     line-height: 1;
+    // ITC Avant Garde draws its figures high in the line box: centring the
+    // box leaves the text 2px above the bar's middle.
+    position: relative;
+    top: 2px;
   }
 
   .status-pill {

@@ -160,6 +160,26 @@ describe 'Admin: Lemon Drop: live editor', js: true do
     expect(issue.sections.reload).to eq([intro])
   end
 
+  it 'adds a Section between two others, and opens it in the drawer' do
+    visit admin_lemon_drop_issue_live_editor_path(issue)
+
+    within('.live-editor__outline') do
+      select 'Hero', from: 'Add a Section'
+      select 'After Intro: hello!', from: 'position'
+      click_button 'Add'
+    end
+
+    within('.live-editor__drawer') do
+      expect(page).to have_css('h2', text: 'Hero')
+      fill_in 'Heading', with: 'let’s cook'
+    end
+    hero = issue.sections.reload.second
+    expect(issue.sections.map(&:sectionable_type)).to eq(%w[LemonDrop::IntroSection LemonDrop::HeroSection LemonDrop::OutroSection])
+    within_frame(page_frame) do
+      expect(page).to have_css("[data-section-id='#{hero.id}'][data-selected]", text: 'let’s cook')
+    end
+  end
+
   it 'shows the page at a phone’s width' do
     visit admin_lemon_drop_issue_live_editor_path(issue)
 

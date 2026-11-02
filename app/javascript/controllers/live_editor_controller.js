@@ -15,7 +15,18 @@ import { DirectUpload } from "@rails/activestorage"
 // data-section-id or data-recipe-id.
 export default class extends Controller {
   static targets = ["page", "canvas", "outline", "drawer", "widthButton"]
-  static values = { formUrl: String, recipeFormUrl: String, newRecipeUrl: String }
+  static values = { formUrl: String, recipeFormUrl: String, newRecipeUrl: String, openSectionId: String }
+
+  // A Section just added (sections#create) opens once the page is in.
+  connect() {
+    if (!this.openSectionIdValue) return
+
+    // The page may have loaded already (a cached one can beat this).
+    const loaded = this.pageTarget.contentDocument?.readyState === "complete" && this.find(sectionKey(this.openSectionIdValue))
+    if (loaded) return this.show(this.openSectionIdValue)
+
+    this.pageTarget.addEventListener("load", () => this.show(this.openSectionIdValue), { once: true })
+  }
 
   pick(event) {
     if (event.origin !== window.location.origin || event.source !== this.pageTarget.contentWindow) return
@@ -25,8 +36,11 @@ export default class extends Controller {
   }
 
   // From the panel's Section list: open it, and bring it into view.
-  async choose(event) {
-    const id = event.currentTarget.dataset.sectionId
+  choose(event) {
+    this.show(event.currentTarget.dataset.sectionId)
+  }
+
+  async show(id) {
     await this.open(id)
     this.find(sectionKey(id))?.scrollIntoView({ block: "start", behavior: "smooth" })
   }

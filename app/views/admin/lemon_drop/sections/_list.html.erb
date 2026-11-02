@@ -15,9 +15,4 @@
   <% end %>
 <% end %>
 
-<%= form_with url: admin_lemon_drop_issue_sections_path(issue), class: 'section-list__add' do |f| %>
-  <%= f.label :section_type, 'Add a Section', class: 'label' %>
-  <%= f.select :section_type, LemonDrop::Section::TYPES.map { |type| [type.constantize.model_name.human, type.demodulize] } %>
-  <%= f.select :position, options_for_select(section_positions_for(sections), sections.size + 1) %>
-  <%= f.submit 'Add', class: 'button' %>
-<% end %>
+<%= render 'admin/lemon_drop/sections/add', issue: issue, sections: sections %>

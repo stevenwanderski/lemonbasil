@@ -26,6 +26,8 @@ class Admin::LemonDrop::SectionsController < Admin::LemonDrop::BaseController
     return head :unprocessable_entity if type.nil?
 
     section = @issue.insert_section(type.constantize.new, position: params[:position])
+    return redirect_to admin_lemon_drop_issue_live_editor_path(@issue, section: section.id) if params[:live_editor]
+
     redirect_to edit_admin_lemon_drop_issue_section_path(@issue, section), notice: "#{section.sectionable.model_name.human} added!"
   end
 

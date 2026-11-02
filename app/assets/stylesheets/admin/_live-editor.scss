@@ -160,6 +160,10 @@ $live-editor-panel: 400px;
     }
   }
 
+  &__outline .section-list__add {
+    margin-top: 20px;
+  }
+
   &__outline[hidden],
   &__drawer[hidden] {
     display: none;
